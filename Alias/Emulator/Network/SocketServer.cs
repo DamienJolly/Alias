@@ -14,8 +14,6 @@ namespace Alias.Emulator.Network
         private static MultithreadEventLoopGroup WorkerGroup;
         private static IChannel BoundChannel;
 
-		public static object ConfigurationFile { get; private set; }
-
 		public static async void Initialize()
         {
             BossGroup = new MultithreadEventLoopGroup(1);

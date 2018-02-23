@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Linq;
 using DotNetty.Transport.Channels;
 
 namespace Alias.Emulator.Network.Sessions
@@ -9,24 +10,32 @@ namespace Alias.Emulator.Network.Sessions
 
 		public static void Initialize()
 		{
-			RegisteredSessions = new Dictionary<IChannelHandlerContext, Session>();
+			SessionManager.RegisteredSessions = new Dictionary<IChannelHandlerContext, Session>();
 		}
 
-		//todo: do habbo shit
+		public static bool IsOnline(int userId)
+		{
+			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo() != null && o.Habbo().Id == userId && !o.Habbo().Disconnecting).Count() > 0;
+		}
+
+		public static Session SessionById(int userId)
+		{
+			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo() != null && o.Habbo().Id == userId).First();
+		}
 
 		public static void Register(IChannelHandlerContext context)
 		{
-			RegisteredSessions.Add(context, new Session(context));
+			SessionManager.RegisteredSessions.Add(context, new Session(context));
 		}
 
 		public static Session SessionByContext(IChannelHandlerContext context)
 		{
-			return RegisteredSessions[context];
+			return SessionManager.RegisteredSessions[context];
 		}
 
 		public static void Remove(IChannelHandlerContext context)
 		{
-			RegisteredSessions.Remove(context);
+			SessionManager.RegisteredSessions.Remove(context);
 		}
 	}
 }

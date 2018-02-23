@@ -17,5 +17,10 @@ namespace Alias.Emulator
 			SocketServer.Initialize();
 			while (true) Logging.ReadLine();
 		}
+
+		public static double Time()
+		{
+			return (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
+		}
 	}
 }

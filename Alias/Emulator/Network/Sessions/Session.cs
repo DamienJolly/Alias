@@ -1,15 +1,17 @@
-﻿using System;
 using DotNetty.Buffers;
 using DotNetty.Transport.Channels;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Utilities;
+using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Network.Sessions
 {
 	public class Session
 	{
 		private IChannelHandlerContext context;
+		public string UniqueId = "";
+		private Habbo habbo;
 
 		public Session(IChannelHandlerContext ctx)
 		{
@@ -40,11 +42,24 @@ namespace Alias.Emulator.Network.Sessions
 
 		public void Disconnect(bool closeSocket = true)
 		{
-			//todo: do habbo shit
+			if (this.Habbo() != null)
+			{
+				this.Habbo().OnDisconnect();
+			}
 			if (closeSocket)
 			{
 				this.Context().CloseAsync();
 			}
+		}
+
+		public Habbo Habbo()
+		{
+			return this.habbo;
+		}
+
+		public void AssignHabbo(Habbo habbo)
+		{
+			this.habbo = habbo;
 		}
 	}
 }

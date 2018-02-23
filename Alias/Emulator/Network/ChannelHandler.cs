@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using DotNetty.Buffers;
 using DotNetty.Transport.Channels;
