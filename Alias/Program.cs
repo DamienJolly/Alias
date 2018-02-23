@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Alias.Emulator;
 
 namespace Alias
 {
@@ -6,7 +6,7 @@ namespace Alias
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-        }
+			Environment.Initialize();
+		}
     }
 }
