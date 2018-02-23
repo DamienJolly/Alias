@@ -1,0 +1,16 @@
+using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Protocol;
+
+namespace Alias.Emulator.Hotel.Users.Handshake.Composers
+{
+	public class DebugConsoleComposer : MessageComposer
+	{
+		public ServerMessage Compose()
+		{
+			ServerMessage result = new ServerMessage(Outgoing.DebugConsoleMessageComposer);
+			result.Boolean(true);
+			return result;
+		}
+	}
+}
