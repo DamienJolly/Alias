@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Network.Protocol
 {
@@ -108,7 +109,7 @@ namespace Alias.Emulator.Network.Protocol
 			}
 			catch (Exception exception)
 			{
-				Console.WriteLine("Can't set the Int!");
+				Logging.Error("Can't set the Int!", exception, "ServerMessage", "SetInt");
 			}
 		}
 
@@ -142,5 +143,4 @@ namespace Alias.Emulator.Network.Protocol
 			this.Message.Clear();
 		}
 	}
-
 }

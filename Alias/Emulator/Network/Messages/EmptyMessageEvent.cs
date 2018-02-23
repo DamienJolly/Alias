@@ -1,6 +1,6 @@
-﻿using System;
-using Alias.Emulator.Network.Protocol;
+﻿using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Network.Messages
 {
@@ -8,7 +8,7 @@ namespace Alias.Emulator.Network.Messages
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			Console.WriteLine("Unregistered Event with Id " + message.Id + " handled by the Placeholder MessageEvent.");
+			Logging.Debug("Unregistered Event with Id " + message.Id + " handled by the Placeholder MessageEvent.");
 		}
 	}
 }

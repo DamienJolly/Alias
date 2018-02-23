@@ -5,6 +5,7 @@ using DotNetty.Transport.Channels;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Sessions;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Network
 {
@@ -41,9 +42,9 @@ namespace Alias.Emulator.Network
 						MessageHandler.Event(clientMessage.Id).Handle(SessionManager.SessionByContext(context), clientMessage);
 						clientMessage.Dispose();
 					}
-					catch (Exception ex)
+					catch (Exception exception)
 					{
-						Console.WriteLine("Error while reading ClientMessage");
+						Logging.Error("Error while reading ClientMessage", exception, "ChannelHandler", "ChannelRead");
 						return;
 					}
 				}
@@ -74,5 +75,4 @@ namespace Alias.Emulator.Network
 			base.ChannelUnregistered(context);
 		}
 	}
-
 }

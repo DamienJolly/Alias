@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Alias.Emulator.Utilities;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
@@ -35,22 +36,22 @@ namespace Alias.Emulator.Network
                         pipeline.AddLast("channel-handler", new ChannelHandler());
                     }));
                 BoundChannel = await Bootstrap.BindAsync(201);
-                Console.WriteLine("Listening for Connections on Port " + 201);
-				Console.ReadLine();
-                await BoundChannel.CloseAsync();
+				Logging.Info("Listening for Connections on Port " + 201);
+				Logging.ReadLine();
+				await BoundChannel.CloseAsync();
             }
             catch (FormatException formatException)
             {
-				Console.WriteLine("Port isn't a valid number!");
-            }
+				Logging.Error("Port isn't a valid number!", formatException, "SocketServer", "Initialize");
+			}
             catch (ArgumentOutOfRangeException argumentException)
             {
-				Console.WriteLine("Port is out of valid range.");
-            }
+				Logging.Error("Port is out of valid range.", argumentException, "SocketServer", "Initialize");
+			}
             catch (AggregateException aggregateException)
             {
-				Console.WriteLine("Port is already in use.");
-            }
+				Logging.Error("Port is already in use.", aggregateException, "SocketServer", "Initialize");
+			}
             finally
             {
                 await Task.WhenAll(
