@@ -6,7 +6,7 @@ namespace Alias
     {
         static void Main(string[] args)
         {
-			Environment.Initialize();
+			AliasEnvironment.Initialize();
 		}
     }
 }

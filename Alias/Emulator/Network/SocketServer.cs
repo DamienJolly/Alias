@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Alias.Emulator.Utilities;
 using DotNetty.Transport.Bootstrapping;
@@ -14,7 +14,9 @@ namespace Alias.Emulator.Network
         private static MultithreadEventLoopGroup WorkerGroup;
         private static IChannel BoundChannel;
 
-        public static async void Initialize()
+		public static object ConfigurationFile { get; private set; }
+
+		public static async void Initialize()
         {
             BossGroup = new MultithreadEventLoopGroup(1);
             WorkerGroup = new MultithreadEventLoopGroup();
@@ -35,8 +37,8 @@ namespace Alias.Emulator.Network
                         IChannelPipeline pipeline = channel.Pipeline;
                         pipeline.AddLast("channel-handler", new ChannelHandler());
                     }));
-                BoundChannel = await Bootstrap.BindAsync(201);
-				Logging.Info("Listening for Connections on Port " + 201);
+                BoundChannel = await Bootstrap.BindAsync(int.Parse(Configuration.Value("tcp.port")));
+				Logging.Info("Listening for Connections on Port " + Configuration.Value("tcp.port"));
 				Logging.ReadLine();
 				await BoundChannel.CloseAsync();
             }

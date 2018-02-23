@@ -6,6 +6,27 @@ namespace Alias.Emulator.Utilities
 {
 	public class Logging
 	{
+		public static void Alias(string text, string version)
+		{
+			Console.Title = text;
+			Console.ForegroundColor = ConsoleColor.DarkBlue;
+			Console.WriteLine();
+			Console.WriteLine();
+			Console.WriteLine();
+			Console.WriteLine();
+			Console.WriteLine("                      ______   _      _");
+			Console.WriteLine("                     |  __  | | |    |_|  ______    ______");
+			Console.WriteLine("                     | |__| | | |     _  |  __  |  |  ____|");
+			Console.WriteLine("                     |  __  | | |__  | | | |__| |  |____  |");
+			Console.WriteLine(@"                     |_|  |_| |____| |_| |_______\ |______|");
+			Console.ForegroundColor = ConsoleColor.DarkCyan;
+			Console.WriteLine("                                   Build: " + version);
+			Console.WriteLine("                             https://DamienJolly.com");
+			Console.WriteLine("");
+			Console.WriteLine("");
+			Console.ForegroundColor = ConsoleColor.Gray;
+		}
+
 		public static void Error(string information, Exception exception, string classname, string method)
 		{
 			Console.ForegroundColor = ConsoleColor.Red;
@@ -54,6 +75,14 @@ namespace Alias.Emulator.Utilities
 		public static ConsoleKeyInfo ReadKey()
 		{
 			return Console.ReadKey();
+		}
+
+		public static void CreateExceptionFile()
+		{
+			if (!File.Exists(Constant.ExceptionFile))
+			{
+				File.Create(Constant.ExceptionFile);
+			}
 		}
 	}
 }
