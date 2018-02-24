@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using Alias.Emulator.Hotel.Users.Handshake;
+using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Network.Messages
 {
@@ -11,7 +14,7 @@ namespace Alias.Emulator.Network.Messages
 			MessageHandler.Events = new Dictionary<int, MessageEvent>();
 			MessageHandler.EmptyMessageEvent = new EmptyMessageEvent();
 
-			//Register events
+			HandshakeEvents.Register();
 		}
 
 		public static void Register(int Id, MessageEvent evnt)

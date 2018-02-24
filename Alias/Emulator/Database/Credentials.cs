@@ -25,6 +25,7 @@ namespace Alias.Emulator.Database
 				ConnString.MinimumPoolSize = this.MinPoolSize;
 				ConnString.MaximumPoolSize = this.MaxPoolSize;
 				ConnString.Pooling = true;
+				ConnString.SslMode = MySqlSslMode.None;
 				return ConnString.ToString();
 			}
 		}

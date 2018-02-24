@@ -64,6 +64,5 @@ namespace Alias.Emulator.Network
         {
             BoundChannel.CloseAsync();
         }
-
     }
 }

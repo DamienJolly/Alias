@@ -2,7 +2,6 @@ using DotNetty.Buffers;
 using DotNetty.Transport.Channels;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Utilities;
 using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Network.Sessions
@@ -15,7 +14,6 @@ namespace Alias.Emulator.Network.Sessions
 
 		public Session(IChannelHandlerContext ctx)
 		{
-			Logging.Info("Connection incoming from: " + ctx.Channel.LocalAddress);
 			this.context = ctx;
 		}
 

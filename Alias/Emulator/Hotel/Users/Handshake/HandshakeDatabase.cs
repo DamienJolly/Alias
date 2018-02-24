@@ -61,7 +61,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 			{
 				dbClient.AddParameter("id", userId);
 				dbClient.AddParameter("now", AliasEnvironment.Time());
-				return dbClient.DataRow("SELECT `reason` FROM `bans` WHERE `user_id` = @id AND `expire` > @now") != null;
+				return dbClient.DataRow("SELECT `reason` FROM `bans` WHERE `user_id` = @id AND `expires` > @now") != null;
 			}
 		}
 	}
