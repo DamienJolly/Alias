@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Alias.Emulator.Hotel.Misc.Composers;
+using Alias.Emulator.Hotel.Users.Composers;
 using Alias.Emulator.Hotel.Users.Handshake.Composers;
 using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Utilities;
@@ -25,15 +26,15 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 
 					session.Habbo().Init();
 					session.Send(new SecureLoginOKComposer());
-					//session.Send(new UserHomeRoomComposer()); //todo:
-					//session.Send(new UserEffectsListComposer()); //todo:
-					//session.Send(new UserClothesComposer()); //todo:
-					//session.Send(new NewUserIdentityComposer()); //todo:
-					session.Send(new UserPermissionsComposer(session.Habbo().Rank)); //todo: user rank
+					session.Send(new UserHomeRoomComposer(0)); //todo: homeroom id
+					session.Send(new UserEffectsListComposer()); //todo:
+					session.Send(new UserClothesComposer()); //todo:
+					session.Send(new NewUserIdentityComposer()); //todo:
+					session.Send(new UserPermissionsComposer(session.Habbo().Rank));
 					session.Send(new SessionRightsComposer());
 					session.Send(new SomeConnectionComposer());
 					session.Send(new DebugConsoleComposer());
-					//session.Send(new UserAchievementScoreComposer()); //todo:
+					session.Send(new UserAchievementScoreComposer()); //todo:
 					session.Send(new UnknownComposer4());
 					session.Send(new UnknownComposer5());
 					//session.Send(new BuildersClubExpiredComposer()); //todo:
@@ -41,7 +42,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					//session.Send(new FavoriteRoomsCountComposer()); //todo:
 					//session.Send(new GameCenterGameListComposer()); //todo:
 					//session.Send(new GameCenterAccountInfoComposer()); //todo:
-					//session.Send(new UserClubComposer()); //todo:
+					session.Send(new UserClubComposer()); //todo:
 
 					//TODO Modtool
 
@@ -51,6 +52,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					//session.Send(new NavigatorSavedSearchesComposer());
 					//session.Send(new NavigatorEventCategoriesComposer());
 					//session.Send(new NavigatorSettingsComposer();
+
 					//session.Send(new InventoryRefreshComposer());
 					//session.Send(new ForumsTestComposer());
 					//session.Send(new InventoryAchievementsComposer());

@@ -39,7 +39,7 @@ namespace Alias.Emulator.Network
 							return;
 						}
 						ClientMessage clientMessage = new ClientMessage(buffer.ReadBytes(length));
-						MessageHandler.Event(clientMessage.Id == 0 ? 4000 : clientMessage.Id).Handle(SessionManager.SessionByContext(context), clientMessage);
+						MessageHandler.Event(clientMessage.Id).Handle(SessionManager.SessionByContext(context), clientMessage);
 						clientMessage.Dispose();
 					}
 					catch (Exception exception)
