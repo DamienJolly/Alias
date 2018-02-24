@@ -1,4 +1,5 @@
 using System;
+using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users
@@ -13,6 +14,7 @@ namespace Alias.Emulator.Hotel.Users
 		public string Motto = "Hello world!";
 		public int Rank = 1;
 		public bool Disconnecting = false;
+		public NavigatorPreference NavigatorPreference;
 
 		public Habbo()
 		{
@@ -21,7 +23,8 @@ namespace Alias.Emulator.Hotel.Users
 
 		public void Init()
 		{
-			//todo: Do some stuff
+			this.NavigatorPreference = NavigatorDatabase.Preference(this.Id);
+			this.NavigatorPreference.NavigatorSearches = NavigatorDatabase.ReadSavedSearches(this.Id);
 		}
 
 		public void OnDisconnect()

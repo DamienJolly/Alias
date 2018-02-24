@@ -16,5 +16,15 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int HotelViewMessageEvent = 105;
 		public const int HotelViewRequestBonusRareMessageEvent = 957;
 		public const int RequestNewsListMessageEvent = 1827;
+
+		// Navigator
+		public const int RequestNavigatorDataMessageEvent = 2110;
+		public const int SaveWindowSettingsMessageEvent = 3159;
+		public const int SearchRoomsMessageEvent = 249;
+		public const int RequestRoomCategoriesMessageEvent = 3027;
+		public const int RequestNavigatorSettingsMessageEvent = 1782;
+		public const int RequestPromotedRoomsMessageEvent = 2908;
+		public const int AddSavedSearchMessageEvent = 2226;
+		public const int RemoveSavedSearchMessageEvent = 1954;
 	}
 }

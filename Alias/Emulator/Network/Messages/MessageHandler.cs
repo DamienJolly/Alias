@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Alias.Emulator.Hotel.Landing;
+using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Network.Messages
@@ -13,6 +15,8 @@ namespace Alias.Emulator.Network.Messages
 			MessageHandler.EmptyMessageEvent = new EmptyMessageEvent();
 
 			UserEvents.Register();
+			LandingEvents.Register();
+			NavigatorEvents.Register();
 		}
 
 		public static void Register(int Id, MessageEvent evnt)

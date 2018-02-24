@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Alias.Emulator.Hotel.Misc.Composers;
+using Alias.Emulator.Hotel.Navigator.Composers;
 using Alias.Emulator.Hotel.Users.Composers;
 using Alias.Emulator.Hotel.Users.Handshake.Composers;
 using Alias.Emulator.Network.Sessions;
@@ -46,12 +47,12 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 
 					//TODO Modtool
 
-					//session.Send(new NavigatorMetaDataComposer());
-					//session.Send(new NavigatorLiftedRoomsComposer());
-					//session.Send(new NavigatorCollapsedCategoriesComposer());
-					//session.Send(new NavigatorSavedSearchesComposer());
-					//session.Send(new NavigatorEventCategoriesComposer());
-					//session.Send(new NavigatorSettingsComposer();
+					session.Send(new NavigatorMetaDataComposer());
+					session.Send(new NavigatorLiftedRoomsComposer());
+					session.Send(new NavigatorCollapsedCategoriesComposer());
+					session.Send(new NavigatorSavedSearchesComposer(session.Habbo().NavigatorPreference.NavigatorSearches));
+					session.Send(new NavigatorEventCategoriesComposer(session.Habbo().Rank));
+					session.Send(new NavigatorSettingsComposer(session.Habbo().NavigatorPreference));
 
 					//session.Send(new InventoryRefreshComposer());
 					//session.Send(new ForumsTestComposer());

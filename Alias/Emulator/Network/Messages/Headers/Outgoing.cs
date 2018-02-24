@@ -25,6 +25,17 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int NewsListMessageComposer = 286;
 		public const int BonusRareMessageComposer = 1533;
 
+		// Navigator
+		public const int RoomCategoriesMessageComposer = 1562;
+		public const int NavigatorSearchResultsMessageComposer = 2690;
+		public const int NavigatorEventCategoriesMessageComposer = 3244;
+		public const int PrivateRoomsMessageComposer = 52;
+		public const int NavigatorMetaDataMessageComposer = 3052;
+		public const int NavigatorLiftedRoomsMessageComposer = 3104;
+		public const int NavigatorCollapsedCategoriesMessageComposer = 1543;
+		public const int NavigatorSavedSearchesMessageComposer = 3984;
+		public const int NavigatorSettingsMessageComposer = 518;
+
 		// Misc
 		public const int GenericAlertMessageComposer = 3801;
 

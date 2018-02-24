@@ -1,5 +1,7 @@
 using System;
 using Alias.Emulator.Database;
+using Alias.Emulator.Hotel.Navigator;
+using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Network;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Sessions;
@@ -35,6 +37,8 @@ namespace Alias.Emulator
 			}
 			
 			MessageHandler.Initialize();
+			RoomManager.Initialize();
+			Navigator.Initialize();
 			SessionManager.Initialize();
 			SocketServer.Initialize();
 			while (true) Logging.ReadLine();
@@ -43,6 +47,16 @@ namespace Alias.Emulator
 		public static double Time()
 		{
 			return (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
+		}
+
+		public static bool ToBool(string x)
+		{
+			return x.Equals("1");
+		}
+
+		public static string BoolToString(bool x)
+		{
+			return x ? "1" : "0";
 		}
 	}
 }
