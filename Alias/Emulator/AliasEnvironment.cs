@@ -2,6 +2,7 @@ using System;
 using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
+using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Network;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Sessions;
@@ -37,6 +38,7 @@ namespace Alias.Emulator
 			}
 			
 			MessageHandler.Initialize();
+			RoomModelManager.Initialize();
 			RoomManager.Initialize();
 			Navigator.Initialize();
 			SessionManager.Initialize();
@@ -57,6 +59,19 @@ namespace Alias.Emulator
 		public static string BoolToString(bool x)
 		{
 			return x ? "1" : "0";
+		}
+
+		public static double ParseChar(char c)
+		{
+			int xyz = 0;
+			if (int.TryParse(c.ToString(), out xyz))
+			{
+				return (double)xyz;
+			}
+			else
+			{
+				return (double)(Convert.ToInt32(c) - 87);
+			}
 		}
 	}
 }

@@ -19,11 +19,31 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int NewUserIdentityMessageComposer = 3738;
 			public const int SomeConnectionMessageComposer = 3928;
 
+		// Rooms
+		public const int RoomDataMessageComposer = 687;
+		public const int RoomOpenMessageComposer = 758;
+		public const int RoomAccessDeniedMessageComposer = 878;
+		public const int RoomModelMessageComposer = 2031;
+		public const int RoomPaintMessageComposer = 2454;
+		public const int RoomScoreMessageComposer = 482;
+		public const int RoomEntryInfoMessageComposer = 749;
+		public const int RoomFloorThicknessUpdatedMessageComposer = 3786;
+
+			// Models
+			public const int RoomHeightMapMessageComposer = 1301;
+			public const int RoomRelativeMapMessageComposer = 2753;
+
+			// Users
+			public const int RoomUsersMessageComposer = 374;
+			public const int RoomUserRemoveMessageComposer = 2661;
+			public const int RoomUserStatusMessageComposer = 1640;
+
 		// Landing
 		public const int HotelViewDataMessageComposer = 1745;
 		public const int HallOfFameMessageComposer = 3005;
 		public const int NewsListMessageComposer = 286;
 		public const int BonusRareMessageComposer = 1533;
+		public const int HotelViewMessageComposer = 1745;
 
 		// Navigator
 		public const int RoomCategoriesMessageComposer = 1562;
@@ -38,6 +58,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 
 		// Misc
 		public const int GenericAlertMessageComposer = 3801;
+		public const int GenericErrorMessageComposer = 1600;
 
 			// Unknown
 			public const int UnknownComposer4 = 793;

@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+using Alias.Emulator.Hotel.Rooms.Models;
+using Alias.Emulator.Hotel.Rooms.Users;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
@@ -12,6 +13,19 @@ namespace Alias.Emulator.Hotel.Rooms
 		public RoomData RoomData
 		{
 			get; set;
+		}
+
+		public RoomUserManager UserManager
+		{
+			get; set;
+		}
+
+		public RoomModel Model
+		{
+			get
+			{
+				return RoomModelManager.GetModel(this.RoomData.ModelName);
+			}
 		}
 
 		public int IdleTime = 0;
@@ -34,6 +48,13 @@ namespace Alias.Emulator.Hotel.Rooms
 		public void OnRoomCrash()
 		{
 			this.Disposing = true;
+			foreach (RoomUser user in this.UserManager.Users)
+			{
+				//if (user.Habbo == null || user.Habbo.Session() == null)
+					//todo: notify user the room crashed
+
+				this.UserManager.OnUserLeave(user.Habbo.Session());
+			}
 			this.Dispose();
 		}
 

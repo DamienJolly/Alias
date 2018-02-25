@@ -1,5 +1,6 @@
 using System;
 using Alias.Emulator.Hotel.Navigator;
+using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users
@@ -15,6 +16,11 @@ namespace Alias.Emulator.Hotel.Users
 		public int Rank = 1;
 		public bool Disconnecting = false;
 		public NavigatorPreference NavigatorPreference;
+
+		public Room CurrentRoom
+		{
+			get; set;
+		} = null;
 
 		public Habbo()
 		{
