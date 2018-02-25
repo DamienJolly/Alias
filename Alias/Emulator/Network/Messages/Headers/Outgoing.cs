@@ -37,7 +37,10 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RoomUsersMessageComposer = 374;
 			public const int RoomUserRemoveMessageComposer = 2661;
 			public const int RoomUserStatusMessageComposer = 1640;
-
+			public const int RoomUserTalkMessageComposer = 1446;
+			public const int RoomUserShoutMessageComposer = 1036;
+			public const int RoomUserWhisperMessageComposer = 2704;
+		
 		// Landing
 		public const int HotelViewDataMessageComposer = 1745;
 		public const int HallOfFameMessageComposer = 3005;

@@ -9,6 +9,9 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 		public static void Register()
 		{
 			MessageHandler.Register(Incoming.RoomUserWalkMessageEvent, new RoomUserWalkEvent());
+			MessageHandler.Register(Incoming.RoomUserTalkMessageEvent, new RoomUserTalkEvent());
+			MessageHandler.Register(Incoming.RoomUserShoutMessageEvent, new RoomUserTalkEvent());
+			MessageHandler.Register(Incoming.RoomUserWhisperMessageEvent, new RoomUserTalkEvent());
 		}
 	}
 }
