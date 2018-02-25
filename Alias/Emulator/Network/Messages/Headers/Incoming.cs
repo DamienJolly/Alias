@@ -16,6 +16,9 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int RequestRoomLoadMessageEvent = 2312;
 		public const int RequestRoomHeightmapMessageEvent = 3898;
 
+			// Users
+			public const int RoomUserWalkMessageEvent = 3320;
+
 		// Landing
 		public const int HotelViewDataMessageEvent = 2912;
 		public const int HotelViewMessageEvent = 105;

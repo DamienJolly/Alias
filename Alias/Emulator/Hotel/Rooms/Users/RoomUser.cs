@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Drawing;
 using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Users
@@ -20,6 +22,16 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 		}
 
 		public UserPosition Position
+		{
+			get; set;
+		}
+
+		public LinkedList<Point> Path
+		{
+			get; set;
+		}
+
+		public UserPosition TargetPosition
 		{
 			get; set;
 		}

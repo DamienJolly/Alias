@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.States;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Utilities;
@@ -101,6 +102,7 @@ namespace Alias.Emulator.Hotel.Rooms
 				Room result = new Room();
 				result.Id = roomId;
 				result.RoomData = RoomManager.RoomData(roomId);
+				result.DynamicModel = new DynamicRoomModel(result);
 				result.UserManager = new RoomUserManager(result);
 				result.Initialize();
 				RoomManager.LoadedRooms.Add(result);

@@ -1,4 +1,6 @@
+using Alias.Emulator.Hotel.Rooms.Cycle;
 using Alias.Emulator.Hotel.Rooms.Models;
+using Alias.Emulator.Hotel.Rooms.Pathfinding;
 using Alias.Emulator.Hotel.Rooms.Users;
 
 namespace Alias.Emulator.Hotel.Rooms
@@ -28,6 +30,21 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
+		public RoomCycleTask Cycle
+		{
+			get; set;
+		}
+
+		public DynamicRoomModel DynamicModel
+		{
+			get; set;
+		}
+
+		public PathFinder PathFinder
+		{
+			get; set;
+		}
+
 		public int IdleTime = 0;
 
 		public bool Disposing
@@ -42,7 +59,10 @@ namespace Alias.Emulator.Hotel.Rooms
 
 		public void Initialize()
 		{
-			//todo: 
+			this.Cycle = new RoomCycleTask();
+			this.Cycle.Room = this;
+			this.Cycle.StartCycle();
+			this.PathFinder = new PathFinder(this);
 		}
 
 		public void OnRoomCrash()
@@ -50,8 +70,10 @@ namespace Alias.Emulator.Hotel.Rooms
 			this.Disposing = true;
 			foreach (RoomUser user in this.UserManager.Users)
 			{
-				//if (user.Habbo == null || user.Habbo.Session() == null)
+				if (user.Habbo == null || user.Habbo.Session() == null)
+				{
 					//todo: notify user the room crashed
+				}
 
 				this.UserManager.OnUserLeave(user.Habbo.Session());
 			}
@@ -61,6 +83,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		public void Dispose()
 		{
 			this.Disposing = true;
+			this.Cycle.StopCycle();
 			RoomDatabase.SaveRoom(this.RoomData);
 			RoomManager.RemoveLoadedRoom(this);
 		}
