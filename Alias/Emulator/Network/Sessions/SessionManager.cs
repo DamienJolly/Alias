@@ -13,6 +13,11 @@ namespace Alias.Emulator.Network.Sessions
 			SessionManager.RegisteredSessions = new Dictionary<IChannelHandlerContext, Session>();
 		}
 
+		public static int OnlineUsers()
+		{
+			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo() != null && !o.Habbo().Disconnecting).Count();
+		}
+
 		public static bool IsOnline(int userId)
 		{
 			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo() != null && o.Habbo().Id == userId && !o.Habbo().Disconnecting).Count() > 0;

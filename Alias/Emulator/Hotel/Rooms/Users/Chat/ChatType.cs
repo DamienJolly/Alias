@@ -1,4 +1,4 @@
-namespace Alias.Emulator.Hotel.Rooms.Users
+namespace Alias.Emulator.Hotel.Rooms.Users.Chat
 {
 	public enum ChatType
 	{

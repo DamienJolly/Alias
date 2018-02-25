@@ -1,4 +1,5 @@
 using System;
+using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Network.Sessions;
@@ -41,6 +42,11 @@ namespace Alias.Emulator.Hotel.Users
 		public Session Session()
 		{
 			return SessionManager.SessionById(this.Id);
+		}
+
+		public void Notification(string text)
+		{
+			this.Session().Send(new GenericAlertComposer(text, Session()));
 		}
 
 		public void Dispose()

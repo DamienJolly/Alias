@@ -3,6 +3,7 @@ using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Rooms.Models;
+using Alias.Emulator.Hotel.Rooms.Users.Chat.Commands;
 using Alias.Emulator.Network;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Sessions;
@@ -13,9 +14,11 @@ namespace Alias.Emulator
     class AliasEnvironment
     {
 		private static string version = "v0.1";
+		public static DateTime ServerStarted;
 
 		public static void Initialize()
 		{
+			ServerStarted = DateTime.Now;
 			Logging.Alias("Alias Emulator is starting up...", version);
 			Logging.CreateExceptionFile();
 			Configuration.Initialize();
@@ -36,14 +39,21 @@ namespace Alias.Emulator
 				Logging.ReadLine();
 				Environment.Exit(0);
 			}
-			
+
 			MessageHandler.Initialize();
 			RoomModelManager.Initialize();
 			RoomManager.Initialize();
 			Navigator.Initialize();
 			SessionManager.Initialize();
+			CommandHandler.Initialize();
 			SocketServer.Initialize();
 			while (true) Logging.ReadLine();
+		}
+
+		public static string UpTime()
+		{
+			TimeSpan Uptime = DateTime.Now - ServerStarted;
+			return Uptime.Days + " day(s), " + Uptime.Hours + " hours and " + Uptime.Minutes + " minutes.";
 		}
 
 		public static double Time()

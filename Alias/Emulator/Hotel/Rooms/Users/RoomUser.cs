@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
+using Alias.Emulator.Hotel.Rooms.Users.Chat;
+using Alias.Emulator.Hotel.Rooms.Users.Chat.Commands;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
 using Alias.Emulator.Hotel.Users;
 
@@ -64,6 +66,11 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			if (text.Length > 100)
 			{
 				text = text.Substring(0, 100);
+			}
+
+			if (text.StartsWith(":") && CommandHandler.Handle(this.Habbo.Session(), text))
+			{
+				return;
 			}
 
 			RoomUserChatComposer packet = new RoomUserChatComposer(this.VirtualId, text, Expression(text), colour, chatType);
