@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Alias.Emulator.Hotel.Rooms.Users.Chat.Commands;
+using Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands

@@ -59,6 +59,12 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int NavigatorSavedSearchesMessageComposer = 3984;
 		public const int NavigatorSettingsMessageComposer = 518;
 
+		// Catalog
+		public const int CatalogModeMessageComposer = 3828;
+		public const int CatalogPagesListMessageComposer = 1032;
+		public const int CatalogPageMessageComposer = 804;
+		public const int DiscountMessageComposer = 2347;
+
 		// Misc
 		public const int GenericAlertMessageComposer = 3801;
 		public const int GenericErrorMessageComposer = 1600;

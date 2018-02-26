@@ -37,5 +37,11 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int RequestPromotedRoomsMessageEvent = 2908;
 		public const int AddSavedSearchMessageEvent = 2226;
 		public const int RemoveSavedSearchMessageEvent = 1954;
+
+		// Catalog
+		public const int RequestCatalogIndexMessageEvent = 2529;
+		public const int RequestCatalogModeMessageEvent = 1195;
+		public const int RequestCatalogPageMessageEvent = 412;
+		public const int RequestDiscountMessageEvent = 223;
 	}
 }

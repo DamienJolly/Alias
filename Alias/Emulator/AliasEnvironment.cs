@@ -1,5 +1,7 @@
 using System;
 using Alias.Emulator.Database;
+using Alias.Emulator.Hotel.Catalog;
+using Alias.Emulator.Hotel.Items;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Rooms.Models;
@@ -41,6 +43,8 @@ namespace Alias.Emulator
 			}
 
 			MessageHandler.Initialize();
+			ItemManager.Initialize();
+			CatalogManager.Initialize();
 			RoomModelManager.Initialize();
 			RoomManager.Initialize();
 			Navigator.Initialize();

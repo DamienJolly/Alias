@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Alias.Emulator.Hotel.Catalog;
 using Alias.Emulator.Hotel.Landing;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
@@ -15,6 +16,7 @@ namespace Alias.Emulator.Network.Messages
 			MessageHandler.Events = new Dictionary<int, MessageEvent>();
 			MessageHandler.EmptyMessageEvent = new EmptyMessageEvent();
 
+			CatalogEvents.Register();
 			UserEvents.Register();
 			RoomEvents.Register();
 			LandingEvents.Register();
