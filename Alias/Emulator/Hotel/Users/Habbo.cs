@@ -2,6 +2,7 @@ using System;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
+using Alias.Emulator.Hotel.Users.Currency;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Network.Sessions;
 
@@ -18,10 +19,11 @@ namespace Alias.Emulator.Hotel.Users
 		public int Rank = 1;
 		public int ClubLevel = 1;
 		public int Credits = 9999;
-		public int Points = 9999;
 		public bool Disconnecting = false;
 		public NavigatorPreference NavigatorPreference;
+
 		private Inventory.Inventory inventory;
+		private Currency.Currency currency;
 
 		public Room CurrentRoom
 		{
@@ -35,6 +37,8 @@ namespace Alias.Emulator.Hotel.Users
 
 		public void Init()
 		{
+			this.currency = new Currency.Currency(this);
+			CurrencyDatabase.InitCurrency(this.currency);
 			this.inventory = new Inventory.Inventory(this);
 			InventoryDatabase.InitInventory(this.inventory);
 			this.NavigatorPreference = NavigatorDatabase.Preference(this.Id);
@@ -44,6 +48,7 @@ namespace Alias.Emulator.Hotel.Users
 		public void OnDisconnect()
 		{
 			this.Disconnecting = true;
+			CurrencyDatabase.SaveCurrencies(this.currency);
 		}
 
 		public Session Session()
@@ -61,9 +66,19 @@ namespace Alias.Emulator.Hotel.Users
 			return this.inventory;
 		}
 
+		public Currency.Currency Currency()
+		{
+			return this.currency;
+		}
+
 		public void Dispose()
 		{
-			throw new NotImplementedException();
+			this.Username = null;
+			this.Mail = null;
+			this.Look = null;
+			this.Motto = null;
+			this.Gender = null;
+			this.currency.Dispose();
 		}
 	}
 }

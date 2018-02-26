@@ -12,6 +12,11 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int UserClubMessageComposer = 954;
 		public const int UserEffectsListMessageComposer = 340;
 
+			// Currency
+			public const int UserCreditsMessageComposer = 3475;
+			public const int UserCurrencyMessageComposer = 2018;
+			public const int UserPointsMessageComposer = 2275;
+
 			// Handshake
 			public const int DebugConsoleMessageComposer = 3284;
 			public const int SecureLoginOKMessageComposer = 2491;

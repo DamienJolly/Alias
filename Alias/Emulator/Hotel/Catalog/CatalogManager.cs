@@ -3,6 +3,7 @@ using System.Linq;
 using Alias.Emulator.Hotel.Catalog.Composers;
 using Alias.Emulator.Hotel.Items;
 using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Users.Currency.Composers;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Users.Inventory.Composers;
 
@@ -66,7 +67,7 @@ namespace Alias.Emulator.Hotel.Catalog
 				{
 					if (item.Credits <= habbo.Credits - totalCredits)
 					{
-						if (item.Points <= habbo.Points - totalPoints)
+						if (item.Points <= habbo.Currency().GetCurrencyType(item.PointsType).Amount - totalPoints)
 						{
 							if (((i + 1) % 6 != 0 && item.HasOffer) || !item.HasOffer)
 							{
@@ -91,7 +92,14 @@ namespace Alias.Emulator.Hotel.Catalog
 
 				if (totalCredits > 0)
 				{
-					//todo: take credits
+					habbo.Credits -= totalCredits;
+					habbo.Session().Send(new UserCreditsComposer(habbo));
+				}
+
+				if (totalPoints > 0)
+				{
+					habbo.Currency().GetCurrencyType(item.PointsType).Amount -= totalPoints;
+					habbo.Session().Send(new UserPointsComposer(habbo.Currency().GetCurrencyType(item.PointsType).Amount, -totalPoints, item.PointsType));
 				}
 
 				if (itemsList != null)

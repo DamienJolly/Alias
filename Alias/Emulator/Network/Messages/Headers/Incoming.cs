@@ -4,6 +4,9 @@ namespace Alias.Emulator.Network.Messages.Headers
 	{
 		// Users
 
+			// Currency
+			public const int RequestUserCreditsMessageEvent = 273;
+
 			// Handshake
 			public const int ReleaseVersionMessageEvent = 4000;
 			public const int SecureLoginMessageEvent = 2419;
