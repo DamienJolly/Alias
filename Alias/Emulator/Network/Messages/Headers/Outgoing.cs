@@ -13,6 +13,17 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int UserEffectsListMessageComposer = 340;
 		public const int UserProfileMessageComposer = 3898;
 
+			// Messenger
+			public const int MessengerInitMessageComposer = 1605;
+			public const int FriendsMessageComposer = 3130;
+			public const int UpdateFriendMessageComposer = 2800;
+			public const int FriendRequestMessageComposer = 2219;
+			public const int LoadFriendRequestsMessageComposer = 280;
+			public const int RoomInviteErrorMessageComposer = 462;
+			public const int FriendChatMessageMessageComposer = 1587;
+			public const int RoomInviteMessageComposer = 3870;
+			public const int UserSearchResultMessageComposer = 973;
+
 			// Currency
 			public const int UserCreditsMessageComposer = 3475;
 			public const int UserCurrencyMessageComposer = 2018;

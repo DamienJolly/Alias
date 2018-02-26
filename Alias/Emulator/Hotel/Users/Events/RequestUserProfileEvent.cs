@@ -10,22 +10,13 @@ namespace Alias.Emulator.Hotel.Users.Events
 		public void Handle(Session session, ClientMessage message)
 		{
 			int userId = message.Integer();
-
 			if (userId <= 0)
 			{
 				//todo: open group chat
 				return;
 			}
-
-			Habbo targetData = SessionManager.SessionById(userId).Habbo();
-
-			if (targetData == null)
-			{
-				session.Habbo().Notification("An error occured whilst finding that user's profile.");
-				return;
-			}
-
-			session.Send(new UserProfileComposer(targetData, session));
+			
+			session.Send(new UserProfileComposer(SessionManager.Habbo(userId), session));
 		}
 	}
 }

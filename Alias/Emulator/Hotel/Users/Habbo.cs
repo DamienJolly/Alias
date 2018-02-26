@@ -4,15 +4,16 @@ using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Users.Currency;
 using Alias.Emulator.Hotel.Users.Inventory;
+using Alias.Emulator.Hotel.Users.Messenger;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users
 {
 	public sealed class Habbo : IDisposable
 	{
-		public int Id = 1;
-		public string Username = "Damien";
-		public string Mail = "DamienJolly@hotmail.com";
+		public int Id = 0;
+		public string Username = "Unknown";
+		public string Mail = "Default@email.com";
 		public string Look = "";
 		public string Gender = "M";
 		public string Motto = "Hello world!";
@@ -20,8 +21,10 @@ namespace Alias.Emulator.Hotel.Users
 		public int ClubLevel = 1;
 		public int Credits = 9999;
 		public bool Disconnecting = false;
+		public bool Muted = false;
 		public NavigatorPreference NavigatorPreference;
 
+		private Messenger.Messenger messenger;
 		private Inventory.Inventory inventory;
 		private Currency.Currency currency;
 
@@ -41,6 +44,9 @@ namespace Alias.Emulator.Hotel.Users
 			CurrencyDatabase.InitCurrency(this.currency);
 			this.inventory = new Inventory.Inventory(this);
 			InventoryDatabase.InitInventory(this.inventory);
+			this.messenger = new Messenger.Messenger(this);
+			MessengerDatabase.InitMessenger(this.messenger);
+			this.Messenger().UpdateStatus(true);
 			this.NavigatorPreference = NavigatorDatabase.Preference(this.Id);
 			this.NavigatorPreference.NavigatorSearches = NavigatorDatabase.ReadSavedSearches(this.Id);
 		}
@@ -69,6 +75,11 @@ namespace Alias.Emulator.Hotel.Users
 		public Currency.Currency Currency()
 		{
 			return this.currency;
+		}
+
+		public Messenger.Messenger Messenger()
+		{
+			return this.messenger;
 		}
 
 		public void Dispose()

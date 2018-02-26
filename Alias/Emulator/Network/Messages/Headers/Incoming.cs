@@ -5,6 +5,18 @@ namespace Alias.Emulator.Network.Messages.Headers
 		// Users
 		public const int RequestUserProfileMessageEvent = 3265;
 
+			// Messenger
+			public const int RequestInitFriendsMessageEvent = 2781;
+			public const int SearchUserMessageEvent = 1210;
+			public const int FriendRequestMessageEvent = 3157;
+			public const int AcceptFriendRequestMessageEvent = 137;
+			public const int DeclineFriendRequestMessageEvent = 2890;
+			public const int RequestFriendRequestsMessageEvent = 2448;
+			public const int FriendPrivateMessageMessageEvent = 3567;
+			public const int RemoveFriendMessageEvent = 1689;
+			public const int InviteFriendsMessageEvent = 1276;
+			public const int RequestFriendsMessageEvent = 1523;
+
 			// Currency
 			public const int RequestUserCreditsMessageEvent = 273;
 

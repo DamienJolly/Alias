@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Users.Handshake;
 using DotNetty.Transport.Channels;
 
 namespace Alias.Emulator.Network.Sessions
@@ -11,6 +13,18 @@ namespace Alias.Emulator.Network.Sessions
 		public static void Initialize()
 		{
 			SessionManager.RegisteredSessions = new Dictionary<IChannelHandlerContext, Session>();
+		}
+
+		public static Habbo Habbo(int UserId)
+		{
+			if (SessionManager.IsOnline(UserId))
+			{
+				return SessionManager.SessionById(UserId).Habbo();
+			}
+			else
+			{
+				return HandshakeDatabase.BuildHabbo(UserId);
+			}
 		}
 
 		public static int OnlineUsers()
