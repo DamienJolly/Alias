@@ -3,6 +3,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 	public class Incoming
 	{
 		// Users
+		public const int RequestUserProfileMessageEvent = 3265;
 
 			// Currency
 			public const int RequestUserCreditsMessageEvent = 273;

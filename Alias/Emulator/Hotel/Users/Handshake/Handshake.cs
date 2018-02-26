@@ -4,6 +4,7 @@ using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Navigator.Composers;
 using Alias.Emulator.Hotel.Users.Composers;
 using Alias.Emulator.Hotel.Users.Handshake.Composers;
+using Alias.Emulator.Hotel.Users.Inventory.Composers;
 using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Utilities;
 
@@ -20,7 +21,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					session.AssignHabbo(HandshakeDatabase.BuildHabbo(sso));
 					if (HandshakeDatabase.IsBanned(session.Habbo().Id))
 					{
-						//todo: banned message
+						session.Habbo().Notification("Oops, it appeares you are banned!");
 						session.Disconnect();
 						return;
 					}
@@ -54,7 +55,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					session.Send(new NavigatorEventCategoriesComposer(session.Habbo().Rank));
 					session.Send(new NavigatorSettingsComposer(session.Habbo().NavigatorPreference));
 
-					//session.Send(new InventoryRefreshComposer());
+					session.Send(new InventoryRefreshComposer());
 					//session.Send(new ForumsTestComposer());
 					//session.Send(new InventoryAchievementsComposer());
 					//session.Send(new AchievementListComposer());

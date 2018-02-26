@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Messages.Headers;
@@ -24,7 +25,7 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 			message.Int(this.page.Id);
 			message.String(this.mode);
 			this.page.GetLayout().Serialize(message, this.page);
-
+			
 			if (this.page.Layout == CatalogLayout.RECENT_PURCHASES)
 			{
 				message.Int(0);
@@ -37,21 +38,21 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 				{
 					message.Int(item.Id);
 					message.String(item.Name);
-					message.Boolean(false); //rentable
+					message.Boolean(false);
 					message.Int(item.Credits);
 					message.Int(item.Points);
 					message.Int(item.PointsType);
-					message.Boolean(true); //can gift
+					message.Boolean(item.CanGift);
 
 					message.Int(item.GetItems().Count);
 					item.GetItems().ForEach(data =>
 					{
-						message.String("s"); //todo:
-						//if (data.Type.Equals("b"))
+						message.String(data.Type);
+						if (data.Type.Equals("b"))
 						{
-							//message.String(data.name);
+							message.String(data.Name);
 						}
-						//else
+						else
 						{
 							message.Int(data.Id);
 
@@ -70,7 +71,7 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 
 					message.Int(item.ClubLevel);
 					message.Boolean(item.HasOffer);
-					message.Boolean(false); //dunno
+					message.Boolean(false);
 					message.String(item.Name + ".png");
 				});
 			}

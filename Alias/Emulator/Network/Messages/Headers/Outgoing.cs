@@ -11,6 +11,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int UserAchievementScoreMessageComposer = 1968;
 		public const int UserClubMessageComposer = 954;
 		public const int UserEffectsListMessageComposer = 340;
+		public const int UserProfileMessageComposer = 3898;
 
 			// Currency
 			public const int UserCreditsMessageComposer = 3475;

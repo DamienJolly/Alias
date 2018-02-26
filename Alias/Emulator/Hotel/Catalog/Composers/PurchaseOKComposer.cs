@@ -18,27 +18,27 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 			ServerMessage message = new ServerMessage(Outgoing.PurchaseOKMessageComposer);
 			message.Int(item.Id);
 			message.String(item.Name);
-			message.Boolean(false); //rentable
+			message.Boolean(false);
 			message.Int(item.Credits);
 			message.Int(item.Points);
 			message.Int(item.PointsType);
-			message.Boolean(true); //can gift
+			message.Boolean(item.CanGift);
 
 			message.Int(item.GetItems().Count);
 			item.GetItems().ForEach(data =>
 			{
-				message.String("s"); //TODO
-									 //if (data.Type.Equals("b"))
+				message.String("s");
+				if (data.Type.Equals("b"))
 				{
-					//message.String(data.name);
+					message.String(data.Name);
 				}
-				//else
+				else
 				{
 					message.Int(data.Id);
 
 					//TODO extradata
 					message.String("");
-					message.Int(item.GetItemAmount(data.Id)); //amount
+					message.Int(item.GetItemAmount(data.Id));
 
 					message.Boolean(item.IsLimited);
 					if (item.IsLimited)
@@ -51,7 +51,7 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 
 			message.Int(item.ClubLevel);
 			message.Boolean(item.HasOffer);
-			message.Boolean(false); //dunno
+			message.Boolean(false);
 			message.String(item.Name + ".png");
 			return message;
 		}

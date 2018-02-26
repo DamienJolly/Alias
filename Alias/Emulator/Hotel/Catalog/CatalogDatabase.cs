@@ -58,6 +58,7 @@ namespace Alias.Emulator.Hotel.Catalog
 					item.LimitedStack = (int)row["limited_stack"];
 					item.LimitedSells = (int)row["limited_sells"];
 					item.ClubLevel = (int)row["club_level"];
+					item.CanGift = AliasEnvironment.ToBool((string)row["can_gift"]);
 					item.HasOffer = AliasEnvironment.ToBool((string)row["have_offer"]);
 					item.OfferId = (int)row["offer_id"];
 

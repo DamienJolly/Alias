@@ -8,7 +8,10 @@ namespace Alias.Emulator.Hotel.Landing.Events
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			//todo: leave room
+			if (session.Habbo().CurrentRoom != null)
+			{
+				session.Habbo().CurrentRoom.UserManager.OnUserLeave(session);
+			}
 		}
 	}
 }

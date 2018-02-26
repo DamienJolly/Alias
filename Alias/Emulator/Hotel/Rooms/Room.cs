@@ -72,7 +72,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			{
 				if (user.Habbo == null || user.Habbo.Session() == null)
 				{
-					//todo: notify user the room crashed
+					user.Habbo.Notification("Sorry, it appears that room has crashed!");
 				}
 
 				this.UserManager.OnUserLeave(user.Habbo.Session());

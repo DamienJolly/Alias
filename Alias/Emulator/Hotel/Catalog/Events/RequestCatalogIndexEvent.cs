@@ -8,7 +8,7 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			//todo: maybe code
+			// Not used..
 		}
 	}
 }

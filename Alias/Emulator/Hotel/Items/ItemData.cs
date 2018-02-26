@@ -42,6 +42,11 @@ namespace Alias.Emulator.Hotel.Items
 			get; set;
 		}
 
+		public string Type
+		{
+			get; set;
+		} = "s";
+
 		public int Modes
 		{
 			get; set;

@@ -60,6 +60,11 @@ namespace Alias.Emulator.Hotel.Catalog
 			get; set;
 		}
 
+		public bool CanGift
+		{
+			get; set;
+		}
+
 		public bool HasOffer
 		{
 			get; set;
