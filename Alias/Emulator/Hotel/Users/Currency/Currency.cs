@@ -31,6 +31,7 @@ namespace Alias.Emulator.Hotel.Users.Currency
 
 		public void Dispose()
 		{
+			CurrencyDatabase.SaveCurrencies(this);
 			this.currencies.Clear();
 			this.habbo = null;
 		}

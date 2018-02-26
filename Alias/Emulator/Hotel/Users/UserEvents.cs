@@ -13,6 +13,12 @@ namespace Alias.Emulator.Hotel.Users
 		public static void Register()
 		{
 			MessageHandler.Register(Incoming.RequestUserProfileMessageEvent, new RequestUserProfileEvent());
+			MessageHandler.Register(Incoming.RequestMeMenuSettingsMessageEvent, new RequestMeMenuSettingsEvent());
+			MessageHandler.Register(Incoming.UsernameMessageEvent, new UsernameEvent());
+			MessageHandler.Register(Incoming.SaveUserVolumesMessageEvent, new SaveUserVolumesEvent());
+			MessageHandler.Register(Incoming.SavePreferOldChatMessageEvent, new SavePreferOldChatEvent());
+			MessageHandler.Register(Incoming.SaveIgnoreRoomInvitesMessageEvent, new SaveIgnoreRoomInvitesEvent());
+			MessageHandler.Register(Incoming.SaveBlockCameraFollowMessageEvent, new SaveBlockCameraFollowEvent());
 
 			MessengerEvents.Register();
 			CurrencyEvents.Register();

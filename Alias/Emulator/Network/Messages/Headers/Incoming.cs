@@ -4,6 +4,12 @@ namespace Alias.Emulator.Network.Messages.Headers
 	{
 		// Users
 		public const int RequestUserProfileMessageEvent = 3265;
+		public const int RequestMeMenuSettingsMessageEvent = 2388;
+		public const int SaveUserVolumesMessageEvent = 1367;
+		public const int SavePreferOldChatMessageEvent = 1262;
+		public const int SaveIgnoreRoomInvitesMessageEvent = 1086;
+		public const int SaveBlockCameraFollowMessageEvent = 1461;
+		public const int UsernameMessageEvent = 3878;
 
 			// Messenger
 			public const int RequestInitFriendsMessageEvent = 2781;

@@ -20,10 +20,13 @@ namespace Alias.Emulator.Hotel.Users
 		public int Rank = 1;
 		public int ClubLevel = 1;
 		public int Credits = 9999;
+		public int HomeRoom = 0;
+		public int AchievementScore = 0;
 		public bool Disconnecting = false;
 		public bool Muted = false;
 		public Room CurrentRoom = null;
 		public NavigatorPreference NavigatorPreference;
+		public UserSettings Settings;
 
 		private Messenger.Messenger messenger;
 		private Inventory.Inventory inventory;
@@ -45,12 +48,16 @@ namespace Alias.Emulator.Hotel.Users
 			this.Messenger().UpdateStatus(true);
 			this.NavigatorPreference = NavigatorDatabase.Preference(this.Id);
 			this.NavigatorPreference.NavigatorSearches = NavigatorDatabase.ReadSavedSearches(this.Id);
+			this.Settings = UserDatabase.Settings(this.Id);
 		}
 
 		public void OnDisconnect()
 		{
 			this.Disconnecting = true;
-			CurrencyDatabase.SaveCurrencies(this.currency);
+			if (this.Settings != null)
+			{
+				UserDatabase.UpdateSettings(this.Settings, this.Id);
+			}
 		}
 
 		public Session Session()
@@ -85,6 +92,7 @@ namespace Alias.Emulator.Hotel.Users
 			this.Look = null;
 			this.Motto = null;
 			this.Gender = null;
+			this.Settings = null;
 			this.currency.Dispose();
 		}
 	}

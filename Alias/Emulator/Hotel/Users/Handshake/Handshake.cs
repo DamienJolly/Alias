@@ -21,22 +21,21 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					session.AssignHabbo(HandshakeDatabase.BuildHabbo(sso));
 					if (HandshakeDatabase.IsBanned(session.Habbo().Id))
 					{
-						session.Habbo().Notification("Oops, it appeares you are banned!");
 						session.Disconnect();
 						return;
 					}
 
 					session.Habbo().Init();
 					session.Send(new SecureLoginOKComposer());
-					session.Send(new UserHomeRoomComposer(0)); //todo: homeroom id
+					session.Send(new UserHomeRoomComposer(session.Habbo().HomeRoom));
 					session.Send(new UserEffectsListComposer()); //todo:
 					session.Send(new UserClothesComposer()); //todo:
-					session.Send(new NewUserIdentityComposer()); //todo:
+					session.Send(new NewUserIdentityComposer());
 					session.Send(new UserPermissionsComposer(session.Habbo().Rank));
 					session.Send(new SessionRightsComposer());
 					session.Send(new SomeConnectionComposer());
 					session.Send(new DebugConsoleComposer());
-					session.Send(new UserAchievementScoreComposer()); //todo:
+					session.Send(new UserAchievementScoreComposer(session.Habbo().AchievementScore));
 					session.Send(new UnknownComposer4());
 					session.Send(new UnknownComposer5());
 					//session.Send(new BuildersClubExpiredComposer()); //todo:

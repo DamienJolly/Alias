@@ -192,7 +192,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			
 			friends.ForEach(id =>
 			{
-				if (this.Habbo().Messenger().IsFriend(id) && SessionManager.IsOnline(id))
+				if (this.Habbo().Messenger().IsFriend(id) && SessionManager.IsOnline(id) && !this.habbo.Settings.IgnoreInvites)
 				{
 					SessionManager.SessionById(id).Send(new RoomInviteComposer(this.Habbo().Id, message), false);
 				}

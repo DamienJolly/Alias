@@ -12,6 +12,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int UserClubMessageComposer = 954;
 		public const int UserEffectsListMessageComposer = 340;
 		public const int UserProfileMessageComposer = 3898;
+		public const int MeMenuSettingsMessageComposer = 513;
 
 			// Messenger
 			public const int MessengerInitMessageComposer = 1605;

@@ -6,10 +6,17 @@ namespace Alias.Emulator.Hotel.Users.Composers
 {
 	public class UserAchievementScoreComposer : MessageComposer
 	{
+		private int achievementScore;
+
+		public UserAchievementScoreComposer(int achievementScore)
+		{
+			this.achievementScore = achievementScore;
+		}
+
 		public ServerMessage Compose()
 		{
 			ServerMessage result = new ServerMessage(Outgoing.UserAchievementScoreMessageComposer);
-			result.Int(0);
+			result.Int(this.achievementScore);
 			return result;
 		}
 	}

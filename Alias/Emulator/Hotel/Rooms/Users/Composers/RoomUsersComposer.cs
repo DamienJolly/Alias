@@ -41,7 +41,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 				result.Int(0); //groupwhat
 				result.String(""); //Groupname?
 				result.String("");
-				result.Int(0); //achievement points
+				result.Int(user.Habbo.AchievementScore); //achievement points
 				result.Boolean(false); //idk
 
 			});
