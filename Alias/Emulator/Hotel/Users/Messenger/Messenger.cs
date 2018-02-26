@@ -94,13 +94,15 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (!this.IsFriend(UserId))
 			{
-				MessengerFriend friend = new MessengerFriend();
-				Habbo h                = SessionManager.Habbo(UserId);
-				friend.Id              = h.Id;
-				friend.Username        = h.Username;
-				friend.Look            = h.Look;
-				friend.Motto           = h.Motto;
-				friend.FriendWith      = this.Habbo().Id;
+				Habbo h = SessionManager.Habbo(UserId);
+				MessengerFriend friend = new MessengerFriend()
+				{
+					Id         = h.Id,
+					Username   = h.Username,
+					Look       = h.Look,
+					Motto      = h.Motto,
+					FriendWith = this.Habbo().Id
+				};
 				this.FriendList().Add(friend);
 				this.Habbo().Session().Send(new UpdateFriendComposer(friend));
 			}
@@ -160,7 +162,13 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 				return;
 			}
 
-			if (this.IsFriend(toUser) && SessionManager.IsOnline(toUser))
+			if (!this.IsFriend(toUser))
+			{
+				this.Habbo().Session().Send(new RoomInviteErrorComposer(RoomInviteErrorComposer.NO_FRIENDS, toUser));
+				return;
+			}
+
+			if (SessionManager.IsOnline(toUser))
 			{
 				SessionManager.SessionById(toUser).Habbo().Messenger().OnMessage(this.Habbo().Id, message);
 
@@ -169,13 +177,9 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 					this.Habbo().Session().Send(new RoomInviteErrorComposer(RoomInviteErrorComposer.FRIEND_MUTED, toUser));
 				}
 			}
-			else if (this.IsFriend(toUser) && !SessionManager.IsOnline(toUser))
+			else
 			{
 				//todo: Offline messages
-			}
-			else if (!this.IsFriend(toUser))
-			{
-				this.Habbo().Session().Send(new RoomInviteErrorComposer(RoomInviteErrorComposer.NO_FRIENDS, toUser));
 			}
 		}
 

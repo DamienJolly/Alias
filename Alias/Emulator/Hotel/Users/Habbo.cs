@@ -22,16 +22,12 @@ namespace Alias.Emulator.Hotel.Users
 		public int Credits = 9999;
 		public bool Disconnecting = false;
 		public bool Muted = false;
+		public Room CurrentRoom = null;
 		public NavigatorPreference NavigatorPreference;
 
 		private Messenger.Messenger messenger;
 		private Inventory.Inventory inventory;
 		private Currency.Currency currency;
-
-		public Room CurrentRoom
-		{
-			get; set;
-		} = null;
 
 		public Habbo()
 		{

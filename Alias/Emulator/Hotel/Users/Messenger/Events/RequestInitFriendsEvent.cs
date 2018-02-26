@@ -11,6 +11,8 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 		{
 			session.Send(new MessengerInitComposer());
 			session.Send(new FriendsComposer(session.Habbo().Messenger().FriendList()));
+
+			//todo: Offline messages
 		}
 	}
 }

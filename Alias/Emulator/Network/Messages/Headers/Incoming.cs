@@ -16,6 +16,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RemoveFriendMessageEvent = 1689;
 			public const int InviteFriendsMessageEvent = 1276;
 			public const int RequestFriendsMessageEvent = 1523;
+			public const int FindNewFriendsMessageEvent = 516;
 
 			// Currency
 			public const int RequestUserCreditsMessageEvent = 273;

@@ -23,6 +23,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int FriendChatMessageMessageComposer = 1587;
 			public const int RoomInviteMessageComposer = 3870;
 			public const int UserSearchResultMessageComposer = 973;
+			public const int FriendFindingRoomMessageComposer = 1210;
 
 			// Currency
 			public const int UserCreditsMessageComposer = 3475;
@@ -51,6 +52,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int RoomScoreMessageComposer = 482;
 		public const int RoomEntryInfoMessageComposer = 749;
 		public const int RoomFloorThicknessUpdatedMessageComposer = 3786;
+		public const int ForwardToRoomMessageComposer = 160;
 
 			// Models
 			public const int RoomHeightMapMessageComposer = 1301;

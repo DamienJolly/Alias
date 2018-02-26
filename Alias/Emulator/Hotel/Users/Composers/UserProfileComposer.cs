@@ -25,10 +25,10 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			result.String(habbo.Motto);
 			result.String("01.01.1970 00:00:00"); //Account created
 			result.Int(0); //Achievement score
-			result.Int(0); //Friends count
-			result.Boolean(true); //Friends
-			result.Boolean(false); //Friend request sent
-			result.Boolean(true); //Online
+			result.Int(SessionManager.IsOnline(habbo.Id) ? habbo.Messenger().FriendList().Count : 0); //todo: get friends amount for offline users
+			result.Boolean(viewer.Habbo().Messenger().IsFriend(habbo.Id));
+			result.Boolean(viewer.Habbo().Messenger().RequestExists(habbo.Id));
+			result.Boolean(SessionManager.IsOnline(habbo.Id));
 
 			result.Int(0); // Count - groups
 			{
