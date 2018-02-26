@@ -134,6 +134,16 @@ namespace Alias.Emulator.Database
 			return result;
 		}
 
+		public long InsertQuery(string Query, int timeout = 30)
+		{
+			this.Command.CommandTimeout = timeout;
+			this.Command.CommandText = Query;
+			this.Command.ExecuteScalar();
+			long lastId = this.Command.LastInsertedId;
+			this.Command.CommandText = null;
+			return lastId;
+		}
+
 		public void ClearParameters()
 		{
 			this.Command.Parameters.Clear();

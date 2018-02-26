@@ -2,6 +2,7 @@ using System;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
+using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users
@@ -15,8 +16,12 @@ namespace Alias.Emulator.Hotel.Users
 		public string Gender = "M";
 		public string Motto = "Hello world!";
 		public int Rank = 1;
+		public int ClubLevel = 1;
+		public int Credits = 9999;
+		public int Points = 9999;
 		public bool Disconnecting = false;
 		public NavigatorPreference NavigatorPreference;
+		private Inventory.Inventory inventory;
 
 		public Room CurrentRoom
 		{
@@ -30,6 +35,8 @@ namespace Alias.Emulator.Hotel.Users
 
 		public void Init()
 		{
+			this.inventory = new Inventory.Inventory(this);
+			InventoryDatabase.InitInventory(this.inventory);
 			this.NavigatorPreference = NavigatorDatabase.Preference(this.Id);
 			this.NavigatorPreference.NavigatorSearches = NavigatorDatabase.ReadSavedSearches(this.Id);
 		}
@@ -47,6 +54,11 @@ namespace Alias.Emulator.Hotel.Users
 		public void Notification(string text)
 		{
 			this.Session().Send(new GenericAlertComposer(text, Session()));
+		}
+
+		public Inventory.Inventory Inventory()
+		{
+			return this.inventory;
 		}
 
 		public void Dispose()

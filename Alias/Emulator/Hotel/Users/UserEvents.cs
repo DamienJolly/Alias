@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Alias.Emulator.Hotel.Users.Handshake;
+using Alias.Emulator.Hotel.Users.Inventory;
 
 namespace Alias.Emulator.Hotel.Users
 {
@@ -9,6 +7,7 @@ namespace Alias.Emulator.Hotel.Users
 	{
 		public static void Register()
 		{
+			InventoryEvents.Register();
 			HandshakeEvents.Register();
 		}
 	}

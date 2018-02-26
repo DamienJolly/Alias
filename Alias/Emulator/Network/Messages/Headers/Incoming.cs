@@ -11,6 +11,9 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RequestUserDataMessageEvent = 357;
 			public const int VersionCheckMessageEvent = -1;
 
+			// Inventory
+			public const int RequestInventoryItemsMessageEvent = 3150;
+
 		// Rooms
 		public const int RequestRoomDataMessageEvent = 2230;
 		public const int RequestRoomLoadMessageEvent = 2312;
@@ -43,5 +46,6 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int RequestCatalogModeMessageEvent = 1195;
 		public const int RequestCatalogPageMessageEvent = 412;
 		public const int RequestDiscountMessageEvent = 223;
+		public const int CatalogBuyItemMessageEvent = 3492;
 	}
 }

@@ -12,6 +12,7 @@ namespace Alias.Emulator.Hotel.Catalog
 			MessageHandler.Register(Incoming.RequestCatalogModeMessageEvent, new RequestCatalogModeEvent());
 			MessageHandler.Register(Incoming.RequestCatalogPageMessageEvent, new RequestCatalogPageEvent());
 			MessageHandler.Register(Incoming.RequestDiscountMessageEvent, new RequestDiscountEvent());
+			MessageHandler.Register(Incoming.CatalogBuyItemMessageEvent, new CatalogBuyItemEvent());
 		}
 	}
 }

@@ -19,6 +19,12 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int NewUserIdentityMessageComposer = 3738;
 			public const int SomeConnectionMessageComposer = 3928;
 
+			// Inventory
+			public const int InventoryItemsMessageComposer = 994;
+			public const int AddHabboItemsMessageComposer = 2103;
+			public const int InventoryRefreshMessageComposer = 3151;
+			public const int RemoveHabboItemMessageComposer = 159;
+
 		// Rooms
 		public const int RoomDataMessageComposer = 687;
 		public const int RoomOpenMessageComposer = 758;
@@ -64,6 +70,10 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int CatalogPagesListMessageComposer = 1032;
 		public const int CatalogPageMessageComposer = 804;
 		public const int DiscountMessageComposer = 2347;
+		public const int AlertPurchaseFailedMessageComposer = 1404;
+		public const int AlertPurchaseUnavailableMessageComposer = 3770;
+		public const int AlertLimitedSoldOutMessageComposer = 377;
+		public const int PurchaseOKMessageComposer = 869;
 
 		// Misc
 		public const int GenericAlertMessageComposer = 3801;
