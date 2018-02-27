@@ -70,5 +70,8 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int RequestCatalogPageMessageEvent = 412;
 		public const int RequestDiscountMessageEvent = 223;
 		public const int CatalogBuyItemMessageEvent = 3492;
+
+		// Achievements
+		public const int RequestAchievementsMessageEvent = 219;
 	}
 }

@@ -2,6 +2,7 @@ using System;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
+using Alias.Emulator.Hotel.Users.Achievements;
 using Alias.Emulator.Hotel.Users.Currency;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Users.Messenger;
@@ -31,6 +32,7 @@ namespace Alias.Emulator.Hotel.Users
 		private Messenger.Messenger messenger;
 		private Inventory.Inventory inventory;
 		private Currency.Currency currency;
+		private Achievements.Achievement achievements;
 
 		public Habbo()
 		{
@@ -45,6 +47,8 @@ namespace Alias.Emulator.Hotel.Users
 			InventoryDatabase.InitInventory(this.inventory);
 			this.messenger = new Messenger.Messenger(this);
 			MessengerDatabase.InitMessenger(this.messenger);
+			this.achievements = new Achievements.Achievement(this);
+			AchievementDatabase.InitAchievements(this.achievements);
 			this.Messenger().UpdateStatus(true);
 			this.NavigatorPreference = NavigatorDatabase.Preference(this.Id);
 			this.NavigatorPreference.NavigatorSearches = NavigatorDatabase.ReadSavedSearches(this.Id);
@@ -57,6 +61,14 @@ namespace Alias.Emulator.Hotel.Users
 			if (this.Settings != null)
 			{
 				UserDatabase.UpdateSettings(this.Settings, this.Id);
+			}
+			if (this.achievements != null)
+			{
+				AchievementDatabase.SaveAchievements(this.achievements);
+			}
+			if (this.currency != null)
+			{
+				CurrencyDatabase.SaveCurrencies(this.currency);
 			}
 		}
 
@@ -85,6 +97,11 @@ namespace Alias.Emulator.Hotel.Users
 			return this.messenger;
 		}
 
+		public Achievements.Achievement Achievements()
+		{
+			return this.achievements;
+		}
+
 		public void Dispose()
 		{
 			this.Username = null;
@@ -94,6 +111,7 @@ namespace Alias.Emulator.Hotel.Users
 			this.Gender = null;
 			this.Settings = null;
 			this.currency.Dispose();
+			this.achievements.Dispose();
 		}
 	}
 }

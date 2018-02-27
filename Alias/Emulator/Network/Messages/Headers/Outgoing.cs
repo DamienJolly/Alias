@@ -14,6 +14,10 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int UserProfileMessageComposer = 3898;
 		public const int MeMenuSettingsMessageComposer = 513;
 
+			//Achievements
+			public const int AchievementUnlockedMessageComposer = 806;
+			public const int AchievementProgressMessageComposer = 2107;
+
 			// Messenger
 			public const int MessengerInitMessageComposer = 1605;
 			public const int FriendsMessageComposer = 3130;
@@ -66,7 +70,8 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RoomUserTalkMessageComposer = 1446;
 			public const int RoomUserShoutMessageComposer = 1036;
 			public const int RoomUserWhisperMessageComposer = 2704;
-		
+			public const int RoomUserDataMessageComposer = 3920;
+
 		// Landing
 		public const int HotelViewDataMessageComposer = 1745;
 		public const int HallOfFameMessageComposer = 3005;
@@ -94,6 +99,9 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int AlertPurchaseUnavailableMessageComposer = 3770;
 		public const int AlertLimitedSoldOutMessageComposer = 377;
 		public const int PurchaseOKMessageComposer = 869;
+
+		// Achievements
+		public const int AchievementListMessageComposer = 305;
 
 		// Misc
 		public const int GenericAlertMessageComposer = 3801;

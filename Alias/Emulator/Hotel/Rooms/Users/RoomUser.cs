@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using Alias.Emulator.Hotel.Achievements;
 using Alias.Emulator.Hotel.Rooms.Users.Chat;
 using Alias.Emulator.Hotel.Rooms.Users.Chat.Commands;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
@@ -72,6 +73,9 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			{
 				return;
 			}
+
+			// Test
+			AchievementManager.ProgressAchievement(this.Habbo, AchievementManager.GetAchievement("AvatarLooks"));
 
 			RoomUserChatComposer packet = new RoomUserChatComposer(this.VirtualId, text, Expression(text), colour, chatType);
 
