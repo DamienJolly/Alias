@@ -10,6 +10,8 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int SaveIgnoreRoomInvitesMessageEvent = 1086;
 		public const int SaveBlockCameraFollowMessageEvent = 1461;
 		public const int UsernameMessageEvent = 3878;
+		public const int UserWearBadgeMessageEvent = 644;
+		public const int RequestWearingBadgesMessageEvent = 2091;
 
 			// Messenger
 			public const int RequestInitFriendsMessageEvent = 2781;
@@ -36,6 +38,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 
 			// Inventory
 			public const int RequestInventoryItemsMessageEvent = 3150;
+			public const int RequestInventoryBadgesMessageEvent = 2769;
 
 		// Rooms
 		public const int RequestRoomDataMessageEvent = 2230;

@@ -3,6 +3,7 @@ using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Users.Achievements;
+using Alias.Emulator.Hotel.Users.Badges;
 using Alias.Emulator.Hotel.Users.Currency;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Users.Messenger;
@@ -33,6 +34,7 @@ namespace Alias.Emulator.Hotel.Users
 		private Inventory.Inventory inventory;
 		private Currency.Currency currency;
 		private Achievements.Achievement achievements;
+		private BadgeComponent badges;
 
 		public Habbo()
 		{
@@ -43,6 +45,7 @@ namespace Alias.Emulator.Hotel.Users
 		{
 			this.currency = new Currency.Currency(this);
 			CurrencyDatabase.InitCurrency(this.currency);
+			this.badges = new BadgeComponent(this);
 			this.inventory = new Inventory.Inventory(this);
 			InventoryDatabase.InitInventory(this.inventory);
 			this.messenger = new Messenger.Messenger(this);
@@ -80,6 +83,11 @@ namespace Alias.Emulator.Hotel.Users
 		public void Notification(string text)
 		{
 			this.Session().Send(new GenericAlertComposer(text, Session()));
+		}
+
+		public BadgeComponent GetBadgeComponent()
+		{
+			return this.badges;
 		}
 
 		public Inventory.Inventory Inventory()

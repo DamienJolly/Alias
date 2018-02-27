@@ -13,6 +13,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int UserEffectsListMessageComposer = 340;
 		public const int UserProfileMessageComposer = 3898;
 		public const int MeMenuSettingsMessageComposer = 513;
+		public const int UserBadgesMessageComposer = 1087;
 
 			//Achievements
 			public const int AchievementUnlockedMessageComposer = 806;
@@ -47,6 +48,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int AddHabboItemsMessageComposer = 2103;
 			public const int InventoryRefreshMessageComposer = 3151;
 			public const int RemoveHabboItemMessageComposer = 159;
+			public const int InventoryBadgesMessageComposer = 717;
 
 		// Rooms
 		public const int RoomDataMessageComposer = 687;

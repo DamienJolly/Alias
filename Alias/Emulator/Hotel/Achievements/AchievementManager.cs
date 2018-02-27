@@ -5,6 +5,8 @@ using Alias.Emulator.Hotel.Users.Achievements;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
 using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Hotel.Achievements.Composers;
+using Alias.Emulator.Hotel.Users.Badges;
+using Alias.Emulator.Hotel.Users.Composers;
 
 namespace Alias.Emulator.Hotel.Achievements
 {
@@ -91,7 +93,28 @@ namespace Alias.Emulator.Hotel.Achievements
 				habbo.Session().Send(new AchievementProgressComposer(habbo, achievement));
 				habbo.Session().Send(new AchievementUnlockedComposer(habbo, achievement));
 
-				//todo: badge shit
+				BadgeDefinition badge = habbo.GetBadgeComponent().GetBadge("ACH_" + achievement.Name + oldLevel.Level);
+				if (badge == null)
+				{
+					habbo.GetBadgeComponent().GiveBadge("ACH_" + achievement.Name + newLevel.Level);
+				}
+				else
+				{
+					badge.Code = "ACH_" + achievement.Name + newLevel.Level;
+					habbo.GetBadgeComponent().UpdateBadge(badge, "ACH_" + achievement.Name + oldLevel.Level);
+				}
+
+				if (badge.Slot > 0)
+				{
+					if (habbo.CurrentRoom != null)
+					{
+						habbo.CurrentRoom.UserManager.Send(new UserBadgesComposer(habbo.GetBadgeComponent().GetWearingBadges(), habbo.Id));
+					}
+					else
+					{
+						habbo.Session().Send(new UserBadgesComposer(habbo.GetBadgeComponent().GetWearingBadges(), habbo.Id));
+					}
+				}
 
 				habbo.AchievementScore += newLevel.RewardPoints;
 

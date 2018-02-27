@@ -19,6 +19,8 @@ namespace Alias.Emulator.Hotel.Users
 			MessageHandler.Register(Incoming.SavePreferOldChatMessageEvent, new SavePreferOldChatEvent());
 			MessageHandler.Register(Incoming.SaveIgnoreRoomInvitesMessageEvent, new SaveIgnoreRoomInvitesEvent());
 			MessageHandler.Register(Incoming.SaveBlockCameraFollowMessageEvent, new SaveBlockCameraFollowEvent());
+			MessageHandler.Register(Incoming.UserWearBadgeMessageEvent, new UserWearBadgeEvent());
+			MessageHandler.Register(Incoming.RequestWearingBadgesMessageEvent, new RequestWearingBadgesEvent());
 
 			MessengerEvents.Register();
 			CurrencyEvents.Register();
