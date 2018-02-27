@@ -102,7 +102,7 @@ namespace Alias.Emulator.Hotel.Rooms
 				Room result = new Room();
 				result.Id = roomId;
 				result.RoomData = RoomManager.RoomData(roomId);
-				result.DynamicModel = new DynamicRoomModel(result);
+				result.GameMap = new GameMap(result);
 				result.UserManager = new RoomUserManager(result);
 				result.Initialize();
 				RoomManager.LoadedRooms.Add(result);

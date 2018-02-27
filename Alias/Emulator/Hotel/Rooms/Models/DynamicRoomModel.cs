@@ -51,11 +51,6 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 						tile.State = TileState.CLOSED;
 						tile.Z = 0.0;
 					}
-
-					if (this.BaseModel.Door.X == x && this.BaseModel.Door.Y == y)
-					{
-						tile.State = TileState.DOOR;
-					}
 					this.Tiles[x, y] = tile;
 				}
 			}

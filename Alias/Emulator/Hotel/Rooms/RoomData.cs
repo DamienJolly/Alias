@@ -37,7 +37,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			get
 			{
-				return 0;
+				return 1;
 			}
 		}
 

@@ -79,7 +79,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int HallOfFameMessageComposer = 3005;
 		public const int NewsListMessageComposer = 286;
 		public const int BonusRareMessageComposer = 1533;
-		public const int HotelViewMessageComposer = 1745;
+		public const int HotelViewMessageComposer = 122;
 
 		// Navigator
 		public const int RoomCategoriesMessageComposer = 1562;

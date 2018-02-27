@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
 using Alias.Emulator.Network.Messages;
@@ -52,9 +53,12 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 					}
 				};
 				//todo: get Door height.
+				this.Send(new RoomUsersComposer(user), user);
+				this.Send(new RoomUserStatusComposer(user), user);
 				this.Users.Add(user);
-				this.Send(new RoomUsersComposer(user));
-				this.Send(new RoomUserStatusComposer(user));
+				this.Room.GameMap.AddUserToMap(user, new Point(user.Position.X, user.Position.Y));
+				session.Send(new RoomUsersComposer(this.Users));
+				session.Send(new RoomUserStatusComposer(this.Users));
 			}
 			else
 			{
@@ -68,6 +72,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			{
 				RoomUser user = this.UserBySession(session);
 				this.Users.Remove(user);
+				this.Room.GameMap.RemoveUserFromMap(user, new Point(user.Position.X, user.Position.Y));
 				this.Send(new RoomUserRemoveComposer(user.VirtualId));
 				user.Habbo.CurrentRoom = null;
 				user.Dispose();

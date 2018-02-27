@@ -35,7 +35,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		}
 
-		public DynamicRoomModel DynamicModel
+		public GameMap GameMap
 		{
 			get; set;
 		}

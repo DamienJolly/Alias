@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Pathfinding
@@ -42,12 +41,11 @@ namespace Alias.Emulator.Hotel.Rooms.Pathfinding
 		public LinkedList<Point> Path(UserPosition position, UserPosition target)
 		{
 			LinkedList<Node> openNodes = new LinkedList<Node>();
-			for (int x = 0; x < this.Room.DynamicModel.SizeX; x++)
+			for (int x = 0; x < this.Room.GameMap.DynamicModel.SizeX; x++)
 			{
-				for (int y = 0; y < this.Room.DynamicModel.SizeY; y++)
+				for (int y = 0; y < this.Room.GameMap.DynamicModel.SizeY; y++)
 				{
-					//todo: Add DynamicModel check for valid tile
-					if (this.Room.DynamicModel.Tiles[x, y].State == TileState.OPEN || this.Room.DynamicModel.Tiles[x, y].State == TileState.DOOR)
+					if (this.Room.GameMap.IsValidPosition(x, y) || (position.X == x && position.Y == y))
 					{
 						openNodes.AddLast(new Node(x, y));
 					}
