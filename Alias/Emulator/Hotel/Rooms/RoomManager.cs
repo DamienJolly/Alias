@@ -91,6 +91,11 @@ namespace Alias.Emulator.Hotel.Rooms
 			return roomData;
 		}
 
+		public static void DoRoomCycle()
+		{
+			RoomManager.LoadedRooms.ForEach(room => room.Cycle());
+		}
+
 		public static List<Room> ReadLoadedRooms()
 		{
 			return RoomManager.LoadedRooms;

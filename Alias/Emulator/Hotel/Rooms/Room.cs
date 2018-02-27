@@ -1,8 +1,10 @@
-using Alias.Emulator.Hotel.Rooms.Cycle;
 using Alias.Emulator.Hotel.Rooms.Items;
+using Alias.Emulator.Hotel.Rooms.Items.Tasks;
 using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.Pathfinding;
+using Alias.Emulator.Hotel.Rooms.Tasks;
 using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Users.Tasks;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
@@ -36,11 +38,6 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
-		public RoomCycleTask Cycle
-		{
-			get; set;
-		}
-
 		public DynamicRoomModel DynamicModel
 		{
 			get; set;
@@ -63,11 +60,26 @@ namespace Alias.Emulator.Hotel.Rooms
 
 		}
 
+		public void Cycle()
+		{
+			if (this.Disposing)
+			{
+				return;
+			}
+
+			RoomTask.Start(this);
+			if (this.UserManager != null)
+			{
+				WalkTask.Start(this.UserManager.Users);
+			}
+			if (this.ItemManager != null)
+			{
+				ItemTask.Start(this.ItemManager.Items);
+			}
+		}
+
 		public void Initialize()
 		{
-			this.Cycle = new RoomCycleTask();
-			this.Cycle.Room = this;
-			this.Cycle.StartCycle();
 			this.PathFinder = new PathFinder(this);
 		}
 
@@ -89,7 +101,6 @@ namespace Alias.Emulator.Hotel.Rooms
 		public void Dispose()
 		{
 			this.Disposing = true;
-			this.Cycle.StopCycle();
 			RoomItemDatabase.SaveFurniture(this.ItemManager.Items);
 			RoomDatabase.SaveRoom(this.RoomData);
 			RoomManager.RemoveLoadedRoom(this);

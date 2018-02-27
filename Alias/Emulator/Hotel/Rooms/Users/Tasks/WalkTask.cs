@@ -1,13 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Drawing;
-using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Hotel.Rooms.Users.Composers;
+using System.Linq;
 using Alias.Emulator.Hotel.Landing.Composers;
-using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.Items;
+using Alias.Emulator.Hotel.Rooms.Users.Composers;
 
-namespace Alias.Emulator.Hotel.Rooms.Cycle.Tasks
+namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 {
 	public class WalkTask
 	{

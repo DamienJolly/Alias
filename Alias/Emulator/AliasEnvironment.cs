@@ -10,6 +10,7 @@ using Alias.Emulator.Hotel.Rooms.Users.Chat.Commands;
 using Alias.Emulator.Network;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Sessions;
+using Alias.Emulator.Tasks;
 using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator
@@ -18,6 +19,7 @@ namespace Alias.Emulator
     {
 		private static string version = "v0.1";
 		public static DateTime ServerStarted;
+		public static TaskManager tasks;
 
 		public static void Initialize()
 		{
@@ -53,6 +55,9 @@ namespace Alias.Emulator
 			SessionManager.Initialize();
 			CommandHandler.Initialize();
 			SocketServer.Initialize();
+
+			tasks = new TaskManager();
+
 			while (true) Logging.ReadLine();
 		}
 

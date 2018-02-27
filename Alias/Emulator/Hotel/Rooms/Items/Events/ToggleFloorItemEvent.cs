@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Hotel.Users.Inventory;
-using Alias.Emulator.Hotel.Users.Inventory.Composers;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -27,7 +23,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			//todo: Item interaction
+			item.GetInteractor().OnUserInteract(session, room, item, state);
 		}
 	}
 }

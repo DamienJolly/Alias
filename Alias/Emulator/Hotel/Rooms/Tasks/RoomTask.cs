@@ -1,17 +1,12 @@
 using System;
 using Alias.Emulator.Utilities;
 
-namespace Alias.Emulator.Hotel.Rooms.Cycle.Tasks
+namespace Alias.Emulator.Hotel.Rooms.Tasks
 {
 	public class RoomTask
 	{
 		public static void Start(Room room)
 		{
-			if (room.Disposing)
-			{
-				return;
-			}
-
 			try
 			{
 				if (room.UserManager.UserCount == 0)

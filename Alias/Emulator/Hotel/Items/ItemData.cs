@@ -1,3 +1,5 @@
+using Alias.Emulator.Hotel.Rooms.Items;
+
 namespace Alias.Emulator.Hotel.Items
 {
 	public class ItemData
@@ -38,6 +40,11 @@ namespace Alias.Emulator.Hotel.Items
 		}
 
 		public bool CanWalk
+		{
+			get; set;
+		}
+
+		public ItemInteraction Interaction
 		{
 			get; set;
 		}

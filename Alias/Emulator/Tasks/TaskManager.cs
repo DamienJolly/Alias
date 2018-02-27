@@ -1,18 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
-using Alias.Emulator.Hotel.Rooms.Cycle.Tasks;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms;
 
-namespace Alias.Emulator.Hotel.Rooms.Cycle
+namespace Alias.Emulator.Tasks
 {
-	public sealed class RoomCycleTask : IDisposable
+	public sealed class TaskManager : IDisposable
 	{
-		public Room Room
-		{
-			get; set;
-		}
-
 		private bool IsAlive
 		{
 			get; set;
@@ -22,13 +15,17 @@ namespace Alias.Emulator.Hotel.Rooms.Cycle
 		{
 			get; set;
 		}
-		
+
 		private Timer sheduler;
+
+		public TaskManager()
+		{
+			this.StartCycle();
+		}
 
 		public void OnCycle(object sender)
 		{
-			WalkTask.Start(new List<RoomUser>(this.Room.UserManager.Users));
-			RoomTask.Start(this.Room);
+			RoomManager.DoRoomCycle();
 		}
 
 		public void StartCycle()

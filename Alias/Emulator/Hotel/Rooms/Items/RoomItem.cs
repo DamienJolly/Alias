@@ -1,4 +1,5 @@
 using Alias.Emulator.Hotel.Items;
+using Alias.Emulator.Hotel.Rooms.Items.Interactions;
 using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Items
@@ -40,6 +41,14 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			get
 			{
 				return (string)UserDatabase.Variable(this.Owner, "Username");
+			}
+		}
+
+		public IItemInteractor GetInteractor()
+		{
+			switch (this.ItemData.Interaction)
+			{
+				case ItemInteraction.DEFAULT: default: return new InteractionDefault();
 			}
 		}
 	}

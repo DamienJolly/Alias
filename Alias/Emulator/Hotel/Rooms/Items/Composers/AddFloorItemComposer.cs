@@ -24,8 +24,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Composers
 			result.String(item.Position.Z.ToString());
 			result.String(item.ItemData.Height.ToString());
 			result.Int(1);
-			result.Int(0); //(item.LimitedNo > 0 ? 256 : 0);
-			result.String(item.Mode.ToString());
+			item.GetInteractor().Serialize(result, item);
 			//if (item.LimitedNo > 0)
 			{
 				//result.Int(item.LimitedNo);
