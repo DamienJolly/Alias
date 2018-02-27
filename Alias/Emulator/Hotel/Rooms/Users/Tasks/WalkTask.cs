@@ -52,7 +52,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 							usr.Path = usr.Room.PathFinder.Path(usr.Position, usr.TargetPosition);
 						}
 					}
-					else if (usr.Path != null && usr.Path.Count == 0)
+					else
 					{
 						if (usr.TargetPosition.X == usr.Position.X && usr.TargetPosition.Y == usr.Position.Y)
 						{
@@ -83,11 +83,12 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 								usr.Position.Rotation = chair.Position.Rotation;
 								usr.Position.HeadRotation = usr.Position.Rotation;
 								usr.Position.Z = usr.Room.DynamicModel.GetTileHeight(usr.Position.X, usr.Position.Y, chair);
+								usr.isSitting = false;
 								update = true;
 							}
 							else
 							{
-								if (usr.Actions.Has("sit"))
+								if (!usr.isSitting && usr.Actions.Has("sit"))
 								{
 									usr.Actions.Remove("sit");
 									usr.Position.Z = usr.Room.DynamicModel.GetTileHeight(usr.Position.X, usr.Position.Y);

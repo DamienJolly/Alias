@@ -21,7 +21,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 					messengerFriend.Username = habbo.Username;
 					messengerFriend.Look = habbo.Look;
 					messengerFriend.Motto = habbo.Motto;
-					messengerFriend.FriendWith = messenger.Habbo().Id;
+					messengerFriend.InRoom = habbo.CurrentRoom != null;
 					messenger.FriendList().Add(messengerFriend);
 					row.Delete();
 				}

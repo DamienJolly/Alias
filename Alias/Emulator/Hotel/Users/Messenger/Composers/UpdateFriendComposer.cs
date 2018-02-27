@@ -39,7 +39,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 				message.String(this.Friend.Username);
 				message.Int(1); //Gender???
 				message.Boolean(SessionManager.IsOnline(this.Friend.Id));
-				message.Boolean(false); //InRoom
+				message.Boolean(this.Friend.InRoom); //InRoom
 				message.String(this.Friend.Look);
 				message.Int(0); //category id
 				message.String(this.Friend.Motto);

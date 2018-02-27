@@ -20,7 +20,7 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 		{
 			ServerMessage result = new ServerMessage(Outgoing.RoomEntryInfoMessageComposer);
 			result.Int(this.room.Id);
-			result.Boolean(this.room.RoomRights.HasRights(this.habbo));
+			result.Boolean(this.room.RoomRights.HasRights(this.habbo.Id));
 			return result;
 		}
 	}

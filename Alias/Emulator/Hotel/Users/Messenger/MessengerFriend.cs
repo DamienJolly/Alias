@@ -23,17 +23,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			get; set;
 		}
 
-		public bool AppearsOffline
-		{
-			get; set;
-		}
-
-		public bool HideInRoom
-		{
-			get; set;
-		}
-
-		public int FriendWith
+		public bool InRoom
 		{
 			get; set;
 		}

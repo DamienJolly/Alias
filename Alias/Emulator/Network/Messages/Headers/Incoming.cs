@@ -12,6 +12,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int UsernameMessageEvent = 3878;
 		public const int UserWearBadgeMessageEvent = 644;
 		public const int RequestWearingBadgesMessageEvent = 2091;
+		public const int UserSaveLookMessageEvent = 2730;
 
 			// Messenger
 			public const int RequestInitFriendsMessageEvent = 2781;
@@ -52,6 +53,13 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RoomUserTalkMessageEvent = 1314;
 			public const int RoomUserShoutMessageEvent = 2085;
 			public const int RoomUserWhisperMessageEvent = 1543;
+			public const int RoomUserActionMessageEvent = 2456;
+			public const int RoomUserSitMessageEvent = 2235;
+			public const int RoomUserSignMessageEvent = 1975;
+			public const int RoomUserLookAtPointMessageEvent = 3301;
+			public const int RoomUserDanceMessageEvent = 2080;
+			public const int RoomUserGiveRightsMessageEvent = 808;
+			public const int RoomUserRemoveRightsMessageEvent = 2064;
 
 			// Items
 			public const int RotateMoveItemMessageEvent = 248;

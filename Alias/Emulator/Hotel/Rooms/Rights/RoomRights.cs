@@ -20,31 +20,31 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 			this.Room = room;
 		}
 
-		public void GiveRights(Habbo habbo)
+		public void GiveRights(int userId)
 		{
-			if (this.HasRights(habbo))
+			if (this.HasRights(userId))
 			{
 				return;
 			}
 
-			RoomRightsDatabase.GiveRights(this.Room.Id, habbo.Id);
+			RoomRightsDatabase.GiveRights(this.Room.Id, userId);
 			UserRight right = new UserRight()
 			{
-				Id       = habbo.Id,
-				Username = habbo.Username
+				Id       = userId,
+				Username = (string)UserDatabase.Variable(userId, "username")
 			};
 			this.UserRights.Add(right);
 		}
 
-		public void TakeRights(Habbo habbo)
+		public void TakeRights(int userId)
 		{
-			if (!this.HasRights(habbo))
+			if (!this.HasRights(userId))
 			{
 				return;
 			}
 
-			RoomRightsDatabase.TakeRights(this.Room.Id, habbo.Id);
-			this.UserRights.Remove(this.UserRights.Where(right => right.Id == habbo.Id).First());
+			RoomRightsDatabase.TakeRights(this.Room.Id, userId);
+			this.UserRights.Remove(this.UserRights.Where(right => right.Id == userId).First());
 		}
 
 		public void RefreshRights(Habbo habbo)
@@ -55,7 +55,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 				habbo.Session().Send(new RoomRightsComposer(5));
 				Room.UserManager.UserBySession(habbo.Session()).Actions.Add("flatctrl", 5 + "");
 			}
-			else if (this.HasRights(habbo))
+			else if (this.HasRights(habbo.Id))
 			{
 				habbo.Session().Send(new RoomRightsComposer(1));
 				Room.UserManager.UserBySession(habbo.Session()).Actions.Add("flatctrl", 1 + "");
@@ -67,14 +67,9 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 			}
 		}
 
-		public bool IsOwner(Habbo habbo)
+		public bool HasRights(int userId)
 		{
-			return habbo.Id == this.Room.RoomData.OwnerId;
-		}
-
-		public bool HasRights(Habbo habbo)
-		{
-			return habbo.Id == this.Room.RoomData.OwnerId || this.UserRights.Where(right => right.Id == habbo.Id).Count() > 0;
+			return userId == this.Room.RoomData.OwnerId || this.UserRights.Where(right => right.Id == userId).Count() > 0;
 		}
 	}
 }

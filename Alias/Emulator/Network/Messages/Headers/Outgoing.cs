@@ -14,6 +14,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int UserProfileMessageComposer = 3898;
 		public const int MeMenuSettingsMessageComposer = 513;
 		public const int UserBadgesMessageComposer = 1087;
+		public const int UpdateUserLookMessageComposer = 2429;
 
 			//Achievements
 			public const int AchievementUnlockedMessageComposer = 806;
@@ -79,6 +80,8 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RoomUserShoutMessageComposer = 1036;
 			public const int RoomUserWhisperMessageComposer = 2704;
 			public const int RoomUserDataMessageComposer = 3920;
+			public const int RoomUserActionMessageComposer = 1631;
+			public const int RoomUserDanceMessageComposer = 2233;
 
 			// Items
 			public const int AddFloorItemMessageComposer = 1534;

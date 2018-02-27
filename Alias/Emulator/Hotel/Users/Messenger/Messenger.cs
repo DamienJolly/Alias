@@ -33,6 +33,11 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (this.IsFriend(userId))
 			{
+				Habbo h = SessionManager.Habbo(userId);
+				this.Friend(userId).Look = h.Look;
+				this.Friend(userId).Username = h.Username;
+				this.Friend(userId).Motto = h.Motto;
+				this.Friend(userId).InRoom = h.CurrentRoom != null;
 				this.Habbo().Session().Send(new UpdateFriendComposer(this.Friend(userId)));
 			}
 		}
@@ -101,7 +106,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 					Username   = h.Username,
 					Look       = h.Look,
 					Motto      = h.Motto,
-					FriendWith = this.Habbo().Id
+					InRoom     = h.CurrentRoom != null
 				};
 				this.FriendList().Add(friend);
 				this.Habbo().Session().Send(new UpdateFriendComposer(friend));

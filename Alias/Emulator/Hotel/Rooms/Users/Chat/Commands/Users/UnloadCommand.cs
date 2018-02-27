@@ -35,7 +35,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
 				return false;
 			}
 
-			if (session.Habbo().CurrentRoom.RoomRights.IsOwner(session.Habbo()))
+			if (session.Habbo().CurrentRoom.RoomData.OwnerId == session.Habbo().Id)
 			{
 				session.Habbo().CurrentRoom.Unload();
 			}

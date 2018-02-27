@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			if (!room.RoomRights.HasRights(session.Habbo()))
+			if (!room.RoomRights.HasRights(session.Habbo().Id))
 			{
 				return;
 			}

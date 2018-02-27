@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights.Events
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			if (session.Habbo().CurrentRoom == null || !session.Habbo().CurrentRoom.RoomRights.HasRights(session.Habbo()))
+			if (session.Habbo().CurrentRoom == null || !session.Habbo().CurrentRoom.RoomRights.HasRights(session.Habbo().Id))
 			{
 				return;
 			}

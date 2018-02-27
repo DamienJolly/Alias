@@ -45,9 +45,57 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			get; set;
 		} = new UserActions();
 
+		public bool isSitting
+		{
+			get; set;
+		} = false;
+
 		public RoomUser()
 		{
 
+		}
+
+		public void MakeSit()
+		{
+			if (this.Actions.Has("mv"))
+			{
+				return;
+			}
+
+			if (!this.Actions.Has("sit"))
+			{
+				if ((this.Position.Rotation % 2) != 0)
+				{
+					this.Position.Rotation--;
+				}
+
+				this.Actions.Add("sit", 0.5 + "");
+				this.isSitting = true;
+			}
+			else
+			{
+				this.Actions.Remove("sit");
+				this.isSitting = false;
+			}
+
+			this.Room.UserManager.Send(new RoomUserStatusComposer(this));
+		}
+
+		public void LookAtPoint(int x, int y)
+		{
+			if (x == this.Position.X && y == this.Position.Y)
+			{
+				return;
+			}
+
+			if (this.Actions.Has("mv") || this.Actions.Has("lay"))
+			{
+				return;
+			}
+
+			this.Position.CalculateRotation(x, y, this.Actions.Has("sit"));
+
+			this.Room.UserManager.Send(new RoomUserStatusComposer(this));
 		}
 
 		public void OnChat(string text, int colour, ChatType chatType, RoomUser target = null)

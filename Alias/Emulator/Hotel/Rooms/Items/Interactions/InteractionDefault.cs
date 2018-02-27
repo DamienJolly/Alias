@@ -25,7 +25,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 
 		public void OnUserInteract(Session session, Room room, RoomItem item, int state)
 		{
-			if (item.ItemData.Modes <= 1)
+			if (item.ItemData.Modes <= 1 || !room.RoomRights.HasRights(session.Habbo().Id))
 			{
 				return;
 			}
