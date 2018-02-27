@@ -13,6 +13,12 @@ namespace Alias.Emulator.Hotel.Navigator
 			Categories = NavigatorDatabase.ReadCategories();
 		}
 
+		public static void Reload()
+		{
+			Categories.Clear();
+			Initialize();
+		}
+
 		public static INavigatorCategory NewCategory(string type)
 		{
 			switch (type)

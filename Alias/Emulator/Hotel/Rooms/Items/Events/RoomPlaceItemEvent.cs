@@ -19,6 +19,11 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
+			if (!room.RoomRights.HasRights(session.Habbo()))
+			{
+				return;
+			}
+
 			string[] values = message.String().Split(' ');
 
 			if (values.Length < 1)
@@ -68,7 +73,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 							Rotation = rotation
 						}
 					};
-					room.ItemManager.Items.Add(rItem);
+					room.ItemManager.AddItem(rItem);
 					room.UserManager.Send(new AddFloorItemComposer(rItem));
 
 					session.Habbo().Inventory().RemoveItem(iItem);

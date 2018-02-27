@@ -21,6 +21,12 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			this.Room = room;
 		}
 
+		public void AddItem(RoomItem item)
+		{
+			RoomItemDatabase.AddItem(item);
+			Items.Add(item);
+		}
+
 		public void RemoveItem(RoomItem item)
 		{
 			RoomItemDatabase.RemoveItem(item.Id);

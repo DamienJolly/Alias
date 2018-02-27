@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using Alias.Emulator.Hotel.Landing.Composers;
 using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Items.Tasks;
 using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.Pathfinding;
+using Alias.Emulator.Hotel.Rooms.Rights;
 using Alias.Emulator.Hotel.Rooms.Tasks;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Rooms.Users.Tasks;
@@ -48,6 +51,11 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		}
 
+		public RoomRights RoomRights
+		{
+			get; set;
+		}
+
 		public int IdleTime = 0;
 
 		public bool Disposing
@@ -62,11 +70,6 @@ namespace Alias.Emulator.Hotel.Rooms
 
 		public void Cycle()
 		{
-			if (this.Disposing)
-			{
-				return;
-			}
-
 			RoomTask.Start(this);
 			if (this.UserManager != null)
 			{
@@ -81,19 +84,21 @@ namespace Alias.Emulator.Hotel.Rooms
 		public void Initialize()
 		{
 			this.PathFinder = new PathFinder(this);
+			this.RoomRights = new RoomRights(this);
 		}
 
-		public void OnRoomCrash()
+		public void Unload()
 		{
 			this.Disposing = true;
-			foreach (RoomUser user in this.UserManager.Users)
+			List<RoomUser> users = this.UserManager.Users;
+			foreach (RoomUser user in users)
 			{
-				if (user.Habbo == null || user.Habbo.Session() == null)
+				if (user.Habbo != null && user.Habbo.Session() != null)
 				{
-					user.Habbo.Notification("Sorry, it appears that room has crashed!");
+					user.Habbo.CurrentRoom = null;
+					user.Habbo.Notification("Sorry, it appears that room has been unloaded!");
+					user.Habbo.Session().Send(new HotelViewComposer());
 				}
-
-				this.UserManager.OnUserLeave(user.Habbo.Session());
 			}
 			this.Dispose();
 		}

@@ -32,6 +32,22 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			return items;
 		}
 
+		public static void AddItem(RoomItem item)
+		{
+			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			{
+				dbClient.AddParameter("itemId", item.Id);
+				dbClient.AddParameter("roomId", item.Room.Id);
+				dbClient.AddParameter("userId", item.Owner);
+				dbClient.AddParameter("xPos", item.Position.X);
+				dbClient.AddParameter("yPos", item.Position.Y);
+				dbClient.AddParameter("ZPos", item.Position.Z);
+				dbClient.AddParameter("Rot", item.Position.Rotation);
+				dbClient.AddParameter("baseId", item.ItemData.Id);
+				item.Id = (int)dbClient.InsertQuery("INSERT INTO `room_items` (`id`, `room_id`, `user_id`, `x`, `y`, `z`, `rot`, `base_id`) VALUES (@itemId, @roomId, @userId, @xPos, @yPos, @zPos, @rot, @baseId)");
+			}
+		}
+
 		public static void RemoveItem(int itemId)
 		{
 			using (DatabaseClient dbClient = DatabaseClient.Instance())

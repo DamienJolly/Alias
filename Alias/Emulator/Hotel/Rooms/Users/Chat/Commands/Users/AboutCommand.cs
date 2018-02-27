@@ -50,7 +50,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
 					+ "\n"
 					+ "- Damien Jolly";
 
-			session.Habbo().Notification(message);
+			session.Habbo().Notification(message, true);
 			return true;
 		}
 	}

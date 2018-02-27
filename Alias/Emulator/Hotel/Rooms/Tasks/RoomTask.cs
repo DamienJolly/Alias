@@ -26,7 +26,7 @@ namespace Alias.Emulator.Hotel.Rooms.Tasks
 			catch (Exception ex)
 			{
 				Logging.Error("Room: " + room.Id + " has crashed, disposing room..", ex, "RoomTask", "Start");
-				room.OnRoomCrash();
+				room.Unload();
 			}
 		}
 	}

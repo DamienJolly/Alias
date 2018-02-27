@@ -23,6 +23,11 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
+			if (!room.RoomRights.HasRights(session.Habbo()))
+			{
+				return;
+			}
+
 			item.GetInteractor().OnUserInteract(session, room, item, state);
 		}
 	}

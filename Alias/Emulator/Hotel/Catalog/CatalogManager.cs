@@ -20,6 +20,14 @@ namespace Alias.Emulator.Hotel.Catalog
 			featured = CatalogDatabase.ReadFeatured();
 		}
 
+		public static void Reload()
+		{
+			pages.Clear();
+			featured.Clear();
+
+			Initialize();
+		}
+
 		public static void PurchaseItem(CatalogPage page, CatalogItem item, Habbo habbo, int amount, string extradata)
 		{
 			ItemData cBaseItem = null;

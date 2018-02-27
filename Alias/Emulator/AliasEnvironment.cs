@@ -64,7 +64,7 @@ namespace Alias.Emulator
 		public static string UpTime()
 		{
 			TimeSpan Uptime = DateTime.Now - ServerStarted;
-			return Uptime.Days + " day(s), " + Uptime.Hours + " hours and " + Uptime.Minutes + " minutes.";
+			return Uptime.Days + " day(s), " + Uptime.Hours + " hour(s) and " + Uptime.Minutes + " minute(s)";
 		}
 
 		public static double Time()

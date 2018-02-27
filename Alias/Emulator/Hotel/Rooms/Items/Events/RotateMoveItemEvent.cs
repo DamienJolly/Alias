@@ -23,7 +23,10 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			//check rights
+			if (!room.RoomRights.HasRights(session.Habbo()))
+			{
+				return;
+			}
 
 			int x = message.Integer();
 			int y = message.Integer();

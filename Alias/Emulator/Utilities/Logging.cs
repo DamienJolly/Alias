@@ -62,6 +62,11 @@ namespace Alias.Emulator.Utilities
 			Console.ForegroundColor = ConsoleColor.Gray;
 		}
 
+		public static void Title(string title)
+		{
+			Console.Title = title;
+		}
+
 		public static void EmptyLine()
 		{
 			Console.WriteLine("");

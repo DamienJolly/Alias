@@ -13,6 +13,12 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 			RoomModelManager.Models = RoomModelDatabase.Models();
 		}
 
+		public static void Reload()
+		{
+			Models.Clear();
+			Initialize();
+		}
+
 		public static bool ModelExists(string name)
 		{
 			return RoomModelManager.Models.Where(m => m.Name.Equals(name)).Count() > 0;

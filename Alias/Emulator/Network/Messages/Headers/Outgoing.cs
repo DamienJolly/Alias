@@ -60,6 +60,11 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int RoomEntryInfoMessageComposer = 749;
 		public const int RoomFloorThicknessUpdatedMessageComposer = 3786;
 		public const int BubbleAlertMessageComposer = 1992;
+		public const int RoomAddRightsListMessageComposer = 2088;
+		public const int RoomRemoveRightsListMessageComposer = 1327;
+		public const int RoomRightsMessageComposer = 780;
+		public const int RoomOwnerMessageComposer = 339;
+		public const int RoomRightsListMessageComposer = 1284;
 		public const int ForwardToRoomMessageComposer = 160;
 
 			// Models
@@ -75,10 +80,12 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RoomUserWhisperMessageComposer = 2704;
 			public const int RoomUserDataMessageComposer = 3920;
 
-		// Items
-		public const int AddFloorItemMessageComposer = 1534;
-		public const int RemoveFloorItemMessageComposer = 2703;
-		public const int FloorItemUpdateMessageComposer = 3776;
+			// Items
+			public const int AddFloorItemMessageComposer = 1534;
+			public const int RemoveFloorItemMessageComposer = 2703;
+			public const int FloorItemUpdateMessageComposer = 3776;
+			public const int FurnitureAliasesMessageComposer = 1723;
+			public const int RoomFloorItemsMessageComposer = 1778;
 
 		// Landing
 		public const int HotelViewDataMessageComposer = 1745;
@@ -107,6 +114,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int AlertPurchaseUnavailableMessageComposer = 3770;
 		public const int AlertLimitedSoldOutMessageComposer = 377;
 		public const int PurchaseOKMessageComposer = 869;
+		public const int CatalogUpdatedMessageComposer = 1866;
 
 		// Achievements
 		public const int AchievementListMessageComposer = 305;

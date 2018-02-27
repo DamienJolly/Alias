@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using Alias.Emulator.Hotel.Rooms;
+using Alias.Emulator.Network.Sessions;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Tasks
 {
@@ -20,11 +22,20 @@ namespace Alias.Emulator.Tasks
 
 		public TaskManager()
 		{
+			Logging.Title("Alias Emulator - 0 users online - 0 rooms loaded - 0 day(s), 0 hour(s) and 0 minute(s) uptime");
 			this.StartCycle();
 		}
 
+		private int tick = 0;
+
 		public void OnCycle(object sender)
 		{
+			tick++;
+			if (tick >= 60)
+			{
+				Logging.Title("Alias Emulator - " + SessionManager.OnlineUsers() + " users online - " + RoomManager.ReadLoadedRooms().Count + " rooms loaded - " + AliasEnvironment.UpTime() + " uptime");
+				tick = 0;
+			}
 			RoomManager.DoRoomCycle();
 		}
 

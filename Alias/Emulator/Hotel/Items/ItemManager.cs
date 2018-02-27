@@ -12,6 +12,13 @@ namespace Alias.Emulator.Hotel.Items
 			Items = ItemDatabase.ReadItemData();
 		}
 
+		public static void Reload()
+		{
+			Items.Clear();
+
+			Initialize();
+		}
+
 		public static ItemData GetItemData(int baseId)
 		{
 			return Items.Where(item => item.Id == baseId).FirstOrDefault();

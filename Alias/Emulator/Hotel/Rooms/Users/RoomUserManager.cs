@@ -58,6 +58,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 				this.Users.Add(user);
 				session.Send(new RoomUsersComposer(this.Users));
 				session.Send(new RoomUserStatusComposer(this.Users));
+				Room.RoomRights.RefreshRights(session.Habbo());
 			}
 			else
 			{

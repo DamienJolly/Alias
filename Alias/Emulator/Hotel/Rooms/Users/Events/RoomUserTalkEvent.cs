@@ -12,8 +12,21 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 		{
 			if (session.Habbo() != null && session.Habbo().CurrentRoom != null)
 			{
+				string text = message.String();
+				RoomUser target = null;
+				if (GetChatType(message.Id) == ChatType.WHISPER)
+				{
+					target = session.Habbo().CurrentRoom.UserManager.UserByName(text.Split(' ')[0]);
+					if (target == null || target.Habbo.CurrentRoom == null)
+					{
+						return;
+					}
+					
+					text = text.Substring(text.Split(' ')[0].Length + 1);
+				}
+
 				RoomUser usr = session.Habbo().CurrentRoom.UserManager.UserBySession(session);
-				usr.OnChat(message.String(), message.Integer(), GetChatType(message.Id));
+				usr.OnChat(text, message.Integer(), GetChatType(message.Id), target);
 			}
 		}
 

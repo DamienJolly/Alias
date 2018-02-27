@@ -1,4 +1,5 @@
 using Alias.Emulator.Hotel.Rooms.Composers;
+using Alias.Emulator.Hotel.Rooms.Items.Composers;
 using Alias.Emulator.Hotel.Rooms.Models.Composers;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Protocol;
@@ -21,8 +22,8 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 
 			session.Habbo().CurrentRoom.UserManager.OnUserJoin(session);
 
-			//session.Send(new RoomFloorItemsComposer());
-			//session.Send(new ItemsComposer()); //todo:
+			session.Send(new RoomFloorItemsComposer(session.Habbo().CurrentRoom.ItemManager.Items));
+			//session.Send(new ItemsComposer()); //todo: wall items
 		}
 	}
 }

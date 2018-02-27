@@ -93,7 +93,7 @@ namespace Alias.Emulator.Hotel.Rooms
 
 		public static void DoRoomCycle()
 		{
-			RoomManager.LoadedRooms.ForEach(room => room.Cycle());
+			RoomManager.LoadedRooms.Where(room => !room.Disposing).ToList().ForEach(room => room.Cycle());
 		}
 
 		public static List<Room> ReadLoadedRooms()

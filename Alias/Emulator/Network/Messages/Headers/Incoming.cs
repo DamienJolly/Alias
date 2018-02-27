@@ -41,9 +41,11 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RequestInventoryBadgesMessageEvent = 2769;
 
 		// Rooms
+		public const int RequestHeightmapMessageEvent = 3898;
 		public const int RequestRoomDataMessageEvent = 2230;
 		public const int RequestRoomLoadMessageEvent = 2312;
-		public const int RequestRoomHeightmapMessageEvent = 3898;
+		public const int RequestRoomHeightmapMessageEvent = 2300;
+		public const int RequestRoomRightsMessageEvent = 3385;
 
 			// Users
 			public const int RoomUserWalkMessageEvent = 3320;

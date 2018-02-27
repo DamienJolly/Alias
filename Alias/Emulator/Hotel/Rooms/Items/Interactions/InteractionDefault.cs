@@ -26,7 +26,9 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 		public void OnUserInteract(Session session, Room room, RoomItem item, int state)
 		{
 			if (item.ItemData.Modes <= 1)
+			{
 				return;
+			}
 
 			item.Mode++;
 			if (item.Mode >= item.ItemData.Modes)

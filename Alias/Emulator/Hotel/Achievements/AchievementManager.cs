@@ -19,6 +19,12 @@ namespace Alias.Emulator.Hotel.Achievements
 			achievements = AchievementDatabase.ReadAchievements();
 		}
 
+		public static void Reload()
+		{
+			achievements.Clear();
+			Initialize();
+		}
+
 		public static List<Achievement> GetAchievements()
 		{
 			return achievements.Where(ach => ach.Category != AchievementCategory.INVISIBLE).ToList();

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.States;
+using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
@@ -24,7 +25,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			get
 			{
-				return "Damien";
+				return (string)UserDatabase.Variable(this.OwnerId, "Username");
 			}
 		}
 
@@ -37,7 +38,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			get
 			{
-				return 1;
+				return (int)RoomManager.Room(this.Id).UserManager.UserCount;
 			}
 		}
 

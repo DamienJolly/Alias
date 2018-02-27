@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Hotel.Users.Handshake;
+using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Protocol;
 using DotNetty.Transport.Channels;
 
 namespace Alias.Emulator.Network.Sessions
@@ -55,6 +57,11 @@ namespace Alias.Emulator.Network.Sessions
 		public static void Remove(IChannelHandlerContext context)
 		{
 			SessionManager.RegisteredSessions.Remove(context);
+		}
+
+		public static void Send(MessageComposer message)
+		{
+			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo() != null && !o.Habbo().Disconnecting).ToList().ForEach(o => o.Send(message));
 		}
 	}
 }

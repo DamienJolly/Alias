@@ -2,6 +2,8 @@ using System;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
+using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Users.Chat;
 using Alias.Emulator.Hotel.Users.Achievements;
 using Alias.Emulator.Hotel.Users.Badges;
 using Alias.Emulator.Hotel.Users.Currency;
@@ -80,9 +82,17 @@ namespace Alias.Emulator.Hotel.Users
 			return SessionManager.SessionById(this.Id);
 		}
 
-		public void Notification(string text)
+		public void Notification(string text, bool forced = false)
 		{
-			this.Session().Send(new GenericAlertComposer(text, Session()));
+			if (this.CurrentRoom != null && !forced)
+			{
+				RoomUser target = this.CurrentRoom.UserManager.UserByUserid(this.Id);
+				target.OnChat(text, 0, ChatType.WHISPER, target);
+			}
+			else
+			{
+				this.Session().Send(new GenericAlertComposer(text, Session()));
+			}
 		}
 
 		public BadgeComponent GetBadgeComponent()

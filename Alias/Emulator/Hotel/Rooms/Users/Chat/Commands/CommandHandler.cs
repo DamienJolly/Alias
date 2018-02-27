@@ -15,6 +15,8 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands
 		public static void Initialize()
 		{
 			CommandHandler.Commands.Add(new AboutCommand());
+			CommandHandler.Commands.Add(new UnloadCommand());
+			CommandHandler.Commands.Add(new UpdateCommand());
 		}
 
 		public static bool Handle(Session session, string text)
