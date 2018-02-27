@@ -5,6 +5,7 @@ using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
 using Alias.Emulator.Hotel.Landing.Composers;
 using Alias.Emulator.Hotel.Rooms.Models;
+using Alias.Emulator.Hotel.Rooms.Items;
 
 namespace Alias.Emulator.Hotel.Rooms.Cycle.Tasks
 {
@@ -32,9 +33,12 @@ namespace Alias.Emulator.Hotel.Rooms.Cycle.Tasks
 						}
 
 						Point p = usr.Path.First();
-						double height = 0.0;
-
-						usr.Room.GameMap.UpdateUserMovement(usr, new Point(usr.Position.X, usr.Position.Y), p);
+						RoomItem chair = null;
+						if (usr.Room.DynamicModel.CanSitAt(p.X, p.Y, true))
+						{
+							chair = usr.Room.DynamicModel.GetLowestChair(p.X, p.Y);
+						}
+						double height = usr.Room.DynamicModel.GetTileHeight(p.X, p.Y, chair);
 
 						usr.Actions.Add("mv", p.X + "," + p.Y + "," + height);
 						usr.Position.Rotation = usr.Room.PathFinder.Rotation(usr.Position.X, usr.Position.Y, p.X, p.Y);
@@ -54,9 +58,47 @@ namespace Alias.Emulator.Hotel.Rooms.Cycle.Tasks
 					{
 						if (usr.TargetPosition.X == usr.Position.X && usr.TargetPosition.Y == usr.Position.Y)
 						{
+							bool update = false;
 							if (usr.Actions.Has("mv"))
 							{
 								usr.Actions.Remove("mv");
+								update = true;
+							}
+
+							RoomItem chair = null;
+							if (usr.Room.DynamicModel.CanSitAt(usr.Position.X, usr.Position.Y, true))
+							{
+								chair = usr.Room.DynamicModel.GetLowestChair(usr.Position.X, usr.Position.Y);
+							}
+							else
+							{
+								chair = usr.Room.DynamicModel.GetTopItemAt(usr.Position.X, usr.Position.Y);
+								if (chair != null && !chair.ItemData.CanSit)
+								{
+									chair = null;
+								}
+							}
+
+							if (chair != null)
+							{
+								usr.Actions.Add("sit", chair.ItemData.Height.ToString());
+								usr.Position.Rotation = chair.Position.Rotation;
+								usr.Position.HeadRotation = usr.Position.Rotation;
+								usr.Position.Z = usr.Room.DynamicModel.GetTileHeight(usr.Position.X, usr.Position.Y, chair);
+								update = true;
+							}
+							else
+							{
+								if (usr.Actions.Has("sit"))
+								{
+									usr.Actions.Remove("sit");
+									usr.Position.Z = usr.Room.DynamicModel.GetTileHeight(usr.Position.X, usr.Position.Y);
+									update = true;
+								}
+							}
+
+							if (update)
+							{
 								usr.Room.UserManager.Send(new RoomUserStatusComposer(usr));
 							}
 

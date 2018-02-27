@@ -59,6 +59,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int RoomScoreMessageComposer = 482;
 		public const int RoomEntryInfoMessageComposer = 749;
 		public const int RoomFloorThicknessUpdatedMessageComposer = 3786;
+		public const int BubbleAlertMessageComposer = 1992;
 		public const int ForwardToRoomMessageComposer = 160;
 
 			// Models
@@ -73,6 +74,11 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RoomUserShoutMessageComposer = 1036;
 			public const int RoomUserWhisperMessageComposer = 2704;
 			public const int RoomUserDataMessageComposer = 3920;
+
+		// Items
+		public const int AddFloorItemMessageComposer = 1534;
+		public const int RemoveFloorItemMessageComposer = 2703;
+		public const int FloorItemUpdateMessageComposer = 3776;
 
 		// Landing
 		public const int HotelViewDataMessageComposer = 1745;

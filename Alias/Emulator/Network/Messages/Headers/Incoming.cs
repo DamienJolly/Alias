@@ -51,6 +51,12 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RoomUserShoutMessageEvent = 2085;
 			public const int RoomUserWhisperMessageEvent = 1543;
 
+			// Items
+			public const int RotateMoveItemMessageEvent = 248;
+			public const int RoomPlaceItemMessageEvent = 1258;
+			public const int RoomPickupItemMessageEvent = 3456;
+			public const int ToggleFloorItemMessageEvent = 99;
+
 		// Landing
 		public const int HotelViewDataMessageEvent = 2912;
 		public const int HotelViewMessageEvent = 105;

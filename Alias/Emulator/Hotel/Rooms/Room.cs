@@ -1,4 +1,5 @@
 using Alias.Emulator.Hotel.Rooms.Cycle;
+using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.Pathfinding;
 using Alias.Emulator.Hotel.Rooms.Users;
@@ -22,6 +23,11 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		}
 
+		public RoomItemManager ItemManager
+		{
+			get; set;
+		}
+
 		public RoomModel Model
 		{
 			get
@@ -35,7 +41,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		}
 
-		public GameMap GameMap
+		public DynamicRoomModel DynamicModel
 		{
 			get; set;
 		}
@@ -84,6 +90,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			this.Disposing = true;
 			this.Cycle.StopCycle();
+			RoomItemDatabase.SaveFurniture(this.ItemManager.Items);
 			RoomDatabase.SaveRoom(this.RoomData);
 			RoomManager.RemoveLoadedRoom(this);
 		}

@@ -56,7 +56,6 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 				this.Send(new RoomUsersComposer(user), user);
 				this.Send(new RoomUserStatusComposer(user), user);
 				this.Users.Add(user);
-				this.Room.GameMap.AddUserToMap(user, new Point(user.Position.X, user.Position.Y));
 				session.Send(new RoomUsersComposer(this.Users));
 				session.Send(new RoomUserStatusComposer(this.Users));
 			}
@@ -72,7 +71,6 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			{
 				RoomUser user = this.UserBySession(session);
 				this.Users.Remove(user);
-				this.Room.GameMap.RemoveUserFromMap(user, new Point(user.Position.X, user.Position.Y));
 				this.Send(new RoomUserRemoveComposer(user.VirtualId));
 				user.Habbo.CurrentRoom = null;
 				user.Dispose();

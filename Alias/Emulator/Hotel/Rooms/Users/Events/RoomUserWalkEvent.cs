@@ -15,7 +15,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 				
 				RoomUser usr = session.Habbo().CurrentRoom.UserManager.UserBySession(session);
 
-				if (usr.Position.X == x && usr.Position.Y == y)
+				if ((usr.Position.X == x && usr.Position.Y == y) || !usr.Room.DynamicModel.ValidTile(x, y, true))
 				{
 					return;
 				}

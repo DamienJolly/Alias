@@ -1,4 +1,5 @@
 using Alias.Emulator.Hotel.Rooms.Events;
+using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Messages.Headers;
@@ -14,6 +15,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			MessageHandler.Register(Incoming.RequestRoomHeightmapMessageEvent, new RequestRoomHeightmapEvent());
 
 			RoomUserEvents.Register();
+			RoomItemEvents.Register();
 		}
 	}
 }
