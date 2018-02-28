@@ -6,11 +6,11 @@ namespace Alias.Emulator.Utilities
 {
 	public class Configuration
 	{
-		private static Dictionary<string, string> variables;
+		private static Dictionary<string, string> Variables;
 
 		public static void Initialize()
 		{
-			Configuration.variables = new Dictionary<string, string>();
+			Configuration.Variables = new Dictionary<string, string>();
 			if (!File.Exists(Constant.ConfigurationFile))
 			{
 				Logging.Error("Configuration File not found. ", new Exception(), "ConfigurationFile", "Initialize");
@@ -21,18 +21,18 @@ namespace Alias.Emulator.Utilities
 
 			foreach (string line in File.ReadAllLines(Constant.ConfigurationFile))
 			{
-				if (!line.StartsWith("#") && line.Contains("=") && line.Split('=').Length == 2 && !Configuration.variables.ContainsKey(line.Split('=')[0]))
+				if (!line.StartsWith("#") && line.Contains("=") && line.Split('=').Length == 2 && !Configuration.Variables.ContainsKey(line.Split('=')[0]))
 				{
-					Configuration.variables.Add(line.Split('=')[0], line.Split('=')[1]);
+					Configuration.Variables.Add(line.Split('=')[0], line.Split('=')[1]);
 				}
 			}
 		}
 
 		public static string Value(string key)
 		{
-			if (Configuration.variables.ContainsKey(key))
+			if (Configuration.Variables.ContainsKey(key))
 			{
-				return Configuration.variables[key];
+				return Configuration.Variables[key];
 			}
 			return "";
 		}

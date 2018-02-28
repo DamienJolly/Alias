@@ -7,11 +7,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Events
 {
-	public class UserWearBadgeEvent : MessageEvent
+	public class UserWearBadgeEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			session.Habbo().GetBadgeComponent().ResetSlots();
+			session.Habbo.Badges.ResetSlots();
 
 			List<BadgeDefinition> badges = new List<BadgeDefinition>();
 			for (int i = 0; i < 5; i++)
@@ -24,22 +24,22 @@ namespace Alias.Emulator.Hotel.Users.Events
 					continue;
 				}
 
-				BadgeDefinition badge = session.Habbo().GetBadgeComponent().GetBadge(code);
+				BadgeDefinition badge = session.Habbo.Badges.GetBadge(code);
 				if (badge != null)
 				{
 					badge.Slot = slot;
-					session.Habbo().GetBadgeComponent().UpdateBadge(badge, code);
+					session.Habbo.Badges.UpdateBadge(badge, code);
 					badges.Add(badge);
 				}
 			}
 
-			if (session.Habbo().CurrentRoom != null)
+			if (session.Habbo.CurrentRoom != null)
 			{
-				session.Habbo().CurrentRoom.UserManager.Send(new UserBadgesComposer(badges, session.Habbo().Id));
+				session.Habbo.CurrentRoom.UserManager.Send(new UserBadgesComposer(badges, session.Habbo.Id));
 			}
 			else
 			{
-				session.Send(new UserBadgesComposer(badges, session.Habbo().Id));
+				session.Send(new UserBadgesComposer(badges, session.Habbo.Id));
 			}
 		}
 	}

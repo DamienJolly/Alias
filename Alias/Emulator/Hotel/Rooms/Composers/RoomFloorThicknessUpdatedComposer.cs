@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Composers
 {
-	public class RoomFloorThicknessUpdatedComposer : MessageComposer
+	public class RoomFloorThicknessUpdatedComposer : IMessageComposer
 	{
 		private Room room;
 

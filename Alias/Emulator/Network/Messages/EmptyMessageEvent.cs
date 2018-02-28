@@ -4,7 +4,7 @@ using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Network.Messages
 {
-	public class EmptyMessageEvent : MessageEvent
+	public class EmptyMessageEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

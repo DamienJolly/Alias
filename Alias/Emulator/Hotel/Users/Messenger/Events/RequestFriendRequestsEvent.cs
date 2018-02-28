@@ -5,11 +5,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
-	public class RequestFriendRequestsEvent : MessageEvent
+	public class RequestFriendRequestsEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			session.Send(new LoadFriendRequestsComposer(session.Habbo().Messenger()));
+			session.Send(new LoadFriendRequestsComposer(session.Habbo.Messenger));
 		}
 	}
 }

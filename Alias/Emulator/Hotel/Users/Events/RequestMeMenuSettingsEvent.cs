@@ -5,11 +5,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Events
 {
-	public class RequestMeMenuSettingsEvent : MessageEvent
+	public class RequestMeMenuSettingsEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			session.Send(new MeMenuSettingsComposer(session.Habbo()));
+			session.Send(new MeMenuSettingsComposer(session.Habbo));
 		}
 	}
 }

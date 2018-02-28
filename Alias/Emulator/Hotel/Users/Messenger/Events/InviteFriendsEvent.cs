@@ -5,11 +5,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
-	public class InviteFriendsEvent : MessageEvent
+	public class InviteFriendsEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			if (session.Habbo().Muted)
+			if (session.Habbo.Muted)
 			{
 				return;
 			}
@@ -30,7 +30,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 				friends.Add(message.Integer());
 			}
 
-			session.Habbo().Messenger().RoomInvitation(friends, message.String());
+			session.Habbo.Messenger.RoomInvitation(friends, message.String());
 		}
 	}
 }

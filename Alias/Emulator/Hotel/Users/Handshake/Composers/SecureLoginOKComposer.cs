@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Handshake.Composers
 {
-	public class SecureLoginOKComposer : MessageComposer
+	public class SecureLoginOKComposer : IMessageComposer
 	{
 		public ServerMessage Compose()
 		{

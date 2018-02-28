@@ -15,6 +15,7 @@
   <ItemGroup>
     <Folder Include="Emulator\Hotel\Catalog\Layouts\" />
     <Folder Include="Emulator\Hotel\Rooms\Users\Chat\Commands\Staff\" />
+    <Folder Include="Emulator\Hotel\Users\Trading\" />
   </ItemGroup>
 
 </Project>

@@ -39,7 +39,7 @@ namespace Alias.Emulator.Hotel.Achievements
 		{
 			if (achievement != null)
 			{
-				Habbo habbo = SessionManager.SessionById(habboId).Habbo();
+				Habbo habbo = SessionManager.SessionById(habboId).Habbo;
 				if (habbo != null)
 				{
 					ProgressAchievement(habbo, achievement, amount);
@@ -64,7 +64,7 @@ namespace Alias.Emulator.Hotel.Achievements
 			}
 			
 			int progress = 0;
-			AchievementProgress currentProgress = habbo.Achievements().GetAchievementProgress(achievement);
+			AchievementProgress currentProgress = habbo.Achievements.GetAchievementProgress(achievement);
 			if (currentProgress == null)
 			{
 				AchievementDatabase.AddUserAchievement(habbo, achievement, amount);
@@ -73,7 +73,7 @@ namespace Alias.Emulator.Hotel.Achievements
 					Achievement = achievement,
 					Progress = amount
 				};
-				habbo.Achievements().RequestAchievementProgress().Add(newAchievement);
+				habbo.Achievements.RequestAchievementProgress().Add(newAchievement);
 			}
 
 			AchievementLevel oldLevel = achievement.GetLevelForProgress(progress);
@@ -87,38 +87,38 @@ namespace Alias.Emulator.Hotel.Achievements
 				return;
 			}
 			
-			habbo.Achievements().GetAchievementProgress(achievement).Progress += amount;
+			habbo.Achievements.GetAchievementProgress(achievement).Progress += amount;
 
 			AchievementLevel newLevel = achievement.GetLevelForProgress(progress + amount);
 			if (oldLevel.Level == newLevel.Level && newLevel.Level < achievement.Levels.Count)
 			{
-				habbo.Session().Send(new AchievementProgressComposer(habbo, achievement));
+				habbo.Session.Send(new AchievementProgressComposer(habbo, achievement));
 			}
 			else
 			{
-				habbo.Session().Send(new AchievementProgressComposer(habbo, achievement));
-				habbo.Session().Send(new AchievementUnlockedComposer(habbo, achievement));
+				habbo.Session.Send(new AchievementProgressComposer(habbo, achievement));
+				habbo.Session.Send(new AchievementUnlockedComposer(habbo, achievement));
 
-				BadgeDefinition badge = habbo.GetBadgeComponent().GetBadge("ACH_" + achievement.Name + oldLevel.Level);
+				BadgeDefinition badge = habbo.Badges.GetBadge("ACH_" + achievement.Name + oldLevel.Level);
 				if (badge == null)
 				{
-					habbo.GetBadgeComponent().GiveBadge("ACH_" + achievement.Name + newLevel.Level);
+					habbo.Badges.GiveBadge("ACH_" + achievement.Name + newLevel.Level);
 				}
 				else
 				{
 					badge.Code = "ACH_" + achievement.Name + newLevel.Level;
-					habbo.GetBadgeComponent().UpdateBadge(badge, "ACH_" + achievement.Name + oldLevel.Level);
+					habbo.Badges.UpdateBadge(badge, "ACH_" + achievement.Name + oldLevel.Level);
 				}
 
 				if (badge.Slot > 0)
 				{
 					if (habbo.CurrentRoom != null)
 					{
-						habbo.CurrentRoom.UserManager.Send(new UserBadgesComposer(habbo.GetBadgeComponent().GetWearingBadges(), habbo.Id));
+						habbo.CurrentRoom.UserManager.Send(new UserBadgesComposer(habbo.Badges.GetWearingBadges(), habbo.Id));
 					}
 					else
 					{
-						habbo.Session().Send(new UserBadgesComposer(habbo.GetBadgeComponent().GetWearingBadges(), habbo.Id));
+						habbo.Session.Send(new UserBadgesComposer(habbo.Badges.GetWearingBadges(), habbo.Id));
 					}
 				}
 
@@ -135,7 +135,7 @@ namespace Alias.Emulator.Hotel.Achievements
 
 		public static bool HasAchieved(Habbo habbo, Achievement achievement)
 		{
-			AchievementProgress achievementProgress = habbo.Achievements().GetAchievementProgress(achievement);
+			AchievementProgress achievementProgress = habbo.Achievements.GetAchievementProgress(achievement);
 			if (achievementProgress == null)
 			{
 				return false;

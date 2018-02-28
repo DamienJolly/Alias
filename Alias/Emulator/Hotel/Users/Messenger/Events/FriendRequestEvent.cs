@@ -4,11 +4,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
-	public class FriendRequestEvent : MessageEvent
+	public class FriendRequestEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			session.Habbo().Messenger().Request(message.String());
+			session.Habbo.Messenger.Request(message.String());
 		}
 	}
 }

@@ -3,14 +3,14 @@ using System.Linq;
 
 namespace Alias.Emulator.Hotel.Users.Currency
 {
-	public class Currency
+	public class CurrencyComponent
 	{
 		private List<CurrencyType> currencies;
 		private Habbo habbo;
 
-		public Currency(Habbo h)
+		public CurrencyComponent(Habbo h)
 		{
-			this.currencies = new List<CurrencyType>();
+			this.currencies = CurrencyDatabase.ReadCurrencies(h.Id);
 			this.habbo = h;
 		}
 

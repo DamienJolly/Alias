@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class FriendFindingRoomComposer : MessageComposer
+	public class FriendFindingRoomComposer : IMessageComposer
 	{
 		public static int NO_ROOM_FOUND = 0;
 		public static int ROOM_FOUND = 1;

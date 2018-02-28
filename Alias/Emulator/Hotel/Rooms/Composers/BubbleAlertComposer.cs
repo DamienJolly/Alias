@@ -6,7 +6,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Composers
 {
-	public class BubbleAlertComposer : MessageComposer
+	public class BubbleAlertComposer : IMessageComposer
 	{
 		string Type;
 		Dictionary<string, string> Data;

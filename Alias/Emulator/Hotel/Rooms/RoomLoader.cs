@@ -32,7 +32,7 @@ namespace Alias.Emulator.Hotel.Rooms
 						return true;
 					case RoomDoorState.PASSWORD:
 						{
-							return rdata.Password == password || rdata.OwnerId == session.Habbo().Id;
+							return rdata.Password == password || rdata.OwnerId == session.Habbo.Id;
 						}
 					default:
 						return false;
@@ -54,9 +54,9 @@ namespace Alias.Emulator.Hotel.Rooms
 				session.Send(new RoomPaintComposer("wallpaper", "0.0"));
 			session.Send(new RoomPaintComposer("landscape", "0.0"));
 			session.Send(new RoomScoreComposer(room.RoomData.Likes.Count, room.RoomData.Likes.Contains(room.Id)));
-			if (session.Habbo().CurrentRoom != null)
-				session.Habbo().CurrentRoom.UserManager.OnUserLeave(session);
-			session.Habbo().CurrentRoom = room;
+			if (session.Habbo.CurrentRoom != null)
+				session.Habbo.CurrentRoom.UserManager.OnUserLeave(session);
+			session.Habbo.CurrentRoom = room;
 		}
 	}
 }

@@ -15,28 +15,35 @@ namespace Alias.Emulator.Hotel.Users
 {
 	public sealed class Habbo : IDisposable
 	{
-		public int Id = 0;
-		public string Username = "Unknown";
-		public string Mail = "Default@email.com";
-		public string Look = "";
-		public string Gender = "M";
-		public string Motto = "Hello world!";
-		public int Rank = 1;
-		public int ClubLevel = 1;
-		public int Credits = 9999;
-		public int HomeRoom = 0;
-		public int AchievementScore = 0;
-		public bool Disconnecting = false;
-		public bool Muted = false;
-		public Room CurrentRoom = null;
-		public NavigatorPreference NavigatorPreference;
-		public UserSettings Settings;
+		public int Id { get; set; } = 0;
+		public string Username { get; set; } = "Unknown";
+		public string Mail { get; set; } = "Default@email.com";
+		public string Look { get; set; } = "";
+		public string Gender { get; set; } = "M";
+		public string Motto { get; set; } = "Hello world!";
+		public int Rank { get; set; } = 1;
+		public int ClubLevel { get; set; } = 1;
+		public int Credits { get; set; } = 9999;
+		public int HomeRoom { get; set; } = 0;
+		public int AchievementScore { get; set; } = 0;
+		public bool Disconnecting { get; set; } = false;
+		public bool Muted { get; set; } = false;
+		public Room CurrentRoom { get; set; } = null;
+		public NavigatorPreference NavigatorPreference { get; set; }
+		public UserSettings Settings { get; set; }
+		public MessengerComponent Messenger { get; set; }
+		public InventoryComponent Inventory { get; set; }
+		public CurrencyComponent Currency { get; set; }
+		public AchievementComponent Achievements { get; set; }
+		public BadgeComponent Badges { get; set; }
 
-		private Messenger.Messenger messenger;
-		private Inventory.Inventory inventory;
-		private Currency.Currency currency;
-		private Achievements.Achievement achievements;
-		private BadgeComponent badges;
+		public Session Session
+		{
+			get
+			{
+				return SessionManager.SessionById(this.Id);
+			}
+		}
 
 		public Habbo()
 		{
@@ -45,16 +52,13 @@ namespace Alias.Emulator.Hotel.Users
 
 		public void Init()
 		{
-			this.currency = new Currency.Currency(this);
-			CurrencyDatabase.InitCurrency(this.currency);
-			this.badges = new BadgeComponent(this);
-			this.inventory = new Inventory.Inventory(this);
-			InventoryDatabase.InitInventory(this.inventory);
-			this.messenger = new Messenger.Messenger(this);
-			MessengerDatabase.InitMessenger(this.messenger);
-			this.achievements = new Achievements.Achievement(this);
-			AchievementDatabase.InitAchievements(this.achievements);
-			this.Messenger().UpdateStatus(true);
+			this.Currency = new CurrencyComponent(this);
+			this.Badges = new BadgeComponent(this);
+			this.Inventory = new InventoryComponent(this);
+			this.Messenger = new MessengerComponent(this);
+			this.Achievements = new AchievementComponent(this);
+
+			this.Messenger.UpdateStatus(true);
 			this.NavigatorPreference = NavigatorDatabase.Preference(this.Id);
 			this.NavigatorPreference.NavigatorSearches = NavigatorDatabase.ReadSavedSearches(this.Id);
 			this.Settings = UserDatabase.Settings(this.Id);
@@ -67,19 +71,14 @@ namespace Alias.Emulator.Hotel.Users
 			{
 				UserDatabase.UpdateSettings(this.Settings, this.Id);
 			}
-			if (this.achievements != null)
+			if (this.Achievements != null)
 			{
-				AchievementDatabase.SaveAchievements(this.achievements);
+				AchievementDatabase.SaveAchievements(this.Achievements);
 			}
-			if (this.currency != null)
+			if (this.Currency != null)
 			{
-				CurrencyDatabase.SaveCurrencies(this.currency);
+				CurrencyDatabase.SaveCurrencies(this.Currency);
 			}
-		}
-
-		public Session Session()
-		{
-			return SessionManager.SessionById(this.Id);
 		}
 
 		public void Notification(string text, bool forced = false)
@@ -91,45 +90,14 @@ namespace Alias.Emulator.Hotel.Users
 			}
 			else
 			{
-				this.Session().Send(new GenericAlertComposer(text, Session()));
+				this.Session.Send(new GenericAlertComposer(text, Session));
 			}
-		}
-
-		public BadgeComponent GetBadgeComponent()
-		{
-			return this.badges;
-		}
-
-		public Inventory.Inventory Inventory()
-		{
-			return this.inventory;
-		}
-
-		public Currency.Currency Currency()
-		{
-			return this.currency;
-		}
-
-		public Messenger.Messenger Messenger()
-		{
-			return this.messenger;
-		}
-
-		public Achievements.Achievement Achievements()
-		{
-			return this.achievements;
 		}
 
 		public void Dispose()
 		{
-			this.Username = null;
-			this.Mail = null;
-			this.Look = null;
-			this.Motto = null;
-			this.Gender = null;
-			this.Settings = null;
-			this.currency.Dispose();
-			this.achievements.Dispose();
+			this.Currency.Dispose();
+			this.Achievements.Dispose();
 		}
 	}
 }

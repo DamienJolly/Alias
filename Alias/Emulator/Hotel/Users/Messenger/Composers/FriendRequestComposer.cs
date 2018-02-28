@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class FriendRequestComposer : MessageComposer
+	public class FriendRequestComposer : IMessageComposer
 	{
 		private MessengerRequest Request;
 

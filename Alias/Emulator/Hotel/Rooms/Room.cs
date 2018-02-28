@@ -93,11 +93,11 @@ namespace Alias.Emulator.Hotel.Rooms
 			List<RoomUser> users = this.UserManager.Users;
 			foreach (RoomUser user in users)
 			{
-				if (user.Habbo != null && user.Habbo.Session() != null)
+				if (user.Habbo != null && user.Habbo.Session != null)
 				{
 					user.Habbo.CurrentRoom = null;
 					user.Habbo.Notification("Sorry, it appears that room has been unloaded!");
-					user.Habbo.Session().Send(new HotelViewComposer());
+					user.Habbo.Session.Send(new HotelViewComposer());
 				}
 			}
 			this.Dispose();

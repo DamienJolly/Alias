@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
-	public class RemoveFriendEvent : MessageEvent
+	public class RemoveFriendEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -20,7 +20,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 
 			for (int i = 0; i < amount; i++)
 			{
-				session.Habbo().Messenger().RemoveFriend(message.Integer());
+				session.Habbo.Messenger.RemoveFriend(message.Integer());
 			}
 		}
 	}

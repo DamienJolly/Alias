@@ -6,19 +6,19 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Users.Events
 {
-	public class RoomUserGiveRightsEvent : MessageEvent
+	public class RoomUserGiveRightsEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
 			int userId = message.Integer();
 
-			Room room = session.Habbo().CurrentRoom;
+			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			if (room.RoomData.OwnerId == session.Habbo().Id)
+			if (room.RoomData.OwnerId == session.Habbo.Id)
 			{
 				room.RoomRights.GiveRights(userId);
 

@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Events
 {
-	public class SaveUserVolumesEvent : MessageEvent
+	public class SaveUserVolumesEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -12,9 +12,9 @@ namespace Alias.Emulator.Hotel.Users.Events
 			int furni = message.Integer();
 			int trax = message.Integer();
 
-			session.Habbo().Settings.VolumeSystem = system;
-			session.Habbo().Settings.VolumeFurni = furni;
-			session.Habbo().Settings.VolumeTrax = trax;
+			session.Habbo.Settings.VolumeSystem = system;
+			session.Habbo.Settings.VolumeFurni = furni;
+			session.Habbo.Settings.VolumeTrax = trax;
 		}
 	}
 }

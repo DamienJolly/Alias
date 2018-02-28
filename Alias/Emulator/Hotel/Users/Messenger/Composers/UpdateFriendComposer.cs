@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class UpdateFriendComposer : MessageComposer
+	public class UpdateFriendComposer : IMessageComposer
 	{
 		private MessengerFriend Friend;
 		private int FriendId = 0;

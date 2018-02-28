@@ -7,11 +7,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
-	public class RotateMoveItemEvent : MessageEvent
+	public class RotateMoveItemEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			Room room = session.Habbo().CurrentRoom;
+			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			if (!room.RoomRights.HasRights(session.Habbo().Id))
+			if (!room.RoomRights.HasRights(session.Habbo.Id))
 			{
 				return;
 			}

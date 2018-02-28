@@ -3,20 +3,20 @@ using System.Linq;
 
 namespace Alias.Emulator.Hotel.Users.Inventory
 {
-	public class Inventory
+	public class InventoryComponent
 	{
 		private List<InventoryItem> floorItems;
 		private Habbo habbo;
 
-		public Inventory(Habbo h)
+		public InventoryComponent(Habbo h)
 		{
-			this.floorItems = new List<InventoryItem>();
+			this.floorItems = InventoryDatabase.ReadFloorItems(h.Id);
 			this.habbo = h;
 		}
 
 		public void AddItems(List<InventoryItem> items)
 		{
-			InventoryDatabase.AddFurni(items, habbo.Inventory());
+			InventoryDatabase.AddFurni(items, habbo.Inventory);
 		}
 
 		public void RemoveItem(InventoryItem item)

@@ -5,15 +5,15 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Events
 {
-	public class RemoveSavedSearchEvent : MessageEvent
+	public class RemoveSavedSearchEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
 			int id = message.Integer();
 
-			session.Habbo().NavigatorPreference.RemoveSearch(id);
+			session.Habbo.NavigatorPreference.RemoveSearch(id);
 
-			session.Send(new NavigatorSavedSearchesComposer(session.Habbo().NavigatorPreference.NavigatorSearches));
+			session.Send(new NavigatorSavedSearchesComposer(session.Habbo.NavigatorPreference.NavigatorSearches));
 		}
 	}
 }

@@ -19,23 +19,23 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 				if (!string.IsNullOrEmpty(sso) && HandshakeDatabase.SSOExists(sso))
 				{
 					session.AssignHabbo(HandshakeDatabase.BuildHabbo(sso));
-					if (HandshakeDatabase.IsBanned(session.Habbo().Id))
+					if (HandshakeDatabase.IsBanned(session.Habbo.Id))
 					{
 						session.Disconnect();
 						return;
 					}
 
-					session.Habbo().Init();
+					session.Habbo.Init();
 					session.Send(new SecureLoginOKComposer());
-					session.Send(new UserHomeRoomComposer(session.Habbo().HomeRoom));
+					session.Send(new UserHomeRoomComposer(session.Habbo.HomeRoom));
 					session.Send(new UserEffectsListComposer()); //todo:
 					session.Send(new UserClothesComposer()); //todo:
 					session.Send(new NewUserIdentityComposer());
-					session.Send(new UserPermissionsComposer(session.Habbo().Rank));
+					session.Send(new UserPermissionsComposer(session.Habbo.Rank));
 					session.Send(new SessionRightsComposer());
 					session.Send(new SomeConnectionComposer());
 					session.Send(new DebugConsoleComposer());
-					session.Send(new UserAchievementScoreComposer(session.Habbo().AchievementScore));
+					session.Send(new UserAchievementScoreComposer(session.Habbo.AchievementScore));
 					session.Send(new UnknownComposer4());
 					session.Send(new UnknownComposer5());
 					//session.Send(new BuildersClubExpiredComposer()); //todo:
@@ -50,9 +50,9 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					session.Send(new NavigatorMetaDataComposer());
 					session.Send(new NavigatorLiftedRoomsComposer());
 					session.Send(new NavigatorCollapsedCategoriesComposer());
-					session.Send(new NavigatorSavedSearchesComposer(session.Habbo().NavigatorPreference.NavigatorSearches));
-					session.Send(new NavigatorEventCategoriesComposer(session.Habbo().Rank));
-					session.Send(new NavigatorSettingsComposer(session.Habbo().NavigatorPreference));
+					session.Send(new NavigatorSavedSearchesComposer(session.Habbo.NavigatorPreference.NavigatorSearches));
+					session.Send(new NavigatorEventCategoriesComposer(session.Habbo.Rank));
+					session.Send(new NavigatorSettingsComposer(session.Habbo.NavigatorPreference));
 
 					session.Send(new InventoryRefreshComposer());
 					//session.Send(new ForumsTestComposer());

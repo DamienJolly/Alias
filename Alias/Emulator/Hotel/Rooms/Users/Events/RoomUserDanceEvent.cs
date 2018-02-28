@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Users.Events
 {
-	public class RoomUserDanceEvent : MessageEvent
+	public class RoomUserDanceEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -16,7 +16,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 				return;
 			}
 
-			Room room = session.Habbo().CurrentRoom;
+			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
 			{
 				return;

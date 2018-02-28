@@ -5,11 +5,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Inventory.Events
 {
-	public class RequestInventoryBadgesEvent : MessageEvent
+	public class RequestInventoryBadgesEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			session.Send(new InventoryBadgesComposer(session.Habbo()));
+			session.Send(new InventoryBadgesComposer(session.Habbo));
 		}
 	}
 }

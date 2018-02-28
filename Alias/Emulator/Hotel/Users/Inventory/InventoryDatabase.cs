@@ -7,23 +7,27 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 {
 	public class InventoryDatabase
 	{
-		public static void InitInventory(Inventory inventory)
+		public static List<InventoryItem> ReadFloorItems(int userId)
 		{
+			List<InventoryItem> items = new List<InventoryItem>();
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{
-				dbClient.AddParameter("id", inventory.Habbo().Id);
+				dbClient.AddParameter("id", userId);
 				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `habbo_inventory` WHERE `user_id` = @id").Rows)
 				{
-					InventoryItem item = new InventoryItem();
-					item.Id = (int)row["id"];
-					item.ItemData = ItemManager.GetItemData((int)row["base_id"]);
-					inventory.FloorItems().Add(item);
+					InventoryItem item = new InventoryItem
+					{
+						Id       = (int)row["id"],
+						ItemData = ItemManager.GetItemData((int)row["base_id"])
+					};
+					items.Add(item);
 					row.Delete();
 				}
 			}
+			return items;
 		}
 
-		public static void AddFurni(List<InventoryItem> items, Inventory inventory)
+		public static void AddFurni(List<InventoryItem> items, InventoryComponent inventory)
 		{
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{

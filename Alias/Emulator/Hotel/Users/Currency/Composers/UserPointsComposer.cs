@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Currency.Composers
 {
-	public class UserPointsComposer : MessageComposer
+	public class UserPointsComposer : IMessageComposer
 	{
 		private int currentAmount;
 		private int amountAdded;

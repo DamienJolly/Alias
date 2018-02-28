@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class RoomInviteErrorComposer : MessageComposer
+	public class RoomInviteErrorComposer : IMessageComposer
 	{
 		public static readonly int FRIEND_MUTED = 3;
 		public static readonly int YOU_ARE_MUTED = 4;

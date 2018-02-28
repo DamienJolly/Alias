@@ -1,8 +1,8 @@
-﻿using Alias.Emulator.Network.Protocol;
+using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Network.Messages
 {
-	public interface MessageComposer
+	public interface IMessageComposer
 	{
 		ServerMessage Compose();
 	}

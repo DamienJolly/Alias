@@ -33,19 +33,19 @@ namespace Alias.Emulator.Hotel.Catalog
 			ItemData cBaseItem = null;
 			if (item == null)
 			{
-				habbo.Session().Send(new AlertPurchaseFailedComposer(AlertPurchaseFailedComposer.SERVER_ERROR));
+				habbo.Session.Send(new AlertPurchaseFailedComposer(AlertPurchaseFailedComposer.SERVER_ERROR));
 				return;
 			}
 
 			if (item.ClubLevel > habbo.ClubLevel)
 			{
-				habbo.Session().Send(new AlertPurchaseUnavailableComposer(AlertPurchaseUnavailableComposer.REQUIRES_CLUB));
+				habbo.Session.Send(new AlertPurchaseUnavailableComposer(AlertPurchaseUnavailableComposer.REQUIRES_CLUB));
 				return;
 			}
 
 			if (amount <= 0 || amount > 100)
 			{
-				habbo.Session().Send(new AlertPurchaseFailedComposer(AlertPurchaseFailedComposer.SERVER_ERROR));
+				habbo.Session.Send(new AlertPurchaseFailedComposer(AlertPurchaseFailedComposer.SERVER_ERROR));
 				return;
 			}
 
@@ -53,7 +53,7 @@ namespace Alias.Emulator.Hotel.Catalog
 			{
 				if (amount > 1 && !item.HasOffer)
 				{
-					habbo.Session().Send(new AlertPurchaseFailedComposer(AlertPurchaseUnavailableComposer.ILLEGAL));
+					habbo.Session.Send(new AlertPurchaseFailedComposer(AlertPurchaseUnavailableComposer.ILLEGAL));
 					return;
 				}
 
@@ -62,7 +62,7 @@ namespace Alias.Emulator.Hotel.Catalog
 					amount = 1;
 					if (item.LimitedStack - item.LimitedSells <= 0)
 					{
-						habbo.Session().Send(new AlertLimitedSoldOutComposer());
+						habbo.Session.Send(new AlertLimitedSoldOutComposer());
 						return;
 					}
 				}
@@ -75,7 +75,7 @@ namespace Alias.Emulator.Hotel.Catalog
 				{
 					if (item.Credits <= habbo.Credits - totalCredits)
 					{
-						if (item.Points <= habbo.Currency().GetCurrencyType(item.PointsType).Amount - totalPoints)
+						if (item.Points <= habbo.Currency.GetCurrencyType(item.PointsType).Amount - totalPoints)
 						{
 							if (((i + 1) % 6 != 0 && item.HasOffer) || !item.HasOffer)
 							{
@@ -101,26 +101,26 @@ namespace Alias.Emulator.Hotel.Catalog
 				if (totalCredits > 0)
 				{
 					habbo.Credits -= totalCredits;
-					habbo.Session().Send(new UserCreditsComposer(habbo));
+					habbo.Session.Send(new UserCreditsComposer(habbo));
 				}
 
 				if (totalPoints > 0)
 				{
-					habbo.Currency().GetCurrencyType(item.PointsType).Amount -= totalPoints;
-					habbo.Session().Send(new UserPointsComposer(habbo.Currency().GetCurrencyType(item.PointsType).Amount, -totalPoints, item.PointsType));
+					habbo.Currency.GetCurrencyType(item.PointsType).Amount -= totalPoints;
+					habbo.Session.Send(new UserPointsComposer(habbo.Currency.GetCurrencyType(item.PointsType).Amount, -totalPoints, item.PointsType));
 				}
 
 				if (itemsList != null)
 				{
-					habbo.Session().Send(new AddHabboItemsComposer(itemsList));
-					habbo.Inventory().AddItems(itemsList);
-					habbo.Session().Send(new PurchaseOKComposer(item));
-					habbo.Session().Send(new InventoryRefreshComposer());
+					habbo.Session.Send(new AddHabboItemsComposer(itemsList));
+					habbo.Inventory.AddItems(itemsList);
+					habbo.Session.Send(new PurchaseOKComposer(item));
+					habbo.Session.Send(new InventoryRefreshComposer());
 				}
 			}
 			catch
 			{
-				habbo.Session().Send(new AlertPurchaseFailedComposer(AlertPurchaseFailedComposer.SERVER_ERROR));
+				habbo.Session.Send(new AlertPurchaseFailedComposer(AlertPurchaseFailedComposer.SERVER_ERROR));
 			}
 		}
 

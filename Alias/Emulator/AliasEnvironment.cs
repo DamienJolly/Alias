@@ -17,14 +17,14 @@ namespace Alias.Emulator
 {
     class AliasEnvironment
     {
-		private static string version = "v0.1";
-		public static DateTime ServerStarted;
-		public static TaskManager tasks;
+		private static readonly string version = "0.1";
+		private static DateTime ServerStarted;
+		private static TaskManager Tasks;
 
 		public static void Initialize()
 		{
-			ServerStarted = DateTime.Now;
-			Logging.Alias("Alias Emulator is starting up...", version);
+			AliasEnvironment.ServerStarted = DateTime.Now;
+			Logging.Alias("Alias Emulator is starting up...", AliasEnvironment.version);
 			Logging.CreateExceptionFile();
 			Configuration.Initialize();
 
@@ -56,14 +56,14 @@ namespace Alias.Emulator
 			CommandHandler.Initialize();
 			SocketServer.Initialize();
 
-			tasks = new TaskManager();
+			AliasEnvironment.Tasks = new TaskManager();
 
 			while (true) Logging.ReadLine();
 		}
 
 		public static string UpTime()
 		{
-			TimeSpan Uptime = DateTime.Now - ServerStarted;
+			TimeSpan Uptime = DateTime.Now - AliasEnvironment.ServerStarted;
 			return Uptime.Days + " day(s), " + Uptime.Hours + " hour(s) and " + Uptime.Minutes + " minute(s)";
 		}
 

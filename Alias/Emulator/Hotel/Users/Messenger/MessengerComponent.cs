@@ -5,16 +5,16 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger
 {
-	public class Messenger
+	public class MessengerComponent
 	{
 		private List<MessengerFriend> Friends;
 		private List<MessengerRequest> Requests;
 		private Habbo habbo;
 
-		public Messenger(Habbo h)
+		public MessengerComponent(Habbo h)
 		{
-			this.Friends = new List<MessengerFriend>();
-			this.Requests = new List<MessengerRequest>();
+			this.Friends = MessengerDatabase.ReadFriendships(h.Id);
+			this.Requests = MessengerDatabase.ReadFriendRequests(h.Id);
 			this.habbo = h;
 		}
 
@@ -24,7 +24,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			{
 				if (SessionManager.IsOnline(friend.Id))
 				{
-					SessionManager.SessionById(friend.Id).Habbo().Messenger().Update(this.Habbo().Id);
+					SessionManager.SessionById(friend.Id).Habbo.Messenger.Update(this.Habbo().Id);
 				}
 			}
 		}
@@ -33,12 +33,12 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (this.IsFriend(userId))
 			{
-				Habbo h = SessionManager.Habbo(userId);
+				Habbo h = SessionManager.HabboById(userId);
 				this.Friend(userId).Look = h.Look;
 				this.Friend(userId).Username = h.Username;
 				this.Friend(userId).Motto = h.Motto;
 				this.Friend(userId).InRoom = h.CurrentRoom != null;
-				this.Habbo().Session().Send(new UpdateFriendComposer(this.Friend(userId)));
+				this.Habbo().Session.Send(new UpdateFriendComposer(this.Friend(userId)));
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 
 			if (SessionManager.IsOnline(userId))
 			{
-				SessionManager.SessionById(userId).Habbo().Messenger().OnRequest(this.Habbo());
+				SessionManager.SessionById(userId).Habbo.Messenger.OnRequest(this.Habbo());
 			}
 		}
 
@@ -68,7 +68,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 				Look     = h.Look
 			};
 			this.RequestList().Add(request);
-			this.Habbo().Session().Send(new FriendRequestComposer(request));
+			this.Habbo().Session.Send(new FriendRequestComposer(request));
 		}
 
 		public void RemoveRequest(int UserId)
@@ -90,7 +90,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 
 				if (SessionManager.IsOnline(UserId))
 				{
-					SessionManager.SessionById(UserId).Habbo().Messenger().OnFriend(this.Habbo().Id);
+					SessionManager.SessionById(UserId).Habbo.Messenger.OnFriend(this.Habbo().Id);
 				}
 			}
 		}
@@ -99,7 +99,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (!this.IsFriend(UserId))
 			{
-				Habbo h = SessionManager.Habbo(UserId);
+				Habbo h = SessionManager.HabboById(UserId);
 				MessengerFriend friend = new MessengerFriend()
 				{
 					Id         = h.Id,
@@ -109,7 +109,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 					InRoom     = h.CurrentRoom != null
 				};
 				this.FriendList().Add(friend);
-				this.Habbo().Session().Send(new UpdateFriendComposer(friend));
+				this.Habbo().Session.Send(new UpdateFriendComposer(friend));
 			}
 		}
 
@@ -122,7 +122,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 
 				if (SessionManager.IsOnline(friend))
 				{
-					SessionManager.SessionById(friend).Habbo().Messenger().OnRemoveFriend(this.Habbo().Id);
+					SessionManager.SessionById(friend).Habbo.Messenger.OnRemoveFriend(this.Habbo().Id);
 				}
 			}
 		}
@@ -130,7 +130,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		public void OnRemoveFriend(int friendId)
 		{
 			this.FriendList().Remove(this.FriendList().Where(o => o.Id == friendId).First());
-			this.Habbo().Session().Send(new UpdateFriendComposer(friendId));
+			this.Habbo().Session.Send(new UpdateFriendComposer(friendId));
 		}
 
 		public void Decline(int UserId)
@@ -163,23 +163,23 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 
 			if (this.Habbo().Muted)
 			{
-				this.Habbo().Session().Send(new RoomInviteErrorComposer(RoomInviteErrorComposer.YOU_ARE_MUTED, toUser));
+				this.Habbo().Session.Send(new RoomInviteErrorComposer(RoomInviteErrorComposer.YOU_ARE_MUTED, toUser));
 				return;
 			}
 
 			if (!this.IsFriend(toUser))
 			{
-				this.Habbo().Session().Send(new RoomInviteErrorComposer(RoomInviteErrorComposer.NO_FRIENDS, toUser));
+				this.Habbo().Session.Send(new RoomInviteErrorComposer(RoomInviteErrorComposer.NO_FRIENDS, toUser));
 				return;
 			}
 
 			if (SessionManager.IsOnline(toUser))
 			{
-				SessionManager.SessionById(toUser).Habbo().Messenger().OnMessage(this.Habbo().Id, message);
+				SessionManager.SessionById(toUser).Habbo.Messenger.OnMessage(this.Habbo().Id, message);
 
-				if (SessionManager.SessionById(toUser).Habbo().Muted)
+				if (SessionManager.SessionById(toUser).Habbo.Muted)
 				{
-					this.Habbo().Session().Send(new RoomInviteErrorComposer(RoomInviteErrorComposer.FRIEND_MUTED, toUser));
+					this.Habbo().Session.Send(new RoomInviteErrorComposer(RoomInviteErrorComposer.FRIEND_MUTED, toUser));
 				}
 			}
 			else
@@ -197,7 +197,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			
 			friends.ForEach(id =>
 			{
-				if (this.Habbo().Messenger().IsFriend(id) && SessionManager.IsOnline(id) && !this.habbo.Settings.IgnoreInvites)
+				if (this.Habbo().Messenger.IsFriend(id) && SessionManager.IsOnline(id) && !this.habbo.Settings.IgnoreInvites)
 				{
 					SessionManager.SessionById(id).Send(new RoomInviteComposer(this.Habbo().Id, message), false);
 				}
@@ -211,7 +211,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			if (this.IsFriend(fromUser))
 			{
 				MessengerDatabase.StoreMessage(fromUser, this.Habbo().Id, message);
-				this.Habbo().Session().Send(new FriendChatMessageComposer(fromUser, message));
+				this.Habbo().Session.Send(new FriendChatMessageComposer(fromUser, message));
 			}
 		}
 

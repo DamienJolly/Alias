@@ -4,13 +4,13 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Landing.Events
 {
-	public class HotelViewEvent : MessageEvent
+	public class HotelViewEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			if (session.Habbo().CurrentRoom != null)
+			if (session.Habbo.CurrentRoom != null)
 			{
-				session.Habbo().CurrentRoom.UserManager.OnUserLeave(session);
+				session.Habbo.CurrentRoom.UserManager.OnUserLeave(session);
 			}
 		}
 	}

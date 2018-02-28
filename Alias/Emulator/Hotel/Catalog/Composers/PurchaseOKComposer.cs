@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Catalog.Composers
 {
-	public class PurchaseOKComposer : MessageComposer
+	public class PurchaseOKComposer : IMessageComposer
 	{
 		CatalogItem item;
 

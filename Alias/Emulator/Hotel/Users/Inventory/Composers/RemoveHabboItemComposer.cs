@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 {
-	public class RemoveHabboItemComposer : MessageComposer
+	public class RemoveHabboItemComposer : IMessageComposer
 	{
 		private int itemId;
 

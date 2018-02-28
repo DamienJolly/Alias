@@ -8,25 +8,15 @@ namespace Alias.Emulator.Tasks
 {
 	public sealed class TaskManager : IDisposable
 	{
-		private bool IsAlive
-		{
-			get; set;
-		} = true;
-
-		private Thread Cycle
-		{
-			get; set;
-		}
-
+		private Thread Cycle;
 		private Timer sheduler;
+		private int tick = 0;
 
 		public TaskManager()
 		{
 			Logging.Title("Alias Emulator - 0 users online - 0 rooms loaded - 0 day(s), 0 hour(s) and 0 minute(s) uptime");
 			this.StartCycle();
 		}
-
-		private int tick = 0;
 
 		public void OnCycle(object sender)
 		{

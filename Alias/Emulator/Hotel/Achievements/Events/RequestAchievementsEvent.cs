@@ -5,11 +5,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Achievements.Events
 {
-    public class RequestAchievementsEvent : MessageEvent
+    public class RequestAchievementsEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			session.Send(new AchievementListComposer(session.Habbo()));
+			session.Send(new AchievementListComposer(session.Habbo));
 		}
     }
 }

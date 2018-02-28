@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 {
-	public class AddHabboItemsComposer : MessageComposer
+	public class AddHabboItemsComposer : IMessageComposer
 	{
 		List<InventoryItem> items;
 

@@ -4,41 +4,32 @@ namespace Alias.Emulator.Database
 {
 	public class Credentials
 	{
-		private readonly string Username;
-		private readonly string Password;
-		private readonly string Hostname;
-		private readonly string Database;
-		private readonly uint Port;
-		private readonly uint MinPoolSize;
-		private readonly uint MaxPoolSize;
+		public string Username { get; set; }
+		public string Password { get; set; }
+		public string Hostname { get; set; }
+		public string Database { get; set; }
+		public uint Port { get; set; }
+		public uint MinPoolSize { get; set; }
+		public uint MaxPoolSize { get; set; }
 
 		public string ConnectionString
 		{
 			get
 			{
-				MySqlConnectionStringBuilder ConnString = new MySqlConnectionStringBuilder();
-				ConnString.Server = this.Hostname;
-				ConnString.Port = this.Port;
-				ConnString.UserID = this.Username;
-				ConnString.Password = this.Password;
-				ConnString.Database = this.Database;
-				ConnString.MinimumPoolSize = this.MinPoolSize;
-				ConnString.MaximumPoolSize = this.MaxPoolSize;
-				ConnString.Pooling = true;
-				ConnString.SslMode = MySqlSslMode.None;
+				MySqlConnectionStringBuilder ConnString = new MySqlConnectionStringBuilder
+				{
+					Server          = this.Hostname,
+					Port            = this.Port,
+					UserID          = this.Username,
+					Password        = this.Password,
+					Database        = this.Database,
+					MinimumPoolSize = this.MinPoolSize,
+					MaximumPoolSize = this.MaxPoolSize,
+					Pooling         = true,
+					SslMode         = MySqlSslMode.None
+				};
 				return ConnString.ToString();
 			}
-		}
-
-		public Credentials(string username, string password, string hostname, uint port, string database, uint minPoolSize, uint maxPoolSize)
-		{
-			this.Username = username;
-			this.Password = password;
-			this.Hostname = hostname;
-			this.Port = port;
-			this.Database = database;
-			this.MinPoolSize = minPoolSize;
-			this.MaxPoolSize = maxPoolSize;
 		}
 	}
 }

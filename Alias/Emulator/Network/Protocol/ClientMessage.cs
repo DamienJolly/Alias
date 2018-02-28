@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using DotNetty.Buffers;
 
 namespace Alias.Emulator.Network.Protocol
@@ -37,28 +37,10 @@ namespace Alias.Emulator.Network.Protocol
 			return this.Buffer.ReadByte() == 1;
 		}
 
-		public override string ToString()
-		{
-			string output = "";
-			foreach (char chr in this.Buffer.ToString(Encoding.UTF8).ToCharArray())
-			{
-				if (chr < 31)
-				{
-					output += "[" + (int)chr + "]";
-				}
-				else
-				{
-					output += chr;
-				}
-			}
-			return output;
-		}
-
 		public void Dispose()
 		{
 			this.Buffer.Clear();
 			this.Buffer = null;
 		}
 	}
-
 }

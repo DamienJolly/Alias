@@ -5,12 +5,12 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
-	public class RequestInitFriendsEvent : MessageEvent
+	public class RequestInitFriendsEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
 			session.Send(new MessengerInitComposer());
-			session.Send(new FriendsComposer(session.Habbo().Messenger().FriendList()));
+			session.Send(new FriendsComposer(session.Habbo.Messenger.FriendList()));
 
 			//todo: Offline messages
 		}

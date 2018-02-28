@@ -30,14 +30,14 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
 
 		public override bool Handle(string[] args, Session session)
 		{
-			if (session.Habbo().CurrentRoom == null)
+			if (session.Habbo.CurrentRoom == null)
 			{
 				return false;
 			}
 
-			if (session.Habbo().CurrentRoom.RoomData.OwnerId == session.Habbo().Id)
+			if (session.Habbo.CurrentRoom.RoomData.OwnerId == session.Habbo.Id)
 			{
-				session.Habbo().CurrentRoom.Unload();
+				session.Habbo.CurrentRoom.Unload();
 			}
 			return true;
 		}

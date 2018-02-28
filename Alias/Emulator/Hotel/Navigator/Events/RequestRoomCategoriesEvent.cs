@@ -5,11 +5,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Events
 {
-	public class RequestRoomCategoriesEvent : MessageEvent
+	public class RequestRoomCategoriesEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			session.Send(new RoomCategoriesComposer(session.Habbo().Rank));
+			session.Send(new RoomCategoriesComposer(session.Habbo.Rank));
 		}
 	}
 }

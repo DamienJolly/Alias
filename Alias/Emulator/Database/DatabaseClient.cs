@@ -7,7 +7,7 @@ namespace Alias.Emulator.Database
 {
 	public sealed class DatabaseClient : IDisposable
 	{
-		public static Credentials Credentials;
+		private static Credentials Credentials;
 		private MySqlConnection Connection;
 		private MySqlCommand Command;
 
@@ -20,15 +20,16 @@ namespace Alias.Emulator.Database
 
 		public static void Initialize()
 		{
-			DatabaseClient.Credentials = new Credentials(
-				Configuration.Value("mysql.username"),
-				Configuration.Value("mysql.password"),
-				Configuration.Value("mysql.hostname"),
-				uint.Parse(Configuration.Value("mysql.port")),
-				Configuration.Value("mysql.database"),
-				uint.Parse(Configuration.Value("mysql.minsize")),
-				uint.Parse(Configuration.Value("mysql.maxsize"))
-			);
+			DatabaseClient.Credentials = new Credentials()
+			{
+				Username    = Configuration.Value("mysql.username"),
+				Password    = Configuration.Value("mysql.password"),
+				Hostname    = Configuration.Value("mysql.hostname"),
+				Port        = uint.Parse(Configuration.Value("mysql.port")),
+				Database    = Configuration.Value("mysql.database"),
+				MinPoolSize = uint.Parse(Configuration.Value("mysql.minsize")),
+				MaxPoolSize = uint.Parse(Configuration.Value("mysql.maxsize"))
+			};
 		}
 
 		public static DatabaseClient Instance()

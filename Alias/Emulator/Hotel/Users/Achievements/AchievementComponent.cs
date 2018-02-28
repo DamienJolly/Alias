@@ -3,14 +3,14 @@ using System.Linq;
 
 namespace Alias.Emulator.Hotel.Users.Achievements
 {
-    public class Achievement
+    public class AchievementComponent
     {
 		private List<AchievementProgress> achievementProgress;
 		private Habbo habbo;
 
-		public Achievement(Habbo h)
+		public AchievementComponent(Habbo h)
 		{
-			this.achievementProgress = new List<AchievementProgress>();
+			this.achievementProgress = AchievementDatabase.ReadAchievements(h.Id);
 			this.habbo = h;
 		}
 

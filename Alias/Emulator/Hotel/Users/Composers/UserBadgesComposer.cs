@@ -6,7 +6,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Composers
 {
-	public class UserBadgesComposer : MessageComposer
+	public class UserBadgesComposer : IMessageComposer
 	{
 		private List<BadgeDefinition> badges;
 		private int id;

@@ -3,7 +3,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Network.Messages
 {
-	public interface MessageEvent
+	public interface IMessageEvent
 	{
 		void Handle(Session session, ClientMessage message);
 	}

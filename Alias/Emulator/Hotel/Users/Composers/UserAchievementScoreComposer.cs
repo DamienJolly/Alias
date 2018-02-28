@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Composers
 {
-	public class UserAchievementScoreComposer : MessageComposer
+	public class UserAchievementScoreComposer : IMessageComposer
 	{
 		private int achievementScore;
 

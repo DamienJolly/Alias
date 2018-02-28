@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Composers
 {
-	public class UserDataComposer : MessageComposer
+	public class UserDataComposer : IMessageComposer
 	{
 		private Habbo Habbo;
 

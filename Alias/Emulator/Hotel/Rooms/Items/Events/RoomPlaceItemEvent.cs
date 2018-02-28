@@ -9,17 +9,17 @@ using Alias.Emulator.Hotel.Users.Inventory.Composers;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
-	public class RoomPlaceItemEvent : MessageEvent
+	public class RoomPlaceItemEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			Room room = session.Habbo().CurrentRoom;
+			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			if (!room.RoomRights.HasRights(session.Habbo().Id))
+			if (!room.RoomRights.HasRights(session.Habbo.Id))
 			{
 				return;
 			}
@@ -41,7 +41,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			InventoryItem iItem = session.Habbo().Inventory().GetFloorItem(itemId);
+			InventoryItem iItem = session.Habbo.Inventory.GetFloorItem(itemId);
 			if (iItem == null)
 			{
 				return;
@@ -64,7 +64,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 						Id = iItem.Id,
 						Room = room,
 						ItemData = iItem.ItemData,
-						Owner = session.Habbo().Id,
+						Owner = session.Habbo.Id,
 						Position = new ItemPosition()
 						{
 							X = x,
@@ -76,7 +76,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 					room.ItemManager.AddItem(rItem);
 					room.UserManager.Send(new AddFloorItemComposer(rItem));
 
-					session.Habbo().Inventory().RemoveItem(iItem);
+					session.Habbo.Inventory.RemoveItem(iItem);
 					session.Send(new RemoveHabboItemComposer(iItem.Id));
 				}
 				else

@@ -3,7 +3,6 @@ using System.Linq;
 using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Hotel.Users.Handshake;
 using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Protocol;
 using DotNetty.Transport.Channels;
 
 namespace Alias.Emulator.Network.Sessions
@@ -17,31 +16,24 @@ namespace Alias.Emulator.Network.Sessions
 			SessionManager.RegisteredSessions = new Dictionary<IChannelHandlerContext, Session>();
 		}
 
-		public static Habbo Habbo(int UserId)
+		public static Habbo HabboById(int UserId)
 		{
-			if (SessionManager.IsOnline(UserId))
-			{
-				return SessionManager.SessionById(UserId).Habbo();
-			}
-			else
-			{
-				return HandshakeDatabase.BuildHabbo(UserId);
-			}
+			return SessionManager.IsOnline(UserId) ? SessionManager.SessionById(UserId).Habbo : HandshakeDatabase.BuildHabbo(UserId);
 		}
 
 		public static int OnlineUsers()
 		{
-			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo() != null && !o.Habbo().Disconnecting).Count();
+			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.Disconnecting).Count();
 		}
 
 		public static bool IsOnline(int userId)
 		{
-			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo() != null && o.Habbo().Id == userId && !o.Habbo().Disconnecting).Count() > 0;
+			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && o.Habbo.Id == userId && !o.Habbo.Disconnecting).Count() > 0;
 		}
 
 		public static Session SessionById(int userId)
 		{
-			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo() != null && o.Habbo().Id == userId).First();
+			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && o.Habbo.Id == userId).First();
 		}
 
 		public static void Register(IChannelHandlerContext context)
@@ -59,9 +51,9 @@ namespace Alias.Emulator.Network.Sessions
 			SessionManager.RegisteredSessions.Remove(context);
 		}
 
-		public static void Send(MessageComposer message)
+		public static void Send(IMessageComposer message)
 		{
-			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo() != null && !o.Habbo().Disconnecting).ToList().ForEach(o => o.Send(message));
+			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.Disconnecting).ToList().ForEach(o => o.Send(message));
 		}
 	}
 }

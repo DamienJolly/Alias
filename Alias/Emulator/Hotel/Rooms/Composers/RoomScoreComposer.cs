@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Composers
 {
-	public class RoomScoreComposer : MessageComposer
+	public class RoomScoreComposer : IMessageComposer
 	{
 		private int Score;
 		private bool CanVote;

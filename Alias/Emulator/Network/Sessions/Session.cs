@@ -8,19 +8,27 @@ namespace Alias.Emulator.Network.Sessions
 {
 	public class Session
 	{
-		private IChannelHandlerContext context;
-		public string UniqueId = "";
-		private Habbo habbo;
+		public string UniqueId
+		{
+			get; set;
+		} = "";
+
+		public Habbo Habbo
+		{
+			get; set;
+		}
+
+		private IChannelHandlerContext Context;
 
 		public Session(IChannelHandlerContext ctx)
 		{
-			this.context = ctx;
+			this.Context = ctx;
 		}
 
 		public void Send(ServerMessage response, bool dispose = true)
 		{
 			byte[] array = response.ByteBuffer();
-			this.Context().Channel.WriteAndFlushAsync(Unpooled.CopiedBuffer(array));
+			this.Context.Channel.WriteAndFlushAsync(Unpooled.CopiedBuffer(array));
 			if (dispose)
 			{
 				array = null;
@@ -28,36 +36,26 @@ namespace Alias.Emulator.Network.Sessions
 			}
 		}
 
-		public void Send(MessageComposer composer, bool dispose = true)
+		public void Send(IMessageComposer composer, bool dispose = true)
 		{
 			this.Send(composer.Compose(), dispose);
 		}
 
-		public IChannelHandlerContext Context()
-		{
-			return this.context;
-		}
-
 		public void Disconnect(bool closeSocket = true)
 		{
-			if (this.Habbo() != null)
+			if (this.Habbo != null)
 			{
-				this.Habbo().OnDisconnect();
+				this.Habbo.OnDisconnect();
 			}
 			if (closeSocket)
 			{
-				this.Context().CloseAsync();
+				this.Context.CloseAsync();
 			}
-		}
-
-		public Habbo Habbo()
-		{
-			return this.habbo;
 		}
 
 		public void AssignHabbo(Habbo habbo)
 		{
-			this.habbo = habbo;
+			this.Habbo = habbo;
 		}
 	}
 }

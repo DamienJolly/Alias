@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
-	public class SearchUserEvent : MessageEvent
+	public class SearchUserEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -16,7 +16,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 				return;
 			}
 
-			session.Send(new UserSearchResultComposer(MessengerDatabase.Search(username), session.Habbo().Messenger()));
+			session.Send(new UserSearchResultComposer(MessengerDatabase.Search(username), session.Habbo.Messenger));
 		}
 	}
 }

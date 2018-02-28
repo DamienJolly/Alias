@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 {
-	public class RoomUserChatComposer : MessageComposer
+	public class RoomUserChatComposer : IMessageComposer
 	{
 		private int VirtualId;
 		private string Message;
@@ -34,7 +34,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 			return result;
 		}
 
-		private uint Id
+		private int Id
 		{
 			get
 			{

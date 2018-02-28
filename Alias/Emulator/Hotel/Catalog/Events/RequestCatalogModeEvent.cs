@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Catalog.Events
 {
-	public class RequestCatalogModeEvent : MessageEvent
+	public class RequestCatalogModeEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -13,12 +13,12 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 			if (MODE.Equals("normal"))
 			{
 				session.Send(new CatalogModeComposer(0));
-				session.Send(new CatalogPagesListComposer(session.Habbo(), MODE));
+				session.Send(new CatalogPagesListComposer(session.Habbo, MODE));
 			}
 			else
 			{
 				session.Send(new CatalogModeComposer(1));
-				session.Send(new CatalogPagesListComposer(session.Habbo(), MODE));
+				session.Send(new CatalogPagesListComposer(session.Habbo, MODE));
 			}
 		}
 	}

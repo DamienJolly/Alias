@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Composers
 {
-	public class RoomDataComposer : MessageComposer
+	public class RoomDataComposer : IMessageComposer
 	{
 		private RoomData Data;
 		private bool Loading;
@@ -53,7 +53,7 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			message.Int(0);
 			message.Int(0);
 			message.Int(0);
-			message.Boolean(session.Habbo().Id == this.Data.OwnerId);
+			message.Boolean(session.Habbo.Id == this.Data.OwnerId);
 			message.Int(0);
 			message.Int(0);
 			message.Int(0);

@@ -4,11 +4,11 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class LoadFriendRequestsComposer : MessageComposer
+	public class LoadFriendRequestsComposer : IMessageComposer
 	{
-		private Messenger messenger;
+		private MessengerComponent messenger;
 
-		public LoadFriendRequestsComposer(Messenger messenger)
+		public LoadFriendRequestsComposer(MessengerComponent messenger)
 		{
 			this.messenger = messenger;
 		}

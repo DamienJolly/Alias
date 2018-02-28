@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Rights.Composers
 {
-	public class RoomRightsComposer : MessageComposer
+	public class RoomRightsComposer : IMessageComposer
 	{
 		private int Id;
 

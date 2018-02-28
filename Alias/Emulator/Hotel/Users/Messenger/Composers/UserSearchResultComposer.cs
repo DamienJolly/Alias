@@ -6,12 +6,12 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class UserSearchResultComposer : MessageComposer
+	public class UserSearchResultComposer : IMessageComposer
 	{
 		private List<Habbo> NotFriends;
 		private List<Habbo> Friends;
 
-		public UserSearchResultComposer(List<Habbo> habbos, Messenger messenger)
+		public UserSearchResultComposer(List<Habbo> habbos, MessengerComponent messenger)
 		{
 			this.NotFriends = new List<Habbo>();
 			this.Friends = new List<Habbo>();

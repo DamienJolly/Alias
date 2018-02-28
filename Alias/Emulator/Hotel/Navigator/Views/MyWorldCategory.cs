@@ -18,7 +18,7 @@ namespace Alias.Emulator.Hotel.Navigator.Views
 			{
 				case "my":
 					{
-						RoomDatabase.UserRooms(session.Habbo().Id).ForEach(Id =>
+						RoomDatabase.UserRooms(session.Habbo.Id).ForEach(Id =>
 						{
 							result.Add(RoomManager.RoomData(Id));
 						});

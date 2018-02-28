@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Network.Protocol
 {
@@ -10,22 +9,20 @@ namespace Alias.Emulator.Network.Protocol
 		private List<byte> Message;
 		private int MessageId;
 
-		public ServerMessage()
+		public ServerMessage(int Header)
 		{
 			this.Message = new List<byte>();
-			this.MessageId = 0;
+			this.MessageId = Header;
+			this.Short(Header);
 		}
 
-		public ServerMessage(uint Header)
+		public byte[] ByteBuffer()
 		{
-			this.Message = new List<byte>();
-			this.MessageId = 0;
-			this.Init(Header);
-		}
-
-		public void Boolean(bool b)
-		{
-			this.Bytes(new byte[] { b ? ((byte)1) : ((byte)0) }, false);
+			List<byte> list = new List<byte>();
+			list.AddRange(BitConverter.GetBytes(this.Message.Count));
+			list.Reverse();
+			list.AddRange(this.Message);
+			return list.ToArray();
 		}
 
 		public void Bytes(byte[] b, bool IsInt)
@@ -43,24 +40,10 @@ namespace Alias.Emulator.Network.Protocol
 			}
 		}
 
-		public List<byte> BytesTo(byte[] b, bool IsInt)
+		public void String(string s)
 		{
-			List<byte> list = new List<byte>();
-			if (IsInt)
-			{
-				for (int i = b.Length - 1; i > -1; i--)
-				{
-					list.Add(b[i]);
-				}
-				return list;
-			}
-			list.AddRange(b);
-			return list;
-		}
-
-		public void Int(int i)
-		{
-			this.Bytes(BitConverter.GetBytes(i), true);
+			this.Short(s.Length);
+			this.Bytes(Encoding.UTF8.GetBytes(s), false);
 		}
 
 		public void Short(int i)
@@ -69,73 +52,14 @@ namespace Alias.Emulator.Network.Protocol
 			this.Bytes(BitConverter.GetBytes(num), true);
 		}
 
-		public void String(string s)
+		public void Int(int i)
 		{
-			this.Short(s.Length);
-			this.Bytes(Encoding.UTF8.GetBytes(s), false);
+			this.Bytes(BitConverter.GetBytes(i), true);
 		}
 
-		public void UInt(uint i)
+		public void Boolean(bool b)
 		{
-			this.Int((int)i);
-		}
-
-		public byte[] ByteBuffer()
-		{
-			List<byte> list = new List<byte>();
-			list.AddRange(BitConverter.GetBytes(this.Message.Count));
-			list.Reverse();
-			list.AddRange(this.Message);
-			return list.ToArray();
-		}
-
-		public void Init(uint Header)
-		{
-			this.Message = new List<byte>();
-			this.MessageId = (int)Header;
-			this.Short((int)Header);
-		}
-
-		public void SetInt(int i, int startOn)
-		{
-			try
-			{
-				List<byte> message = new List<byte>();
-				message = this.Message;
-				List<byte> collection = this.BytesTo(BitConverter.GetBytes(i), true);
-				message.RemoveRange(startOn, collection.Count);
-				message.InsertRange(startOn, collection);
-				this.Message = message;
-			}
-			catch (Exception exception)
-			{
-				Logging.Error("Can't set the Int!", exception, "ServerMessage", "SetInt");
-			}
-		}
-
-		public override string ToString()
-		{
-			string output = "";
-			foreach (char chr in Encoding.UTF8.GetString(this.Message.ToArray()).ToCharArray())
-			{
-				if (chr < 31)
-				{
-					output += "[" + (int)chr + "]";
-				}
-				else
-				{
-					output += chr;
-				}
-			}
-			return output;
-		}
-
-		public int Id
-		{
-			get
-			{
-				return this.MessageId;
-			}
+			this.Bytes(new byte[] { b ? ((byte)1) : ((byte)0) }, false);
 		}
 
 		public void Dispose()

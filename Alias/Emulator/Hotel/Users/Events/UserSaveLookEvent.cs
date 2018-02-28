@@ -7,7 +7,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Events
 {
-	public class UserSaveLookEvent : MessageEvent
+	public class UserSaveLookEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -19,21 +19,21 @@ namespace Alias.Emulator.Hotel.Users.Events
 
 			string look = message.String();
 
-			session.Habbo().Look = look;
-			session.Habbo().Gender = gender;
-			session.Send(new UpdateUserLookComposer(session.Habbo()));
+			session.Habbo.Look = look;
+			session.Habbo.Gender = gender;
+			session.Send(new UpdateUserLookComposer(session.Habbo));
 
-			if (session.Habbo().Messenger() != null)
+			if (session.Habbo.Messenger != null)
 			{
-				session.Habbo().Messenger().UpdateStatus(true);
+				session.Habbo.Messenger.UpdateStatus(true);
 			}
 
-			if (session.Habbo().CurrentRoom != null)
+			if (session.Habbo.CurrentRoom != null)
 			{
-				session.Habbo().CurrentRoom.UserManager.Send(new RoomUserDataComposer(session.Habbo()));
+				session.Habbo.CurrentRoom.UserManager.Send(new RoomUserDataComposer(session.Habbo));
 			}
 
-			AchievementManager.ProgressAchievement(session.Habbo(), AchievementManager.GetAchievement("AvatarLooks"));
+			AchievementManager.ProgressAchievement(session.Habbo, AchievementManager.GetAchievement("AvatarLooks"));
 		}
 	}
 }

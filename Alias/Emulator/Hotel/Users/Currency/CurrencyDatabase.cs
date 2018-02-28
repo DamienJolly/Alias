@@ -6,25 +6,27 @@ namespace Alias.Emulator.Hotel.Users.Currency
 {
 	public class CurrencyDatabase
 	{
-		public static void InitCurrency(Currency currency)
+		public static List<CurrencyType> ReadCurrencies(int userId)
 		{
+			List<CurrencyType> currenies = new List<CurrencyType>();
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{
-				dbClient.AddParameter("id", currency.Habbo().Id);
+				dbClient.AddParameter("id", userId);
 				foreach (DataRow row in dbClient.DataTable("SELECT `type`, `amount` FROM `habbo_currencies` WHERE `user_id` = @id").Rows)
 				{
-					CurrencyType currencyType = new CurrencyType()
+					CurrencyType currency = new CurrencyType()
 					{
 						Type   = (int)row["type"],
 						Amount = (int)row["amount"]
 					};
-					currency.RequestCurrencies().Add(currencyType);
+					currenies.Add(currency);
 					row.Delete();
 				}
 			}
+			return currenies;
 		}
 
-		public static void SaveCurrencies(Currency currency)
+		public static void SaveCurrencies(CurrencyComponent currency)
 		{
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{

@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Catalog.Events
 {
-	public class RequestDiscountEvent : MessageEvent
+	public class RequestDiscountEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

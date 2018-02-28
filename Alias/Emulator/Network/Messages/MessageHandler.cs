@@ -10,11 +10,12 @@ namespace Alias.Emulator.Network.Messages
 {
 	public class MessageHandler
 	{
-		private static Dictionary<int, MessageEvent> Events;
-		private static MessageEvent EmptyMessageEvent;
+		private static Dictionary<int, IMessageEvent> Events;
+		private static IMessageEvent EmptyMessageEvent;
+
 		public static void Initialize()
 		{
-			MessageHandler.Events = new Dictionary<int, MessageEvent>();
+			MessageHandler.Events = new Dictionary<int, IMessageEvent>();
 			MessageHandler.EmptyMessageEvent = new EmptyMessageEvent();
 
 			AchievementEvents.Register();
@@ -25,12 +26,12 @@ namespace Alias.Emulator.Network.Messages
 			NavigatorEvents.Register();
 		}
 
-		public static void Register(int Id, MessageEvent evnt)
+		public static void Register(int Id, IMessageEvent evnt)
 		{
 			MessageHandler.Events.Add(Id, evnt);
 		}
 
-		public static MessageEvent Event(int Id)
+		public static IMessageEvent Event(int Id)
 		{
 			if (MessageHandler.Events.ContainsKey(Id))
 			{

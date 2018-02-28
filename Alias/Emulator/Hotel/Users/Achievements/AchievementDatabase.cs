@@ -7,25 +7,27 @@ namespace Alias.Emulator.Hotel.Users.Achievements
 {
     public class AchievementDatabase
     {
-		public static void InitAchievements(Achievement achievement)
+		public static List<AchievementProgress> ReadAchievements(int userId)
 		{
+			List<AchievementProgress> achievements = new List<AchievementProgress>();
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{
-				dbClient.AddParameter("id", achievement.Habbo().Id);
+				dbClient.AddParameter("id", userId);
 				foreach (DataRow row in dbClient.DataTable("SELECT `progress`, `name` FROM `habbo_achievements` WHERE `user_id` = @id").Rows)
 				{
-					AchievementProgress ach = new AchievementProgress()
+					AchievementProgress achievement = new AchievementProgress()
 					{
 						Achievement = AchievementManager.GetAchievement((string)row["name"]),
 						Progress    = (int)row["progress"]
 					};
-					achievement.RequestAchievementProgress().Add(ach);
+					achievements.Add(achievement);
 					row.Delete();
 				}
 			}
+			return achievements;
 		}
 
-		public static void SaveAchievements(Achievement achievement)
+		public static void SaveAchievements(AchievementComponent achievement)
 		{
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{

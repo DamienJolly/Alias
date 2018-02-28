@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Catalog.Composers
 {
-	public class AlertPurchaseUnavailableComposer : MessageComposer
+	public class AlertPurchaseUnavailableComposer : IMessageComposer
 	{
 		public static int ILLEGAL = 0;
 		public static int REQUIRES_CLUB = 1;

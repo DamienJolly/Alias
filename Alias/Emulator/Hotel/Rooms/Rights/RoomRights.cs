@@ -51,19 +51,19 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 		{
 			if (this.Room.RoomData.OwnerId == habbo.Id)
 			{
-				habbo.Session().Send(new RoomOwnerComposer());
-				habbo.Session().Send(new RoomRightsComposer(5));
-				Room.UserManager.UserBySession(habbo.Session()).Actions.Add("flatctrl", 5 + "");
+				habbo.Session.Send(new RoomOwnerComposer());
+				habbo.Session.Send(new RoomRightsComposer(5));
+				Room.UserManager.UserBySession(habbo.Session).Actions.Add("flatctrl", 5 + "");
 			}
 			else if (this.HasRights(habbo.Id))
 			{
-				habbo.Session().Send(new RoomRightsComposer(1));
-				Room.UserManager.UserBySession(habbo.Session()).Actions.Add("flatctrl", 1 + "");
+				habbo.Session.Send(new RoomRightsComposer(1));
+				Room.UserManager.UserBySession(habbo.Session).Actions.Add("flatctrl", 1 + "");
 			}
 			else
 			{
-				habbo.Session().Send(new RoomRightsComposer(0));
-				Room.UserManager.UserBySession(habbo.Session()).Actions.Add("flatctrl", 0 + "");
+				habbo.Session.Send(new RoomRightsComposer(0));
+				Room.UserManager.UserBySession(habbo.Session).Actions.Add("flatctrl", 0 + "");
 			}
 		}
 

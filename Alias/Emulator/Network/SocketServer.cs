@@ -10,19 +10,19 @@ namespace Alias.Emulator.Network
     class SocketServer
     {
 		private static ServerBootstrap Bootstrap;
-        private static MultithreadEventLoopGroup BossGroup;
-        private static MultithreadEventLoopGroup WorkerGroup;
-        private static IChannel BoundChannel;
+		private static MultithreadEventLoopGroup BossGroup;
+		private static MultithreadEventLoopGroup WorkerGroup;
+		private static IChannel BoundChannel;
 
 		public static async void Initialize()
         {
-            BossGroup = new MultithreadEventLoopGroup(1);
-            WorkerGroup = new MultithreadEventLoopGroup();
-            Bootstrap = new ServerBootstrap();
+			SocketServer.BossGroup   = new MultithreadEventLoopGroup(1);
+			SocketServer.WorkerGroup = new MultithreadEventLoopGroup();
+			SocketServer.Bootstrap   = new ServerBootstrap();
             try
             {
-                Bootstrap
-                    .Group(BossGroup, WorkerGroup)
+				SocketServer.Bootstrap
+					.Group(SocketServer.BossGroup, SocketServer.WorkerGroup)
                     .Channel<TcpServerSocketChannel>()
                     .Option(ChannelOption.AutoRead, true)
                     .Option(ChannelOption.SoBacklog, 100)
@@ -35,10 +35,10 @@ namespace Alias.Emulator.Network
                         IChannelPipeline pipeline = channel.Pipeline;
                         pipeline.AddLast("channel-handler", new ChannelHandler());
                     }));
-                BoundChannel = await Bootstrap.BindAsync(int.Parse(Configuration.Value("tcp.port")));
+				SocketServer.BoundChannel = await Bootstrap.BindAsync(int.Parse(Configuration.Value("tcp.port")));
 				Logging.Info("Listening for Connections on Port " + Configuration.Value("tcp.port"));
 				Logging.ReadLine();
-				await BoundChannel.CloseAsync();
+				await SocketServer.BoundChannel.CloseAsync();
             }
             catch (FormatException formatException)
             {
@@ -55,14 +55,14 @@ namespace Alias.Emulator.Network
             finally
             {
                 await Task.WhenAll(
-                    BossGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)),
-                    WorkerGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)));
+					SocketServer.BossGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)),
+					SocketServer.WorkerGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)));
             }
         }
 
         public void Stop()
         {
-            BoundChannel.CloseAsync();
+			SocketServer.BoundChannel.CloseAsync();
         }
     }
 }

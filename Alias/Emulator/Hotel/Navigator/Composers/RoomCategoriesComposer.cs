@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Navigator.Composers
 {
-	public class RoomCategoriesComposer : MessageComposer
+	public class RoomCategoriesComposer : IMessageComposer
 	{
 		int Rank;
 

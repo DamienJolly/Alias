@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Misc.Composers
 {
-	public class GenericErrorComposer : MessageComposer
+	public class GenericErrorComposer : IMessageComposer
 	{
 		int ErrorCode;
 

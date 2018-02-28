@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Events
 {
-    class RequestUserProfileEvent : MessageEvent
+    class RequestUserProfileEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -16,7 +16,7 @@ namespace Alias.Emulator.Hotel.Users.Events
 				return;
 			}
 			
-			session.Send(new UserProfileComposer(SessionManager.Habbo(userId), session));
+			session.Send(new UserProfileComposer(SessionManager.HabboById(userId), session));
 		}
 	}
 }

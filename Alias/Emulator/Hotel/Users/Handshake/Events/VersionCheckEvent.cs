@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Handshake.Events
 {
-	public class VersionCheckEvent : MessageEvent
+	public class VersionCheckEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

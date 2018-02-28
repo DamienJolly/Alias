@@ -37,7 +37,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
 		{
 			if (args.Length == 0)
 			{
-				session.Habbo().Notification("You must inculde something to update, e.g. :update catalog");
+				session.Habbo.Notification("You must inculde something to update, e.g. :update catalog");
 				return true;
 			}
 
@@ -82,11 +82,11 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
 					}
 
 				default:
-					session.Habbo().Notification("'" + type + "' is not a valid item to be updated.");
+					session.Habbo.Notification("'" + type + "' is not a valid item to be updated.");
 					return true;
 			}
 
-			session.Habbo().Notification("'" + type + "' was successfully updated.");
+			session.Habbo.Notification("'" + type + "' was successfully updated.");
 
 			return true;
 		}

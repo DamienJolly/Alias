@@ -1,44 +1,58 @@
 using System.Collections.Generic;
 using System.Data;
 using Alias.Emulator.Database;
-using Alias.Emulator.Hotel.Users.Handshake;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger
 {
 	public class MessengerDatabase
 	{
-		public static void InitMessenger(Messenger messenger)
+		public static List<MessengerFriend> ReadFriendships(int userId)
 		{
+			List<MessengerFriend> friends = new List<MessengerFriend>();
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{
-				dbClient.AddParameter("id", messenger.Habbo().Id);
+				dbClient.AddParameter("id", userId);
 				foreach (DataRow row in dbClient.DataTable("SELECT `user_one`, `user_two` FROM `messenger_friends` WHERE `user_one` = @id OR `user_two` = @id").Rows)
 				{
-					MessengerFriend messengerFriend = new MessengerFriend();
-					messengerFriend.Id = (int)row["user_one"] == messenger.Habbo().Id ? (int)row["user_two"] : (int)row["user_one"];
-					Habbo habbo = SessionManager.Habbo(messengerFriend.Id);
-					messengerFriend.Username = habbo.Username;
-					messengerFriend.Look = habbo.Look;
-					messengerFriend.Motto = habbo.Motto;
-					messengerFriend.InRoom = habbo.CurrentRoom != null;
-					messenger.FriendList().Add(messengerFriend);
-					row.Delete();
-				}
-
-				dbClient.ClearParameters();
-				dbClient.AddParameter("id", messenger.Habbo().Id);
-				foreach (DataRow row in dbClient.DataTable("SELECT `sender` FROM `messenger_requests` WHERE `reciever` = @id").Rows)
-				{
-					MessengerRequest messengerRequest = new MessengerRequest();
-					messengerRequest.Id = (int)row["sender"];
-					Habbo habbo = SessionManager.Habbo(messengerRequest.Id);
-					messengerRequest.Username = habbo.Username;
-					messengerRequest.Look = habbo.Look;
-					messenger.RequestList().Add(messengerRequest);
+					int targetId = (int)row["user_one"] == userId ? (int)row["user_two"] : (int)row["user_one"];
+					Habbo habbo = SessionManager.HabboById(targetId);
+					MessengerFriend friend = new MessengerFriend
+					{
+						Id       = targetId,
+						Username = habbo.Username,
+						Look     = habbo.Look,
+						Motto    = habbo.Motto,
+						InRoom   = habbo.CurrentRoom != null
+					};
+					friends.Add(friend);
 					row.Delete();
 				}
 			}
+			return friends;
+		}
+
+		public static List<MessengerRequest> ReadFriendRequests(int userId)
+		{
+			List<MessengerRequest> requests = new List<MessengerRequest>();
+			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			{
+				dbClient.AddParameter("id", userId);
+				foreach (DataRow row in dbClient.DataTable("SELECT `sender` FROM `messenger_requests` WHERE `reciever` = @id").Rows)
+				{
+					int targetId = (int)row["sender"];
+					Habbo habbo = SessionManager.HabboById(targetId);
+					MessengerRequest request = new MessengerRequest
+					{
+						Id       = targetId,
+						Username = habbo.Username,
+						Look     = habbo.Look
+					};
+					requests.Add(request);
+					row.Delete();
+				}
+			}
+			return requests;
 		}
 
 		public static List<Habbo> Search(string query)
@@ -52,7 +66,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 					dbClient.AddParameter("query", "%" + query + "%");
 					foreach (DataRow row in dbClient.DataTable("SELECT `id` FROM `habbos` WHERE `username` LIKE @query").Rows)
 					{
-						result.Add(SessionManager.Habbo((int)row["Id"]));
+						result.Add(SessionManager.HabboById((int)row["Id"]));
 						row.Delete();
 					}
 				}

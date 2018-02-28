@@ -110,7 +110,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 				text = text.Substring(0, 100);
 			}
 
-			if (text.StartsWith(":") && CommandHandler.Handle(this.Habbo.Session(), text))
+			if (text.StartsWith(":") && CommandHandler.Handle(this.Habbo.Session, text))
 			{
 				return;
 			}
@@ -121,9 +121,9 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			{
 				if (target != this)
 				{
-					target.Habbo.Session().Send(packet, false);
+					target.Habbo.Session.Send(packet, false);
 				}
-				this.Habbo.Session().Send(packet);
+				this.Habbo.Session.Send(packet);
 			}
 			else
 			{

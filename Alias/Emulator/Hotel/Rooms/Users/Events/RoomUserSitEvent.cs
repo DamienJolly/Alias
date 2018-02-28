@@ -4,11 +4,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Users.Events
 {
-	public class RoomUserSitEvent : MessageEvent
+	public class RoomUserSitEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			Room room = session.Habbo().CurrentRoom;
+			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
 			{
 				return;

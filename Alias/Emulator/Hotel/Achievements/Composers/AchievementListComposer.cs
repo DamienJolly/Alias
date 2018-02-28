@@ -6,7 +6,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Achievements.Composers
 {
-    public class AchievementListComposer : MessageComposer
+    public class AchievementListComposer : IMessageComposer
 	{
 		private Habbo habbo;
 
@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 			AchievementManager.GetAchievements().ForEach(achievement =>
 			{
 				int amount = 0;
-				AchievementProgress achievementProgress = habbo.Achievements().GetAchievementProgress(achievement);
+				AchievementProgress achievementProgress = habbo.Achievements.GetAchievementProgress(achievement);
 				if (achievementProgress != null)
 				{
 					amount = achievementProgress.Progress;

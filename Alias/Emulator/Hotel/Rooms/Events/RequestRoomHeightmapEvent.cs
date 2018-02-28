@@ -7,22 +7,22 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Events
 {
-	public class RequestRoomHeightmapEvent : MessageEvent
+	public class RequestRoomHeightmapEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			if (session.Habbo().CurrentRoom == null)
+			if (session.Habbo.CurrentRoom == null)
 			{
 				return;
 			}
-			session.Send(new RoomRelativeMapComposer(session.Habbo().CurrentRoom));
-			session.Send(new RoomHeightMapComposer(session.Habbo().CurrentRoom));
-			session.Send(new RoomEntryInfoComposer(session.Habbo().CurrentRoom, session.Habbo()));
-			session.Send(new RoomFloorThicknessUpdatedComposer(session.Habbo().CurrentRoom));
+			session.Send(new RoomRelativeMapComposer(session.Habbo.CurrentRoom));
+			session.Send(new RoomHeightMapComposer(session.Habbo.CurrentRoom));
+			session.Send(new RoomEntryInfoComposer(session.Habbo.CurrentRoom, session.Habbo));
+			session.Send(new RoomFloorThicknessUpdatedComposer(session.Habbo.CurrentRoom));
 
-			session.Habbo().CurrentRoom.UserManager.OnUserJoin(session);
+			session.Habbo.CurrentRoom.UserManager.OnUserJoin(session);
 
-			session.Send(new RoomFloorItemsComposer(session.Habbo().CurrentRoom.ItemManager.Items));
+			session.Send(new RoomFloorItemsComposer(session.Habbo.CurrentRoom.ItemManager.Items));
 			//session.Send(new ItemsComposer()); //todo: wall items
 		}
 	}

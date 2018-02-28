@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Landing.Composers
 {
-	public class HotelViewComposer : MessageComposer
+	public class HotelViewComposer : IMessageComposer
 	{
 		public ServerMessage Compose()
 		{

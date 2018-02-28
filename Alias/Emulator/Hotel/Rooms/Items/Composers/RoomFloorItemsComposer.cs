@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Composers
 {
-	public class RoomFloorItemsComposer : MessageComposer
+	public class RoomFloorItemsComposer : IMessageComposer
 	{
 		private List<RoomItem> Items;
 

@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Navigator.Composers
 {
-	public class NavigatorSavedSearchesComposer : MessageComposer
+	public class NavigatorSavedSearchesComposer : IMessageComposer
 	{
 		private List<NavigatorSearches> searches;
 

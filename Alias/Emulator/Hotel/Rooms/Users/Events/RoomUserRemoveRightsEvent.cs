@@ -6,19 +6,19 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Users.Events
 {
-	public class RoomUserRemoveRightsEvent : MessageEvent
+	public class RoomUserRemoveRightsEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
 			int amount = message.Integer();
 
-			Room room = session.Habbo().CurrentRoom;
+			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			if (room.RoomData.OwnerId == session.Habbo().Id)
+			if (room.RoomData.OwnerId == session.Habbo.Id)
 			{
 				for (int i = 0; i < amount; i++)
 				{

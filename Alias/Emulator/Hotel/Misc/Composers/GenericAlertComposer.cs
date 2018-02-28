@@ -5,13 +5,13 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Misc.Composers
 {
-	public class GenericAlertComposer : MessageComposer
+	public class GenericAlertComposer : IMessageComposer
 	{
 		private string message;
 
 		public GenericAlertComposer(string message, Session session)
 		{
-			this.message = message.Replace("%username%", session.Habbo().Username);
+			this.message = message.Replace("%username%", session.Habbo.Username);
 		}
 
 		public ServerMessage Compose()

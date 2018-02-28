@@ -5,19 +5,19 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Events
 {
-	public class AddSavedSearchEvent : MessageEvent
+	public class AddSavedSearchEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
 			string page = message.String();
 			string searchCode = message.String();
 
-			if (session.Habbo().NavigatorPreference.HasPage(page, searchCode))
+			if (session.Habbo.NavigatorPreference.HasPage(page, searchCode))
 				return;
 
-			session.Habbo().NavigatorPreference.AddSearch(page, searchCode);
+			session.Habbo.NavigatorPreference.AddSearch(page, searchCode);
 
-			session.Send(new NavigatorSavedSearchesComposer(session.Habbo().NavigatorPreference.NavigatorSearches));
+			session.Send(new NavigatorSavedSearchesComposer(session.Habbo.NavigatorPreference.NavigatorSearches));
 		}
 	}
 }

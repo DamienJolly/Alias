@@ -6,7 +6,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class FriendsComposer : MessageComposer
+	public class FriendsComposer : IMessageComposer
 	{
 		private List<MessengerFriend> FriendList;
 

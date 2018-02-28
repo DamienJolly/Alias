@@ -41,7 +41,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			{
 				RoomUser user = new RoomUser()
 				{
-					Habbo     = session.Habbo(),
+					Habbo     = session.Habbo,
 					Room      = Room,
 					VirtualId = NextVirtualId(),
 					Position = new UserPosition()
@@ -58,7 +58,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 				this.Users.Add(user);
 				session.Send(new RoomUsersComposer(this.Users));
 				session.Send(new RoomUserStatusComposer(this.Users));
-				Room.RoomRights.RefreshRights(session.Habbo());
+				Room.RoomRights.RefreshRights(session.Habbo);
 			}
 			else
 			{
@@ -84,7 +84,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 
 		public RoomUser UserBySession(Session session)
 		{
-			return this.Users.Where(user => user.Habbo.Id == session.Habbo().Id).First();
+			return this.Users.Where(user => user.Habbo.Id == session.Habbo.Id).First();
 		}
 
 		public RoomUser UserByVirtualid(int virtualId)
@@ -99,7 +99,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 
 		public bool UserExists(Session session)
 		{
-			return this.Users.Where(user => user.Habbo.Id == session.Habbo().Id).Count() > 0;
+			return this.Users.Where(user => user.Habbo.Id == session.Habbo.Id).Count() > 0;
 		}
 
 		internal RoomUser UserByName(string targetname)
@@ -121,16 +121,16 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			return this.VirtualId++;
 		}
 
-		public void Send(MessageComposer composer, List<RoomUser> except)
+		public void Send(IMessageComposer composer, List<RoomUser> except)
 		{
 			ServerMessage message = composer.Compose();
 			this.Users.ForEach(user =>
 			{
-				if (user.Habbo.Session() != null && !except.Contains(user))
+				if (user.Habbo.Session != null && !except.Contains(user))
 				{
 					try
 					{
-						user.Habbo.Session().Send(message, false);
+						user.Habbo.Session.Send(message, false);
 					}
 					catch (Exception ex)
 					{
@@ -140,16 +140,16 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			});
 		}
 
-		public void Send(MessageComposer composer, RoomUser except)
+		public void Send(IMessageComposer composer, RoomUser except)
 		{
 			ServerMessage message = composer.Compose();
 			this.Users.ForEach(user =>
 			{
-				if (user.Habbo.Session() != null && user.VirtualId != except.VirtualId)
+				if (user.Habbo.Session != null && user.VirtualId != except.VirtualId)
 				{
 					try
 					{
-						user.Habbo.Session().Send(message, false);
+						user.Habbo.Session.Send(message, false);
 					}
 					catch (Exception ex)
 					{
@@ -159,16 +159,16 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			});
 		}
 
-		public void Send(MessageComposer composer)
+		public void Send(IMessageComposer composer)
 		{
 			ServerMessage message = composer.Compose();
 			this.Users.ForEach(user =>
 			{
-				if (user.Habbo.Session() != null)
+				if (user.Habbo.Session != null)
 				{
 					try
 					{
-						user.Habbo.Session().Send(message, false);
+						user.Habbo.Session.Send(message, false);
 					}
 					catch (Exception ex)
 					{

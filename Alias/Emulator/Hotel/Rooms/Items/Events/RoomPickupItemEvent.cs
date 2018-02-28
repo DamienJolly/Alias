@@ -9,11 +9,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
-	public class RoomPickupItemEvent : MessageEvent
+	public class RoomPickupItemEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			Room room = session.Habbo().CurrentRoom;
+			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -43,7 +43,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				ItemData = rItem.ItemData
 			};
 
-			session.Habbo().Inventory().AddItems(new List<InventoryItem> { iItem });
+			session.Habbo.Inventory.AddItems(new List<InventoryItem> { iItem });
 
 			session.Send(new InventoryRefreshComposer());
 		}

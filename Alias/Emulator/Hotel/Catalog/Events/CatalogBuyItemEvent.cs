@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Catalog.Events
 {
-	public class CatalogBuyItemEvent : MessageEvent
+	public class CatalogBuyItemEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -21,7 +21,7 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 				return;
 			}
 
-			if (page.Rank > session.Habbo().Rank)
+			if (page.Rank > session.Habbo.Rank)
 			{
 				session.Send(new AlertPurchaseUnavailableComposer(AlertPurchaseUnavailableComposer.ILLEGAL));
 				return;
@@ -29,7 +29,7 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 
 			CatalogItem item = page.GetCatalogItem(itemId);
 
-			CatalogManager.PurchaseItem(page, item, session.Habbo(), count, extraData);
+			CatalogManager.PurchaseItem(page, item, session.Habbo, count, extraData);
 		}
 	}
 }

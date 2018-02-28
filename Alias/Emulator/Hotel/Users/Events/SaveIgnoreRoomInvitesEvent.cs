@@ -4,13 +4,13 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Events
 {
-	public class SaveIgnoreRoomInvitesEvent : MessageEvent
+	public class SaveIgnoreRoomInvitesEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
 			bool ignoreInvites = message.Boolean();
 
-			session.Habbo().Settings.IgnoreInvites = ignoreInvites;
+			session.Habbo.Settings.IgnoreInvites = ignoreInvites;
 		}
 	}
 }

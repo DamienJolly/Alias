@@ -103,8 +103,8 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 
 							if (usr.Room.Model.Door.X == usr.Position.X && usr.Room.Model.Door.Y == usr.Position.Y)
 							{
-								usr.Room.UserManager.OnUserLeave(usr.Habbo.Session());
-								usr.Habbo.Session().Send(new HotelViewComposer());
+								usr.Room.UserManager.OnUserLeave(usr.Habbo.Session);
+								usr.Habbo.Session.Send(new HotelViewComposer());
 							}
 						}
 					}

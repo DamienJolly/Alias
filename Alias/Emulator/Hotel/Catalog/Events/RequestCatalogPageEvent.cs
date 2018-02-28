@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Catalog.Events
 {
-	public class RequestCatalogPageEvent : MessageEvent
+	public class RequestCatalogPageEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -16,9 +16,9 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 			CatalogPage page = CatalogManager.GetCatalogPage(catalogPageId);
 			if (catalogPageId > 0 && page != null)
 			{
-				if (page.Rank <= session.Habbo().Rank && page.Enabled)
+				if (page.Rank <= session.Habbo.Rank && page.Enabled)
 				{
-					session.Send(new CatalogPageComposer(page, session.Habbo(), mode));
+					session.Send(new CatalogPageComposer(page, session.Habbo, mode));
 				}
 			}
 		}

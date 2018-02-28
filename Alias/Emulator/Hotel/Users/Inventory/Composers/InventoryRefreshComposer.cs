@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 {
-	public class InventoryRefreshComposer : MessageComposer
+	public class InventoryRefreshComposer : IMessageComposer
 	{
 		public ServerMessage Compose()
 		{
