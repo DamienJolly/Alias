@@ -8,8 +8,8 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Events
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			string gordanPath = message.String();
-			string externalVariables = message.String();
+			// not used
+			return;
 		}
 	}
 }

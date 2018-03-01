@@ -49,7 +49,6 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					habbo.Motto = (string)row["motto"];
 					habbo.Gender = (string)row["gender"];
 				}
-				row.Delete();
 			}
 			
 			return habbo;

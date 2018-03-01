@@ -3,94 +3,94 @@ namespace Alias.Emulator.Network.Messages.Headers
 	public class Incoming
 	{
 		// Users
-		public const int RequestUserProfileMessageEvent = 3265;
-		public const int RequestMeMenuSettingsMessageEvent = 2388;
-		public const int SaveUserVolumesMessageEvent = 1367;
-		public const int SavePreferOldChatMessageEvent = 1262;
-		public const int SaveIgnoreRoomInvitesMessageEvent = 1086;
-		public const int SaveBlockCameraFollowMessageEvent = 1461;
-		public const int UsernameMessageEvent = 3878;
-		public const int UserWearBadgeMessageEvent = 644;
-		public const int RequestWearingBadgesMessageEvent = 2091;
-		public const int UserSaveLookMessageEvent = 2730;
+		public const int RequestUserProfileMessageEvent = 2023;
+		public const int RequestMeMenuSettingsMessageEvent = 3537;
+		public const int SaveUserVolumesMessageEvent = 2507;
+		public const int SavePreferOldChatMessageEvent = 2213;
+		public const int SaveIgnoreRoomInvitesMessageEvent = 3110;
+		public const int SaveBlockCameraFollowMessageEvent = 191;
+		public const int UsernameMessageEvent = 3822;
+		public const int UserWearBadgeMessageEvent = 3804;
+		public const int RequestWearingBadgesMessageEvent = 1318;
+		public const int UserSaveLookMessageEvent = 1588;
 
 			// Messenger
-			public const int RequestInitFriendsMessageEvent = 2781;
-			public const int SearchUserMessageEvent = 1210;
-			public const int FriendRequestMessageEvent = 3157;
-			public const int AcceptFriendRequestMessageEvent = 137;
-			public const int DeclineFriendRequestMessageEvent = 2890;
-			public const int RequestFriendRequestsMessageEvent = 2448;
-			public const int FriendPrivateMessageMessageEvent = 3567;
-			public const int RemoveFriendMessageEvent = 1689;
-			public const int InviteFriendsMessageEvent = 1276;
-			public const int RequestFriendsMessageEvent = 1523;
-			public const int FindNewFriendsMessageEvent = 516;
+			public const int RequestInitFriendsMessageEvent = 1405;
+			public const int SearchUserMessageEvent = 3483;
+			public const int FriendRequestMessageEvent = 3779;
+			public const int AcceptFriendRequestMessageEvent = 1879;
+			public const int DeclineFriendRequestMessageEvent = 204;
+			public const int RequestFriendRequestsMessageEvent = 2467;
+			public const int FriendPrivateMessageMessageEvent = 2279;
+			public const int RemoveFriendMessageEvent = 853;
+			public const int InviteFriendsMessageEvent = 0x0500;
+			public const int RequestFriendsMessageEvent = 1368;
+			public const int FindNewFriendsMessageEvent = 1100;
 
 			// Currency
-			public const int RequestUserCreditsMessageEvent = 273;
+			public const int RequestUserCreditsMessageEvent = 2109;
 
 			// Handshake
 			public const int ReleaseVersionMessageEvent = 4000;
-			public const int SecureLoginMessageEvent = 2419;
-			public const int MachineIDMessageEvent = 2490;
-			public const int RequestUserDataMessageEvent = 357;
-			public const int VersionCheckMessageEvent = -1;
+			public const int SecureLoginMessageEvent = 1930;
+			public const int MachineIDMessageEvent = 3465;
+			public const int RequestUserDataMessageEvent = 3092;
+			public const int VersionCheckMessageEvent = 410;
 
 			// Inventory
-			public const int RequestInventoryItemsMessageEvent = 3150;
-			public const int RequestInventoryBadgesMessageEvent = 2769;
+			public const int RequestInventoryItemsMessageEvent = 2835;
+			public const int RequestInventoryBadgesMessageEvent = 1023;
 
 		// Rooms
-		public const int RequestHeightmapMessageEvent = 3898;
-		public const int RequestRoomDataMessageEvent = 2230;
-		public const int RequestRoomLoadMessageEvent = 2312;
-		public const int RequestRoomHeightmapMessageEvent = 2300;
-		public const int RequestRoomRightsMessageEvent = 3385;
+		public const int RequestHeightmapMessageEvent = 2443;
+		public const int RequestRoomDataMessageEvent = 425;
+		public const int RequestRoomLoadMessageEvent = 3464;
+		public const int RequestRoomHeightmapMessageEvent = 1583;
+		public const int RequestRoomRightsMessageEvent = 3071;
 
 			// Users
-			public const int RoomUserWalkMessageEvent = 3320;
-			public const int RoomUserTalkMessageEvent = 1314;
-			public const int RoomUserShoutMessageEvent = 2085;
-			public const int RoomUserWhisperMessageEvent = 1543;
-			public const int RoomUserActionMessageEvent = 2456;
-			public const int RoomUserSitMessageEvent = 2235;
-			public const int RoomUserSignMessageEvent = 1975;
-			public const int RoomUserLookAtPointMessageEvent = 3301;
-			public const int RoomUserDanceMessageEvent = 2080;
-			public const int RoomUserGiveRightsMessageEvent = 808;
-			public const int RoomUserRemoveRightsMessageEvent = 2064;
+			public const int RoomUserWalkMessageEvent = 3155;
+			public const int RoomUserTalkMessageEvent = 500;
+			public const int RoomUserShoutMessageEvent = 3803;
+			public const int RoomUserWhisperMessageEvent = 3485;
+			public const int RoomUserActionMessageEvent = 2925;
+			public const int RoomUserSitMessageEvent = 68;
+			public const int RoomUserSignMessageEvent = 1146;
+			public const int RoomUserLookAtPointMessageEvent = 258;
+			public const int RoomUserDanceMessageEvent = 3911;
+			public const int RoomUserGiveRightsMessageEvent = 3880;
+			public const int RoomUserRemoveRightsMessageEvent = 404;
 
 			// Items
-			public const int RotateMoveItemMessageEvent = 248;
-			public const int RoomPlaceItemMessageEvent = 1258;
-			public const int RoomPickupItemMessageEvent = 3456;
-			public const int ToggleFloorItemMessageEvent = 99;
+			public const int RotateMoveItemMessageEvent = 1620;
+			public const int RoomPlaceItemMessageEvent = 2187;
+			public const int RoomPickupItemMessageEvent = 3036;
+			public const int ToggleFloorItemMessageEvent = 1699;
 
 		// Landing
-		public const int HotelViewDataMessageEvent = 2912;
-		public const int HotelViewMessageEvent = 105;
-		public const int HotelViewRequestBonusRareMessageEvent = 957;
-		public const int RequestNewsListMessageEvent = 1827;
+		public const int HotelViewDataMessageEvent = 1579;
+		public const int HotelViewMessageEvent = 3119;
+		public const int HotelViewRequestBonusRareMessageEvent = 1019;
+		public const int RequestNewsListMessageEvent = 1156;
 
 		// Navigator
-		public const int RequestNavigatorDataMessageEvent = 2110;
-		public const int SaveWindowSettingsMessageEvent = 3159;
-		public const int SearchRoomsMessageEvent = 249;
-		public const int RequestRoomCategoriesMessageEvent = 3027;
-		public const int RequestNavigatorSettingsMessageEvent = 1782;
-		public const int RequestPromotedRoomsMessageEvent = 2908;
-		public const int AddSavedSearchMessageEvent = 2226;
-		public const int RemoveSavedSearchMessageEvent = 1954;
+		public const int RequestNavigatorDataMessageEvent = 2142;
+		public const int SaveWindowSettingsMessageEvent = 107;
+		public const int SearchRoomsMessageEvent = 3612;
+		public const int RequestRoomCategoriesMessageEvent = 3976;
+		public const int RequestNavigatorSettingsMessageEvent = 708;
+		public const int RequestPromotedRoomsMessageEvent = 2446;
+		public const int AddSavedSearchMessageEvent = 117;
+		public const int RemoveSavedSearchMessageEvent = 448;
 
 		// Catalog
-		public const int RequestCatalogIndexMessageEvent = 2529;
-		public const int RequestCatalogModeMessageEvent = 1195;
-		public const int RequestCatalogPageMessageEvent = 412;
-		public const int RequestDiscountMessageEvent = 223;
-		public const int CatalogBuyItemMessageEvent = 3492;
+		public const int RequestCatalogIndexMessageEvent = 1191;
+		public const int RequestCatalogModeMessageEvent = 2565;
+		public const int RequestCatalogPageMessageEvent = 3547;
+		public const int RequestDiscountMessageEvent = 703;
+		public const int CatalogBuyItemMessageEvent = 2687;
 
 		// Achievements
-		public const int RequestAchievementsMessageEvent = 219;
+		public const int RequestAchievementsMessageEvent = 3280;
 	}
 }
