@@ -23,7 +23,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RequestFriendRequestsMessageEvent = 2467;
 			public const int FriendPrivateMessageMessageEvent = 2279;
 			public const int RemoveFriendMessageEvent = 853;
-			public const int InviteFriendsMessageEvent = 0x0500;
+			public const int InviteFriendsMessageEvent = 1280;
 			public const int RequestFriendsMessageEvent = 1368;
 			public const int FindNewFriendsMessageEvent = 1100;
 
@@ -60,6 +60,16 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RoomUserDanceMessageEvent = 3911;
 			public const int RoomUserGiveRightsMessageEvent = 3880;
 			public const int RoomUserRemoveRightsMessageEvent = 404;
+
+			// Trading
+			public const int TradeStartMessageEvent = 3586;
+			public const int TradeOfferItemMessageEvent = 2175;
+			public const int TradeOfferMultipleItemsMessageEvent = 1725;
+			public const int TradeCancelOfferItemMessageEvent = 2177;
+			public const int TradeAcceptMessageEvent = 999;
+			public const int TradeUnAcceptMessageEvent = 2851;
+			public const int TradeConfirmMessageEvent = 727;
+			public const int TradeCloseMessageEvent = 3602;
 
 			// Items
 			public const int RotateMoveItemMessageEvent = 1620;

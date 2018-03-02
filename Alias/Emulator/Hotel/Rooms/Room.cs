@@ -6,6 +6,7 @@ using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.Pathfinding;
 using Alias.Emulator.Hotel.Rooms.Rights;
 using Alias.Emulator.Hotel.Rooms.Tasks;
+using Alias.Emulator.Hotel.Rooms.Trading;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Rooms.Users.Tasks;
 
@@ -56,6 +57,11 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		}
 
+		public RoomTrading RoomTrading
+		{
+			get; set;
+		}
+
 		public int IdleTime = 0;
 
 		public bool Disposing
@@ -85,6 +91,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			this.PathFinder = new PathFinder(this);
 			this.RoomRights = new RoomRights(this);
+			this.RoomTrading = new RoomTrading(this);
 		}
 
 		public void Unload()

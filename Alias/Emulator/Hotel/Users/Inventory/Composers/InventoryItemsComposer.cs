@@ -42,8 +42,8 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 				}
 
 				message.Boolean(false); //canRecyle
-				message.Boolean(false); //canTrade
-				message.Boolean(false); //canStack
+				message.Boolean(true); //canTrade
+				message.Boolean(true); //canStack
 				message.Boolean(false); //canSell
 
 				message.Int(-1); // item Rent time

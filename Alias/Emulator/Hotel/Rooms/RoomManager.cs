@@ -24,6 +24,8 @@ namespace Alias.Emulator.Hotel.Rooms
 			switch (tradeState)
 			{
 				case RoomTradeState.ALLOWED:
+					return 2;
+				case RoomTradeState.OWNER:
 					return 1;
 				case RoomTradeState.FORBIDDEN:
 					return 0;
@@ -36,8 +38,10 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			switch (state)
 			{
-				case 1:
+				case 2:
 					return RoomTradeState.ALLOWED;
+				case 1:
+					return RoomTradeState.OWNER;
 				case 0:
 					return RoomTradeState.FORBIDDEN;
 				default:

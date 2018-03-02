@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Alias.Emulator.Hotel.Rooms.Trading;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Protocol;
@@ -74,6 +75,13 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 				this.Users.Remove(user);
 				this.Send(new RoomUserRemoveComposer(user.VirtualId));
 				user.Habbo.CurrentRoom = null;
+
+				RoomTrade trade = this.Room.RoomTrading.GetActiveTrade(user);
+				if (trade != null)
+				{
+					trade.StopTrade(user);
+				}
+
 				user.Dispose();
 			}
 			else

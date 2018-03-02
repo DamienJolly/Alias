@@ -83,6 +83,15 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RoomUserActionMessageComposer = 205;
 			public const int RoomUserDanceMessageComposer = 586;
 
+			// Trading
+			public const int TradeStartFailMessageComposer = 1608;
+			public const int TradeStartMessageComposer = 2786;
+			public const int TradeAcceptedMessageComposer = 3479;
+			public const int TradeClosedMessageComposer = 1147;
+			public const int TradeCompleteMessageComposer = 468;
+			public const int TradeUpdateMessageComposer = 2275;
+			public const int TradingWaitingConfirmMessageComposer = 2009;
+
 			// Items
 			public const int AddFloorItemMessageComposer = 2396;
 			public const int RemoveFloorItemMessageComposer = 2986;

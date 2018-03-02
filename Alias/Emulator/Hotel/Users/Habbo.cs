@@ -28,6 +28,7 @@ namespace Alias.Emulator.Hotel.Users
 		public int AchievementScore { get; set; } = 0;
 		public bool Disconnecting { get; set; } = false;
 		public bool Muted { get; set; } = false;
+		public bool AllowTrading { get; set; } = true;
 		public Room CurrentRoom { get; set; } = null;
 		public NavigatorPreference NavigatorPreference { get; set; }
 		public UserSettings Settings { get; set; }
@@ -67,6 +68,10 @@ namespace Alias.Emulator.Hotel.Users
 		public void OnDisconnect()
 		{
 			this.Disconnecting = true;
+			if (this.CurrentRoom != null)
+			{
+				this.CurrentRoom.UserManager.OnUserLeave(this.Session);
+			}
 			if (this.Settings != null)
 			{
 				UserDatabase.UpdateSettings(this.Settings, this.Id);
