@@ -36,7 +36,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 				message.Boolean(true);
 				message.Boolean(false);
 				message.Boolean(false);
-				message.Short(0); //relation
+				message.Short(friend.Relation);
 			});
 			return message;
 		}

@@ -1,3 +1,4 @@
+using Alias.Emulator.Hotel.Users.Messenger;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Messages.Headers;
 using Alias.Emulator.Network.Protocol;
@@ -25,7 +26,7 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			result.String(habbo.Motto);
 			result.String("01.01.1970 00:00:00"); //Account created
 			result.Int(habbo.AchievementScore);
-			result.Int(SessionManager.IsOnline(habbo.Id) ? habbo.Messenger.FriendList().Count : 0); //todo: get friends amount for offline users
+			result.Int(SessionManager.IsOnline(habbo.Id) ? habbo.Messenger.FriendList().Count : MessengerComponent.GetFriendList(habbo.Id).Count);
 			result.Boolean(viewer.Habbo.Messenger.IsFriend(habbo.Id));
 			result.Boolean(viewer.Habbo.Messenger.RequestExists(habbo.Id));
 			result.Boolean(SessionManager.IsOnline(habbo.Id));

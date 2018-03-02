@@ -33,7 +33,7 @@ namespace Alias.Emulator.Network.Sessions
 
 		public static Session SessionById(int userId)
 		{
-			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && o.Habbo.Id == userId).First();
+			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && o.Habbo.Id == userId).FirstOrDefault();
 		}
 
 		public static void Register(IChannelHandlerContext context)

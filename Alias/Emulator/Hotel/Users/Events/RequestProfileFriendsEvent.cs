@@ -1,25 +1,25 @@
-using Alias.Emulator.Hotel.Users.Badges;
 using Alias.Emulator.Hotel.Users.Composers;
+using Alias.Emulator.Hotel.Users.Messenger;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Events
 {
-	public class RequestWearingBadgesEvent : IMessageEvent
+    class RequestProfileFriendsEvent : IMessageEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
 			int userId = message.Integer();
 			Habbo habbo = SessionManager.HabboById(userId);
 
-			if (habbo.Badges == null)
+			if (habbo.Messenger != null)
 			{
-				session.Send(new UserBadgesComposer(BadgeComponent.Initialize(userId), userId));
+				session.Send(new ProfileFriendsComposer(userId, habbo.Messenger.FriendList()));
 			}
 			else
 			{
-				session.Send(new UserBadgesComposer(habbo.Badges.GetWearingBadges(), userId));
+				session.Send(new ProfileFriendsComposer(userId, MessengerComponent.GetFriendList(userId)));
 			}
 		}
 	}

@@ -13,9 +13,9 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{
 				dbClient.AddParameter("id", userId);
-				foreach (DataRow row in dbClient.DataTable("SELECT `user_one`, `user_two` FROM `messenger_friends` WHERE `user_one` = @id OR `user_two` = @id").Rows)
+				foreach (DataRow row in dbClient.DataTable("SELECT `target_id`, `relation` FROM `messenger_friends` WHERE `user_id` = @id").Rows)
 				{
-					int targetId = (int)row["user_one"] == userId ? (int)row["user_two"] : (int)row["user_one"];
+					int targetId = (int)row["target_id"];
 					Habbo habbo = SessionManager.HabboById(targetId);
 					MessengerFriend friend = new MessengerFriend
 					{
@@ -23,7 +23,8 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 						Username = habbo.Username,
 						Look     = habbo.Look,
 						Motto    = habbo.Motto,
-						InRoom   = habbo.CurrentRoom != null
+						InRoom   = habbo.CurrentRoom != null,
+						Relation = (int)row["relation"]
 					};
 					friends.Add(friend);
 					row.Delete();
@@ -31,7 +32,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			}
 			return friends;
 		}
-
+		
 		public static List<MessengerRequest> ReadFriendRequests(int userId)
 		{
 			List<MessengerRequest> requests = new List<MessengerRequest>();
@@ -111,28 +112,43 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			}
 		}
 
-		public static void CreateFriendship(int UserOne, int UserTwo)
+		public static void UpdateRelation(int targetId, int userId, int type)
 		{
-			if (UserOne > 0 && UserTwo > 0)
+			if (targetId > 0 && userId > 0 && type > 0)
 			{
 				using (DatabaseClient dbClient = DatabaseClient.Instance())
 				{
-					dbClient.AddParameter("one", UserOne);
-					dbClient.AddParameter("two", UserTwo);
-					dbClient.Query("INSERT INTO `messenger_friends` (`user_one`, `user_two`) VALUES (@one, @two)");
+					dbClient.AddParameter("targetId", targetId);
+					dbClient.AddParameter("userId", userId);
+					dbClient.AddParameter("type", type);
+					dbClient.Query("UPDATE `messenger_friends` SET `relation` = @type WHERE `target_id` = @targetId AND `user_id` = @userId");
 				}
 			}
 		}
 
-		public static void RemoveFriend(int UserOne, int UserTwo)
+		public static void CreateFriendship(int targetId, int userId)
 		{
-			if (UserOne > 0 && UserTwo > 0)
+			if (targetId > 0 && userId > 0)
 			{
 				using (DatabaseClient dbClient = DatabaseClient.Instance())
 				{
-					dbClient.AddParameter("one", UserOne);
-					dbClient.AddParameter("two", UserTwo);
-					dbClient.Query("DELETE FROM `messenger_friends` WHERE (`user_one` = @one AND `user_two` = @two) OR (`user_one` = @two AND `user_two` = @one)");
+					dbClient.AddParameter("targetId", targetId);
+					dbClient.AddParameter("userId", userId);
+					dbClient.Query("INSERT INTO `messenger_friends` (`target_id`, `user_id`) VALUES (@targetId, @userId)");
+					dbClient.Query("INSERT INTO `messenger_friends` (`user_id`, `target_id`) VALUES (@targetId, @userId)");
+				}
+			}
+		}
+
+		public static void RemoveFriend(int targetId, int userId)
+		{
+			if (targetId > 0 && userId > 0)
+			{
+				using (DatabaseClient dbClient = DatabaseClient.Instance())
+				{
+					dbClient.AddParameter("targetId", targetId);
+					dbClient.AddParameter("userId", userId);
+					dbClient.Query("DELETE FROM `messenger_friends` WHERE (`target_id` = @targetId AND `user_id` = @userId) OR (`target_id` = @userId AND `user_id` = @targetId)");
 				}
 			}
 		}

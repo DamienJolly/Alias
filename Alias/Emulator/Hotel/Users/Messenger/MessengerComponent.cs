@@ -13,9 +13,14 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 
 		public MessengerComponent(Habbo h)
 		{
-			this.Friends = MessengerDatabase.ReadFriendships(h.Id);
 			this.Requests = MessengerDatabase.ReadFriendRequests(h.Id);
+			this.Friends = MessengerDatabase.ReadFriendships(h.Id);
 			this.habbo = h;
+		}
+
+		public static List<MessengerFriend> GetFriendList(int userId)
+		{
+			return MessengerDatabase.ReadFriendships(userId);
 		}
 
 		public void UpdateStatus(bool notif)
@@ -29,6 +34,13 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			}
 		}
 
+		public void SetRelation(int userId, int type)
+		{
+			MessengerDatabase.UpdateRelation(userId, this.habbo.Id, type);
+			this.Friend(userId).Relation = type;
+			this.Update(userId);
+		}
+
 		public void Update(int userId)
 		{
 			if (this.IsFriend(userId))
@@ -38,6 +50,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 				this.Friend(userId).Username = h.Username;
 				this.Friend(userId).Motto = h.Motto;
 				this.Friend(userId).InRoom = h.CurrentRoom != null;
+				this.Friend(userId).Relation = this.Friend(userId).Relation;
 				this.Habbo().Session.Send(new UpdateFriendComposer(this.Friend(userId)));
 			}
 		}
@@ -102,11 +115,12 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 				Habbo h = SessionManager.HabboById(UserId);
 				MessengerFriend friend = new MessengerFriend()
 				{
-					Id         = h.Id,
-					Username   = h.Username,
-					Look       = h.Look,
-					Motto      = h.Motto,
-					InRoom     = h.CurrentRoom != null
+					Id       = h.Id,
+					Username = h.Username,
+					Look     = h.Look,
+					Motto    = h.Motto,
+					InRoom   = h.CurrentRoom != null,
+					Relation = 0
 				};
 				this.FriendList().Add(friend);
 				this.Habbo().Session.Send(new UpdateFriendComposer(friend));

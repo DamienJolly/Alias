@@ -7,48 +7,48 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
 	public class UpdateFriendComposer : IMessageComposer
 	{
-		private MessengerFriend Friend;
-		private int FriendId = 0;
+		private MessengerFriend friend;
+		private int friendId = 0;
 
 		public UpdateFriendComposer(MessengerFriend friend)
 		{
-			this.Friend = friend;
+			this.friend = friend;
 		}
 
 		public UpdateFriendComposer(int friendId)
 		{
-			this.FriendId = friendId;
+			this.friendId = friendId;
 		}
 
 		public ServerMessage Compose()
 		{
 			ServerMessage message = new ServerMessage(Outgoing.UpdateFriendMessageComposer);
-			if (this.FriendId > 0)
+			if (this.friendId > 0)
 			{
 				message.Int(0);
 				message.Int(1);
 				message.Int(-1);
-				message.Int(this.FriendId);
+				message.Int(this.friendId);
 			}
 			else
 			{
 				message.Int(0);
 				message.Int(1);
 				message.Int(0);
-				message.Int(this.Friend.Id);
-				message.String(this.Friend.Username);
+				message.Int(this.friend.Id);
+				message.String(this.friend.Username);
 				message.Int(1); //Gender???
-				message.Boolean(SessionManager.IsOnline(this.Friend.Id));
-				message.Boolean(this.Friend.InRoom); //InRoom
-				message.String(this.Friend.Look);
+				message.Boolean(SessionManager.IsOnline(this.friend.Id));
+				message.Boolean(this.friend.InRoom);
+				message.String(this.friend.Look);
 				message.Int(0); //category id
-				message.String(this.Friend.Motto);
+				message.String(this.friend.Motto);
 				message.String("");
 				message.String("");
 				message.Boolean(true);
 				message.Boolean(false);
 				message.Boolean(false);
-				message.Short(0);//relation
+				message.Short(this.friend.Relation);
 			}
 			return message;
 		}

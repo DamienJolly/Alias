@@ -15,6 +15,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int MeMenuSettingsMessageComposer = 2204;
 		public const int UserBadgesMessageComposer = 1757;
 		public const int UpdateUserLookMessageComposer = 757;
+		public const int ProfileFriendsMessageComposer = 3458;
 
 			//Achievements
 			public const int AchievementUnlockedMessageComposer = 2603;

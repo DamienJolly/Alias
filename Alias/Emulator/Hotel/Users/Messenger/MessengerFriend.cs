@@ -28,9 +28,9 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			get; set;
 		}
 
-		public MessengerFriend()
+		public int Relation
 		{
-
+			get; set;
 		}
 	}
 }

@@ -19,6 +19,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			MessageHandler.Register(Incoming.InviteFriendsMessageEvent, new InviteFriendsEvent());
 			MessageHandler.Register(Incoming.RequestFriendsMessageEvent, new RequestFriendsEvent());
 			MessageHandler.Register(Incoming.FindNewFriendsMessageEvent, new FindNewFriendsEvent());
+			MessageHandler.Register(Incoming.ChangeRelationMessageEvent, new ChangeRelationEvent());
 		}
 	}
 }

@@ -13,6 +13,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int UserWearBadgeMessageEvent = 3804;
 		public const int RequestWearingBadgesMessageEvent = 1318;
 		public const int UserSaveLookMessageEvent = 1588;
+		public const int RequestProfileFriendsMessageEvent = 3763;
 
 			// Messenger
 			public const int RequestInitFriendsMessageEvent = 1405;
@@ -26,6 +27,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int InviteFriendsMessageEvent = 1280;
 			public const int RequestFriendsMessageEvent = 1368;
 			public const int FindNewFriendsMessageEvent = 1100;
+			public const int ChangeRelationMessageEvent = 2356;
 
 			// Currency
 			public const int RequestUserCreditsMessageEvent = 2109;
