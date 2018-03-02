@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Network.Messages;
@@ -29,13 +30,27 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				return;
 			}
 
-			List<InventoryItem> items = new List<InventoryItem>();
-			for (int i = 0; i < message.Integer(); i++)
+			int amount = message.Integer();
+			int itemId = message.Integer();
+
+			InventoryItem item = session.Habbo.Inventory.GetFloorItem(itemId);
+			if (item == null)
 			{
-				InventoryItem item = session.Habbo.Inventory.GetFloorItem(message.Integer());
-				if (item != null)
+				return;
+			}
+
+			int count = 0;
+			List<InventoryItem> items = new List<InventoryItem>();
+			foreach (InventoryItem i in session.Habbo.Inventory.FloorItems().Where(x => x.ItemData.Id == item.ItemData.Id))
+			{
+				if (!trade.GetTradeUser(user).OfferedItems.Contains(i))
 				{
-					items.Add(item);
+					items.Add(i);
+					count++;
+				}
+				if (count == amount)
+				{
+					break;
 				}
 			}
 
