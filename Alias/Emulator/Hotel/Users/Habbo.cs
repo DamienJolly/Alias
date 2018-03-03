@@ -1,6 +1,7 @@
 using System;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Navigator;
+using Alias.Emulator.Hotel.Permissions;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Rooms.Users.Chat;
@@ -21,7 +22,7 @@ namespace Alias.Emulator.Hotel.Users
 		public string Look { get; set; } = "";
 		public string Gender { get; set; } = "M";
 		public string Motto { get; set; } = "Hello world!";
-		public int Rank { get; set; } = 1;
+		public int Rank { get; set; } = 6;
 		public int ClubLevel { get; set; } = 1;
 		public int Credits { get; set; } = 9999;
 		public int HomeRoom { get; set; } = 0;
@@ -97,6 +98,11 @@ namespace Alias.Emulator.Hotel.Users
 			{
 				this.Session.Send(new GenericAlertComposer(text, Session));
 			}
+		}
+
+		public bool HasPermission(string param)
+		{
+			return PermissionManager.HasPermission(this.Rank, param);
 		}
 
 		public void Dispose()

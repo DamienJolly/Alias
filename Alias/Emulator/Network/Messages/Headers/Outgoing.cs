@@ -108,6 +108,9 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int BonusRareMessageComposer = 761;
 		public const int HotelViewMessageComposer = 730;
 
+		// Moderation
+		public const int ModToolMessageComposer = 258;
+
 		// Navigator
 		public const int RoomCategoriesMessageComposer = 1084;
 		public const int NavigatorSearchResultsMessageComposer = 1388;

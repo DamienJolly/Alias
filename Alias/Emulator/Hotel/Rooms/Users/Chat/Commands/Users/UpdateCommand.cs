@@ -21,7 +21,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
 		{
 			get
 			{
-				return "Updates verious.";
+				return "Updates various aspects of the hotel.";
 			}
 		}
 
@@ -29,7 +29,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
 		{
 			get
 			{
-				return string.Empty;
+				return "%variable%";
 			}
 		}
 

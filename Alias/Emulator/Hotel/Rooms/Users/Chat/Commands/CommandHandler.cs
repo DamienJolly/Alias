@@ -26,7 +26,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands
 			{
 				ICommand command = CommandHandler.Commands.Where(cmd => cmd.Name.Equals(text.Substring(1).Split(' ')[0])).First();
 				string[] parameters;
-				if (PermissionManager.HasCommandPermission(session.Habbo.Rank, command.Name))
+				if (!PermissionManager.HasCommandPermission(session.Habbo.Rank, command.Name))
 				{
 					return false;
 				}

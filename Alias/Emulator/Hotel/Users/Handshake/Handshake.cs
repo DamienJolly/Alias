@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Alias.Emulator.Hotel.Achievements.Composers;
 using Alias.Emulator.Hotel.Misc.Composers;
+using Alias.Emulator.Hotel.Moderation.Composers;
 using Alias.Emulator.Hotel.Navigator.Composers;
 using Alias.Emulator.Hotel.Permissions;
 using Alias.Emulator.Hotel.Users.Composers;
@@ -47,9 +48,9 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					//session.Send(new GameCenterAccountInfoComposer()); //todo:
 					session.Send(new UserClubComposer()); //todo:
 
-					if(PermissionManager.HasPermission(session.Habbo.Rank, "mod_tool"))
+					if(PermissionManager.HasPermission(session.Habbo.Rank, "acc_modtool"))
 					{
-						//session.Send(new ModToolComposer(session.Habbo));
+						session.Send(new ModToolComposer(session.Habbo));
 					}
 
 					session.Send(new NavigatorMetaDataComposer());

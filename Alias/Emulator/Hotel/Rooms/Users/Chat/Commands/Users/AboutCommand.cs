@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using Alias.Emulator.Hotel.Items;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
