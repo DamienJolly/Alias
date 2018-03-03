@@ -13,6 +13,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 			MessageHandler.Register(Incoming.MachineIDMessageEvent, new MachineIDEvent());
 			MessageHandler.Register(Incoming.RequestUserDataMessageEvent, new RequestUserDataEvent());
 			MessageHandler.Register(Incoming.VersionCheckMessageEvent, new VersionCheckEvent());
+			MessageHandler.Register(Incoming.PingMessageEvent, new PingEvent());
 		}
 	}
 }

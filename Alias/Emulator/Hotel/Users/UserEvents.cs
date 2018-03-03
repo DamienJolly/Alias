@@ -23,6 +23,7 @@ namespace Alias.Emulator.Hotel.Users
 			MessageHandler.Register(Incoming.RequestWearingBadgesMessageEvent, new RequestWearingBadgesEvent());
 			MessageHandler.Register(Incoming.UserSaveLookMessageEvent, new UserSaveLookEvent());
 			MessageHandler.Register(Incoming.RequestProfileFriendsMessageEvent, new RequestProfileFriendsEvent());
+			MessageHandler.Register(Incoming.UserActivityMessageEvent, new UserActivityEvent());
 
 			MessengerEvents.Register();
 			CurrencyEvents.Register();
