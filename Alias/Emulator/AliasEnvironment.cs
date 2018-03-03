@@ -4,6 +4,7 @@ using Alias.Emulator.Hotel.Achievements;
 using Alias.Emulator.Hotel.Catalog;
 using Alias.Emulator.Hotel.Items;
 using Alias.Emulator.Hotel.Navigator;
+using Alias.Emulator.Hotel.Permissions;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.Users.Chat.Commands;
@@ -47,6 +48,7 @@ namespace Alias.Emulator
 
 			MessageHandler.Initialize();
 			AchievementManager.Initialize();
+			PermissionManager.Initialize();
 			ItemManager.Initialize();
 			CatalogManager.Initialize();
 			RoomModelManager.Initialize();

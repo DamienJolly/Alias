@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Alias.Emulator.Hotel.Permissions;
 using Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users;
 using Alias.Emulator.Network.Sessions;
 
@@ -25,6 +26,10 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands
 			{
 				ICommand command = CommandHandler.Commands.Where(cmd => cmd.Name.Equals(text.Substring(1).Split(' ')[0])).First();
 				string[] parameters;
+				if (PermissionManager.HasCommandPermission(session.Habbo.Rank, command.Name))
+				{
+					return false;
+				}
 				if (text.Length <= 2 + command.Name.Length)
 				{
 					parameters = new string[0];
