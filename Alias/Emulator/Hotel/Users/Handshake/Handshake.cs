@@ -50,7 +50,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 
 					if(PermissionManager.HasPermission(session.Habbo.Rank, "acc_modtool"))
 					{
-						session.Send(new ModToolComposer(session.Habbo));
+						session.Send(new ModerationToolComposer(session.Habbo));
 					}
 
 					session.Send(new NavigatorMetaDataComposer());

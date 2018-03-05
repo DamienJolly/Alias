@@ -156,7 +156,7 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 				}
 			}
 
-			if (topItem == null || lowestSitItem == null )
+			if (topItem == null || lowestSitItem == null)
 			{
 				return false;
 			}

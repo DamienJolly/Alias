@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Alias.Emulator.Hotel.Achievements;
 using Alias.Emulator.Hotel.Catalog;
 using Alias.Emulator.Hotel.Landing;
+using Alias.Emulator.Hotel.Moderation;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Users;
@@ -18,6 +19,7 @@ namespace Alias.Emulator.Network.Messages
 			MessageHandler.Events = new Dictionary<int, IMessageEvent>();
 			MessageHandler.EmptyMessageEvent = new EmptyMessageEvent();
 
+			ModerationEvents.Register();
 			AchievementEvents.Register();
 			CatalogEvents.Register();
 			UserEvents.Register();

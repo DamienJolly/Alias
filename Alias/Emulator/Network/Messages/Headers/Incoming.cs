@@ -81,6 +81,25 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RoomPickupItemMessageEvent = 3036;
 			public const int ToggleFloorItemMessageEvent = 1699;
 
+		// Moderation
+		public const int ModerationAlertMessageEvent = 1932;
+		public const int ModerationRequestUserInfoMessageEvent = 3939;
+		public const int ModerationRequestRoomInfoMessageEvent = 306;
+		public const int ModerationRequestRoomVisitsMessageEvent = 3371;
+		public const int ModerationRequestRoomChatlogMessageEvent = 891;
+		public const int ModerationChangeRoomSettingsMessageEvent = 124;
+		public const int ModerationRequestUserChatlogMessageEvent = 1362;
+		public const int ModerationKickMessageEvent = 472;
+		public const int ModerationPickTicketMessageEvent = 3388;
+		public const int ModerationReleaseTicketMessageEvent = 263;
+		public const int ModerationCloseTicketMessageEvent = 1383;
+		public const int ModerationRoomAlertMessageEvent = 557;
+		public const int ModerationRequestIssueChatlogMessageEvent = 2986;
+		public const int ModerationSanctionAlertMessageEvent = 2026;
+		public const int ModerationSanctionMuteMessageEvent = 1034;
+		public const int ModerationSanctionBanMessageEvent = 2429;
+		public const int ModerationSanctionTradeLockMessageEvent = 57;
+
 		// Landing
 		public const int HotelViewDataMessageEvent = 1579;
 		public const int HotelViewMessageEvent = 3119;

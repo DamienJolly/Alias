@@ -101,6 +101,14 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int FurnitureAliasesMessageComposer = 2958;
 			public const int RoomFloorItemsMessageComposer = 2585;
 
+		// Moderation
+		public const int ModerationIssueHandledMessageComposer = 3973;
+		public const int ModerationIssueInfoMessageComposer = 414;
+		public const int ModerationRoomInfoMessageComposer = 1047;
+		public const int ModerationToolMessageComposer = 258;
+		public const int ModerationUserInfoMessageComposer = 556;
+		public const int ModerationUserRoomVisitsMessageComposer = 2748;
+
 		// Landing
 		public const int HotelViewDataMessageComposer = 730;
 		public const int HallOfFameMessageComposer = 1243;

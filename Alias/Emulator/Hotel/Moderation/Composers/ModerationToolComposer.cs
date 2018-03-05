@@ -5,22 +5,22 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Moderation.Composers
 {
-	public class ModToolComposer : IMessageComposer
+	public class ModerationToolComposer : IMessageComposer
 	{
 		private Habbo habbo;
 
-		public ModToolComposer(Habbo habbo)
+		public ModerationToolComposer(Habbo habbo)
 		{
 			this.habbo = habbo;
 		}
 
 		public ServerMessage Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.ModToolMessageComposer);
+			ServerMessage result = new ServerMessage(Outgoing.ModerationToolMessageComposer);
 			if (this.habbo.HasPermission("acc_modtool_ticket_queue"))
 			{
-				result.Int(ModerationManager.GetModerationTickets.Count);
-				ModerationManager.GetModerationTickets.ForEach(ticket =>
+				result.Int(ModerationManager.GetTickets.Count);
+				ModerationManager.GetTickets.ForEach(ticket =>
 				{
 					result.Int(ticket.Id);
 					result.Int(ModerationTicketStates.GetIntFromState(ticket.State));

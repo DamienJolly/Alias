@@ -51,6 +51,11 @@ namespace Alias.Emulator.Network.Sessions
 			SessionManager.RegisteredSessions.Remove(context);
 		}
 
+		public static void SendWithPermission(IMessageComposer message, string param)
+		{
+			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.Disconnecting && o.Habbo.HasPermission(param)).ToList().ForEach(o => o.Send(message));
+		}
+
 		public static void Send(IMessageComposer message)
 		{
 			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.Disconnecting).ToList().ForEach(o => o.Send(message));
