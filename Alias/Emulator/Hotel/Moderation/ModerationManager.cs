@@ -29,6 +29,37 @@ namespace Alias.Emulator.Hotel.Moderation
 			return presets.Where(preset => preset.Type == type).ToList();
 		}
 
+		public static void QuickTicket(Habbo reported, string message)
+		{
+			ModerationTicket issue = new ModerationTicket()
+			{
+				Id = 999,
+				SenderId = reported.Id,
+				SenderUsername = reported.Username,
+				Message = message,
+				Type = ModerationTicketType.AUTOMATIC
+			};
+
+			AddTicket(issue);
+		}
+
+		public static void AddTicket(ModerationTicket issue)
+		{
+			//todo: add to db
+			modTickets.Add(issue);
+			SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
+		}
+
+		public static List<ModerationChatlog> GetRoomChatlog(int roomId)
+		{
+			return ModerationDatabase.ReadRoomChatlogs(roomId);
+		}
+
+		public static List<ModerationChatlog> GetUserChatlog(int senderId, int targetId)
+		{
+			return ModerationDatabase.ReadUserChatlogs(senderId, targetId);
+		}
+
 		public static void BanUser(int targetUserId, Session moderator, string reason, int duration, ModerationBanType type, int topic)
 		{
 			Habbo target = SessionManager.HabboById(targetUserId);

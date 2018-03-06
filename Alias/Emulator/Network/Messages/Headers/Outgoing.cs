@@ -113,6 +113,9 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int ModerationToolMessageComposer = 258;
 		public const int ModerationUserInfoMessageComposer = 556;
 		public const int ModerationUserRoomVisitsMessageComposer = 2748;
+		public const int ModerationTopicsMessageComposer = 463;
+		public const int ModerationIssueChatlogMessageComposer = 3999;
+		public const int ModerationRoomChatlogMessageComposer = 3885;
 
 		// Landing
 		public const int HotelViewDataMessageComposer = 730;

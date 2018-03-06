@@ -15,14 +15,18 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
+			message.Integer();
 			int roomId = message.Integer();
 			if (roomId <= 0)
 			{
 				return;
 			}
 
-			//todo: roomchatlogs
-
+			Room room = RoomManager.Room(roomId);
+			if (room != null)
+			{
+				session.Send(new ModerationRoomChatlogComposer(room, ModerationManager.GetRoomChatlog(room.RoomData.Id)));
+			}
 		}
 	}
 }

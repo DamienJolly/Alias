@@ -52,6 +52,11 @@ namespace Alias.Emulator.Network.Protocol
 			this.Bytes(BitConverter.GetBytes(num), true);
 		}
 
+		public void Byte(int i)
+		{
+			Message.Add((byte)i);
+		}
+
 		public void Int(int i)
 		{
 			this.Bytes(BitConverter.GetBytes(i), true);

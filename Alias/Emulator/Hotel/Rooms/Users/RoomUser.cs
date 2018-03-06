@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using Alias.Emulator.Hotel.Achievements;
+using Alias.Emulator.Hotel.Misc.WordFilter;
+using Alias.Emulator.Hotel.Moderation;
 using Alias.Emulator.Hotel.Rooms.Users.Chat;
 using Alias.Emulator.Hotel.Rooms.Users.Chat.Commands;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
@@ -109,6 +111,14 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			{
 				text = text.Substring(0, 100);
 			}
+			
+			if (WordFilterManager.CheckBanned(text))
+			{
+				ModerationManager.QuickTicket(this.Habbo, "User said a banned word");
+				return;
+			}
+
+			text = WordFilterManager.Filter(text);
 
 			if (text.StartsWith(":") && CommandHandler.Handle(this.Habbo.Session, text))
 			{
@@ -128,6 +138,22 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			else
 			{
 				this.Room.UserManager.Send(packet);
+			}
+			WordFilterDatabase.StoreMessage(this.Habbo.Id, this.Room.Id, text, ChatTypeToInt(chatType), target != null ? target.Habbo.Id : 0);
+		}
+
+		private int ChatTypeToInt(ChatType type)
+		{
+			switch (type)
+			{
+				case ChatType.CHAT:
+					return 0;
+				case ChatType.SHOUT:
+					return 1;
+				case ChatType.WHISPER:
+					return 2;
+				default:
+					return 0;
 			}
 		}
 

@@ -42,7 +42,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					session.Send(new UnknownComposer4());
 					session.Send(new UnknownComposer5());
 					//session.Send(new BuildersClubExpiredComposer()); //todo:
-					//session.Send(new CfhTopicsMessageComposer()); //todo:
+					session.Send(new ModerationTopicsComposer());
 					//session.Send(new FavoriteRoomsCountComposer()); //todo:
 					//session.Send(new GameCenterGameListComposer()); //todo:
 					//session.Send(new GameCenterAccountInfoComposer()); //todo:

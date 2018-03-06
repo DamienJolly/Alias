@@ -3,6 +3,7 @@ using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Achievements;
 using Alias.Emulator.Hotel.Catalog;
 using Alias.Emulator.Hotel.Items;
+using Alias.Emulator.Hotel.Misc.WordFilter;
 using Alias.Emulator.Hotel.Moderation;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Permissions;
@@ -47,6 +48,7 @@ namespace Alias.Emulator
 				Environment.Exit(0);
 			}
 
+			WordFilterManager.Initialize();
 			MessageHandler.Initialize();
 			AchievementManager.Initialize();
 			ModerationManager.Initialize();
