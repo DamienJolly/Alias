@@ -16,6 +16,8 @@ namespace Alias.Emulator.Hotel.Rooms
 			MessageHandler.Register(Incoming.RequestRoomDataMessageEvent, new RequestRoomDataEvent());
 			MessageHandler.Register(Incoming.RequestRoomLoadMessageEvent, new RequestRoomLoadEvent());
 			MessageHandler.Register(Incoming.RequestRoomHeightmapMessageEvent, new RequestRoomHeightmapEvent());
+			MessageHandler.Register(Incoming.RequestRoomSettingsMessageEvent, new RequestRoomSettingsEvent());
+			MessageHandler.Register(Incoming.RoomSettingsSaveMessageEvent, new RoomSettingsSaveEvent());
 
 			RoomTradingEvents.Register();
 			RoomRightsEvents.Register();

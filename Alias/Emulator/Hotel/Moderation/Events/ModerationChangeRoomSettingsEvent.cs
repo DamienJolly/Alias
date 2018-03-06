@@ -1,5 +1,6 @@
-using Alias.Emulator.Hotel.Moderation.Composers;
 using Alias.Emulator.Hotel.Rooms;
+using Alias.Emulator.Hotel.Rooms.States;
+using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -21,13 +22,34 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			RoomData roomData = RoomManager.RoomData(roomId);
-			if (roomData != null)
+			Room room = RoomManager.Room(roomId);
+			if (room != null)
 			{
-				bool kickUsers = message.Integer() == 1;
 				bool lockDoor = message.Integer() == 1;
 				bool changeTitle = message.Integer() == 1;
-				//todo: code room settings
+				bool kickUsers = message.Integer() == 1;
+
+				if (changeTitle)
+				{
+					room.RoomData.Name = "Inappropriate to hotel management!";
+				}
+
+				if (lockDoor)
+				{
+					room.RoomData.DoorState = RoomDoorState.CLOSED;
+				}
+
+				if (kickUsers)
+				{
+					foreach (RoomUser user in room.UserManager.Users)
+					{
+						if (user.Habbo.HasPermission("acc_unkickable") || user.Habbo.HasPermission("acc_modtool") || user.Habbo.Id == room.RoomData.OwnerId)
+						{
+							continue;
+						}
+						room.UserManager.OnUserLeave(user.Habbo.Session);
+					}
+				}
 			}
 		}
 	}

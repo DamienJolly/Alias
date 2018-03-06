@@ -24,7 +24,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 			if (target != null)
 			{
 				string text = message.String();
-				double lenght = 60 * 60;
+				double duration = 60 * 60;
 
 				// todo: muting
 				target.Habbo.Muted = true;

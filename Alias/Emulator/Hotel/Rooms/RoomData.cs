@@ -136,6 +136,11 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		} = "0.0";
 
+		public RoomSettings Settings
+		{
+			get; set;
+		} = new RoomSettings();
+
 		public RoomData()
 		{
 

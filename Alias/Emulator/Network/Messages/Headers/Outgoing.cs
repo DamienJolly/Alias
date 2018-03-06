@@ -69,6 +69,11 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int RoomOwnerMessageComposer = 74;
 		public const int RoomRightsListMessageComposer = 2035;
 		public const int ForwardToRoomMessageComposer = 3716;
+		public const int RoomSettingsUpdatedMessageComposer = 824;
+		public const int RoomSettingsSavedMessageComposer = 1632;
+		public const int RoomSettingsMessageComposer = 1644;
+		public const int RoomEditSettingsErrorMessageComposer = 2465;
+		public const int RoomChatSettingsMessageComposer = 3145;
 
 			// Models
 			public const int RoomHeightMapMessageComposer = 1909;
