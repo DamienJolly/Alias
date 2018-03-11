@@ -47,7 +47,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 					break;
 				case BAN_100_YEARS:
 				case BAN_AVATAR_ONLY_100_YEARS:
-					duration = (int)AliasEnvironment.Time();
+					duration = (int)AliasEnvironment.GetUnixTimestamp();
 					break;
 			}
 

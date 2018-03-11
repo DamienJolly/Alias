@@ -11,11 +11,6 @@ namespace Alias.Emulator.Hotel.Users.Composers
 		public UserDataComposer(Habbo habbo)
 		{
 			this.Habbo = habbo;
-
-			if (this.Habbo == null)
-			{
-				this.Habbo = new Habbo();
-			}
 		}
 
 		public ServerMessage Compose()

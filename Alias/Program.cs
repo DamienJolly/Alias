@@ -1,10 +1,13 @@
-﻿using Alias.Emulator;
+using Alias.Emulator;
 
 namespace Alias
 {
     class Program
     {
-        static void Main(string[] args)
+		/// <summary>
+		/// Entry point for our application.
+		/// </summary>
+		static void Main(string[] args)
         {
 			AliasEnvironment.Initialize();
 		}

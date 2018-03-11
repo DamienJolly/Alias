@@ -32,6 +32,25 @@ namespace Alias.Emulator.Database
 			};
 		}
 
+		public static void TestConnection()
+		{
+			try
+			{
+				using (DatabaseClient client = DatabaseClient.Instance())
+				{
+					string srv = client.String("SELECT @@version;");
+					Logging.Info("Current SQL Version: " + srv);
+				}
+			}
+			catch (Exception ex)
+			{
+				Logging.Error("Failed Connection to SQL Server", ex, "DatabaseClient", "TestConnection");
+				Logging.Info("Press any key to exit.");
+				Logging.ReadLine();
+				Environment.Exit(0);
+			}
+		}
+
 		public static DatabaseClient Instance()
 		{
 			return new DatabaseClient();

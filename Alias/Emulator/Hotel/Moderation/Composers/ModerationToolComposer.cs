@@ -26,7 +26,7 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 					result.Int(ModerationTicketStates.GetIntFromState(ticket.State));
 					result.Int(ModerationTicketTypes.GetIntFromType(ticket.Type));
 					result.Int(ticket.Category);
-					result.Int((int)AliasEnvironment.Time() - ticket.Id);
+					result.Int((int)AliasEnvironment.GetUnixTimestamp() - ticket.Id);
 					result.Int(ticket.Priority);
 					result.Int(1); // ??
 					result.Int(ticket.SenderId);

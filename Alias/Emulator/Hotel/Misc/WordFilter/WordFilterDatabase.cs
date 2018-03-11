@@ -32,7 +32,7 @@ namespace Alias.Emulator.Hotel.Misc.WordFilter
 				dbClient.AddParameter("message", (message.Trim(' ').Length > 0) ? message : "*user sent blank message*");
 				dbClient.AddParameter("type", type);
 				dbClient.AddParameter("toId", toId);
-				dbClient.AddParameter("tstamp", (int)AliasEnvironment.Time());
+				dbClient.AddParameter("tstamp", (int)AliasEnvironment.GetUnixTimestamp());
 				dbClient.Query("INSERT INTO `chatlogs` (`room_id`, `user_id`, `message`, `type`, `target_id`, `timestamp`) VALUES (@roomId, @userId, @message, @type, @toId, @tstamp)");
 			}
 		}

@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Network.Sessions;
@@ -6,48 +5,43 @@ using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Tasks
 {
-	public sealed class TaskManager : IDisposable
+	public class TaskManager
 	{
-		private Thread Cycle;
-		private Timer sheduler;
-		private int tick = 0;
-
-		public TaskManager()
+		private static Thread _cycle;
+		private static Timer _sheduler;
+		private static int _tick = 0;
+		
+		public static void Initialize()
 		{
 			Logging.Title("Alias Emulator - 0 users online - 0 rooms loaded - 0 day(s), 0 hour(s) and 0 minute(s) uptime");
-			this.StartCycle();
+			StartCycle();
 		}
-
-		public void OnCycle(object sender)
+		
+		public static void OnCycle(object sender)
 		{
-			tick++;
-			if (tick >= 60)
+			_tick++;
+			if (_tick >= 60)
 			{
-				Logging.Title("Alias Emulator - " + SessionManager.OnlineUsers() + " users online - " + RoomManager.ReadLoadedRooms().Count + " rooms loaded - " + AliasEnvironment.UpTime() + " uptime");
-				tick = 0;
+				Logging.Title("Alias Emulator - " + SessionManager.OnlineUsers() + " users online - " + RoomManager.ReadLoadedRooms().Count + " rooms loaded - " + AliasEnvironment.GetUpTime() + " uptime");
+				_tick = 0;
 			}
 			RoomManager.DoRoomCycle();
 		}
 
-		public void StartCycle()
+		public static void StartCycle()
 		{
-			this.Cycle = new Thread(this.OnCycle);
-			sheduler = new Timer(new TimerCallback(this.StartPool), null, 500, 500);
+			_cycle = new Thread(OnCycle);
+			_sheduler = new Timer(new TimerCallback(StartPool), null, 500, 500);
 		}
 
-		private void StartPool(object sender)
+		private static void StartPool(object sender)
 		{
-			ThreadPool.UnsafeQueueUserWorkItem(this.OnCycle, null);
+			ThreadPool.UnsafeQueueUserWorkItem(OnCycle, null);
 		}
 
-		public void StopCycle()
+		public static void StopCycle()
 		{
-			this.sheduler.Dispose();
-		}
-
-		public void Dispose()
-		{
-			this.sheduler.Dispose();
+			_sheduler.Dispose();
 		}
 	}
 }

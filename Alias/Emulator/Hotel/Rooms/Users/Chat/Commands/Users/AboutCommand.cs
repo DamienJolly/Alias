@@ -38,7 +38,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
 					+ "- Furni: " + 0 + "\r"
 					+ "\n"
 					+ "<b>Server Statistics</b> \r"
-					+ "- Uptime: " + AliasEnvironment.UpTime() + "\r"
+					+ "- Uptime: " + AliasEnvironment.GetUpTime() + "\r"
 					+ "- RAM Usage: " + Process.GetCurrentProcess().WorkingSet64 / (1024 * 1024) + "MBs \r"
 					+ "- Build:  " + Constant.ProductionVersion + " \r"
 					+ "\n"

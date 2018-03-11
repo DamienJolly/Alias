@@ -20,7 +20,7 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			result.Int(ModerationTicketStates.GetIntFromState(this.issue.State));
 			result.Int(ModerationTicketTypes.GetIntFromType(this.issue.Type));
 			result.Int(this.issue.Category);
-			result.Int((int)AliasEnvironment.Time() - this.issue.Id);
+			result.Int((int)AliasEnvironment.GetUnixTimestamp() - this.issue.Id);
 			result.Int(this.issue.Priority);
 			result.Int(1); // ??
 			result.Int(this.issue.SenderId);
@@ -29,9 +29,12 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			result.String(this.issue.ReportedUsername);
 			result.Int(this.issue.ModId);
 			result.String(this.issue.ModUsername);
-			result.String(this.issue.Message);
+			result.String(this.issue.Message + " - AutomaticAlertWord");
 			result.Int(this.issue.RoomId);
+			result.Int(1);
+			result.String("Banned Word");
 			result.Int(0);
+			result.Int(4);
 			return result;
 		}
 	}

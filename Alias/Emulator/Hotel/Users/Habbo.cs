@@ -14,22 +14,13 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users
 {
-	public sealed class Habbo : IDisposable
+	public class Habbo : HabboData
 	{
-		public int Id { get; set; } = 0;
-		public string Username { get; set; } = "Unknown";
-		public string Mail { get; set; } = "Default@email.com";
-		public string Look { get; set; } = "";
-		public string Gender { get; set; } = "M";
-		public string Motto { get; set; } = "Hello world!";
-		public int Rank { get; set; } = 6;
-		public int ClubLevel { get; set; } = 1;
-		public int Credits { get; set; } = 9999;
-		public int HomeRoom { get; set; } = 0;
-		public int AchievementScore { get; set; } = 0;
-		public bool Disconnecting { get; set; } = false;
-		public bool Muted { get; set; } = false;
-		public bool AllowTrading { get; set; } = true;
+		/// <summary>
+		/// Mark the Habbo as disconnecting.
+		/// </summary>
+		private Boolean _disconnecting = false;
+		
 		public Room CurrentRoom { get; set; } = null;
 		public NavigatorPreference NavigatorPreference { get; set; }
 		public UserSettings Settings { get; set; }
@@ -38,18 +29,29 @@ namespace Alias.Emulator.Hotel.Users
 		public CurrencyComponent Currency { get; set; }
 		public AchievementComponent Achievements { get; set; }
 		public BadgeComponent Badges { get; set; }
-
-		public Session Session
-		{
-			get
-			{
-				return SessionManager.SessionById(this.Id);
-			}
-		}
-
+		
+		/// <summary>
+		/// Initializes a new Habbo instance.
+		/// </summary>
 		public Habbo()
 		{
 
+		}
+		
+		/// <summary>
+		/// The session used for this active user.
+		/// </summary>
+		public Session Session
+		{
+			get { return SessionManager.SessionById(this.Id); }
+		}
+
+		/// <summary>
+		/// Checks to see if the user is disconnecting.
+		/// </summary>
+		public bool IsDisconnecting
+		{
+			get { return this._disconnecting; }
 		}
 
 		public void Init()
@@ -68,7 +70,7 @@ namespace Alias.Emulator.Hotel.Users
 
 		public void OnDisconnect()
 		{
-			this.Disconnecting = true;
+			this._disconnecting = true;
 			if (this.CurrentRoom != null)
 			{
 				this.CurrentRoom.UserManager.OnUserLeave(this.Session);
@@ -103,12 +105,6 @@ namespace Alias.Emulator.Hotel.Users
 		public bool HasPermission(string param)
 		{
 			return PermissionManager.HasPermission(this.Rank, param);
-		}
-
-		public void Dispose()
-		{
-			this.Currency.Dispose();
-			this.Achievements.Dispose();
 		}
 	}
 }

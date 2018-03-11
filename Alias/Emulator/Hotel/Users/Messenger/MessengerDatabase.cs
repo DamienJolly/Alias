@@ -162,7 +162,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 					dbClient.AddParameter("from", from);
 					dbClient.AddParameter("to", to);
 					dbClient.AddParameter("message", message);
-					dbClient.AddParameter("timestamp", (int)AliasEnvironment.Time());
+					dbClient.AddParameter("timestamp", (int)AliasEnvironment.GetUnixTimestamp());
 					dbClient.Query("INSERT INTO `messenger_chatlogs` (`sender`, `reciever`, `message`, `time`) VALUES (@from, @to, @message, @timestamp)");
 				}
 			}
@@ -176,7 +176,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 				{
 					dbClient.AddParameter("from", from);
 					dbClient.AddParameter("message", message);
-					dbClient.AddParameter("timestamp", (int)AliasEnvironment.Time());
+					dbClient.AddParameter("timestamp", (int)AliasEnvironment.GetUnixTimestamp());
 					dbClient.Query("INSERT INTO `messenger_roominvitations` (`sender`, `message`, `time`) VALUES (@from, @message, @timestamp)");
 				}
 			}

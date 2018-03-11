@@ -10,7 +10,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			{
 				dbClient.AddParameter("userOneId", userOne.User.Habbo.Id);
 				dbClient.AddParameter("userTwoId", userTwo.User.Habbo.Id);
-				dbClient.AddParameter("timestamp", AliasEnvironment.Time());
+				dbClient.AddParameter("timestamp", AliasEnvironment.GetUnixTimestamp());
 				return (int)dbClient.InsertQuery("INSERT INTO `room_trade_log` (`user_one_id`, `user_two_id`, `timestamp`) VALUES (@userOneId, @userTwoId, @timestamp)");
 			}
 		}

@@ -22,7 +22,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 				if (!string.IsNullOrEmpty(sso) && HandshakeDatabase.SSOExists(sso))
 				{
 					session.AssignHabbo(HandshakeDatabase.BuildHabbo(sso));
-					if (HandshakeDatabase.IsBanned(session.Habbo.Id))
+					if (session.Habbo == null || HandshakeDatabase.IsBanned(session.Habbo.Id))
 					{
 						session.Disconnect();
 						return;

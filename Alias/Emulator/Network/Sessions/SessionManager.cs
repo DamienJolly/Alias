@@ -23,12 +23,12 @@ namespace Alias.Emulator.Network.Sessions
 
 		public static int OnlineUsers()
 		{
-			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.Disconnecting).Count();
+			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.IsDisconnecting).Count();
 		}
 
 		public static bool IsOnline(int userId)
 		{
-			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && o.Habbo.Id == userId && !o.Habbo.Disconnecting).Count() > 0;
+			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && o.Habbo.Id == userId && !o.Habbo.IsDisconnecting).Count() > 0;
 		}
 
 		public static Session SessionById(int userId)
@@ -53,12 +53,12 @@ namespace Alias.Emulator.Network.Sessions
 
 		public static void SendWithPermission(IMessageComposer message, string param)
 		{
-			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.Disconnecting && o.Habbo.HasPermission(param)).ToList().ForEach(o => o.Send(message));
+			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.IsDisconnecting && o.Habbo.HasPermission(param)).ToList().ForEach(o => o.Send(message));
 		}
 
 		public static void Send(IMessageComposer message)
 		{
-			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.Disconnecting).ToList().ForEach(o => o.Send(message));
+			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.IsDisconnecting).ToList().ForEach(o => o.Send(message));
 		}
 	}
 }

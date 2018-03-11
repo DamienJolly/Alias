@@ -30,7 +30,7 @@ namespace Alias.Emulator.Utilities
 		public static void Error(string information, Exception exception, string classname, string method)
 		{
 			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine("[ALIAS] [ERROR] : " + information);
+			Console.WriteLine("[Alias] [Error] : " + information);
 			Console.ForegroundColor = ConsoleColor.Gray;
 			//Saving Exception
 			string currentText = File.ReadAllText(Constant.ExceptionFile);
@@ -39,6 +39,13 @@ namespace Alias.Emulator.Utilities
 			currentText += "\nEmulator Information: \"" + information + "\" occured at Class " + classname + " and Method " + method;
 			currentText += "\nInformation for developer: " + exception.ToString();
 			File.WriteAllText(Constant.ExceptionFile, currentText);
+		}
+
+		internal static void Command()
+		{
+			Console.ForegroundColor = ConsoleColor.Gray;
+			Console.Write("[Alias] [Command] : ");
+			Console.ForegroundColor = ConsoleColor.Gray;
 		}
 
 		internal static void Message(ClientMessage message, string id)
