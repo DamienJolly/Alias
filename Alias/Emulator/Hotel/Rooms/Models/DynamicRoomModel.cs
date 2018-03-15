@@ -31,6 +31,16 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 			get; set;
 		}
 
+		public double GetHeightAtSquare(int x, int y)
+		{
+			if (x < 0 || y < 0 || x >= this.SizeX || y >= this.SizeY)
+			{
+				return 0;
+			}
+
+			return this.Tiles[x, y].Z;
+		}
+
 		public double GetTileHeight(int x, int y, RoomItem item = null)
 		{
 			double height = this.Tiles[x, y].Z;
@@ -46,6 +56,20 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 			}
 
 			return height;
+		}
+
+		public List<RoomItem> GetWiredEffects(int x, int y)
+		{
+			List<RoomItem> items = new List<RoomItem>();
+			foreach (RoomItem item in this.Room.ItemManager.Items)
+			{
+				if (item.Position.X == x && item.Position.Y == y && item.ItemData.Interaction == ItemInteraction.WIRED_EFFECT)
+				{
+					items.Add(item);
+				}
+			}
+
+			return items;
 		}
 
 		public bool ValidTile(int x, int y, bool goal = false)
@@ -265,6 +289,12 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 
 			return lowestChair;
 		}
+
+		public bool PointInSquare(int x1, int y1, int x2, int y2, int pointX, int pointY)
+		{
+			return (pointX >= x1 && pointY >= y1) && (pointX <= x2 && pointY <= y2);
+		}
+
 
 		public RoomItem GetTopItemAt(int x, int y)
 		{

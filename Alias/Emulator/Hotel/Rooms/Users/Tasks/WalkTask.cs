@@ -31,12 +31,42 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 						}
 
 						Point p = usr.Path.First();
-						RoomItem chair = null;
+						RoomItem item = usr.Room.DynamicModel.GetTopItemAt(p.X, p.Y);
 						if (usr.Room.DynamicModel.CanSitAt(p.X, p.Y, true))
 						{
-							chair = usr.Room.DynamicModel.GetLowestChair(p.X, p.Y);
+							RoomItem lowestChair = usr.Room.DynamicModel.GetLowestChair(p.X, p.Y);
+							if (lowestChair != null)
+							{
+								item = lowestChair;
+							}
 						}
-						double height = usr.Room.DynamicModel.GetTileHeight(p.X, p.Y, chair);
+
+						RoomItem habboItem = usr.Room.DynamicModel.GetTopItemAt(usr.Position.X, usr.Position.Y);
+						if (habboItem != null)
+						{
+							if (habboItem != item || !usr.Room.DynamicModel.PointInSquare(habboItem.Position.X, habboItem.Position.Y, habboItem.Position.X + habboItem.ItemData.Width - 1, habboItem.Position.Y + habboItem.ItemData.Length - 1, p.X, p.Y))
+								habboItem.GetInteractor().OnUserWalkOff(usr.Habbo.Session, usr.Room, habboItem);
+						}
+
+						double height = 0.0;
+
+						if (item != null)
+						{
+							if (item != habboItem || !usr.Room.DynamicModel.PointInSquare(item.Position.X, item.Position.Y, item.Position.X + item.ItemData.Width - 1, item.Position.Y + item.ItemData.Length - 1, usr.Position.X, usr.Position.Y))
+							{
+								item.GetInteractor().OnUserWalkOn(usr.Habbo.Session, usr.Room, habboItem);
+							}
+							height += item.Position.Z;
+							if (!item.ItemData.CanSit && !item.ItemData.CanLay)
+							{
+								// todo: multiheight furni
+								height += item.ItemData.Height;
+							}
+						}
+						else
+						{
+							height += usr.Room.DynamicModel.GetHeightAtSquare(p.X, p.Y);
+						}
 
 						usr.Actions.Add("mv", p.X + "," + p.Y + "," + height);
 						usr.Position.Rotation = usr.Room.PathFinder.Rotation(usr.Position.X, usr.Position.Y, p.X, p.Y);

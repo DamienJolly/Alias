@@ -37,6 +37,7 @@ namespace Alias.Emulator.Network
                     }));
 				SocketServer.BoundChannel = await Bootstrap.BindAsync(int.Parse(Configuration.Value("tcp.port")));
 				Logging.Info("Listening for Connections on Port " + Configuration.Value("tcp.port"));
+				Logging.ReadLine();
 				await SocketServer.BoundChannel.CloseAsync();
             }
             catch (FormatException formatException)

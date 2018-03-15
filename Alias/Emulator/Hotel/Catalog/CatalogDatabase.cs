@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Catalog
 			List<CatalogPage> pages = new List<CatalogPage>();
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_pages`").Rows)
+				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_pages` ORDER BY `order_id` ASC, `caption` ASC").Rows)
 				{
 					CatalogPage item = new CatalogPage();
 					item.Id = (int)row["id"];
@@ -44,7 +44,8 @@ namespace Alias.Emulator.Hotel.Catalog
 			List<CatalogItem> items = new List<CatalogItem>();
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_items`").Rows)
+				dbClient.AddParameter("pageId", page.Id);
+				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_items` WHERE `page_id` = @pageId").Rows)
 				{
 					CatalogItem item = new CatalogItem();
 					item.Id = (int)row["id"];

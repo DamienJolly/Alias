@@ -131,7 +131,7 @@ namespace Alias.Emulator.Hotel.Catalog
 
 		public static List<CatalogPage> GetCatalogPages(int pageId, Habbo habbo)
 		{
-			return pages.Where(page => page.ParentId == pageId && page.Visible && page.Rank <= habbo.Rank).ToList();
+			return pages.Where(page => page.ParentId == pageId && page.Visible && page.Rank <= habbo.Rank).OrderBy(page => page.Order).ToList();
 		}
 
 		public static CatalogPage GetCatalogPage(int pageId)

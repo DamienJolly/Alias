@@ -14,15 +14,24 @@ namespace Alias.Emulator.Hotel.Items
 			{
 				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `item_data`").Rows)
 				{
-					ItemData item = new ItemData();
-					item.Id = (int)row["id"];
-					item.Length = (int)row["length"];
-					item.Width = (int)row["width"];
-					item.Height = (double)row["height"];
-					item.CanSit = AliasEnvironment.ToBool((string)row["can_sit"]);
-					item.CanLay = AliasEnvironment.ToBool((string)row["can_lay"]);
-					item.Interaction = ItemInteractions.GetInteractionFromString((string)row["type"]);
-					item.CanWalk = AliasEnvironment.ToBool((string)row["can_walk"]);
+					ItemData item = new ItemData
+					{
+						Id = (int)row["id"],
+						Length = (int)row["length"],
+						Width = (int)row["width"],
+						Height = (double)row["height"],
+						CanSit = AliasEnvironment.ToBool((string)row["can_sit"]),
+						CanLay = AliasEnvironment.ToBool((string)row["can_lay"]),
+						BehaviourData = (int)row["behaviour_data"],
+						Interaction = ItemInteractions.GetInteractionFromString((string)row["type"]),
+						CanWalk = AliasEnvironment.ToBool((string)row["can_walk"])
+					};
+
+					if (item.IsWired())
+					{
+						item.WiredInteraction = (WiredInteraction)item.BehaviourData;
+					}
+
 					items.Add(item);
 					row.Delete();
 				}

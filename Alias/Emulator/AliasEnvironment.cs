@@ -82,7 +82,9 @@ namespace Alias.Emulator
 			// Load the task manager.
 			TaskManager.Initialize();
 
-			ConsoleCommand.Initialize();
+			while (true) Logging.ReadLine();
+
+			//ConsoleCommand.Initialize();
 		}
 
 		/// <summary>

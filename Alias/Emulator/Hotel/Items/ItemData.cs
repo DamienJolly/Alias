@@ -44,6 +44,16 @@ namespace Alias.Emulator.Hotel.Items
 			get; set;
 		}
 
+		public int BehaviourData
+		{
+			get; set;
+		}
+
+		public WiredInteraction WiredInteraction
+		{
+			get; set;
+		} = WiredInteraction.DEFAULT;
+
 		public ItemInteraction Interaction
 		{
 			get; set;
@@ -63,5 +73,12 @@ namespace Alias.Emulator.Hotel.Items
 		{
 			get; set;
 		} = true;
+
+		public bool IsWired()
+		{
+			return Interaction == ItemInteraction.WIRED_CONDITION ||
+				Interaction == ItemInteraction.WIRED_TRIGGER ||
+				Interaction == ItemInteraction.WIRED_EFFECT;
+		}
 	}
 }

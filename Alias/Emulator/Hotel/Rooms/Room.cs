@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Alias.Emulator.Hotel.Landing.Composers;
 using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Items.Tasks;
@@ -83,6 +84,10 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 			if (this.ItemManager != null)
 			{
+				// Wired and Effects first
+				WiredTask.Start(this.ItemManager.Items.Where(item => item.ItemData.Interaction == ItemInteraction.WIRED_EFFECT).ToList());
+				WiredTask.Start(this.ItemManager.Items.Where(item => item.ItemData.Interaction == ItemInteraction.WIRED_TRIGGER).ToList());
+
 				ItemTask.Start(this.ItemManager.Items);
 			}
 		}

@@ -23,6 +23,16 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 
 		}
 
+		public void OnUserWalkOn(Session session, Room room, RoomItem item)
+		{
+			System.Console.WriteLine("walk on");
+		}
+
+		public void OnUserWalkOff(Session session, Room room, RoomItem item)
+		{
+			System.Console.WriteLine("walk off");
+		}
+
 		public void OnUserInteract(Session session, Room room, RoomItem item, int state)
 		{
 			if (item.ItemData.Modes <= 1 || !room.RoomRights.HasRights(session.Habbo.Id))
