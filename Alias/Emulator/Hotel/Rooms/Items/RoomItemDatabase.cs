@@ -44,7 +44,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 				dbClient.AddParameter("ZPos", item.Position.Z);
 				dbClient.AddParameter("Rot", item.Position.Rotation);
 				dbClient.AddParameter("baseId", item.ItemData.Id);
-				item.Id = (int)dbClient.InsertQuery("INSERT INTO `room_items` (`id`, `room_id`, `user_id`, `x`, `y`, `z`, `rot`, `base_id`) VALUES (@itemId, @roomId, @userId, @xPos, @yPos, @zPos, @rot, @baseId)");
+				dbClient.Query("INSERT INTO `room_items` (`id`, `room_id`, `user_id`, `x`, `y`, `z`, `rot`, `base_id`) VALUES (@itemId, @roomId, @userId, @xPos, @yPos, @zPos, @rot, @baseId)");
 			}
 		}
 

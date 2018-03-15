@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Data;
 using Alias.Emulator.Database;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Catalog
 {
@@ -38,7 +39,7 @@ namespace Alias.Emulator.Hotel.Catalog
 			}
 			return pages;
 		}
-
+		
 		public static List<CatalogItem> ReadItems(CatalogPage page)
 		{
 			List<CatalogItem> items = new List<CatalogItem>();
@@ -57,11 +58,12 @@ namespace Alias.Emulator.Hotel.Catalog
 					item.PointsType = (int)row["points_type"];
 					item.Amount = (int)row["amount"];
 					item.LimitedStack = (int)row["limited_stack"];
-					item.LimitedSells = (int)row["limited_sells"];
 					item.ClubLevel = (int)row["club_level"];
 					item.CanGift = AliasEnvironment.ToBool((string)row["can_gift"]);
 					item.HasOffer = AliasEnvironment.ToBool((string)row["have_offer"]);
 					item.OfferId = (int)row["offer_id"];
+					item.LimitedNumbers = ReadLimited(item.Id, item.LimitedStack);
+					item.LimitedNumbers.Shuffle();
 
 					if (item.OfferId != -1)
 						page.AddOfferId(item.OfferId);
@@ -71,6 +73,31 @@ namespace Alias.Emulator.Hotel.Catalog
 				}
 			}
 			return items;
+		}
+
+		public static List<int> ReadLimited(int itemId, int size)
+		{
+			List<int> takenNumbers = new List<int>();
+			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			{
+				dbClient.AddParameter("itemId", itemId);
+				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_limited_items` WHERE `item_id` = @itemId").Rows)
+				{
+					takenNumbers.Add((int)row["number"]);
+					row.Delete();
+				}
+			}
+			return CatalogManager.GetAvailableNumbers(takenNumbers, size);
+		}
+
+		public static void AddLimited(int itemId, int number)
+		{
+			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			{
+				dbClient.AddParameter("itemId", itemId);
+				dbClient.AddParameter("number", number);
+				dbClient.Query("INSERT INTO	`catalog_limited_items` (`item_id`, `number`) VALUES (@itemId, @number)");
+			}
 		}
 
 		public static List<CatalogFeatured> ReadFeatured()

@@ -52,7 +52,10 @@ namespace Alias.Emulator.Hotel.Catalog
 
 		public int LimitedSells
 		{
-			get; set;
+			get
+			{
+				return LimitedStack - LimitedNumbers.Count;
+			}
 		}
 
 		public int ClubLevel
@@ -81,6 +84,25 @@ namespace Alias.Emulator.Hotel.Catalog
 			{
 				return this.LimitedStack > 0;
 			}
+		}
+
+		public List<int> LimitedNumbers
+		{
+			get; set;
+		}
+
+		public int GetNumber
+		{
+			get
+			{
+				return LimitedNumbers[0];
+			}
+		}
+
+		public void AddLimited(int number)
+		{
+			LimitedNumbers.Remove(number);
+			CatalogDatabase.AddLimited(Id, number);
 		}
 
 		public int GetItemAmount(int id)

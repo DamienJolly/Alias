@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Events
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
-			int totalItems = session.Habbo.Inventory.FloorItems().Count;
+			int totalItems = session.Habbo.Inventory.FloorItems.Count;
 			int pages = (int)Math.Ceiling((double)totalItems / 1000.0);
 			if (pages == 0)
 			{
@@ -21,7 +21,7 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Events
 			int count = 0;
 			int page = 0;
 			List<InventoryItem> items = new List<InventoryItem>();
-			foreach (var item in session.Habbo.Inventory.FloorItems())
+			foreach (var item in session.Habbo.Inventory.FloorItems)
 			{
 				if (count == 0)
 				{

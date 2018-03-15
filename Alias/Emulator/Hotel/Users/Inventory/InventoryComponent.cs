@@ -35,9 +35,12 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			return this.floorItems.Where(item => item.Id == itemId).FirstOrDefault();
 		}
 
-		public List<InventoryItem> FloorItems()
+		public List<InventoryItem> FloorItems
 		{
-			return this.floorItems;
+			get
+			{
+				return this.floorItems;
+			}
 		}
 	}
 }

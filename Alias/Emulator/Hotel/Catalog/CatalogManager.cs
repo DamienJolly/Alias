@@ -28,6 +28,19 @@ namespace Alias.Emulator.Hotel.Catalog
 			Initialize();
 		}
 
+		public static List<int> GetAvailableNumbers(List<int> takenNumbers, int size)
+		{
+			List<int> availableNumbers = new List<int>();
+			for (int i = 1; i <= size; i++)
+			{
+				if (!takenNumbers.Contains(i))
+				{
+					availableNumbers.Add(i);
+				}
+			}
+			return availableNumbers;
+		}
+
 		public static void PurchaseItem(CatalogPage page, CatalogItem item, Habbo habbo, int amount, string extradata)
 		{
 			ItemData cBaseItem = null;
@@ -60,7 +73,7 @@ namespace Alias.Emulator.Hotel.Catalog
 				if (item.IsLimited)
 				{
 					amount = 1;
-					if (item.LimitedStack - item.LimitedSells <= 0)
+					if (item.LimitedNumbers.Count <= 0)
 					{
 						habbo.Session.Send(new AlertLimitedSoldOutComposer());
 						return;
@@ -70,6 +83,14 @@ namespace Alias.Emulator.Hotel.Catalog
 				List<InventoryItem> itemsList = new List<InventoryItem>();
 				int totalCredits = 0;
 				int totalPoints = 0;
+				int limitedNumber = 0;
+				int limitedStack = 0;
+
+				if (item.IsLimited)
+				{
+					limitedNumber = item.GetNumber;
+					limitedStack = item.LimitedStack;
+				}
 
 				for (int i = 0; i < amount; i++)
 				{
@@ -90,6 +111,8 @@ namespace Alias.Emulator.Hotel.Catalog
 									cBaseItem = baseItem;
 									InventoryItem habboItem = new InventoryItem();
 									habboItem.Id = 0;
+									habboItem.LimitedNumber = limitedNumber;
+									habboItem.LimitedStack = limitedStack;
 									habboItem.ItemData = ItemManager.GetItemData(baseItem.Id);
 									itemsList.Add(habboItem);
 								}
@@ -116,6 +139,11 @@ namespace Alias.Emulator.Hotel.Catalog
 					habbo.Inventory.AddItems(itemsList);
 					habbo.Session.Send(new PurchaseOKComposer(item));
 					habbo.Session.Send(new InventoryRefreshComposer());
+
+					if (item.IsLimited)
+					{
+						item.AddLimited(limitedNumber);
+					}
 				}
 			}
 			catch

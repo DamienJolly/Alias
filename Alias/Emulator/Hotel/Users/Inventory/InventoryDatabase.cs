@@ -17,8 +17,10 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 				{
 					InventoryItem item = new InventoryItem
 					{
-						Id       = (int)row["id"],
-						ItemData = ItemManager.GetItemData((int)row["base_id"])
+						Id            = (int)row["id"],
+						LimitedNumber = (int)row["limited_number"],
+						LimitedStack  = (int)row["limited_stack"],
+						ItemData      = ItemManager.GetItemData((int)row["base_id"])
 					};
 					items.Add(item);
 					row.Delete();
@@ -36,7 +38,7 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 					dbClient.AddParameter("baseId", item.ItemData.Id);
 					dbClient.AddParameter("userId", inventory.Habbo().Id);
 					item.Id = (int)dbClient.InsertQuery("INSERT INTO `habbo_inventory` (`base_id`, `user_id`) VALUES (@baseId, @userId)");
-					inventory.FloorItems().Add(item);
+					inventory.FloorItems.Add(item);
 					dbClient.ClearParameters();
 				}
 			}

@@ -33,12 +33,12 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 
 				// ExtraData shit!!!
 				message.Int(1);
-				message.Int(0); //(item.LimitedNo > 0 ? 256 : 0);
+				message.Int(item.IsLimited ? 256 : 0);
 				message.String(""); //item Extradata
-									//if (this.Item.LimitedNo > 0)
+				if (item.IsLimited)
 				{
-					//result.Int(item.LimitedNo);
-					//result.Int(item.LimitedTot);
+					message.Int(item.LimitedNumber);
+					message.Int(item.LimitedStack);
 				}
 
 				message.Boolean(false); //canRecyle

@@ -41,7 +41,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 
 			int count = 0;
 			List<InventoryItem> items = new List<InventoryItem>();
-			foreach (InventoryItem i in session.Habbo.Inventory.FloorItems().Where(x => x.ItemData.Id == item.ItemData.Id))
+			foreach (InventoryItem i in session.Habbo.Inventory.FloorItems.Where(x => x.ItemData.Id == item.ItemData.Id))
 			{
 				if (!trade.GetTradeUser(user).OfferedItems.Contains(i))
 				{
