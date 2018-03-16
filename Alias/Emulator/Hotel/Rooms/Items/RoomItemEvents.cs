@@ -13,6 +13,8 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			MessageHandler.Register(Incoming.RoomPickupItemMessageEvent, new RoomPickupItemEvent());
 			MessageHandler.Register(Incoming.ToggleFloorItemMessageEvent, new ToggleFloorItemEvent());
 			MessageHandler.Register(Incoming.RedeemItemMessageEvent, new RedeemItemEvent());
+			MessageHandler.Register(Incoming.TriggerDiceMessageEvent, new TriggerDiceEvent());
+			MessageHandler.Register(Incoming.CloseDiceMessageEvent, new CloseDiceEvent());
 		}
 	}
 }

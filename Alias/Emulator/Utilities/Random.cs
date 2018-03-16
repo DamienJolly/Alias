@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Alias.Emulator.Utilities
 {
@@ -18,6 +19,11 @@ namespace Alias.Emulator.Utilities
 				list[k] = list[n];
 				list[n] = value;
 			}
+		}
+
+		public static int RandomNumber(int max)
+		{
+			return rng.Next(max) + 1;
 		}
 	}
 }

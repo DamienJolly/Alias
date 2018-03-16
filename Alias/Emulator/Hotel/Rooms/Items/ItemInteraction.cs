@@ -25,6 +25,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 				case "exchange": return ItemInteraction.EXCHANGE;
 				case "diamond_exchange": return ItemInteraction.DIAMOND_EXCHANGE;
 				case "points_exchange": return ItemInteraction.POINTS_EXCHANGE;
+				case "dice": return ItemInteraction.DICE;
 				case "default": default: return ItemInteraction.DEFAULT;
 			}
 		}

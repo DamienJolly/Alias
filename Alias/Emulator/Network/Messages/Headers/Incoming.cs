@@ -83,6 +83,8 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int RoomPickupItemMessageEvent = 3036;
 			public const int ToggleFloorItemMessageEvent = 1699;
 			public const int RedeemItemMessageEvent = 1018;
+			public const int TriggerDiceMessageEvent = 237;
+			public const int CloseDiceMessageEvent = 1285;
 
 		// Moderation
 		public const int ModerationAlertMessageEvent = 1932;

@@ -67,7 +67,7 @@ namespace Alias.Emulator.Hotel.Items
 		public int Modes
 		{
 			get; set;
-		} = 2;
+		} = 5;
 
 		public bool CanStack
 		{

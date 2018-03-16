@@ -68,6 +68,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 				switch (this.ItemData.Interaction)
 				{
 					case ItemInteraction.WIRED_TRIGGER: case ItemInteraction.WIRED_EFFECT: case ItemInteraction.WIRED_CONDITION: _interaction = new InteractionWired(); break;
+					case ItemInteraction.DICE: _interaction = new InteractionDice(); break;
 					case ItemInteraction.DEFAULT: default: _interaction = new InteractionDefault(); break;
 				}
 			}

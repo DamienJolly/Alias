@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Users;
@@ -293,6 +294,11 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 		public bool PointInSquare(int x1, int y1, int x2, int y2, int pointX, int pointY)
 		{
 			return (pointX >= x1 && pointY >= y1) && (pointX <= x2 && pointY <= y2);
+		}
+
+		public bool TilesAdjecent(int x1, int y1, int x2, int y2)
+		{
+			return !(Math.Abs(x1 - y2) > 1) && !(Math.Abs(y1 - x2) > 1);
 		}
 
 
