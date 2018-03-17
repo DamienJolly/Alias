@@ -27,6 +27,17 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			}
 		}
 
+		public int UserId
+		{
+			get; set;
+		}
+
+		// always 0, used for updating
+		public int RoomId
+		{
+			get; set;
+		} = 0;
+
 		public ItemData ItemData
 		{
 			get; set;

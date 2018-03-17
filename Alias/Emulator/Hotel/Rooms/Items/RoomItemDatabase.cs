@@ -13,18 +13,24 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{
 				dbClient.AddParameter("roomId", room.Id);
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `room_items` WHERE `room_id` = @roomId").Rows)
+				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `items` INNER JOIN `items_room_data` ON `items`.`id` = `items_room_data`.`id` WHERE `items`.`room_id` = @roomId").Rows)
 				{
-					RoomItem item = new RoomItem();
-					item.Id = (int)row["id"];
-					item.Room = room;
-					item.Position = new ItemPosition();
-					item.Position.X = (int)row["x"];
-					item.Position.Y = (int)row["y"];
-					item.Position.Z = (double)row["z"];
-					item.Position.Rotation = (int)row["rot"];
-					item.Owner = (int)row["user_id"];
-					item.ItemData = ItemManager.GetItemData((int)row["base_id"]);
+					RoomItem item = new RoomItem
+					{
+						Id = (int)row["id"],
+						Room = room,
+						Position = new ItemPosition
+						{
+							X = (int)row["x"],
+							Y = (int)row["y"],
+							Z = (double)row["z"],
+							Rotation = (int)row["rot"]
+						},
+						Owner = (int)row["user_id"],
+						LimitedNumber = (int)row["limited_number"],
+						LimitedStack = (int)row["limited_stack"],
+						ItemData = ItemManager.GetItemData((int)row["base_id"])
+					};
 					items.Add(item);
 					row.Delete();
 				}
@@ -37,14 +43,11 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{
 				dbClient.AddParameter("itemId", item.Id);
-				dbClient.AddParameter("roomId", item.Room.Id);
-				dbClient.AddParameter("userId", item.Owner);
 				dbClient.AddParameter("xPos", item.Position.X);
 				dbClient.AddParameter("yPos", item.Position.Y);
 				dbClient.AddParameter("ZPos", item.Position.Z);
 				dbClient.AddParameter("Rot", item.Position.Rotation);
-				dbClient.AddParameter("baseId", item.ItemData.Id);
-				dbClient.Query("INSERT INTO `room_items` (`id`, `room_id`, `user_id`, `x`, `y`, `z`, `rot`, `base_id`) VALUES (@itemId, @roomId, @userId, @xPos, @yPos, @zPos, @rot, @baseId)");
+				dbClient.Query("INSERT INTO `items_room_data` (`id`, `x`, `y`, `z`, `rot`) VALUES (@itemId, @xPos, @yPos, @zPos, @rot)");
 			}
 		}
 
@@ -53,7 +56,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			using (DatabaseClient dbClient = DatabaseClient.Instance())
 			{
 				dbClient.AddParameter("itemId", itemId);
-				dbClient.Query("DELETE FROM `room_items` WHERE `id` = @itemId");
+				dbClient.Query("DELETE FROM `items_room_data` WHERE `id` = @itemId");
 			}
 		}
 
@@ -68,7 +71,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 					dbClient.AddParameter("z", item.Position.Z);
 					dbClient.AddParameter("rot", item.Position.Rotation);
 					dbClient.AddParameter("id", item.Id);
-					dbClient.Query("UPDATE `room_items` SET `x` = @x, `y` = @y, `z` = @z, `rot` = @rot WHERE `id` = @id");
+					dbClient.Query("UPDATE `items_room_data` SET `x` = @x, `y` = @y, `z` = @z, `rot` = @rot WHERE `id` = @id");
 					dbClient.ClearParameters();
 				}
 			}

@@ -40,13 +40,13 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 			InventoryItem iItem = new InventoryItem()
 			{
 				Id = rItem.Id,
-				LimitedNumber = 0,
-				LimitedStack = 0,
-				ItemData = rItem.ItemData
+				LimitedNumber = rItem.LimitedNumber,
+				LimitedStack = rItem.LimitedStack,
+				ItemData = rItem.ItemData,
+				UserId = rItem.Owner
 			};
 
-			session.Habbo.Inventory.AddItems(new List<InventoryItem> { iItem });
-
+			session.Habbo.Inventory.UpdateItem(iItem);
 			session.Send(new InventoryRefreshComposer());
 		}
 	}

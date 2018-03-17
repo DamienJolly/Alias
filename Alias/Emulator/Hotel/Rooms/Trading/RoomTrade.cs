@@ -67,15 +67,17 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			foreach (InventoryItem item in userOne.OfferedItems)
 			{
 				RoomTradingDatabase.LogTradeItem(logId, userOne.User.Habbo.Id, item.Id);
-				userOne.User.Habbo.Inventory.RemoveItem(item);
-				userTwo.User.Habbo.Inventory.AddItems(new List<InventoryItem> { item });
+				item.UserId = userTwo.User.Habbo.Id;
+				userOne.User.Habbo.Inventory.FloorItems.Remove(item);
+				userTwo.User.Habbo.Inventory.UpdateItem(item);
 			}
 
 			foreach (InventoryItem item in userTwo.OfferedItems)
 			{
 				RoomTradingDatabase.LogTradeItem(logId, userTwo.User.Habbo.Id, item.Id);
-				userTwo.User.Habbo.Inventory.RemoveItem(item);
-				userOne.User.Habbo.Inventory.AddItems(new List<InventoryItem> { item });
+				item.UserId = userOne.User.Habbo.Id;
+				userTwo.User.Habbo.Inventory.FloorItems.Remove(item);
+				userOne.User.Habbo.Inventory.UpdateItem(item);
 			}
 
 			userOne.User.Habbo.Session.Send(new AddHabboItemsComposer(userTwo.OfferedItems));

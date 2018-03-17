@@ -19,6 +19,22 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			InventoryDatabase.AddFurni(items, habbo.Inventory);
 		}
 
+		public void UpdateItem(InventoryItem item)
+		{
+			InventoryDatabase.UpdateFurni(item);
+			if (item.RoomId != 0)
+			{
+				floorItems.Remove(item);
+			}
+			else
+			{
+				if (!floorItems.Contains(item))
+				{
+					floorItems.Add(item);
+				}
+			}
+		}
+
 		public void RemoveItem(InventoryItem item)
 		{
 			InventoryDatabase.RemoveFurni(item.Id);

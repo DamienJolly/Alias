@@ -64,6 +64,8 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 						Id = iItem.Id,
 						Room = room,
 						ItemData = iItem.ItemData,
+						LimitedNumber = iItem.LimitedNumber,
+						LimitedStack = iItem.LimitedStack,
 						Owner = session.Habbo.Id,
 						Position = new ItemPosition()
 						{
@@ -76,7 +78,8 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 					room.ItemManager.AddItem(rItem);
 					room.UserManager.Send(new AddFloorItemComposer(rItem));
 
-					session.Habbo.Inventory.RemoveItem(iItem);
+					iItem.RoomId = room.Id;
+					session.Habbo.Inventory.UpdateItem(iItem);
 					session.Send(new RemoveHabboItemComposer(iItem.Id));
 				}
 				else

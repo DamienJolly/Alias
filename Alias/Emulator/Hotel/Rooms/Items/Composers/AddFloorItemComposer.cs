@@ -25,10 +25,10 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Composers
 			result.String(item.ItemData.Height.ToString());
 			result.Int(1);
 			item.GetInteractor().Serialize(result, item);
-			//if (item.LimitedNo > 0)
+			if (item.IsLimited)
 			{
-				//result.Int(item.LimitedNo);
-				//result.Int(item.LimitedTot);
+				result.Int(item.LimitedNumber);
+				result.Int(item.LimitedStack);
 			}
 			result.Int(-1); // item Rent time
 			result.Int((item.ItemData.Modes > 1) ? 1 : 0);

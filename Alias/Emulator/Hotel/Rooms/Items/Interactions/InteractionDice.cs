@@ -12,7 +12,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 
 		public void Serialize(ServerMessage message, RoomItem item)
 		{
-			message.Int(0); //(item.LimitedNo > 0 ? 256 : 0);
+			message.Int(item.IsLimited ? 256 : 0);
 			message.String(item.Mode.ToString());
 		}
 

@@ -32,6 +32,24 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			get; set;
 		} = 0;
 
+		public int LimitedStack
+		{
+			get; set;
+		}
+
+		public int LimitedNumber
+		{
+			get; set;
+		}
+
+		public bool IsLimited
+		{
+			get
+			{
+				return LimitedNumber != 0;
+			}
+		}
+
 		public ItemData ItemData
 		{
 			get; set;
