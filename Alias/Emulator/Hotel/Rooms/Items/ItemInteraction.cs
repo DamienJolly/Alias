@@ -7,6 +7,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		EXCHANGE,
 		DIAMOND_EXCHANGE,
 		POINTS_EXCHANGE,
+		BOT,
 
 		WIRED_TRIGGER,
 		WIRED_EFFECT,
@@ -19,6 +20,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		{
 			switch (interaction)
 			{
+				case "bot": return ItemInteraction.BOT;
 				case "wired_trigger": return ItemInteraction.WIRED_TRIGGER;
 				case "wired_effect": return ItemInteraction.WIRED_EFFECT;
 				case "wired_condition": return ItemInteraction.WIRED_CONDITION;

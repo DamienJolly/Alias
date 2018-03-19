@@ -30,6 +30,45 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			return items;
 		}
 
+		public static List<InventoryBots> ReadBots(int userId)
+		{
+			List<InventoryBots> bots = new List<InventoryBots>();
+			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			{
+				dbClient.AddParameter("id", userId);
+				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `bots` WHERE `user_id` = @id AND `room_id` = 0").Rows)
+				{
+					InventoryBots bot = new InventoryBots
+					{
+						Id = (int)row["id"],
+						Name = (string)row["name"],
+						Motto = (string)row["motto"],
+						Look = (string)row["look"],
+						Gender = (string)row["gender"]
+					};
+					bots.Add(bot);
+					row.Delete();
+				}
+			}
+			return bots;
+		}
+
+		public static int AddBot(InventoryBots bot, int userId)
+		{
+			int botId = 0;
+			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			{
+				dbClient.AddParameter("userId", userId);
+				dbClient.AddParameter("name", bot.Name);
+				dbClient.AddParameter("motto", bot.Motto);
+				dbClient.AddParameter("look", bot.Look);
+				dbClient.AddParameter("gender", bot.Gender);
+				botId = (int)dbClient.InsertQuery("INSERT INTO `bots` (`name`, `motto`, `look`, `gender`, `user_id`) VALUES (@name, @motto, @look, @gender, @userId)");
+			}
+
+			return botId;
+		}
+
 		public static void AddFurni(List<InventoryItem> items, InventoryComponent inventory)
 		{
 			using (DatabaseClient dbClient = DatabaseClient.Instance())

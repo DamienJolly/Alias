@@ -18,7 +18,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 			session.Send(new RoomRelativeMapComposer(session.Habbo.CurrentRoom));
 			session.Send(new RoomHeightMapComposer(session.Habbo.CurrentRoom));
 			session.Send(new RoomEntryInfoComposer(session.Habbo.CurrentRoom, session.Habbo));
-			session.Send(new RoomFloorThicknessUpdatedComposer(session.Habbo.CurrentRoom));
+			session.Send(new RoomThicknessComposer(session.Habbo.CurrentRoom));
 
 			session.Habbo.CurrentRoom.UserManager.OnUserJoin(session);
 

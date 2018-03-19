@@ -9,6 +9,11 @@ namespace Alias.Emulator.Hotel.Items
 			get; set;
 		}
 
+		public int SpriteId
+		{
+			get; set;
+		}
+
 		public string Name
 		{
 			get; set;
@@ -44,17 +49,7 @@ namespace Alias.Emulator.Hotel.Items
 			get; set;
 		}
 
-		public int BehaviourData
-		{
-			get; set;
-		}
-
-		public WiredInteraction WiredInteraction
-		{
-			get; set;
-		} = WiredInteraction.DEFAULT;
-
-		public ItemInteraction Interaction
+		public string ExtraData
 		{
 			get; set;
 		}
@@ -62,7 +57,7 @@ namespace Alias.Emulator.Hotel.Items
 		public string Type
 		{
 			get; set;
-		} = "s";
+		}
 
 		public int Modes
 		{
@@ -73,6 +68,16 @@ namespace Alias.Emulator.Hotel.Items
 		{
 			get; set;
 		} = true;
+		
+		public WiredInteraction WiredInteraction
+		{
+			get; set;
+		} = WiredInteraction.DEFAULT;
+
+		public ItemInteraction Interaction
+		{
+			get; set;
+		}
 
 		public bool IsWired()
 		{

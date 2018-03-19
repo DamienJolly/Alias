@@ -47,18 +47,18 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			//58 -> group // Id Name Badge
 			//60 -> promo // name description minutesleft
 			message.Boolean(this.Entry);
-			message.Boolean(false);
-			message.Boolean(!this.Entry);
-			message.Boolean(false);
-			message.Int(0);
-			message.Int(0);
-			message.Int(0);
+			message.Boolean(false); // staff picked
+			message.Boolean(true); // public room
+			message.Boolean(false); // is muted
+			message.Int(this.Data.Settings.WhoMutes);
+			message.Int(this.Data.Settings.WhoKicks);
+			message.Int(this.Data.Settings.WhoBans);
 			message.Boolean(session.Habbo.Id == this.Data.OwnerId);
-			message.Int(0);
-			message.Int(0);
-			message.Int(0);
-			message.Int(0);
-			message.Int(0);
+			message.Int(this.Data.Settings.ChatMode);
+			message.Int(this.Data.Settings.ChatSize);
+			message.Int(this.Data.Settings.ChatSpeed);
+			message.Int(this.Data.Settings.ChatDistance);
+			message.Int(this.Data.Settings.ChatFlood);
 			return message;
 		}
 	}

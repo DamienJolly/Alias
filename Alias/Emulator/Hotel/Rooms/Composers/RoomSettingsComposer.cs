@@ -37,7 +37,7 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			result.Int(this.room.RoomData.Settings.ChatSpeed);
 			result.Int(this.room.RoomData.Settings.ChatDistance);
 			result.Int(this.room.RoomData.Settings.ChatFlood);
-			result.Boolean(true);
+			result.Boolean(false); 
 			result.Int(this.room.RoomData.Settings.WhoMutes);
 			result.Int(this.room.RoomData.Settings.WhoKicks);
 			result.Int(this.room.RoomData.Settings.WhoBans);

@@ -25,11 +25,11 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 					result.Int(item.Id);
 					result.String(item.ItemData.Type.ToUpper());
 					result.Int(item.Id);
-					result.Int(item.ItemData.Id);
+					result.Int(item.ItemData.SpriteId);
 					result.Int(0);
 					result.Boolean(true); //can stack
 					result.Int(0); //todo: extradata
-					result.String("");
+					result.String(item.ItemData.ExtraData);
 					result.Int(0); //rent shit v
 					result.Int(0);
 					result.Int(0);

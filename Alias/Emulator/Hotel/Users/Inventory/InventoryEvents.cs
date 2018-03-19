@@ -10,6 +10,7 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 		{
 			MessageHandler.Register(Incoming.RequestInventoryItemsMessageEvent, new RequestInventoryItemsEvent());
 			MessageHandler.Register(Incoming.RequestInventoryBadgesMessageEvent, new RequestInventoryBadgesEvent());
+			MessageHandler.Register(Incoming.RequestInventoryBotsMessageEvent, new RequestInventoryBotsEvent());
 		}
 	}
 }

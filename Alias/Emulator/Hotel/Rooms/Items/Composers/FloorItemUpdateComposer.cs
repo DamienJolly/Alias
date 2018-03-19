@@ -17,7 +17,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Composers
 		{
 			ServerMessage result = new ServerMessage(Outgoing.FloorItemUpdateMessageComposer);
 			result.Int(this.Item.Id);
-			result.Int(this.Item.ItemData.Id);
+			result.Int(this.Item.ItemData.SpriteId);
 			result.Int(this.Item.Position.X);
 			result.Int(this.Item.Position.Y);
 			result.Int(this.Item.Position.Rotation);

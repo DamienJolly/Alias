@@ -44,6 +44,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 			// Inventory
 			public const int RequestInventoryItemsMessageEvent = 2835;
 			public const int RequestInventoryBadgesMessageEvent = 1023;
+			public const int RequestInventoryBotsMessageEvent = 1278;
 
 		// Rooms
 		public const int RequestHeightmapMessageEvent = 2443;

@@ -42,11 +42,7 @@ namespace Alias.Emulator.Network
 						MessageHandler.Event(clientMessage.Id).Handle(SessionManager.SessionByContext(context), clientMessage);
 						clientMessage.Dispose();
 					}
-					catch (Exception exception)
-					{
-						Logging.Error("Error while reading ClientMessage", exception, "ChannelHandler", "ChannelRead");
-						return;
-					}
+					catch { }
 				}
 			}
 		}

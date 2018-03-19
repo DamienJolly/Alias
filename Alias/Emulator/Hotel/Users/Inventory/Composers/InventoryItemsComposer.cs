@@ -27,14 +27,13 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 			this.items.ForEach(item =>
 			{
 				message.Int(item.Id);
-				message.String("S"); //type
+				message.String(item.ItemData.Type.ToUpper());
 				message.Int(item.Id);
-				message.Int(item.ItemData.Id);
-
-				// ExtraData shit!!!
+				message.Int(item.ItemData.SpriteId);
+				
 				message.Int(1);
 				message.Int(item.IsLimited ? 256 : 0);
-				message.String(""); //item Extradata
+				message.String(item.ItemData.ExtraData);
 				if (item.IsLimited)
 				{
 					message.Int(item.LimitedNumber);

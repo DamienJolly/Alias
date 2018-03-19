@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			ServerMessage result = new ServerMessage(Outgoing.UserClubMessageComposer);
 			result.String("club_habbo");
 			result.Int(0);
-			result.Int(7);
+			result.Int(2);
 			result.Int(0);
 			result.Int(1);
 			result.Boolean(true);

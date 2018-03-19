@@ -16,7 +16,7 @@ namespace Alias.Emulator.Hotel.Users.Composers
 		public ServerMessage Compose()
 		{
 			ServerMessage message = new ServerMessage(Outgoing.UserPerksMessageComposer);
-			message.Int(16);
+			message.Int(15);
 			message.String("USE_GUIDE_TOOL");
 			message.String("");
 			message.Boolean(false);
@@ -40,13 +40,7 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			message.Boolean(true);
 			message.String("HEIGHTMAP_EDITOR_BETA");
 			message.String("");
-			message.Boolean(true);
-			message.String("EXPERIMENTAL_CHAT_BETA");
-			message.String("requirement.unfulfilled.helper_level_2");
-			message.Boolean(true);
-			message.String("EXPERIMENTAL_TOOLBAR");
-			message.String("");
-			message.Boolean(true);
+			message.Boolean(false);
 			message.String("BUILDER_AT_WORK");
 			message.String("");
 			message.Boolean(true);
@@ -63,6 +57,9 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			message.String("");
 			message.Boolean(true);
 			message.String("NAVIGATOR_ROOM_THUMBNAIL_CAMERA");
+			message.String("");
+			message.Boolean(true);
+			message.String("HABBO_CLUB_OFFER_BETA");
 			message.String("");
 			message.Boolean(true);
 			//todo: all this crap

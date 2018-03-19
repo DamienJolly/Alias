@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Catalog.Composers;
 using Alias.Emulator.Hotel.Items;
+using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Hotel.Users.Currency.Composers;
 using Alias.Emulator.Hotel.Users.Inventory;
@@ -13,17 +14,20 @@ namespace Alias.Emulator.Hotel.Catalog
 	{
 		private static List<CatalogPage> pages;
 		private static List<CatalogFeatured> featured;
+		private static List<CatalogBots> bots;
 
 		public static void Initialize()
 		{
 			pages = CatalogDatabase.ReadPages();
 			featured = CatalogDatabase.ReadFeatured();
+			bots = CatalogDatabase.ReadBots();
 		}
 
 		public static void Reload()
 		{
 			pages.Clear();
 			featured.Clear();
+			bots.Clear();
 
 			Initialize();
 		}
@@ -43,7 +47,6 @@ namespace Alias.Emulator.Hotel.Catalog
 
 		public static void PurchaseItem(CatalogPage page, CatalogItem item, Habbo habbo, int amount, string extradata)
 		{
-			ItemData cBaseItem = null;
 			if (item == null)
 			{
 				habbo.Session.Send(new AlertPurchaseFailedComposer(AlertPurchaseFailedComposer.SERVER_ERROR));
@@ -108,13 +111,34 @@ namespace Alias.Emulator.Hotel.Catalog
 							{
 								for (int k = 0; k < item.GetItemAmount(baseItem.Id); k++)
 								{
-									cBaseItem = baseItem;
-									InventoryItem habboItem = new InventoryItem();
-									habboItem.Id = 0;
-									habboItem.LimitedNumber = limitedNumber;
-									habboItem.LimitedStack = limitedStack;
-									habboItem.ItemData = ItemManager.GetItemData(baseItem.Id);
-									itemsList.Add(habboItem);
+									if (baseItem.Interaction == ItemInteraction.BOT)
+									{
+										CatalogBots botData = GetCatalogBot(baseItem.Id);
+										if (botData != null)
+										{
+											InventoryBots habboBot = new InventoryBots
+											{
+												Id = 0,
+												Name = botData.Name,
+												Motto = botData.Motto,
+												Look = botData.Look,
+												Gender = botData.Gender
+											};
+											habbo.Inventory.AddBot(habboBot);
+											habbo.Session.Send(new AddBotComposer(habboBot));
+										}
+									}
+									else
+									{
+										InventoryItem habboItem = new InventoryItem
+										{
+											Id = 0,
+											LimitedNumber = limitedNumber,
+											LimitedStack = limitedStack,
+											ItemData = ItemManager.GetItemData(baseItem.Id)
+										};
+										itemsList.Add(habboItem);
+									}
 								}
 							}
 						}
@@ -133,18 +157,19 @@ namespace Alias.Emulator.Hotel.Catalog
 					habbo.Session.Send(new UserPointsComposer(habbo.Currency.GetCurrencyType(item.PointsType).Amount, -totalPoints, item.PointsType));
 				}
 
+				if (item.IsLimited)
+				{
+					item.AddLimited(limitedNumber);
+				}
+
 				if (itemsList != null)
 				{
 					habbo.Session.Send(new AddHabboItemsComposer(itemsList));
 					habbo.Inventory.AddItems(itemsList);
-					habbo.Session.Send(new PurchaseOKComposer(item));
-					habbo.Session.Send(new InventoryRefreshComposer());
-
-					if (item.IsLimited)
-					{
-						item.AddLimited(limitedNumber);
-					}
 				}
+
+				habbo.Session.Send(new PurchaseOKComposer(item));
+				habbo.Session.Send(new InventoryRefreshComposer());
 			}
 			catch
 			{
@@ -165,6 +190,11 @@ namespace Alias.Emulator.Hotel.Catalog
 		public static CatalogPage GetCatalogPage(int pageId)
 		{
 			return pages.Where(page => page.Id == pageId).FirstOrDefault();
+		}
+
+		public static CatalogBots GetCatalogBot(int itemId)
+		{
+			return bots.Where(bot => bot.ItemId == itemId).FirstOrDefault();
 		}
 	}
 }

@@ -6,17 +6,27 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 	public class InventoryComponent
 	{
 		private List<InventoryItem> floorItems;
+		private List<InventoryBots> bots;
+
 		private Habbo habbo;
 
 		public InventoryComponent(Habbo h)
 		{
 			this.floorItems = InventoryDatabase.ReadFloorItems(h.Id);
+			this.bots = InventoryDatabase.ReadBots(h.Id);
+
 			this.habbo = h;
 		}
 
 		public void AddItems(List<InventoryItem> items)
 		{
 			InventoryDatabase.AddFurni(items, habbo.Inventory);
+		}
+
+		public void AddBot(InventoryBots bot)
+		{
+			bot.Id = InventoryDatabase.AddBot(bot, habbo.Id);
+			bots.Add(bot);
 		}
 
 		public void UpdateItem(InventoryItem item)
@@ -56,6 +66,14 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			get
 			{
 				return this.floorItems;
+			}
+		}
+
+		public List<InventoryBots> GetBots
+		{
+			get
+			{
+				return this.bots;
 			}
 		}
 	}

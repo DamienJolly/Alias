@@ -41,7 +41,6 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 			if (room.RoomData.DoorState == RoomDoorState.PASSWORD && password.Length <= 0)
 			{
 				session.Send(new RoomEditSettingsErrorComposer(room.Id, RoomEditSettingsErrorComposer.PASSWORD_REQUIRED));
-				return;
 			}
 			else
 			{
@@ -72,7 +71,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 					continue;
 				}
 
-				tags.Add(message.String());
+				tags.Add(tag);
 			}
 			
 			room.RoomData.Tags = tags;
@@ -146,7 +145,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 				room.RoomData.Settings.ChatFlood = 0;
 			}
 
-			room.UserManager.Send(new RoomFloorThicknessUpdatedComposer(room));
+			room.UserManager.Send(new RoomThicknessComposer(room));
 			room.UserManager.Send(new RoomChatSettingsComposer(room.RoomData));
 			room.UserManager.Send(new RoomSettingsUpdatedComposer(room.Id));
 			session.Send(new RoomSettingsSavedComposer(room.Id));

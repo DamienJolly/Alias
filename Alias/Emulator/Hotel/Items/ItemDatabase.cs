@@ -17,19 +17,23 @@ namespace Alias.Emulator.Hotel.Items
 					ItemData item = new ItemData
 					{
 						Id = (int)row["id"],
+						SpriteId = (int)row["sprite_id"],
 						Length = (int)row["length"],
 						Width = (int)row["width"],
 						Height = (double)row["height"],
 						CanSit = AliasEnvironment.ToBool((string)row["can_sit"]),
 						CanLay = AliasEnvironment.ToBool((string)row["can_lay"]),
-						BehaviourData = (int)row["behaviour_data"],
-						Interaction = ItemInteractions.GetInteractionFromString((string)row["type"]),
+						ExtraData = (string)row["extra_data"],
+						Type = (string)row["type"],
+						Interaction = ItemInteractions.GetInteractionFromString((string)row["interaction_type"]),
 						CanWalk = AliasEnvironment.ToBool((string)row["can_walk"])
 					};
 
+					//todo: recode
 					if (item.IsWired())
 					{
-						item.WiredInteraction = (WiredInteraction)item.BehaviourData;
+						item.WiredInteraction = WiredInteraction.DEFAULT;
+						//item.WiredInteraction = (WiredInteraction)item.BehaviourData;
 					}
 
 					items.Add(item);

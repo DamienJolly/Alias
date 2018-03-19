@@ -27,31 +27,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			switch (rItem.ItemData.Interaction)
-			{
-				case ItemInteraction.EXCHANGE:
-					{
-						session.Habbo.Credits += rItem.ItemData.BehaviourData;
-						session.Send(new UserCreditsComposer(session.Habbo));
-						break;
-					}
-				case ItemInteraction.DIAMOND_EXCHANGE:
-					{
-						// todo:
-						break;
-					}
-				case ItemInteraction.POINTS_EXCHANGE:
-					{
-						session.Habbo.Currency.GetCurrencyType(1).Amount += rItem.ItemData.BehaviourData;
-						session.Send(new UserPointsComposer(session.Habbo.Currency.GetCurrencyType(1).Amount, +rItem.ItemData.BehaviourData, 1));
-
-						session.Habbo.Credits += rItem.ItemData.BehaviourData;
-						session.Send(new UserCreditsComposer(session.Habbo));
-						break;
-					}
-				default:
-					return;
-			}
+			//todo: recode
 
 			room.ItemManager.RemoveItem(rItem);
 			room.UserManager.Send(new RemoveFloorItemComposer(rItem));

@@ -39,7 +39,29 @@ namespace Alias.Emulator.Hotel.Catalog
 			}
 			return pages;
 		}
-		
+
+		public static List<CatalogBots> ReadBots()
+		{
+			List<CatalogBots> bots = new List<CatalogBots>();
+			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			{
+				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_bot_items`").Rows)
+				{
+					CatalogBots bot = new CatalogBots
+					{
+						ItemId = (int)row["item_id"],
+						Name = (string)row["name"],
+						Look = (string)row["look"],
+						Motto = (string)row["motto"],
+						Gender = (string)row["gender"]
+					};
+					bots.Add(bot);
+					row.Delete();
+				}
+			}
+			return bots;
+		}
+
 		public static List<CatalogItem> ReadItems(CatalogPage page)
 		{
 			List<CatalogItem> items = new List<CatalogItem>();
@@ -48,20 +70,22 @@ namespace Alias.Emulator.Hotel.Catalog
 				dbClient.AddParameter("pageId", page.Id);
 				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_items` WHERE `page_id` = @pageId").Rows)
 				{
-					CatalogItem item = new CatalogItem();
-					item.Id = (int)row["id"];
-					item.PageId = (int)row["page_Id"];
-					item.ItemIds = (string)row["item_ids"];
-					item.Name = (string)row["catalog_name"];
-					item.Credits = (int)row["cost_credits"];
-					item.Points = (int)row["cost_points"];
-					item.PointsType = (int)row["points_type"];
-					item.Amount = (int)row["amount"];
-					item.LimitedStack = (int)row["limited_stack"];
-					item.ClubLevel = (int)row["club_level"];
-					item.CanGift = AliasEnvironment.ToBool((string)row["can_gift"]);
-					item.HasOffer = AliasEnvironment.ToBool((string)row["have_offer"]);
-					item.OfferId = (int)row["offer_id"];
+					CatalogItem item = new CatalogItem
+					{
+						Id = (int)row["id"],
+						PageId = (int)row["page_Id"],
+						ItemIds = (string)row["item_ids"],
+						Name = (string)row["catalog_name"],
+						Credits = (int)row["cost_credits"],
+						Points = (int)row["cost_points"],
+						PointsType = (int)row["points_type"],
+						Amount = (int)row["amount"],
+						LimitedStack = (int)row["limited_stack"],
+						ClubLevel = (int)row["club_level"],
+						CanGift = AliasEnvironment.ToBool((string)row["can_gift"]),
+						HasOffer = AliasEnvironment.ToBool((string)row["have_offer"]),
+						OfferId = (int)row["offer_id"]
+					};
 					item.LimitedNumbers = ReadLimited(item.Id, item.LimitedStack);
 					item.LimitedNumbers.Shuffle();
 

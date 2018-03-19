@@ -1,16 +1,12 @@
-using System.Collections.Generic;
-using System.Drawing;
-using Alias.Emulator.Hotel.Achievements;
 using Alias.Emulator.Hotel.Misc.WordFilter;
 using Alias.Emulator.Hotel.Moderation;
 using Alias.Emulator.Hotel.Rooms.Users.Chat;
 using Alias.Emulator.Hotel.Rooms.Users.Chat.Commands;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
-using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Users
 {
-	public class RoomUser
+	public class RoomUser : RoomUserData
 	{
 		public int VirtualId
 		{
@@ -21,37 +17,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 		{
 			get; set;
 		}
-
-		public Habbo Habbo
-		{
-			get; set;
-		}
-
-		public UserPosition Position
-		{
-			get; set;
-		}
-
-		public LinkedList<Point> Path
-		{
-			get; set;
-		}
-
-		public UserPosition TargetPosition
-		{
-			get; set;
-		}
-
-		public UserActions Actions
-		{
-			get; set;
-		} = new UserActions();
-
-		public bool isSitting
-		{
-			get; set;
-		} = false;
-
+		
 		public RoomUser()
 		{
 

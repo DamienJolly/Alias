@@ -52,6 +52,8 @@ namespace Alias.Emulator.Network.Messages.Headers
 			public const int InventoryRefreshMessageComposer = 32;
 			public const int RemoveHabboItemMessageComposer = 1518;
 			public const int InventoryBadgesMessageComposer = 2782;
+			public const int AddBotMessageComposer = 1996;
+			public const int InventoryBotsMessageComposer = 953;
 
 		// Rooms
 		public const int RoomDataMessageComposer = 439;
@@ -61,7 +63,7 @@ namespace Alias.Emulator.Network.Messages.Headers
 		public const int RoomPaintMessageComposer = 2813;
 		public const int RoomScoreMessageComposer = 2010;
 		public const int RoomEntryInfoMessageComposer = 521;
-		public const int RoomFloorThicknessUpdatedMessageComposer = 3786; //
+		public const int RoomThicknessMessageComposer = 2244;
 		public const int BubbleAlertMessageComposer = 1469;
 		public const int RoomAddRightsListMessageComposer = 667;
 		public const int RoomRemoveRightsListMessageComposer = 1383;

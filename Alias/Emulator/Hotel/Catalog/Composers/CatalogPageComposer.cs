@@ -43,29 +43,20 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 					message.Int(item.Points);
 					message.Int(item.PointsType);
 					message.Boolean(item.CanGift);
-
+					
 					message.Int(item.GetItems().Count);
 					item.GetItems().ForEach(data =>
 					{
 						message.String(data.Type);
-						if (data.Type.Equals("b"))
-						{
-							message.String(data.Name);
-						}
-						else
-						{
-							message.Int(data.Id);
+						message.Int(data.SpriteId);
+						message.String(data.ExtraData);
+						message.Int(item.GetItemAmount(data.Id));
 
-							//todo: extradata
-							message.String("");
-							message.Int(item.GetItemAmount(data.Id));
-
-							message.Boolean(item.IsLimited);
-							if (item.IsLimited)
-							{
-								message.Int(item.LimitedStack);
-								message.Int(item.LimitedStack - item.LimitedSells);
-							}
+						message.Boolean(item.IsLimited);
+						if (item.IsLimited)
+						{
+							message.Int(item.LimitedStack);
+							message.Int(item.LimitedStack - item.LimitedSells);
 						}
 					});
 
