@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Users.Messenger;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Composers
 {
-	public class ProfileFriendsComposer : IMessageComposer
+	public class ProfileFriendsComposer : IPacketComposer
 	{
 		private int userId;
 		private Random rand;

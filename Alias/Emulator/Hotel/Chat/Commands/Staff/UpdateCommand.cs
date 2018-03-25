@@ -1,44 +1,22 @@
-using Alias.Emulator.Hotel.Achievements;
-using Alias.Emulator.Hotel.Catalog;
 using Alias.Emulator.Hotel.Catalog.Composers;
-using Alias.Emulator.Hotel.Items;
-using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Network.Sessions;
 
-namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
+namespace Alias.Emulator.Hotel.Chat.Commands.Staff
 {
-	public class UpdateCommand : ICommand
+	class UpdateCommand : IChatCommand
 	{
-		public override string Name
-		{
-			get
-			{
-				return "update";
-			}
-		}
+		public string Name => "update";
 
-		public override string Description
-		{
-			get
-			{
-				return "Updates various aspects of the hotel.";
-			}
-		}
+		public string Description => "Updates various aspects of the hotel.";
 
-		public override string Arguments
-		{
-			get
-			{
-				return "%variable%";
-			}
-		}
+		public bool IsAsynchronous => false;
 
-		public override bool Handle(string[] args, Session session)
+		public void Handle(Session session, string[] args)
 		{
 			if (args.Length == 0)
 			{
 				session.Habbo.Notification("You must inculde something to update, e.g. :update catalog");
-				return true;
+				return;
 			}
 
 			string type = args[0];
@@ -48,7 +26,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
 				case "catalog":
 				case "catalogue":
 					{
-						CatalogManager.Reload();
+						Alias.GetServer().GetCatalogManager().Initialize();
 						SessionManager.Send(new CatalogUpdatedComposer());
 						break;
 					}
@@ -57,38 +35,36 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
 				case "furni":
 				case "furniture":
 					{
-						ItemManager.Reload();
+						Alias.GetServer().GetItemManager().Initialize();
 						break;
 					}
 
 				case "ach":
 				case "achievements":
 					{
-						AchievementManager.Reload();
+						Alias.GetServer().GetAchievementManager().Initialize();
 						break;
 					}
 
 				case "navi":
 				case "navigator":
 					{
-						Navigator.Navigator.Reload();
+						Alias.GetServer().GetNavigatorManager().Initialize();
 						break;
 					}
 
 				case "models":
 					{
-						RoomModelManager.Reload();
+						Alias.GetServer().GetRoomManager().Initialize();
 						break;
 					}
 
 				default:
 					session.Habbo.Notification("'" + type + "' is not a valid item to be updated.");
-					return true;
+					return;
 			}
 
 			session.Habbo.Notification("'" + type + "' was successfully updated.");
-
-			return true;
 		}
 	}
 }

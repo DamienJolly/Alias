@@ -1,12 +1,12 @@
 using Alias.Emulator.Hotel.Moderation.Composers;
 using Alias.Emulator.Hotel.Rooms;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation.Events
 {
-    public class ModerationRequestRoomChatlogEvent : IMessageEvent
+    public class ModerationRequestRoomChatlogEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -22,10 +22,10 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			Room room = RoomManager.Room(roomId);
+			Room room = Alias.GetServer().GetRoomManager().Room(roomId);
 			if (room != null)
 			{
-				session.Send(new ModerationRoomChatlogComposer(room, ModerationManager.GetRoomChatlog(room.RoomData.Id)));
+				session.Send(new ModerationRoomChatlogComposer(room, Alias.GetServer().GetModerationManager().GetRoomChatlog(room.RoomData.Id)));
 			}
 		}
 	}

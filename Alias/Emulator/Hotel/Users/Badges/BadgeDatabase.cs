@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Data;
 using Alias.Emulator.Database;
+using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Badges
 {
@@ -9,18 +9,20 @@ namespace Alias.Emulator.Hotel.Users.Badges
 		public static List<BadgeDefinition> InitBadges(int userId)
 		{
 			List<BadgeDefinition> badges = new List<BadgeDefinition>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("userId", userId);
-				foreach (DataRow row in dbClient.DataTable("SELECT `badge_code`, `slot_id` FROM `habbo_badges` WHERE `user_id` = @userId").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `badge_code`, `slot_id` FROM `habbo_badges` WHERE `user_id` = @userId"))
 				{
-					BadgeDefinition badge = new BadgeDefinition()
+					while (Reader.Read())
 					{
-						Code = (string)row["badge_code"],
-						Slot = (int)row["slot_id"]
-					};
-					badges.Add(badge);
-					row.Delete();
+						BadgeDefinition badge = new BadgeDefinition()
+						{
+							Code = Reader.GetString("badge_code"),
+							Slot = Reader.GetInt32("slot_id")
+						};
+						badges.Add(badge);
+					}
 				}
 			}
 			return badges;
@@ -28,7 +30,7 @@ namespace Alias.Emulator.Hotel.Users.Badges
 
 		public static void GiveBadge(Habbo habbo, string code)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("userId", habbo.Id);
 				dbClient.AddParameter("badgeCode", code);
@@ -38,7 +40,7 @@ namespace Alias.Emulator.Hotel.Users.Badges
 
 		public static void TakeBadge(Habbo habbo, string code)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("userId", habbo.Id);
 				dbClient.AddParameter("badgeCode", code);
@@ -48,7 +50,7 @@ namespace Alias.Emulator.Hotel.Users.Badges
 
 		public static void UpdateBadge(Habbo habbo, BadgeDefinition badge, string code)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("userId", habbo.Id);
 				dbClient.AddParameter("badgeCode", code);

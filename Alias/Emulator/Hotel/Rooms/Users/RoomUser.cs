@@ -1,7 +1,5 @@
-using Alias.Emulator.Hotel.Misc.WordFilter;
-using Alias.Emulator.Hotel.Moderation;
+using Alias.Emulator.Hotel.Chat.WordFilter;
 using Alias.Emulator.Hotel.Rooms.Users.Chat;
-using Alias.Emulator.Hotel.Rooms.Users.Chat.Commands;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
 
 namespace Alias.Emulator.Hotel.Rooms.Users
@@ -78,20 +76,20 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 				text = text.Substring(0, 100);
 			}
 			
-			if (WordFilterManager.CheckBanned(text))
+			if (Alias.GetServer().GetChatManager().GetFilter().CheckBanned(text))
 			{
-				ModerationManager.QuickTicket(this.Habbo, "User said a banned word");
+				Alias.GetServer().GetModerationManager().QuickTicket(this.Habbo, "User said a banned word");
 				return;
 			}
 
-			text = WordFilterManager.Filter(text);
+			text = Alias.GetServer().GetChatManager().GetFilter().Filter(text);
 
-			if (text.StartsWith(":") && CommandHandler.Handle(this.Habbo.Session, text))
+			if (text.StartsWith(":") && Alias.GetServer().GetChatManager().GetCommands().Parse(this.Habbo.Session, text))
 			{
 				return;
 			}
 
-			RoomUserChatComposer packet = new RoomUserChatComposer(this.VirtualId, text, Expression(text), colour, chatType);
+			RoomUserChatComposer packet = new RoomUserChatComposer(this.VirtualId, text, Alias.GetServer().GetChatManager().GetEmotions().GetEmotionsForText(text), colour, chatType);
 
 			if (target != null)
 			{
@@ -121,28 +119,6 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 				default:
 					return 0;
 			}
-		}
-
-		private int Expression(string text)
-		{
-			int face = 0;
-			if (text.Contains(":D") || text.Contains(":)") || text.Contains("c:") || text.Contains(":-)") || text.Contains("=D"))
-			{
-				face = 1;
-			}
-			if (text.Contains(":(") || text.Contains(":c") || text.Contains(":-(") || text.Contains("=("))
-			{
-				face = 4;
-			}
-			if (text.Contains(":@") || text.Contains(":-@") || text.Contains("=@"))
-			{
-				face = 2;
-			}
-			if (text.ToLower().Contains(":o") || text.Contains(":0") || text.ToLower().Contains(":-o") || text.Contains(":-0") || text.ToLower().Contains("=o") || text.Contains("=0"))
-			{
-				face = 3;
-			}
-			return face;
 		}
 
 		public void Dispose()

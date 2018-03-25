@@ -39,7 +39,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			get
 			{
-				return RoomModelManager.GetModel(this.RoomData.ModelName);
+				return Alias.GetServer().GetRoomManager().GetRoomModelManager().GetModel(this.RoomData.ModelName);
 			}
 		}
 
@@ -120,7 +120,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			this.Disposing = true;
 			RoomItemDatabase.SaveFurniture(this.ItemManager.Items);
 			RoomDatabase.SaveRoom(this.RoomData);
-			RoomManager.RemoveLoadedRoom(this);
+			Alias.GetServer().GetRoomManager().RemoveLoadedRoom(this);
 		}
 	}
 }

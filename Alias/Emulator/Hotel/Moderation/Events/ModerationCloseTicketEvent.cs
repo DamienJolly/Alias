@@ -1,11 +1,11 @@
 using Alias.Emulator.Hotel.Users;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation.Events
 {
-    public class ModerationCloseTicketEvent : IMessageEvent
+    public class ModerationCloseTicketEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			ModerationTicket issue = ModerationManager.GetTicket(ticketId);
+			ModerationTicket issue = Alias.GetServer().GetModerationManager().GetTicket(ticketId);
 			if (issue == null || issue.ModId != session.Habbo.Id)
 			{
 				return;
@@ -35,7 +35,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			ModerationManager.ResolveTicket(issue, habbo, state);
+			Alias.GetServer().GetModerationManager().ResolveTicket(issue, habbo, state);
 		}
 	}
 }

@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation.Events
 {
-    public class ModerationReleaseTicketEvent : IMessageEvent
+    public class ModerationReleaseTicketEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -21,13 +21,13 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 					continue;
 				}
 
-				ModerationTicket issue = ModerationManager.GetTicket(ticketId);
+				ModerationTicket issue = Alias.GetServer().GetModerationManager().GetTicket(ticketId);
 				if (issue == null || issue.ModId != session.Habbo.Id)
 				{
 					continue;
 				}
 
-				ModerationManager.ReleaseTicket(issue);
+				Alias.GetServer().GetModerationManager().ReleaseTicket(issue);
 			}
 		}
 	}

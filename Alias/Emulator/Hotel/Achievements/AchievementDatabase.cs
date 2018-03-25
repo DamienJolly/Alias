@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.Data;
 using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Users;
+using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Achievements
 {
@@ -10,19 +10,21 @@ namespace Alias.Emulator.Hotel.Achievements
 		public static List<Achievement> ReadAchievements()
 		{
 			List<Achievement> achievements = new List<Achievement>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `achievements`").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `achievements`"))
 				{
-					Achievement achievement = new Achievement()
+					while (Reader.Read())
 					{
-						Id    = (int)row["id"],
-						Name     = (string)row["name"],
-						Category = AchievementCategories.GetCategoryFromString((string)row["category"]),
-						Levels   = AchievementDatabase.ReadLevels((int)row["id"])
-					};
-					achievements.Add(achievement);
-					row.Delete();
+						Achievement achievement = new Achievement()
+						{
+							Id       = Reader.GetInt32("id"),
+							Name     = Reader.GetString("name"),
+							Category = AchievementCategories.GetCategoryFromString(Reader.GetString("category")),
+							Levels   = AchievementDatabase.ReadLevels(Reader.GetInt32("id"))
+						};
+						achievements.Add(achievement);
+					}
 				}
 			}
 			return achievements;
@@ -31,21 +33,23 @@ namespace Alias.Emulator.Hotel.Achievements
 		public static List<AchievementLevel> ReadLevels(int id)
 		{
 			List<AchievementLevel> levels = new List<AchievementLevel>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("id", id);
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `achievement_levels` WHERE `id` = @id").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `achievement_levels` WHERE `id` = @id"))
 				{
-					AchievementLevel level = new AchievementLevel()
+					while (Reader.Read())
 					{
-						Level        = (int)row["level"],
-						RewardAmount = (int)row["reward_amount"],
-						RewardType   = (int)row["reward_type"],
-						RewardPoints = (int)row["reward_points"],
-						Progress     = (int)row["progress"]
-					};
-					levels.Add(level);
-					row.Delete();
+						AchievementLevel level = new AchievementLevel()
+						{
+							Level        = Reader.GetInt32("level"),
+							RewardAmount = Reader.GetInt32("reward_amount"),
+							RewardType   = Reader.GetInt32("reward_type"),
+							RewardPoints = Reader.GetInt32("reward_points"),
+							Progress     = Reader.GetInt32("progress")
+						};
+						levels.Add(level);
+					}
 				}
 			}
 			return levels;
@@ -53,7 +57,7 @@ namespace Alias.Emulator.Hotel.Achievements
 
 		public static void AddUserAchievement(Habbo habbo, Achievement achievement, int amount)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("userId", habbo.Id);
 				dbClient.AddParameter("name", achievement.Name);

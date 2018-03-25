@@ -1,5 +1,6 @@
 using System.Data;
 using Alias.Emulator.Database;
+using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Handshake
 {
@@ -7,10 +8,13 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 	{
 		public static bool SSOExists(string sso)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("sso", sso);
-				return dbClient.DataRow("SELECT `username` FROM `habbos` WHERE `username` = @sso") != null;
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT null FROM `habbos` WHERE `username` = @sso"))
+				{
+					return Reader.Read();
+				}
 			}
 		}
 
@@ -18,10 +22,16 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 		{
 			int userId = 0;
 
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("sso", sso);
-				userId = dbClient.Int32("SELECT `id` FROM `habbos` WHERE `username` = @sso");
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `habbos` WHERE `username` = @sso"))
+				{
+					if (Reader.Read())
+					{
+						userId = Reader.GetInt32("id");
+					}
+				}
 			}
 
 			return BuildHabbo(userId);
@@ -30,33 +40,30 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 		public static Habbo BuildHabbo(int userId)
 		{
 			Habbo habbo = null;
-			if (userId == 0)
-			{
-				return habbo;
-			}
-
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
-				DataRow row = dbClient.DataRow("SELECT * FROM `habbos` WHERE `id` = @id");
-				if (row != null)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `habbos` WHERE `id` = @id"))
 				{
-					habbo = new Habbo()
+					if (Reader.Read())
 					{
-						Id = (int)row["id"],
-						Username = (string)row["username"],
-						Mail = (string)row["mail"],
-						Look = (string)row["look"],
-						Motto = (string)row["motto"],
-						Gender = (string)row["gender"],
-						Rank = 6,
-						ClubLevel = 1,
-						Credits = 9999,
-						HomeRoom = 0,
-						AchievementScore = 10,
-						Muted = false,
-						AllowTrading = true
-					};
+						habbo = new Habbo()
+						{
+							Id               = Reader.GetInt32("id"),
+							Username         = Reader.GetString("username"),
+							Mail             = Reader.GetString("mail"),
+							Look             = Reader.GetString("look"),
+							Motto            = Reader.GetString("motto"),
+							Gender           = Reader.GetString("gender"),
+							Rank             = 6,
+							ClubLevel        = 1,
+							Credits          = 9999,
+							HomeRoom         = 0,
+							AchievementScore = 10,
+							Muted            = false,
+							AllowTrading     = true
+						};
+					}
 				}
 			}
 			
@@ -65,11 +72,14 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 
 		public static bool IsBanned(int userId)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
-				dbClient.AddParameter("now", AliasEnvironment.GetUnixTimestamp());
-				return dbClient.DataRow("SELECT `reason` FROM `bans` WHERE `user_id` = @id AND `expires` > @now") != null;
+				dbClient.AddParameter("now", Alias.GetUnixTimestamp());
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT null FROM `bans` WHERE `user_id` = @id AND `expires` > @now"))
+				{
+					return Reader.Read();
+				}
 			}
 		}
 	}

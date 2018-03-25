@@ -1,11 +1,11 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Composers
 {
-	public class RoomDataComposer : IMessageComposer
+	public class RoomDataComposer : IPacketComposer
 	{
 		private RoomData Data;
 		private bool Loading;
@@ -28,11 +28,11 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			message.String(this.Data.Name);
 			message.Int(this.Data.OwnerId);
 			message.String(this.Data.OwnerName);
-			message.Int(RoomManager.DoorToInt(this.Data.DoorState));
+			message.Int(Alias.GetServer().GetRoomManager().DoorToInt(this.Data.DoorState));
 			message.Int(this.Data.UsersNow);
 			message.Int(this.Data.MaxUsers);
 			message.String(this.Data.Description);
-			message.Int(RoomManager.TradeToInt(this.Data.TradeState));
+			message.Int(Alias.GetServer().GetRoomManager().TradeToInt(this.Data.TradeState));
 			message.Int(this.Data.Likes.Count);
 			message.Int(0);
 			message.Int(this.Data.Category);

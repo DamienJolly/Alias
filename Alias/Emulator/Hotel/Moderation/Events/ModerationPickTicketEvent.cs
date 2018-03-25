@@ -1,12 +1,12 @@
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Moderation.Composers;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation.Events
 {
-    public class ModerationPickTicketEvent : IMessageEvent
+    public class ModerationPickTicketEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -22,7 +22,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			ModerationTicket issue = ModerationManager.GetTicket(ticketId);
+			ModerationTicket issue = Alias.GetServer().GetModerationManager().GetTicket(ticketId);
 			if (issue == null)
 			{
 				session.Send(new GenericAlertComposer("Picking issue failed: \rTicket already picked or does not exist!", session));
@@ -36,7 +36,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			ModerationManager.PickTicket(issue, session.Habbo);
+			Alias.GetServer().GetModerationManager().PickTicket(issue, session.Habbo);
 		}
 	}
 }

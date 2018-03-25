@@ -1,6 +1,5 @@
 using Alias.Emulator.Hotel.Users.Currency.Events;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Users.Currency
 {
@@ -8,7 +7,7 @@ namespace Alias.Emulator.Hotel.Users.Currency
 	{
 		public static void Register()
 		{
-			MessageHandler.Register(Incoming.RequestUserCreditsMessageEvent, new RequestUserCreditsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestUserCreditsMessageEvent, new RequestUserCreditsEvent());
 		}
 	}
 }

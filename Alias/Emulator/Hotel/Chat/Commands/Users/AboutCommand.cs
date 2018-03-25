@@ -1,44 +1,28 @@
+using System;
 using System.Diagnostics;
 using Alias.Emulator.Network.Sessions;
 
-namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
+namespace Alias.Emulator.Hotel.Chat.Commands.Users
 {
-	public class AboutCommand : ICommand
+	class AboutCommand : IChatCommand
 	{
-		public override string Name
-		{
-			get
-			{
-				return "about";
-			}
-		}
+		public string Name => "about";
 
-		public override string Description
-		{
-			get
-			{
-				return "Shows important information about the hotel.";
-			}
-		}
+		public string Description => "Shows important information about the hotel.";
 
-		public override string Arguments
-		{
-			get
-			{
-				return string.Empty;
-			}
-		}
+		public bool IsAsynchronous => false;
 
-		public override bool Handle(string[] args, Session session)
+		public void Handle(Session session, string[] args)
 		{
+			TimeSpan Uptime = DateTime.Now - Alias.ServerStarted;
 			string message = "";
 			message += "<b>Hotel Statistics</b> \r"
 					+ "- Online Users: " + SessionManager.OnlineUsers() + "\r"
-					+ "- Active Rooms: " + RoomManager.ReadLoadedRooms().Count + "\r"
+					+ "- Active Rooms: " + Alias.GetServer().GetRoomManager().ReadLoadedRooms().Count + "\r"
 					+ "- Furni: " + 0 + "\r"
 					+ "\n"
 					+ "<b>Server Statistics</b> \r"
-					+ "- Uptime: " + AliasEnvironment.GetUpTime() + "\r"
+					+ "- Uptime: " + Uptime.Days + " day(s), " + Uptime.Hours + " hour(s) and " + Uptime.Minutes + " minute(s)" + "\r"
 					+ "- RAM Usage: " + Process.GetCurrentProcess().WorkingSet64 / (1024 * 1024) + "MBs \r"
 					+ "- Build:  " + Constant.ProductionVersion + " \r"
 					+ "\n"
@@ -50,7 +34,6 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Chat.Commands.Users
 					+ "- Damien Jolly";
 
 			session.Habbo.Notification(message, true);
-			return true;
 		}
 	}
 }

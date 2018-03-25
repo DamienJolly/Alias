@@ -1,12 +1,12 @@
 using Alias.Emulator.Hotel.Users.Messenger;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Composers
 {
-	public class UserProfileComposer : IMessageComposer
+	public class UserProfileComposer : IPacketComposer
 	{
 		private Habbo habbo;
 		private Session viewer;

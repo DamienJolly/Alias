@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Data;
 using Alias.Emulator.Database;
 using Alias.Emulator.Network.Sessions;
+using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Messenger
 {
@@ -10,24 +11,26 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		public static List<MessengerFriend> ReadFriendships(int userId)
 		{
 			List<MessengerFriend> friends = new List<MessengerFriend>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
-				foreach (DataRow row in dbClient.DataTable("SELECT `target_id`, `relation` FROM `messenger_friends` WHERE `user_id` = @id").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `target_id`, `relation` FROM `messenger_friends` WHERE `user_id` = @id"))
 				{
-					int targetId = (int)row["target_id"];
-					Habbo habbo = SessionManager.HabboById(targetId);
-					MessengerFriend friend = new MessengerFriend
+					while (Reader.Read())
 					{
-						Id       = targetId,
-						Username = habbo.Username,
-						Look     = habbo.Look,
-						Motto    = habbo.Motto,
-						InRoom   = habbo.CurrentRoom != null,
-						Relation = (int)row["relation"]
-					};
-					friends.Add(friend);
-					row.Delete();
+						int targetId = Reader.GetInt32("target_id");
+						Habbo habbo  = SessionManager.HabboById(targetId);
+						MessengerFriend friend = new MessengerFriend
+						{
+							Id       = targetId,
+							Username = habbo.Username,
+							Look     = habbo.Look,
+							Motto    = habbo.Motto,
+							InRoom   = habbo.CurrentRoom != null,
+							Relation = Reader.GetInt32("relation")
+						};
+						friends.Add(friend);
+					}
 				}
 			}
 			return friends;
@@ -36,21 +39,23 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		public static List<MessengerRequest> ReadFriendRequests(int userId)
 		{
 			List<MessengerRequest> requests = new List<MessengerRequest>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
-				foreach (DataRow row in dbClient.DataTable("SELECT `sender` FROM `messenger_requests` WHERE `reciever` = @id").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `sender` FROM `messenger_requests` WHERE `reciever` = @id"))
 				{
-					int targetId = (int)row["sender"];
-					Habbo habbo = SessionManager.HabboById(targetId);
-					MessengerRequest request = new MessengerRequest
+					while (Reader.Read())
 					{
-						Id       = targetId,
-						Username = habbo.Username,
-						Look     = habbo.Look
-					};
-					requests.Add(request);
-					row.Delete();
+						int targetId = Reader.GetInt32("sender");
+						Habbo habbo  = SessionManager.HabboById(targetId);
+						MessengerRequest request = new MessengerRequest
+						{
+							Id       = targetId,
+							Username = habbo.Username,
+							Look     = habbo.Look
+						};
+						requests.Add(request);
+					}
 				}
 			}
 			return requests;
@@ -62,13 +67,15 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			{
 				query = query.Replace("%", "");
 				List<Habbo> result = new List<Habbo>();
-				using (DatabaseClient dbClient = DatabaseClient.Instance())
+				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 				{
 					dbClient.AddParameter("query", "%" + query + "%");
-					foreach (DataRow row in dbClient.DataTable("SELECT `id` FROM `habbos` WHERE `username` LIKE @query").Rows)
+					using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `habbos` WHERE `username` LIKE @query"))
 					{
-						result.Add(SessionManager.HabboById((int)row["Id"]));
-						row.Delete();
+						while (Reader.Read())
+						{
+							result.Add(SessionManager.HabboById(Reader.GetInt32("Id")));
+						}
 					}
 				}
 				return result;
@@ -80,7 +87,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (sender > 0 && reciever > 0)
 			{
-				using (DatabaseClient dbClient = DatabaseClient.Instance())
+				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 				{
 					dbClient.AddParameter("sender", sender);
 					dbClient.AddParameter("reciever", reciever);
@@ -91,11 +98,14 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 
 		public static bool RequestExists(int userId, int otherUser)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				dbClient.AddParameter("other", otherUser);
-				return dbClient.DataTable("SELECT `sender` FROM `messenger_requests` WHERE (`sender` = @id AND `reciever` = @other) OR (`reciever` = @id AND `sender` = @other)").Rows.Count > 0;
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `sender` FROM `messenger_requests` WHERE (`sender` = @id AND `reciever` = @other) OR (`reciever` = @id AND `sender` = @other)"))
+				{
+					return Reader.Read();
+				}
 			}
 		}
 
@@ -103,7 +113,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (Sender > 0 && Reciever > 0)
 			{
-				using (DatabaseClient dbClient = DatabaseClient.Instance())
+				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 				{
 					dbClient.AddParameter("sender", Sender);
 					dbClient.AddParameter("reciever", Reciever);
@@ -116,7 +126,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (targetId > 0 && userId > 0 && type > 0)
 			{
-				using (DatabaseClient dbClient = DatabaseClient.Instance())
+				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 				{
 					dbClient.AddParameter("targetId", targetId);
 					dbClient.AddParameter("userId", userId);
@@ -130,7 +140,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (targetId > 0 && userId > 0)
 			{
-				using (DatabaseClient dbClient = DatabaseClient.Instance())
+				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 				{
 					dbClient.AddParameter("targetId", targetId);
 					dbClient.AddParameter("userId", userId);
@@ -144,7 +154,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (targetId > 0 && userId > 0)
 			{
-				using (DatabaseClient dbClient = DatabaseClient.Instance())
+				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 				{
 					dbClient.AddParameter("targetId", targetId);
 					dbClient.AddParameter("userId", userId);
@@ -157,12 +167,12 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (from > 0 && to > 0 && !string.IsNullOrEmpty(message) && !string.IsNullOrWhiteSpace(message))
 			{
-				using (DatabaseClient dbClient = DatabaseClient.Instance())
+				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 				{
 					dbClient.AddParameter("from", from);
 					dbClient.AddParameter("to", to);
 					dbClient.AddParameter("message", message);
-					dbClient.AddParameter("timestamp", (int)AliasEnvironment.GetUnixTimestamp());
+					dbClient.AddParameter("timestamp", (int)Alias.GetUnixTimestamp());
 					dbClient.Query("INSERT INTO `messenger_chatlogs` (`sender`, `reciever`, `message`, `time`) VALUES (@from, @to, @message, @timestamp)");
 				}
 			}
@@ -172,11 +182,11 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (from > 0 && !string.IsNullOrEmpty(message) && !string.IsNullOrWhiteSpace(message))
 			{
-				using (DatabaseClient dbClient = DatabaseClient.Instance())
+				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 				{
 					dbClient.AddParameter("from", from);
 					dbClient.AddParameter("message", message);
-					dbClient.AddParameter("timestamp", (int)AliasEnvironment.GetUnixTimestamp());
+					dbClient.AddParameter("timestamp", (int)Alias.GetUnixTimestamp());
 					dbClient.Query("INSERT INTO `messenger_roominvitations` (`sender`, `message`, `time`) VALUES (@from, @message, @timestamp)");
 				}
 			}

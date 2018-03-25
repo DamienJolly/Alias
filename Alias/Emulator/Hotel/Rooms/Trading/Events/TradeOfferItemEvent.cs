@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Users.Inventory;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 {
-	public class TradeOfferItemEvent : IMessageEvent
+	public class TradeOfferItemEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

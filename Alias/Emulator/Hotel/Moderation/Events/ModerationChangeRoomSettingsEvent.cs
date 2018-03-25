@@ -1,13 +1,13 @@
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Rooms.States;
 using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation.Events
 {
-    public class ModerationChangeRoomSettingsEvent : IMessageEvent
+    public class ModerationChangeRoomSettingsEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -22,7 +22,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			Room room = RoomManager.Room(roomId);
+			Room room = Alias.GetServer().GetRoomManager().Room(roomId);
 			if (room != null)
 			{
 				bool lockDoor = message.Integer() == 1;

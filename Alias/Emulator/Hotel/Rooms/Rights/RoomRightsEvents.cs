@@ -1,6 +1,5 @@
 using Alias.Emulator.Hotel.Rooms.Rights.Events;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Rooms.Rights
 {
@@ -8,7 +7,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
     {
 		public static void Register()
 		{
-			MessageHandler.Register(Incoming.RequestRoomRightsMessageEvent, new RequestRoomRightsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestRoomRightsMessageEvent, new RequestRoomRightsEvent());
 		}
     }
 }

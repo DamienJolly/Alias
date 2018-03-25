@@ -1,11 +1,11 @@
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Users.Handshake.Events
 {
-	public class ReleaseVersionEvent : IMessageEvent
+	public class ReleaseVersionEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

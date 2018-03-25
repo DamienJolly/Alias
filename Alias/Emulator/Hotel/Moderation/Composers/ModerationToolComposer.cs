@@ -1,17 +1,20 @@
+using System.Collections.Generic;
 using Alias.Emulator.Hotel.Users;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Moderation.Composers
 {
-	public class ModerationToolComposer : IMessageComposer
+	public class ModerationToolComposer : IPacketComposer
 	{
 		private Habbo habbo;
+		private List<ModerationTicket> tickets;
 
-		public ModerationToolComposer(Habbo habbo)
+		public ModerationToolComposer(Habbo habbo, List<ModerationTicket> tickets)
 		{
 			this.habbo = habbo;
+			this.tickets = tickets;
 		}
 
 		public ServerMessage Compose()
@@ -19,14 +22,14 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			ServerMessage result = new ServerMessage(Outgoing.ModerationToolMessageComposer);
 			if (this.habbo.HasPermission("acc_modtool_ticket_queue"))
 			{
-				result.Int(ModerationManager.GetTickets.Count);
-				ModerationManager.GetTickets.ForEach(ticket =>
+				result.Int(tickets.Count);
+				tickets.ForEach(ticket =>
 				{
 					result.Int(ticket.Id);
 					result.Int(ModerationTicketStates.GetIntFromState(ticket.State));
 					result.Int(ModerationTicketTypes.GetIntFromType(ticket.Type));
 					result.Int(ticket.Category);
-					result.Int((int)AliasEnvironment.GetUnixTimestamp() - ticket.Id);
+					result.Int((int)Alias.GetUnixTimestamp() - ticket.Id);
 					result.Int(ticket.Priority);
 					result.Int(1); // ??
 					result.Int(ticket.SenderId);
@@ -45,14 +48,14 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 				result.Int(0);
 			}
 
-			result.Int(ModerationManager.GetPresets("user").Count);
-			ModerationManager.GetPresets("user").ForEach(preset =>
+			result.Int(Alias.GetServer().GetModerationManager().GetPresets("user").Count);
+			Alias.GetServer().GetModerationManager().GetPresets("user").ForEach(preset =>
 			{
 				result.String(preset.Data);
 			});
 
-			result.Int(ModerationManager.GetPresets("category").Count);
-			ModerationManager.GetPresets("category").ForEach(preset =>
+			result.Int(Alias.GetServer().GetModerationManager().GetPresets("category").Count);
+			Alias.GetServer().GetModerationManager().GetPresets("category").ForEach(preset =>
 			{
 				result.String(preset.Data);
 			});
@@ -65,8 +68,8 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			result.Boolean(this.habbo.HasPermission("acc_modtool_room_info")); //room info ??Not sure
 			result.Boolean(this.habbo.HasPermission("acc_modtool_room_logs")); //room chatlogs ??Not sure
 
-			result.Int(ModerationManager.GetPresets("room").Count);
-			ModerationManager.GetPresets("room").ForEach(preset =>
+			result.Int(Alias.GetServer().GetModerationManager().GetPresets("room").Count);
+			Alias.GetServer().GetModerationManager().GetPresets("room").ForEach(preset =>
 			{
 				result.String(preset.Data);
 			});

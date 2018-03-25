@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Navigator.Views;
 using Alias.Emulator.Hotel.Rooms;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Composers
 {
-	public class NavigatorSearchResultsComposer : IMessageComposer
+	public class NavigatorSearchResultsComposer : IPacketComposer
 	{
 		private string Category;
 		private string Search;
@@ -18,7 +18,7 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 		public NavigatorSearchResultsComposer(string category, string search, Session s)
 		{
 			this.Category = category;
-			this.Categories = Navigator.GetCategories(category);
+			this.Categories = Alias.GetServer().GetNavigatorManager().GetCategories(category);
 			this.Search = search;
 			this.session = s;
 		}
@@ -62,11 +62,11 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 					message.String(room.Name);
 					message.Int(room.OwnerId);
 					message.String(room.OwnerName);
-					message.Int(RoomManager.DoorToInt(room.DoorState));
+					message.Int(Alias.GetServer().GetRoomManager().DoorToInt(room.DoorState));
 					message.Int(room.UsersNow);
 					message.Int(room.MaxUsers);
 					message.String(room.Description);
-					message.Int(RoomManager.TradeToInt(room.TradeState));
+					message.Int(Alias.GetServer().GetRoomManager().TradeToInt(room.TradeState));
 					message.Int(room.Likes.Count);
 					message.Int(room.Rankings);
 					message.Int(room.Category);

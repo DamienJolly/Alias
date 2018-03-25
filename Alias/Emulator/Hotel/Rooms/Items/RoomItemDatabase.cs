@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Data;
 using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Items;
+using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Rooms.Items
 {
@@ -10,29 +11,31 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		public static List<RoomItem> ReadRoomItems(Room room)
 		{
 			List<RoomItem> items = new List<RoomItem>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("roomId", room.Id);
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `items` INNER JOIN `items_room_data` ON `items`.`id` = `items_room_data`.`id` WHERE `items`.`room_id` = @roomId").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `items` INNER JOIN `items_room_data` ON `items`.`id` = `items_room_data`.`id` WHERE `items`.`room_id` = @roomId"))
 				{
-					RoomItem item = new RoomItem
+					while (Reader.Read())
 					{
-						Id = (int)row["id"],
-						Room = room,
-						Position = new ItemPosition
+						RoomItem item = new RoomItem
 						{
-							X = (int)row["x"],
-							Y = (int)row["y"],
-							Z = (double)row["z"],
-							Rotation = (int)row["rot"]
-						},
-						Owner = (int)row["user_id"],
-						LimitedNumber = (int)row["limited_number"],
-						LimitedStack = (int)row["limited_stack"],
-						ItemData = ItemManager.GetItemData((int)row["base_id"])
-					};
-					items.Add(item);
-					row.Delete();
+							Id            = Reader.GetInt32("id"),
+							Room          = room,
+							Position      = new ItemPosition
+							{
+								X         = Reader.GetInt32("x"),
+								Y         = Reader.GetInt32("y"),
+								Z         = Reader.GetDouble("z"),
+								Rotation  = Reader.GetInt32("rot")
+							},
+							Owner         = Reader.GetInt32("user_id"),
+							LimitedNumber = Reader.GetInt32("limited_number"),
+							LimitedStack  = Reader.GetInt32("limited_stack"),
+							ItemData      = Alias.GetServer().GetItemManager().GetItemData(Reader.GetInt32("base_id"))
+						};
+						items.Add(item);
+					}
 				}
 			}
 			return items;
@@ -40,7 +43,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 
 		public static void AddItem(RoomItem item)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("itemId", item.Id);
 				dbClient.AddParameter("xPos", item.Position.X);
@@ -53,7 +56,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 
 		public static void RemoveItem(int itemId)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("itemId", itemId);
 				dbClient.Query("DELETE FROM `items_room_data` WHERE `id` = @itemId");
@@ -62,7 +65,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 
 		public static void SaveFurniture(List<RoomItem> items)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				foreach (RoomItem item in items)
 				{
@@ -72,7 +75,6 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 					dbClient.AddParameter("rot", item.Position.Rotation);
 					dbClient.AddParameter("id", item.Id);
 					dbClient.Query("UPDATE `items_room_data` SET `x` = @x, `y` = @y, `z` = @z, `rot` = @rot WHERE `id` = @id");
-					dbClient.ClearParameters();
 				}
 			}
 		}

@@ -1,12 +1,12 @@
 using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Hotel.Users.Achievements;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Achievements.Composers
 {
-    public class AchievementProgressComposer : IMessageComposer
+    public class AchievementProgressComposer : IPacketComposer
 	{
 		private Habbo habbo;
 		private Achievement achievement;
@@ -56,7 +56,7 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 			result.Int(nextLevel != null ? nextLevel.RewardAmount : 0);
 			result.Int(nextLevel != null ? nextLevel.RewardType : 0);
 			result.Int(amount);
-			result.Boolean(AchievementManager.HasAchieved(habbo, this.achievement));
+			result.Boolean(Alias.GetServer().GetAchievementManager().HasAchieved(habbo, this.achievement));
 			result.String(this.achievement.Category.ToString().ToLower());
 			result.String(string.Empty);
 			result.Int(this.achievement.Levels.Count);

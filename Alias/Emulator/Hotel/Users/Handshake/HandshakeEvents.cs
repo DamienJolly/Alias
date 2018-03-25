@@ -1,5 +1,4 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Hotel.Users.Handshake.Events;
 
 namespace Alias.Emulator.Hotel.Users.Handshake
@@ -8,12 +7,12 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 	{
 		public static void Register()
 		{
-			MessageHandler.Register(Incoming.ReleaseVersionMessageEvent, new ReleaseVersionEvent());
-			MessageHandler.Register(Incoming.SecureLoginMessageEvent, new SecureLoginEvent());
-			MessageHandler.Register(Incoming.MachineIDMessageEvent, new MachineIDEvent());
-			MessageHandler.Register(Incoming.RequestUserDataMessageEvent, new RequestUserDataEvent());
-			MessageHandler.Register(Incoming.VersionCheckMessageEvent, new VersionCheckEvent());
-			MessageHandler.Register(Incoming.PingMessageEvent, new PingEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.ReleaseVersionMessageEvent, new ReleaseVersionEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.SecureLoginMessageEvent, new SecureLoginEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.MachineIDMessageEvent, new MachineIDEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestUserDataMessageEvent, new RequestUserDataEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.VersionCheckMessageEvent, new VersionCheckEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.PingMessageEvent, new PingEvent());
 		}
 	}
 }

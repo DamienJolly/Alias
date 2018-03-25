@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Data;
 using Alias.Emulator.Database;
+using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Currency
 {
@@ -9,18 +9,20 @@ namespace Alias.Emulator.Hotel.Users.Currency
 		public static List<CurrencyType> ReadCurrencies(int userId)
 		{
 			List<CurrencyType> currenies = new List<CurrencyType>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
-				foreach (DataRow row in dbClient.DataTable("SELECT `type`, `amount` FROM `habbo_currencies` WHERE `user_id` = @id").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `type`, `amount` FROM `habbo_currencies` WHERE `user_id` = @id"))
 				{
-					CurrencyType currency = new CurrencyType()
+					while (Reader.Read())
 					{
-						Type   = (int)row["type"],
-						Amount = (int)row["amount"]
-					};
-					currenies.Add(currency);
-					row.Delete();
+						CurrencyType currency = new CurrencyType()
+						{
+							Type   = Reader.GetInt32("type"),
+							Amount = Reader.GetInt32("amount")
+						};
+						currenies.Add(currency);
+					}
 				}
 			}
 			return currenies;
@@ -28,7 +30,7 @@ namespace Alias.Emulator.Hotel.Users.Currency
 
 		public static void SaveCurrencies(CurrencyComponent currency)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				foreach (CurrencyType cType in currency.RequestCurrencies())
 				{
@@ -36,7 +38,6 @@ namespace Alias.Emulator.Hotel.Users.Currency
 					dbClient.AddParameter("amount", cType.Amount);
 					dbClient.AddParameter("type", cType.Type);
 					dbClient.Query("UPDATE `habbo_currencies` SET `amount` = @amount WHERE `type` = @type AND `user_id` = @id");
-					dbClient.ClearParameters();
 				}
 			}
 		}

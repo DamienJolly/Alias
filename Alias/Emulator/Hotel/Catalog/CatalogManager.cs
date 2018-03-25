@@ -10,29 +10,42 @@ using Alias.Emulator.Hotel.Users.Inventory.Composers;
 
 namespace Alias.Emulator.Hotel.Catalog
 {
-	public class CatalogManager
+	sealed class CatalogManager
 	{
-		private static List<CatalogPage> pages;
-		private static List<CatalogFeatured> featured;
-		private static List<CatalogBots> bots;
+		private List<CatalogPage> _pages;
+		private List<CatalogFeatured> _featured;
+		private List<CatalogBots> _bots;
 
-		public static void Initialize()
+		public CatalogManager()
 		{
-			pages = CatalogDatabase.ReadPages();
-			featured = CatalogDatabase.ReadFeatured();
-			bots = CatalogDatabase.ReadBots();
+			this._pages = new List<CatalogPage>();
+			this._featured = new List<CatalogFeatured>();
+			this._bots = new List<CatalogBots>();
 		}
 
-		public static void Reload()
+		public void Initialize()
 		{
-			pages.Clear();
-			featured.Clear();
-			bots.Clear();
+			if (this._pages.Count > 0)
+			{
+				this._pages.Clear();
+			}
 
-			Initialize();
+			if (this._featured.Count > 0)
+			{
+				this._featured.Clear();
+			}
+
+			if (this._bots.Count > 0)
+			{
+				this._bots.Clear();
+			}
+
+			this._pages = CatalogDatabase.ReadPages();
+			this._featured = CatalogDatabase.ReadFeatured();
+			this._bots = CatalogDatabase.ReadBots();
 		}
 
-		public static List<int> GetAvailableNumbers(List<int> takenNumbers, int size)
+		public List<int> GetAvailableNumbers(List<int> takenNumbers, int size)
 		{
 			List<int> availableNumbers = new List<int>();
 			for (int i = 1; i <= size; i++)
@@ -45,7 +58,7 @@ namespace Alias.Emulator.Hotel.Catalog
 			return availableNumbers;
 		}
 
-		public static void PurchaseItem(CatalogPage page, CatalogItem item, Habbo habbo, int amount, string extradata)
+		public void PurchaseItem(CatalogPage page, CatalogItem item, Habbo habbo, int amount, string extradata)
 		{
 			if (item == null)
 			{
@@ -135,7 +148,7 @@ namespace Alias.Emulator.Hotel.Catalog
 											Id = 0,
 											LimitedNumber = limitedNumber,
 											LimitedStack = limitedStack,
-											ItemData = ItemManager.GetItemData(baseItem.Id)
+											ItemData = Alias.GetServer().GetItemManager().GetItemData(baseItem.Id)
 										};
 										itemsList.Add(habboItem);
 									}
@@ -177,24 +190,24 @@ namespace Alias.Emulator.Hotel.Catalog
 			}
 		}
 
-		public static List<CatalogFeatured> GetFeaturedPages()
+		public List<CatalogFeatured> GetFeaturedPages()
 		{
-			return featured;
+			return this._featured;
 		}
 
-		public static List<CatalogPage> GetCatalogPages(int pageId, Habbo habbo)
+		public List<CatalogPage> GetCatalogPages(int pageId, Habbo habbo)
 		{
-			return pages.Where(page => page.ParentId == pageId && page.Visible && page.Rank <= habbo.Rank).OrderBy(page => page.Order).ToList();
+			return this._pages.Where(page => page.ParentId == pageId && page.Visible && page.Rank <= habbo.Rank).OrderBy(page => page.Order).ToList();
 		}
 
-		public static CatalogPage GetCatalogPage(int pageId)
+		public CatalogPage GetCatalogPage(int pageId)
 		{
-			return pages.Where(page => page.Id == pageId).FirstOrDefault();
+			return this._pages.Where(page => page.Id == pageId).FirstOrDefault();
 		}
 
-		public static CatalogBots GetCatalogBot(int itemId)
+		public CatalogBots GetCatalogBot(int itemId)
 		{
-			return bots.Where(bot => bot.ItemId == itemId).FirstOrDefault();
+			return this._bots.Where(bot => bot.ItemId == itemId).FirstOrDefault();
 		}
 	}
 }

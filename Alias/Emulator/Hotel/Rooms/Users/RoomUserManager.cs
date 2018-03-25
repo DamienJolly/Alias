@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Trading;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Utilities;
@@ -129,7 +129,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			return this.VirtualId++;
 		}
 
-		public void Send(IMessageComposer composer, List<RoomUser> except)
+		public void Send(IPacketComposer composer, List<RoomUser> except)
 		{
 			ServerMessage message = composer.Compose();
 			this.Users.ForEach(user =>
@@ -142,13 +142,13 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 					}
 					catch (Exception ex)
 					{
-						Logging.Error("Couldn't send message to user", ex, "RoomUserManager", "Send(composer, List<> except)");
+						Logging.Error("Couldn't send message to user", ex);
 					}
 				}
 			});
 		}
 
-		public void Send(IMessageComposer composer, RoomUser except)
+		public void Send(IPacketComposer composer, RoomUser except)
 		{
 			ServerMessage message = composer.Compose();
 			this.Users.ForEach(user =>
@@ -161,13 +161,13 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 					}
 					catch (Exception ex)
 					{
-						Logging.Error("Couldn't send message to user", ex, "RoomUserManager", "Send(composer, RoomUser except)");
+						Logging.Error("Couldn't send message to user", ex);
 					}
 				}
 			});
 		}
 
-		public void Send(IMessageComposer composer)
+		public void Send(IPacketComposer composer)
 		{
 			ServerMessage message = composer.Compose();
 			this.Users.ForEach(user =>
@@ -180,7 +180,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 					}
 					catch (Exception ex)
 					{
-						Logging.Error("Couldn't send message to user", ex, "RoomUserManager", "Send(composer)");
+						Logging.Error("Couldn't send message to user", ex);
 					}
 				}
 			});

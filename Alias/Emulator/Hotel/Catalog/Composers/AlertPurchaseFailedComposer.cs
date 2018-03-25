@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Catalog.Composers
 {
-	public class AlertPurchaseFailedComposer : IMessageComposer
+	public class AlertPurchaseFailedComposer : IPacketComposer
 	{
 		public static int SERVER_ERROR = 0;
 		public static int ALREADY_HAVE_BADGE = 1;

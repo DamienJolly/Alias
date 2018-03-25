@@ -1,6 +1,5 @@
 using Alias.Emulator.Hotel.Users.Messenger.Events;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Users.Messenger
 {
@@ -8,18 +7,18 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 	{
 		public static void Register()
 		{
-			MessageHandler.Register(Incoming.RequestInitFriendsMessageEvent, new RequestInitFriendsEvent());
-			MessageHandler.Register(Incoming.SearchUserMessageEvent, new SearchUserEvent());
-			MessageHandler.Register(Incoming.FriendRequestMessageEvent, new FriendRequestEvent());
-			MessageHandler.Register(Incoming.AcceptFriendRequestMessageEvent, new AcceptFriendRequestEvent());
-			MessageHandler.Register(Incoming.DeclineFriendRequestMessageEvent, new DeclineFriendRequestEvent());
-			MessageHandler.Register(Incoming.RequestFriendRequestsMessageEvent, new RequestFriendRequestsEvent());
-			MessageHandler.Register(Incoming.FriendPrivateMessageMessageEvent, new FriendPrivateMessageEvent());
-			MessageHandler.Register(Incoming.RemoveFriendMessageEvent, new RemoveFriendEvent());
-			MessageHandler.Register(Incoming.InviteFriendsMessageEvent, new InviteFriendsEvent());
-			MessageHandler.Register(Incoming.RequestFriendsMessageEvent, new RequestFriendsEvent());
-			MessageHandler.Register(Incoming.FindNewFriendsMessageEvent, new FindNewFriendsEvent());
-			MessageHandler.Register(Incoming.ChangeRelationMessageEvent, new ChangeRelationEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestInitFriendsMessageEvent, new RequestInitFriendsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.SearchUserMessageEvent, new SearchUserEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.FriendRequestMessageEvent, new FriendRequestEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.AcceptFriendRequestMessageEvent, new AcceptFriendRequestEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.DeclineFriendRequestMessageEvent, new DeclineFriendRequestEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestFriendRequestsMessageEvent, new RequestFriendRequestsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.FriendPrivateMessageMessageEvent, new FriendPrivateMessageEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RemoveFriendMessageEvent, new RemoveFriendEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.InviteFriendsMessageEvent, new InviteFriendsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestFriendsMessageEvent, new RequestFriendsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.FindNewFriendsMessageEvent, new FindNewFriendsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.ChangeRelationMessageEvent, new ChangeRelationEvent());
 		}
 	}
 }

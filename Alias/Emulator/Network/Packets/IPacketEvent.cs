@@ -1,9 +1,9 @@
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
-namespace Alias.Emulator.Network.Messages
+namespace Alias.Emulator.Network.Packets
 {
-	public interface IMessageEvent
+	public interface IPacketEvent
 	{
 		void Handle(Session session, ClientMessage message);
 	}

@@ -3,9 +3,7 @@ using System.Text;
 using DotNetty.Buffers;
 using DotNetty.Transport.Channels;
 using Alias.Emulator.Network.Protocol;
-using Alias.Emulator.Network.Messages;
 using Alias.Emulator.Network.Sessions;
-using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Network
 {
@@ -39,7 +37,7 @@ namespace Alias.Emulator.Network
 							return;
 						}
 						ClientMessage clientMessage = new ClientMessage(buffer.ReadBytes(length));
-						MessageHandler.Event(clientMessage.Id).Handle(SessionManager.SessionByContext(context), clientMessage);
+						Alias.GetServer().GetPacketManager().Event(clientMessage.Id).Handle(SessionManager.SessionByContext(context), clientMessage);
 						clientMessage.Dispose();
 					}
 					catch { }

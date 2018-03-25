@@ -4,7 +4,6 @@ using Alias.Emulator.Hotel.Achievements.Composers;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Moderation.Composers;
 using Alias.Emulator.Hotel.Navigator.Composers;
-using Alias.Emulator.Hotel.Permissions;
 using Alias.Emulator.Hotel.Users.Composers;
 using Alias.Emulator.Hotel.Users.Handshake.Composers;
 using Alias.Emulator.Hotel.Users.Inventory.Composers;
@@ -48,9 +47,9 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					//session.Send(new GameCenterAccountInfoComposer()); //todo:
 					session.Send(new UserClubComposer()); //todo:
 
-					if(PermissionManager.HasPermission(session.Habbo.Rank, "acc_modtool"))
+					if (Alias.GetServer().GetPermissionManager().HasPermission(session.Habbo.Rank, "acc_modtool"))
 					{
-						session.Send(new ModerationToolComposer(session.Habbo));
+						session.Send(new ModerationToolComposer(session.Habbo, Alias.GetServer().GetModerationManager().GetTickets));
 					}
 
 					session.Send(new NavigatorMetaDataComposer());
@@ -81,7 +80,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 			}
 			catch (Exception ex)
 			{
-				Logging.Error("An Error occured on the Login process. Disconnecting the User for safety...", ex, "Handshake", "OnLogin");
+				Logging.Error("An Error occured on the Login process. Disconnecting the User for safety...", ex);
 				session.Disconnect();
 			}
 		}

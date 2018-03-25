@@ -13,9 +13,9 @@ namespace Alias.Emulator.Utilities
 			Configuration.Variables = new Dictionary<string, string>();
 			if (!File.Exists(Constant.ConfigurationFile))
 			{
-				Logging.Error("Configuration File not found. ", new Exception(), "ConfigurationFile", "Initialize");
+				Logging.Error("Configuration File not found.");
 				Logging.Info("Press any key to exit.");
-				Logging.ReadLine();
+				Console.ReadKey();
 				Environment.Exit(0);
 			}
 

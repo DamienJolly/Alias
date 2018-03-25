@@ -10,32 +10,36 @@ using Alias.Emulator.Hotel.Users.Composers;
 
 namespace Alias.Emulator.Hotel.Achievements
 {
-    public class AchievementManager
+    sealed class AchievementManager
     {
-		private static List<Achievement> achievements;
+		private List<Achievement> _achievements;
 
-		public static void Initialize()
+		public AchievementManager()
 		{
-			achievements = AchievementDatabase.ReadAchievements();
+			this._achievements = new List<Achievement>();
 		}
 
-		public static void Reload()
+		public void Initialize()
 		{
-			achievements.Clear();
-			Initialize();
+			if (this._achievements.Count > 0)
+			{
+				this._achievements.Clear();
+			}
+
+			this._achievements = AchievementDatabase.ReadAchievements();
 		}
 
-		public static List<Achievement> GetAchievements()
+		public List<Achievement> GetAchievements()
 		{
-			return achievements.Where(ach => ach.Category != AchievementCategory.INVISIBLE).ToList();
+			return this._achievements.Where(ach => ach.Category != AchievementCategory.INVISIBLE).ToList();
 		}
 
-		public static Achievement GetAchievement(string name)
+		public Achievement GetAchievement(string name)
 		{
-			return achievements.Where(ach => ach.Name == name).FirstOrDefault();
+			return this._achievements.Where(ach => ach.Name == name).FirstOrDefault();
 		}
 
-		public static void ProgressAchievement(int habboId, Achievement achievement, int amount = 1)
+		public void ProgressAchievement(int habboId, Achievement achievement, int amount = 1)
 		{
 			if (achievement != null)
 			{
@@ -51,7 +55,7 @@ namespace Alias.Emulator.Hotel.Achievements
 			}
 		}
 
-		public static void ProgressAchievement(Habbo habbo, Achievement achievement, int amount = 1)
+		public void ProgressAchievement(Habbo habbo, Achievement achievement, int amount = 1)
 		{
 			if (achievement == null)
 			{
@@ -133,7 +137,7 @@ namespace Alias.Emulator.Hotel.Achievements
 			}
 		}
 
-		public static bool HasAchieved(Habbo habbo, Achievement achievement)
+		public bool HasAchieved(Habbo habbo, Achievement achievement)
 		{
 			AchievementProgress achievementProgress = habbo.Achievements.GetAchievementProgress(achievement);
 			if (achievementProgress == null)

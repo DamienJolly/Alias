@@ -1,13 +1,13 @@
 using Alias.Emulator.Hotel.Achievements;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
 using Alias.Emulator.Hotel.Users.Composers;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Events
 {
-	public class UserSaveLookEvent : IMessageEvent
+	public class UserSaveLookEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -33,7 +33,7 @@ namespace Alias.Emulator.Hotel.Users.Events
 				session.Habbo.CurrentRoom.UserManager.Send(new RoomUserDataComposer(session.Habbo));
 			}
 
-			AchievementManager.ProgressAchievement(session.Habbo, AchievementManager.GetAchievement("AvatarLooks"));
+			Alias.GetServer().GetAchievementManager().ProgressAchievement(session.Habbo, Alias.GetServer().GetAchievementManager().GetAchievement("AvatarLooks"));
 		}
 	}
 }

@@ -5,7 +5,7 @@ using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Users.Inventory.Composers;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading
 {
@@ -150,7 +150,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			return this.Users.Where(usr => usr.User == user).FirstOrDefault();
 		}
 
-		public void Send(IMessageComposer message)
+		public void Send(IPacketComposer message)
 		{
 			this.Users.ForEach(user =>
 			{

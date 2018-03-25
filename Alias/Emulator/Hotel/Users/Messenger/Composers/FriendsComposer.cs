@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class FriendsComposer : IMessageComposer
+	public class FriendsComposer : IPacketComposer
 	{
 		private List<MessengerFriend> FriendList;
 

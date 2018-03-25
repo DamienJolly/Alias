@@ -1,13 +1,13 @@
 using Alias.Emulator.Hotel.Rooms.Composers;
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
 using Alias.Emulator.Hotel.Rooms.Models.Composers;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Events
 {
-	public class RequestRoomHeightmapEvent : IMessageEvent
+	public class RequestRoomHeightmapEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

@@ -3,6 +3,7 @@ using System.Data;
 using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Rooms.Users.Chat;
 using Alias.Emulator.Hotel.Users;
+using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Moderation
 {
@@ -11,39 +12,41 @@ namespace Alias.Emulator.Hotel.Moderation
 		public static List<ModerationTicket> ReadTickets()
 		{
 			List<ModerationTicket> tickets = new List<ModerationTicket>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `support_tickets` WHERE `state` != 0").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `support_tickets` WHERE `state` != 0"))
 				{
-					string senderUsername = (int)row["sender_id"] > 0 ? (string)UserDatabase.Variable((int)row["sender_id"], "username") : "Unknown";
-					string reportedUsername = (int)row["reported_id"] > 0 ? (string)UserDatabase.Variable((int)row["reported_id"], "username") : "Unknown";
-					string modUsername = (int)row["mod_id"] > 0 ? (string)UserDatabase.Variable((int)row["mod_id"], "username") : "";
-					ModerationTicket ticket = new ModerationTicket()
+					while (Reader.Read())
 					{
-						Id = (int)row["id"],
-						State = ModerationTicketStates.GetStateFromInt((int)row["state"]),
-						Timestamp = (int)row["timestamp"],
-						Priority = (int)row["score"],
-						SenderId = (int)row["sender_id"],
-						SenderUsername = senderUsername,
-						ReportedId = (int)row["reported_id"],
-						ReportedUsername = reportedUsername,
-						ModId = (int)row["mod_id"],
-						ModUsername = modUsername,
-						Message = (string)row["issue"],
-						Type = ModerationTicketTypes.GetTypeFromInt((int)row["type"]),
-						RoomId = (int)row["room_id"],
-						Category = (int)row["category"]
-					};
+						string senderUsername   = Reader.GetInt32("sender_id") > 0 ? (string)UserDatabase.Variable(Reader.GetInt32("sender_id"), "username") : "Unknown";
+						string reportedUsername = Reader.GetInt32("reported_id") > 0 ? (string)UserDatabase.Variable(Reader.GetInt32("reported_id"), "username") : "Unknown";
+						string modUsername      = Reader.GetInt32("mod_id") > 0 ? (string)UserDatabase.Variable(Reader.GetInt32("mod_id"), "username") : "";
+						ModerationTicket ticket = new ModerationTicket()
+						{
+							Id               = Reader.GetInt32("id"),
+							State            = ModerationTicketStates.GetStateFromInt(Reader.GetInt32("state")),
+							Timestamp        = Reader.GetInt32("timestamp"),
+							Priority         = Reader.GetInt32("score"),
+							SenderId         = Reader.GetInt32("sender_id"),
+							SenderUsername   = senderUsername,
+							ReportedId       = Reader.GetInt32("reported_id"),
+							ReportedUsername = reportedUsername,
+							ModId            = Reader.GetInt32("mod_id"),
+							ModUsername      = modUsername,
+							Message          = Reader.GetString("issue"),
+							Type             = ModerationTicketTypes.GetTypeFromInt(Reader.GetInt32("type")),
+							RoomId           = Reader.GetInt32("room_id"),
+							Category         = Reader.GetInt32("category")
+						};
 
-					if (ticket.ModId <= 0)
-					{
-						ticket.ModUsername = "";
-						ticket.State = ModerationTicketState.OPEN;
+						if (ticket.ModId <= 0)
+						{
+							ticket.ModUsername = "";
+							ticket.State       = ModerationTicketState.OPEN;
+						}
+
+						tickets.Add(ticket);
 					}
-
-					tickets.Add(ticket);
-					row.Delete();
 				}
 			}
 			return tickets;
@@ -52,17 +55,19 @@ namespace Alias.Emulator.Hotel.Moderation
 		public static List<ModerationPresets> ReadPresets()
 		{
 			List<ModerationPresets> presets = new List<ModerationPresets>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
-				foreach (DataRow row in dbClient.DataTable("SELECT `type`, `preset` FROM `support_presets`").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `type`, `preset` FROM `support_presets`"))
 				{
-					ModerationPresets preset = new ModerationPresets()
+					while (Reader.Read())
 					{
-						Type = (string)row["type"],
-						Data = (string)row["preset"]
-					};
-					presets.Add(preset);
-					row.Delete();
+						ModerationPresets preset = new ModerationPresets()
+						{
+							Type = Reader.GetString("type"),
+							Data = Reader.GetString("preset")
+						};
+						presets.Add(preset);
+					}
 				}
 			}
 			return presets;
@@ -71,24 +76,26 @@ namespace Alias.Emulator.Hotel.Moderation
 		public static List<ModerationChatlog> ReadRoomChatlogs(int roomId)
 		{
 			List<ModerationChatlog> chatlogs = new List<ModerationChatlog>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("roomId", roomId);
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `chatlogs` WHERE `room_id` = @roomId ORDER BY `timestamp` DESC LIMIT 150").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `chatlogs` WHERE `room_id` = @roomId ORDER BY `timestamp` DESC LIMIT 150"))
 				{
-					string targetUsername = (int)row["target_id"] > 0 ? (string)UserDatabase.Variable((int)row["target_id"], "username") : "";
-					ModerationChatlog chatlog = new ModerationChatlog()
+					while (Reader.Read())
 					{
-						UserId = (int)row["user_id"],
-						Username = (string)UserDatabase.Variable((int)row["user_id"], "username"),
-						TargetId = (int)row["target_id"],
-						TargetUsername = targetUsername,
-						Timestamp = (int)row["timestamp"],
-						Message = (string)row["message"],
-						Type = ChatType.CHAT
-					};
-					chatlogs.Add(chatlog);
-					row.Delete();
+						string targetUsername = Reader.GetInt32("target_id") > 0 ? (string)UserDatabase.Variable(Reader.GetInt32("target_id"), "username") : "";
+						ModerationChatlog chatlog = new ModerationChatlog()
+						{
+							UserId         = Reader.GetInt32("user_id"),
+							Username       = (string)UserDatabase.Variable(Reader.GetInt32("user_id"), "username"),
+							TargetId       = Reader.GetInt32("target_id"),
+							TargetUsername = targetUsername,
+							Timestamp      = Reader.GetInt32("timestamp"),
+							Message        = Reader.GetString("message"),
+							Type           = ChatType.CHAT
+						};
+						chatlogs.Add(chatlog);
+					}
 				}
 			}
 			return chatlogs;
@@ -97,25 +104,27 @@ namespace Alias.Emulator.Hotel.Moderation
 		public static List<ModerationChatlog> ReadUserChatlogs(int senderId, int targetId)
 		{
 			List<ModerationChatlog> chatlogs = new List<ModerationChatlog>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("senderId", senderId);
 				dbClient.AddParameter("targetId", targetId);
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `chatlogs` WHERE `user_id` = @senderId OR `user_id` = @targetId ORDER BY `timestamp` DESC LIMIT 150").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `chatlogs` WHERE `user_id` = @senderId OR `user_id` = @targetId ORDER BY `timestamp` DESC LIMIT 150"))
 				{
-					string targetUsername = (int)row["target_id"] > 0 ? (string)UserDatabase.Variable((int)row["target_id"], "username") : "";
-					ModerationChatlog chatlog = new ModerationChatlog()
+					while (Reader.Read())
 					{
-						UserId = (int)row["user_id"],
-						Username = (string)UserDatabase.Variable((int)row["user_id"], "username"),
-						TargetId = (int)row["target_id"],
-						TargetUsername = targetUsername,
-						Timestamp = (int)row["timestamp"],
-						Message = (string)row["message"],
-						Type = ChatType.CHAT
-					};
-					chatlogs.Add(chatlog);
-					row.Delete();
+						string targetUsername = Reader.GetInt32("target_id") > 0 ? (string)UserDatabase.Variable(Reader.GetInt32("target_id"), "username") : "";
+						ModerationChatlog chatlog = new ModerationChatlog()
+						{
+							UserId         = Reader.GetInt32("user_id"),
+							Username       = (string)UserDatabase.Variable(Reader.GetInt32("user_id"), "username"),
+							TargetId       = Reader.GetInt32("target_id"),
+							TargetUsername = targetUsername,
+							Timestamp      = Reader.GetInt32("timestamp"),
+							Message        = Reader.GetString("message"),
+							Type           = ChatType.CHAT
+						};
+						chatlogs.Add(chatlog);
+					}
 				}
 			}
 			return chatlogs;

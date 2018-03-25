@@ -1,11 +1,11 @@
 using Alias.Emulator.Hotel.Rooms.Composers;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Events
 {
-	public class RequestRoomSettingsEvent : IMessageEvent
+	public class RequestRoomSettingsEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

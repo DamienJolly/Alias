@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Composers
 {
-	public class RoomEditSettingsErrorComposer : IMessageComposer
+	public class RoomEditSettingsErrorComposer : IPacketComposer
 	{
 		public static int PASSWORD_REQUIRED = 5;
 		public static int ROOM_NAME_MISSING = 7;

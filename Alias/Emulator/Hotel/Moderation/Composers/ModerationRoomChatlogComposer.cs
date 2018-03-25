@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Rooms.Users.Chat;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Moderation.Composers
 {
-	public class ModerationRoomChatlogComposer : IMessageComposer
+	public class ModerationRoomChatlogComposer : IPacketComposer
 	{
 		private Room room;
 		private List<ModerationChatlog> chatlog;

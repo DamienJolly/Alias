@@ -156,7 +156,7 @@ namespace Alias.Emulator.Hotel.Catalog
 					{
 						if (identifier > 0)
 						{
-							ItemData item = ItemManager.GetItemData(identifier);
+							ItemData item = Alias.GetServer().GetItemManager().GetItemData(identifier);
 
 							if (item != null)
 								items.Add(item);

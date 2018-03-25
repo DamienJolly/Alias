@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Models.Composers
 {
-	public class RoomHeightMapComposer : IMessageComposer
+	public class RoomHeightMapComposer : IPacketComposer
 	{
 		private Room room;
 

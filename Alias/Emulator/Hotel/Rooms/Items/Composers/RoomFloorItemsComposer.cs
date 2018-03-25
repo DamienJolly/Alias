@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Composers
 {
-	public class RoomFloorItemsComposer : IMessageComposer
+	public class RoomFloorItemsComposer : IPacketComposer
 	{
 		private List<RoomItem> Items;
 

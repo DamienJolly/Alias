@@ -2,7 +2,7 @@ using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Database
 {
-	public class Credentials
+	sealed class Credentials
 	{
 		public string Username { get; set; }
 		public string Password { get; set; }

@@ -1,11 +1,11 @@
 using Alias.Emulator.Hotel.Moderation.Composers;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation.Events
 {
-    public class ModerationSanctionBanEvent : IMessageEvent
+    public class ModerationSanctionBanEvent : IPacketEvent
 	{
 		public const int BAN_18_HOURS = 3;
 		public const int BAN_7_DAYS = 4;
@@ -47,11 +47,11 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 					break;
 				case BAN_100_YEARS:
 				case BAN_AVATAR_ONLY_100_YEARS:
-					duration = (int)AliasEnvironment.GetUnixTimestamp();
+					duration = (int)Alias.GetUnixTimestamp();
 					break;
 			}
 
-			ModerationManager.BanUser(userId, session, reason, duration, ModerationBanType.ACCOUNT, topic);
+			Alias.GetServer().GetModerationManager().BanUser(userId, session, reason, duration, ModerationBanType.ACCOUNT, topic);
 		}
 	}
 }

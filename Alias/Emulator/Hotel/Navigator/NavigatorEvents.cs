@@ -1,6 +1,5 @@
 using Alias.Emulator.Hotel.Navigator.Events;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Navigator
 {
@@ -8,14 +7,14 @@ namespace Alias.Emulator.Hotel.Navigator
 	{
 		public static void Register()
 		{
-			MessageHandler.Register(Incoming.RequestNavigatorSettingsMessageEvent, new RequestNavigatorSettingsEvent());
-			MessageHandler.Register(Incoming.SaveWindowSettingsMessageEvent, new SaveWindowSettingsEvent());
-			MessageHandler.Register(Incoming.SearchRoomsMessageEvent, new SearchRoomsEvent());
-			MessageHandler.Register(Incoming.RequestRoomCategoriesMessageEvent, new RequestRoomCategoriesEvent());
-			MessageHandler.Register(Incoming.RequestNavigatorDataMessageEvent, new RequestNavigatorDataEvent());
-			MessageHandler.Register(Incoming.RequestPromotedRoomsMessageEvent, new RequestPromotedRoomsEvent());
-			MessageHandler.Register(Incoming.AddSavedSearchMessageEvent, new AddSavedSearchEvent());
-			MessageHandler.Register(Incoming.RemoveSavedSearchMessageEvent, new RemoveSavedSearchEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestNavigatorSettingsMessageEvent, new RequestNavigatorSettingsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.SaveWindowSettingsMessageEvent, new SaveWindowSettingsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.SearchRoomsMessageEvent, new SearchRoomsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestRoomCategoriesMessageEvent, new RequestRoomCategoriesEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestNavigatorDataMessageEvent, new RequestNavigatorDataEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestPromotedRoomsMessageEvent, new RequestPromotedRoomsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.AddSavedSearchMessageEvent, new AddSavedSearchEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RemoveSavedSearchMessageEvent, new RemoveSavedSearchEvent());
 		}
 	}
 }

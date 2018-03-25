@@ -1,7 +1,7 @@
 using DotNetty.Buffers;
 using DotNetty.Transport.Channels;
 using Alias.Emulator.Network.Protocol;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Network.Sessions
@@ -36,7 +36,7 @@ namespace Alias.Emulator.Network.Sessions
 			}
 		}
 
-		public void Send(IMessageComposer composer, bool dispose = true)
+		public void Send(IPacketComposer composer, bool dispose = true)
 		{
 			this.Send(composer.Compose(), dispose);
 		}

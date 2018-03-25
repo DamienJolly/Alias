@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Moderation.Composers
 {
-	public class ModerationIssueHandledComposer : IMessageComposer
+	public class ModerationIssueHandledComposer : IPacketComposer
 	{
 		public static int HANDLED = 0;
 		public static int USELESS = 1;

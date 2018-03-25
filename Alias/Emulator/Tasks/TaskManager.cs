@@ -1,47 +1,37 @@
+using System;
 using System.Threading;
-using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Tasks
 {
-	public class TaskManager
+	sealed class TaskManager : IDisposable
 	{
-		private static Thread _cycle;
-		private static Timer _sheduler;
-		private static int _tick = 0;
-		
-		public static void Initialize()
+		private Timer _sheduler;
+		private int _tick = 0;
+
+		public TaskManager()
 		{
-			Logging.Title("Alias Emulator - 0 users online - 0 rooms loaded - 0 day(s), 0 hour(s) and 0 minute(s) uptime");
-			StartCycle();
+			Console.Title = "Alias Emulator - 0 users online - 0 rooms loaded - 0 day(s), 0 hour(s) and 0 minute(s) uptime";
+			this._sheduler = new Timer(new TimerCallback(this.OnCycle), null, 500, 500);
 		}
 		
-		public static void OnCycle(object sender)
+		public void OnCycle(object sender)
 		{
-			_tick++;
-			if (_tick >= 60)
+			this._tick++;
+			if (this._tick >= 60)
 			{
-				Logging.Title("Alias Emulator - " + SessionManager.OnlineUsers() + " users online - " + RoomManager.ReadLoadedRooms().Count + " rooms loaded - " + AliasEnvironment.GetUpTime() + " uptime");
-				_tick = 0;
+				TimeSpan Uptime = DateTime.Now - Alias.ServerStarted;
+				string uptime = Uptime.Days + " day(s), " + Uptime.Hours + " hour(s) and " + Uptime.Minutes + " minute(s)";
+				Console.Title = "Alias Emulator - " + SessionManager.OnlineUsers() + " users online - " + Alias.GetServer().GetRoomManager().ReadLoadedRooms().Count + " rooms loaded - " + uptime + " uptime";
+				this._tick = 0;
 			}
-			RoomManager.DoRoomCycle();
+			Alias.GetServer().GetRoomManager().DoRoomCycle();
 		}
 
-		public static void StartCycle()
+		public void Dispose()
 		{
-			_cycle = new Thread(OnCycle);
-			_sheduler = new Timer(new TimerCallback(StartPool), null, 500, 500);
-		}
-
-		private static void StartPool(object sender)
-		{
-			ThreadPool.UnsafeQueueUserWorkItem(OnCycle, null);
-		}
-
-		public static void StopCycle()
-		{
-			_sheduler.Dispose();
+			this._sheduler.Dispose();
 		}
 	}
 }

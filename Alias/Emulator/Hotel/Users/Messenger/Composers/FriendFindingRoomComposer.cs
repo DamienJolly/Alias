@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class FriendFindingRoomComposer : IMessageComposer
+	public class FriendFindingRoomComposer : IPacketComposer
 	{
 		public static int NO_ROOM_FOUND = 0;
 		public static int ROOM_FOUND = 1;

@@ -1,6 +1,5 @@
 using Alias.Emulator.Hotel.Achievements.Events;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Achievements
 {
@@ -8,7 +7,7 @@ namespace Alias.Emulator.Hotel.Achievements
     {
 		public static void Register()
 		{
-			MessageHandler.Register(Incoming.RequestAchievementsMessageEvent, new RequestAchievementsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestAchievementsMessageEvent, new RequestAchievementsEvent());
 		}
 	}
 }

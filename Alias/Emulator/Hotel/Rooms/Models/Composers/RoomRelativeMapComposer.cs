@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Models.Composers
 {
-	public class RoomRelativeMapComposer : IMessageComposer
+	public class RoomRelativeMapComposer : IPacketComposer
 	{
 		private Room room;
 
@@ -31,7 +31,7 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Composers
 					}
 					else
 					{
-						result.Short((int)AliasEnvironment.ParseChar(position) * 256);
+						result.Short((int)Alias.ParseChar(position) * 256);
 					}
 				}
 			}

@@ -1,11 +1,11 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Misc.Composers
 {
-	public class GenericAlertComposer : IMessageComposer
+	public class GenericAlertComposer : IPacketComposer
 	{
 		private string message;
 

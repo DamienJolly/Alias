@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 {
-	public class RoomUsersComposer : IMessageComposer
+	public class RoomUsersComposer : IPacketComposer
 	{
 		public List<RoomUser> users;
 
@@ -34,10 +34,10 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 				result.Int(user.Position.X);
 				result.Int(user.Position.Y);
 				result.String(user.Position.Z.ToString());
-				result.Int(0);
+				result.Int(2);
 				result.Int(1);
 				result.String(user.Habbo.Gender.ToLower());
-				result.Int(0); //groupid
+				result.Int(-1); //groupid
 				result.Int(0); //groupwhat
 				result.String(""); //Groupname?
 				result.String("");

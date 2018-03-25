@@ -363,7 +363,7 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 					RoomTile tile = new RoomTile();
 					tile.X = x;
 					tile.Y = y;
-					tile.Z = AliasEnvironment.ParseChar(position);
+					tile.Z = Alias.ParseChar(position);
 					if (position == 'x')
 					{
 						tile.State = TileState.CLOSED;

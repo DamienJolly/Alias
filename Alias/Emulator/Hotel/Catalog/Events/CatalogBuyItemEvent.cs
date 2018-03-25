@@ -1,11 +1,11 @@
 using Alias.Emulator.Hotel.Catalog.Composers;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Catalog.Events
 {
-	public class CatalogBuyItemEvent : IMessageEvent
+	public class CatalogBuyItemEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -14,7 +14,7 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 			string extraData = message.String();
 			int count = message.Integer();
 
-			CatalogPage page = CatalogManager.GetCatalogPage(pageId);
+			CatalogPage page = Alias.GetServer().GetCatalogManager().GetCatalogPage(pageId);
 			if (page == null)
 			{
 				session.Send(new AlertPurchaseFailedComposer(AlertPurchaseFailedComposer.SERVER_ERROR));
@@ -29,7 +29,7 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 
 			CatalogItem item = page.GetCatalogItem(itemId);
 
-			CatalogManager.PurchaseItem(page, item, session.Habbo, count, extraData);
+			Alias.GetServer().GetCatalogManager().PurchaseItem(page, item, session.Habbo, count, extraData);
 		}
 	}
 }

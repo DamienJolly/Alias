@@ -19,7 +19,7 @@ namespace Alias.Emulator.Utilities
 				if (Console.ReadKey(true).Key == ConsoleKey.Enter)
 				{
 					Logging.Command();
-					string text = Logging.ReadLine().ToLower();
+					string text = Console.ReadLine().ToLower();
 					if (Handle(text))
 					{
 						Logging.Info("Command was succesfully executed.");

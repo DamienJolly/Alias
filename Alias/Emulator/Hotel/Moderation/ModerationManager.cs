@@ -6,61 +6,60 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation
 {
-    public class ModerationManager
+    sealed class ModerationManager
     {
-		private static List<ModerationPresets> presets;
-		private static List<ModerationTicket> modTickets;
+		private List<ModerationPresets> _presets;
+		private List<ModerationTicket> _modTickets;
 
-		public static void Initialize()
+		public ModerationManager()
 		{
-			presets = ModerationDatabase.ReadPresets();
-			modTickets = ModerationDatabase.ReadTickets();
+			this._presets = new List<ModerationPresets>();
+			this._modTickets = new List<ModerationTicket>();
 		}
 
-		public static void Reload()
+		public void Initialize()
 		{
-			presets.Clear();
-			modTickets.Clear();
-			Initialize();
+			this._presets = ModerationDatabase.ReadPresets();
+			this._modTickets = ModerationDatabase.ReadTickets();
+		}
+		
+		public List<ModerationPresets> GetPresets(string type)
+		{
+			return this._presets.Where(preset => preset.Type == type).ToList();
 		}
 
-		public static List<ModerationPresets> GetPresets(string type)
-		{
-			return presets.Where(preset => preset.Type == type).ToList();
-		}
-
-		public static void QuickTicket(Habbo reported, string message)
+		public void QuickTicket(Habbo reported, string message)
 		{
 			ModerationTicket issue = new ModerationTicket()
 			{
-				Id = 999,
-				SenderId = reported.Id,
+				Id             = 999,
+				SenderId       = reported.Id,
 				SenderUsername = reported.Username,
-				Message = message,
-				Type = ModerationTicketType.AUTOMATIC
+				Message        = message,
+				Type           = ModerationTicketType.AUTOMATIC
 			};
 
 			AddTicket(issue);
 		}
 
-		public static void AddTicket(ModerationTicket issue)
+		public void AddTicket(ModerationTicket issue)
 		{
 			//todo: add to db
-			modTickets.Add(issue);
+			this._modTickets.Add(issue);
 			SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
 		}
 
-		public static List<ModerationChatlog> GetRoomChatlog(int roomId)
+		public List<ModerationChatlog> GetRoomChatlog(int roomId)
 		{
 			return ModerationDatabase.ReadRoomChatlogs(roomId);
 		}
 
-		public static List<ModerationChatlog> GetUserChatlog(int senderId, int targetId)
+		public List<ModerationChatlog> GetUserChatlog(int senderId, int targetId)
 		{
 			return ModerationDatabase.ReadUserChatlogs(senderId, targetId);
 		}
 
-		public static void BanUser(int targetUserId, Session moderator, string reason, int duration, ModerationBanType type, int topic)
+		public void BanUser(int targetUserId, Session moderator, string reason, int duration, ModerationBanType type, int topic)
 		{
 			Habbo target = SessionManager.HabboById(targetUserId);
 			if (target.Rank >= moderator.Habbo.Rank)
@@ -75,37 +74,37 @@ namespace Alias.Emulator.Hotel.Moderation
 			}
 		}
 
-		public static ModerationTicket GetTicket(int ticketId)
+		public ModerationTicket GetTicket(int ticketId)
 		{
-			return modTickets.Where(ticket => ticket.Id == ticketId).FirstOrDefault();
+			return this._modTickets.Where(ticket => ticket.Id == ticketId).FirstOrDefault();
 		}
 
-		public static void RemoveTicket(ModerationTicket issue)
+		public void RemoveTicket(ModerationTicket issue)
 		{
-			modTickets.Remove(issue);
+			this._modTickets.Remove(issue);
 		}
 
-		public static void PickTicket(ModerationTicket issue, Habbo habbo)
+		public void PickTicket(ModerationTicket issue, Habbo habbo)
 		{
-			issue.ModId = habbo.Id;
+			issue.ModId       = habbo.Id;
 			issue.ModUsername = habbo.Username;
-			issue.State = ModerationTicketState.PICKED;
+			issue.State       = ModerationTicketState.PICKED;
 
 			//todo: update in db
 			SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
 		}
 
-		public static void ReleaseTicket(ModerationTicket issue)
+		public void ReleaseTicket(ModerationTicket issue)
 		{
-			issue.ModId = 0;
+			issue.ModId       = 0;
 			issue.ModUsername = "";
-			issue.State = ModerationTicketState.OPEN;
+			issue.State       = ModerationTicketState.OPEN;
 
 			//todo: update in db
 			SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
 		}
 
-		public static void ResolveTicket(ModerationTicket issue, Habbo sender, int state)
+		public void ResolveTicket(ModerationTicket issue, Habbo sender, int state)
 		{
 			issue.State = ModerationTicketState.CLOSED;
 
@@ -128,15 +127,9 @@ namespace Alias.Emulator.Hotel.Moderation
 			}
 
 			SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
-			ModerationManager.RemoveTicket(issue);
+			RemoveTicket(issue);
 		}
 
-		public static List<ModerationTicket> GetTickets
-		{
-			get
-			{
-				return modTickets;
-			}
-		}
+		public List<ModerationTicket> GetTickets => this._modTickets;
 	}
 }

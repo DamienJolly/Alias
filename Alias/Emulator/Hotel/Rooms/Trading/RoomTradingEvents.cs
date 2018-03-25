@@ -1,6 +1,5 @@
 using Alias.Emulator.Hotel.Rooms.Trading.Events;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading
 {
@@ -8,14 +7,14 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
     {
 		public static void Register()
 		{
-			MessageHandler.Register(Incoming.TradeStartMessageEvent, new TradeStartEvent());
-			MessageHandler.Register(Incoming.TradeOfferItemMessageEvent, new TradeOfferItemEvent());
-			MessageHandler.Register(Incoming.TradeOfferMultipleItemsMessageEvent, new TradeOfferMultipleItemsEvent());
-			MessageHandler.Register(Incoming.TradeCancelOfferItemMessageEvent, new TradeCancelOfferItemEvent());
-			MessageHandler.Register(Incoming.TradeAcceptMessageEvent, new TradeAcceptEvent());
-			MessageHandler.Register(Incoming.TradeUnAcceptMessageEvent, new TradeUnAcceptEvent());
-			MessageHandler.Register(Incoming.TradeConfirmMessageEvent, new TradeConfirmEvent());
-			MessageHandler.Register(Incoming.TradeCloseMessageEvent, new TradeCloseEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.TradeStartMessageEvent, new TradeStartEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.TradeOfferItemMessageEvent, new TradeOfferItemEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.TradeOfferMultipleItemsMessageEvent, new TradeOfferMultipleItemsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.TradeCancelOfferItemMessageEvent, new TradeCancelOfferItemEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.TradeAcceptMessageEvent, new TradeAcceptEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.TradeUnAcceptMessageEvent, new TradeUnAcceptEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.TradeConfirmMessageEvent, new TradeConfirmEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.TradeCloseMessageEvent, new TradeCloseEvent());
 		}
 	}
 }

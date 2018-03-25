@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 {
-    public class TradeClosedComposer : IMessageComposer
+    public class TradeClosedComposer : IPacketComposer
 	{
 		public static int USER_CANCEL_TRADE = 0;
 		public static int ITEMS_NOT_FOUND = 1;

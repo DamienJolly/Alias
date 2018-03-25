@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.Composers;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Hotel.Users.Inventory.Composers;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
-	public class RoomPlaceItemEvent : IMessageEvent
+	public class RoomPlaceItemEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

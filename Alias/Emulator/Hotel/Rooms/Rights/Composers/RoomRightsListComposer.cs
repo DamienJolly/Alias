@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Rights.Composers
 {
-	public class RoomRightsListComposer : IMessageComposer
+	public class RoomRightsListComposer : IPacketComposer
 	{
 		Room Room;
 

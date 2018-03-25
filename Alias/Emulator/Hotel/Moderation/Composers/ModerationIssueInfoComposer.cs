@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Moderation.Composers
 {
-	public class ModerationIssueInfoComposer : IMessageComposer
+	public class ModerationIssueInfoComposer : IPacketComposer
 	{
 		private ModerationTicket issue;
 
@@ -20,7 +20,7 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			result.Int(ModerationTicketStates.GetIntFromState(this.issue.State));
 			result.Int(ModerationTicketTypes.GetIntFromType(this.issue.Type));
 			result.Int(this.issue.Category);
-			result.Int((int)AliasEnvironment.GetUnixTimestamp() - this.issue.Id);
+			result.Int((int)Alias.GetUnixTimestamp() - this.issue.Id);
 			result.Int(this.issue.Priority);
 			result.Int(1); // ??
 			result.Int(this.issue.SenderId);

@@ -1,13 +1,13 @@
 using Alias.Emulator.Hotel.Landing.Composers;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Rooms.Composers;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Events
 {
-	public class RequestRoomLoadEvent : IMessageEvent
+	public class RequestRoomLoadEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
@@ -17,7 +17,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 			if (RoomLoader.CanEnter(session, roomId, password))
 			{
 				session.Send(new RoomOpenComposer());
-				RoomLoader.Enter(session, RoomManager.Room(roomId));
+				RoomLoader.Enter(session, Alias.GetServer().GetRoomManager().Room(roomId));
 			}
 			else
 			{

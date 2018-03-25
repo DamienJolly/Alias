@@ -1,6 +1,5 @@
 using Alias.Emulator.Hotel.Users.Inventory.Events;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Users.Inventory
 {
@@ -8,9 +7,9 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 	{
 		public static void Register()
 		{
-			MessageHandler.Register(Incoming.RequestInventoryItemsMessageEvent, new RequestInventoryItemsEvent());
-			MessageHandler.Register(Incoming.RequestInventoryBadgesMessageEvent, new RequestInventoryBadgesEvent());
-			MessageHandler.Register(Incoming.RequestInventoryBotsMessageEvent, new RequestInventoryBotsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestInventoryItemsMessageEvent, new RequestInventoryItemsEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestInventoryBadgesMessageEvent, new RequestInventoryBadgesEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestInventoryBotsMessageEvent, new RequestInventoryBotsEvent());
 		}
 	}
 }

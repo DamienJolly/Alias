@@ -104,7 +104,7 @@ namespace Alias.Emulator.Hotel.Users
 
 		public bool HasPermission(string param)
 		{
-			return PermissionManager.HasPermission(this.Rank, param);
+			return Alias.GetServer().GetPermissionManager().HasPermission(this.Rank, param);
 		}
 	}
 }

@@ -23,12 +23,12 @@ namespace Alias.Emulator.Hotel.Navigator.Views
 						{
 							RoomDatabase.AllRooms().ForEach(Id =>
 							{
-								result.Add(RoomManager.RoomData(Id));
+								result.Add(Alias.GetServer().GetRoomManager().RoomData(Id));
 							});
 						}
 						else
 						{
-							RoomManager.ReadLoadedRooms().ForEach(room =>
+							Alias.GetServer().GetRoomManager().ReadLoadedRooms().ForEach(room =>
 							{
 								if (room.RoomData.UsersNow > 0)
 								{
@@ -40,7 +40,7 @@ namespace Alias.Emulator.Hotel.Navigator.Views
 					}
 				default:
 					{
-						RoomManager.ReadLoadedRooms().ForEach(room =>
+						Alias.GetServer().GetRoomManager().ReadLoadedRooms().ForEach(room =>
 						{
 							if (room.RoomData.UsersNow > 0 && room.RoomData.Category == base.ExtraId)
 							{

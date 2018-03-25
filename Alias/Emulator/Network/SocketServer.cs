@@ -37,20 +37,20 @@ namespace Alias.Emulator.Network
                     }));
 				SocketServer.BoundChannel = await Bootstrap.BindAsync(int.Parse(Configuration.Value("tcp.port")));
 				Logging.Info("Listening for Connections on Port " + Configuration.Value("tcp.port"));
-				Logging.ReadLine();
+				Console.ReadLine();
 				await SocketServer.BoundChannel.CloseAsync();
             }
             catch (FormatException formatException)
             {
-				Logging.Error("Port isn't a valid number!", formatException, "SocketServer", "Initialize");
+				Logging.Error("Port isn't a valid number!", formatException);
 			}
             catch (ArgumentOutOfRangeException argumentException)
             {
-				Logging.Error("Port is out of valid range.", argumentException, "SocketServer", "Initialize");
+				Logging.Error("Port is out of valid range.", argumentException);
 			}
             catch (AggregateException aggregateException)
             {
-				Logging.Error("Port is already in use.", aggregateException, "SocketServer", "Initialize");
+				Logging.Error("Port is already in use.", aggregateException);
 			}
             finally
             {

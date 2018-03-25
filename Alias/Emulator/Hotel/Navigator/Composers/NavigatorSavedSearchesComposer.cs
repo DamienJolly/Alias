@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Navigator.Composers
 {
-	public class NavigatorSavedSearchesComposer : IMessageComposer
+	public class NavigatorSavedSearchesComposer : IPacketComposer
 	{
 		private List<NavigatorSearches> searches;
 

@@ -1,11 +1,11 @@
 using Alias.Emulator.Hotel.Rooms;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Moderation.Composers
 {
-	public class ModerationRoomInfoComposer : IMessageComposer
+	public class ModerationRoomInfoComposer : IPacketComposer
 	{
 		private RoomData roomData;
 

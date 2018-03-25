@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Users.Badges;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Composers
 {
-	public class UserBadgesComposer : IMessageComposer
+	public class UserBadgesComposer : IPacketComposer
 	{
 		private List<BadgeDefinition> badges;
 		private int id;

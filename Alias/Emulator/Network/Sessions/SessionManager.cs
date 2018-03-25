@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Hotel.Users.Handshake;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using DotNetty.Transport.Channels;
 
 namespace Alias.Emulator.Network.Sessions
@@ -51,12 +51,12 @@ namespace Alias.Emulator.Network.Sessions
 			SessionManager.RegisteredSessions.Remove(context);
 		}
 
-		public static void SendWithPermission(IMessageComposer message, string param)
+		public static void SendWithPermission(IPacketComposer message, string param)
 		{
 			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.IsDisconnecting && o.Habbo.HasPermission(param)).ToList().ForEach(o => o.Send(message));
 		}
 
-		public static void Send(IMessageComposer message)
+		public static void Send(IPacketComposer message)
 		{
 			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.IsDisconnecting).ToList().ForEach(o => o.Send(message));
 		}

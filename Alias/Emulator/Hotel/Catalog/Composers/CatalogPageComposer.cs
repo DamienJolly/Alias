@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Users;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Catalog.Composers
 {
-	public class CatalogPageComposer : IMessageComposer
+	public class CatalogPageComposer : IPacketComposer
 	{
 		CatalogPage page;
 		Habbo habbo;
@@ -72,8 +72,8 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 
 			if (this.page.Layout == CatalogLayout.FRONTPAGE || this.page.Layout == CatalogLayout.FRONTPAGE_FEATURED)
 			{
-				message.Int(CatalogManager.GetFeaturedPages().Count);
-				CatalogManager.GetFeaturedPages().ForEach(feature =>
+				message.Int(Alias.GetServer().GetCatalogManager().GetFeaturedPages().Count);
+				Alias.GetServer().GetCatalogManager().GetFeaturedPages().ForEach(feature =>
 				{
 					message.Int(feature.SlotId);
 					message.String(feature.Caption);

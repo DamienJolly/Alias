@@ -1,11 +1,11 @@
 using System.Linq;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Navigator.Composers
 {
-	public class NavigatorEventCategoriesComposer : IMessageComposer
+	public class NavigatorEventCategoriesComposer : IPacketComposer
 	{
 		int Rank;
 
@@ -17,8 +17,8 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 		public ServerMessage Compose()
 		{
 			ServerMessage message = new ServerMessage(Outgoing.NavigatorEventCategoriesMessageComposer);
-			message.Int(Navigator.GetCategories("roomads_view").Where(cat => cat.ExtraId > 0).Count());
-			Navigator.GetCategories("roomads_view").Where(cat => cat.ExtraId > 0).ToList().ForEach(category =>
+			message.Int(Alias.GetServer().GetNavigatorManager().GetCategories("roomads_view").Where(cat => cat.ExtraId > 0).Count());
+			Alias.GetServer().GetNavigatorManager().GetCategories("roomads_view").Where(cat => cat.ExtraId > 0).ToList().ForEach(category =>
 			{
 				message.Int(category.ExtraId);
 				message.String(category.Title);

@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
-	public class TriggerDiceEvent : IMessageEvent
+	public class TriggerDiceEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

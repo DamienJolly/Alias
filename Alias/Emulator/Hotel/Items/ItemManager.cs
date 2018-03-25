@@ -3,25 +3,28 @@ using System.Linq;
 
 namespace Alias.Emulator.Hotel.Items
 {
-	public class ItemManager
+	sealed class ItemManager
 	{
-		private static List<ItemData> Items;
+		private List<ItemData> _items;
 
-		public static void Initialize()
+		public ItemManager()
 		{
-			Items = ItemDatabase.ReadItemData();
+			_items = new List<ItemData>();
 		}
 
-		public static void Reload()
+		public void Initialize()
 		{
-			Items.Clear();
+			if (this._items.Count > 0)
+			{
+				this._items.Clear();
+			}
 
-			Initialize();
+			this._items = ItemDatabase.ReadItemData();
 		}
 
-		public static ItemData GetItemData(int baseId)
+		public ItemData GetItemData(int baseId)
 		{
-			return Items.Where(item => item.Id == baseId).FirstOrDefault();
+			return this._items.Where(item => item.Id == baseId).FirstOrDefault();
 		}
 	}
 }

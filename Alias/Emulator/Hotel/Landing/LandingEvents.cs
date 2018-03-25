@@ -1,6 +1,5 @@
 using Alias.Emulator.Hotel.Landing.Events;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Landing
 {
@@ -8,10 +7,10 @@ namespace Alias.Emulator.Hotel.Landing
     {
 		public static void Register()
 		{
-			MessageHandler.Register(Incoming.RequestNewsListMessageEvent, new RequestNewsListEvent());
-			MessageHandler.Register(Incoming.HotelViewDataMessageEvent, new HotelViewDataEvent());
-			MessageHandler.Register(Incoming.HotelViewMessageEvent, new HotelViewEvent());
-			MessageHandler.Register(Incoming.HotelViewRequestBonusRareMessageEvent, new HotelViewRequestBonusRareEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestNewsListMessageEvent, new RequestNewsListEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.HotelViewDataMessageEvent, new HotelViewDataEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.HotelViewMessageEvent, new HotelViewEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.HotelViewRequestBonusRareMessageEvent, new HotelViewRequestBonusRareEvent());
 		}
 	}
 }

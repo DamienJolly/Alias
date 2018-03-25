@@ -1,11 +1,11 @@
 using Alias.Emulator.Hotel.Users.Inventory.Composers;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Inventory.Events
 {
-	public class RequestInventoryBotsEvent : IMessageEvent
+	public class RequestInventoryBotsEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

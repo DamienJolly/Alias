@@ -3,32 +3,41 @@ using System.Linq;
 
 namespace Alias.Emulator.Hotel.Permissions
 {
-    public class PermissionManager
+    sealed class PermissionManager
     {
-		private static List<Permission> permissions;
-		private static List<Permission> commandPermissions;
+		private List<Permission> _permissions;
+		private List<Permission> _commandPermissions;
 
-		public static void Initialize()
+		public PermissionManager()
 		{
-			permissions = PermissionDatabase.ReadPermissions();
-			commandPermissions = PermissionDatabase.ReadCommandPermissions();
+			this._permissions = new List<Permission>();
+			this._commandPermissions = new List<Permission>();
 		}
 
-		public static void Reload()
+		public void Initialize()
 		{
-			permissions.Clear();
-			commandPermissions.Clear();
-			Initialize();
+			if (this._permissions.Count > 0)
+			{
+				this._permissions.Clear();
+			}
+
+			if (this._commandPermissions.Count > 0)
+			{
+				this._commandPermissions.Clear();
+			}
+
+			this._permissions = PermissionDatabase.ReadPermissions();
+			this._commandPermissions = PermissionDatabase.ReadCommandPermissions();
 		}
 
-		public static bool HasPermission(int rank, string param)
+		public bool HasPermission(int rank, string param)
 		{
-			return permissions.Count(perm => perm.Param == param && perm.Ranks.Contains(rank)) > 0;
+			return this._permissions.Count(perm => perm.Param == param && perm.Ranks.Contains(rank)) > 0;
 		}
 
-		public static bool HasCommandPermission(int rank, string param)
+		public bool HasCommandPermission(int rank, string param)
 		{
-			return commandPermissions.Count(perm => perm.Param == param && perm.Ranks.Contains(rank)) > 0;
+			return this._commandPermissions.Count(perm => perm.Param == param && perm.Ranks.Contains(rank)) > 0;
 		}
 	}
 }

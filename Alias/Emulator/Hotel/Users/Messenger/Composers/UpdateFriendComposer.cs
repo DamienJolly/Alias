@@ -1,11 +1,11 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class UpdateFriendComposer : IMessageComposer
+	public class UpdateFriendComposer : IPacketComposer
 	{
 		private MessengerFriend friend;
 		private int friendId = 0;

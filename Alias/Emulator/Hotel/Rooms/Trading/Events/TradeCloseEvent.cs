@@ -1,11 +1,11 @@
 using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 {
-	public class TradeCloseEvent : IMessageEvent
+	public class TradeCloseEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
-	public class InviteFriendsEvent : IMessageEvent
+	public class InviteFriendsEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

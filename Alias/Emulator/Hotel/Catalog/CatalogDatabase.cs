@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Data;
 using Alias.Emulator.Database;
 using Alias.Emulator.Utilities;
+using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Catalog
 {
@@ -10,31 +11,35 @@ namespace Alias.Emulator.Hotel.Catalog
 		public static List<CatalogPage> ReadPages()
 		{
 			List<CatalogPage> pages = new List<CatalogPage>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_pages` ORDER BY `order_id` ASC, `caption` ASC").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_pages` ORDER BY `order_id` ASC, `caption` ASC"))
 				{
-					CatalogPage item = new CatalogPage();
-					item.Id = (int)row["id"];
-					item.ParentId = (int)row["parent_id"];
-					item.Name = (string)row["name"];
-					item.Caption = (string)row["caption"];
-					item.Icon = (int)row["icon"];
-					item.Rank = (int)row["rank"];
-					item.Order = (int)row["order_id"];
-					item.HeaderImage = (string)row["header_image"];
-					item.TeaserImage = (string)row["teaser_image"];
-					item.SpecialImage = (string)row["special_image"];
-					item.TextOne = (string)row["text_one"];
-					item.TextTwo = (string)row["text_two"];
-					item.TextDetails = (string)row["text_details"];
-					item.TextTeaser = (string)row["text_teaser"];
-					item.Layout = CatalogLayouts.GetLayoutFromString((string)row["layout"]);
-					item.Enabled = AliasEnvironment.ToBool((string)row["enabled"]);
-					item.Visible = AliasEnvironment.ToBool((string)row["visible"]);
-					item.Items = ReadItems(item);
-					pages.Add(item);
-					row.Delete();
+					while (Reader.Read())
+					{
+						CatalogPage item = new CatalogPage
+						{
+							Id           = Reader.GetInt32("id"),
+							ParentId     = Reader.GetInt32("parent_id"),
+							Name         = Reader.GetString("name"),
+							Caption      = Reader.GetString("caption"),
+							Icon         = Reader.GetInt32("icon"),
+							Rank         = Reader.GetInt32("rank"),
+							Order        = Reader.GetInt32("order_id"),
+							HeaderImage  = Reader.GetString("header_image"),
+							TeaserImage  = Reader.GetString("teaser_image"),
+							SpecialImage = Reader.GetString("special_image"),
+							TextOne      = Reader.GetString("text_one"),
+							TextTwo      = Reader.GetString("text_two"),
+							TextDetails  = Reader.GetString("text_details"),
+							TextTeaser   = Reader.GetString("text_teaser"),
+							Layout       = CatalogLayouts.GetLayoutFromString(Reader.GetString("layout")),
+							Enabled      = Reader.GetBoolean("enabled"),
+							Visible      = Reader.GetBoolean("visible")
+						};
+						item.Items = ReadItems(item);
+						pages.Add(item);
+					}
 				}
 			}
 			return pages;
@@ -43,20 +48,22 @@ namespace Alias.Emulator.Hotel.Catalog
 		public static List<CatalogBots> ReadBots()
 		{
 			List<CatalogBots> bots = new List<CatalogBots>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_bot_items`").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_bot_items`"))
 				{
-					CatalogBots bot = new CatalogBots
+					while (Reader.Read())
 					{
-						ItemId = (int)row["item_id"],
-						Name = (string)row["name"],
-						Look = (string)row["look"],
-						Motto = (string)row["motto"],
-						Gender = (string)row["gender"]
-					};
-					bots.Add(bot);
-					row.Delete();
+						CatalogBots bot = new CatalogBots
+						{
+							ItemId = Reader.GetInt32("item_id"),
+							Name   = Reader.GetString("name"),
+							Look   = Reader.GetString("look"),
+							Motto  = Reader.GetString("motto"),
+							Gender = Reader.GetString("gender")
+						};
+						bots.Add(bot);
+					}
 				}
 			}
 			return bots;
@@ -65,35 +72,37 @@ namespace Alias.Emulator.Hotel.Catalog
 		public static List<CatalogItem> ReadItems(CatalogPage page)
 		{
 			List<CatalogItem> items = new List<CatalogItem>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("pageId", page.Id);
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_items` WHERE `page_id` = @pageId").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_items` WHERE `page_id` = @pageId"))
 				{
-					CatalogItem item = new CatalogItem
+					while (Reader.Read())
 					{
-						Id = (int)row["id"],
-						PageId = (int)row["page_Id"],
-						ItemIds = (string)row["item_ids"],
-						Name = (string)row["catalog_name"],
-						Credits = (int)row["cost_credits"],
-						Points = (int)row["cost_points"],
-						PointsType = (int)row["points_type"],
-						Amount = (int)row["amount"],
-						LimitedStack = (int)row["limited_stack"],
-						ClubLevel = (int)row["club_level"],
-						CanGift = AliasEnvironment.ToBool((string)row["can_gift"]),
-						HasOffer = AliasEnvironment.ToBool((string)row["have_offer"]),
-						OfferId = (int)row["offer_id"]
-					};
-					item.LimitedNumbers = ReadLimited(item.Id, item.LimitedStack);
-					item.LimitedNumbers.Shuffle();
+						CatalogItem item = new CatalogItem
+						{
+							Id           = Reader.GetInt32("id"),
+							PageId       = Reader.GetInt32("page_Id"),
+							ItemIds      = Reader.GetString("item_ids"),
+							Name         = Reader.GetString("catalog_name"),
+							Credits      = Reader.GetInt32("cost_credits"),
+							Points       = Reader.GetInt32("cost_points"),
+							PointsType   = Reader.GetInt32("points_type"),
+							Amount       = Reader.GetInt32("amount"),
+							LimitedStack = Reader.GetInt32("limited_stack"),
+							ClubLevel    = Reader.GetInt32("club_level"),
+							CanGift      = Reader.GetBoolean("can_gift"),
+							HasOffer     = Reader.GetBoolean("have_offer"),
+							OfferId      = Reader.GetInt32("offer_id")
+						};
+						item.LimitedNumbers = ReadLimited(item.Id, item.LimitedStack);
+						item.LimitedNumbers.Shuffle();
 
-					if (item.OfferId != -1)
-						page.AddOfferId(item.OfferId);
+						if (item.OfferId != -1)
+							page.AddOfferId(item.OfferId);
 
-					items.Add(item);
-					row.Delete();
+						items.Add(item);
+					}
 				}
 			}
 			return items;
@@ -102,21 +111,23 @@ namespace Alias.Emulator.Hotel.Catalog
 		public static List<int> ReadLimited(int itemId, int size)
 		{
 			List<int> takenNumbers = new List<int>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("itemId", itemId);
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_limited_items` WHERE `item_id` = @itemId").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_limited_items` WHERE `item_id` = @itemId"))
 				{
-					takenNumbers.Add((int)row["number"]);
-					row.Delete();
+					while (Reader.Read())
+					{
+						takenNumbers.Add(Reader.GetInt32("number"));
+					}
 				}
 			}
-			return CatalogManager.GetAvailableNumbers(takenNumbers, size);
+			return Alias.GetServer().GetCatalogManager().GetAvailableNumbers(takenNumbers, size);
 		}
 
 		public static void AddLimited(int itemId, int number)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("itemId", itemId);
 				dbClient.AddParameter("number", number);
@@ -127,20 +138,24 @@ namespace Alias.Emulator.Hotel.Catalog
 		public static List<CatalogFeatured> ReadFeatured()
 		{
 			List<CatalogFeatured> featured = new List<CatalogFeatured>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `catalog_featured`").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_featured`"))
 				{
-					CatalogFeatured item = new CatalogFeatured();
-					item.SlotId = (int)row["slot_id"];
-					item.Caption = (string)row["caption"];
-					item.Image = (string)row["image"];
-					item.Type = (int)row["type"];
-					item.PageName = (string)row["page_name"];
-					item.PageId = (int)row["page_id"];
-					item.ProductName = (string)row["product_name"];
-					featured.Add(item);
-					row.Delete();
+					while (Reader.Read())
+					{
+						CatalogFeatured item = new CatalogFeatured
+						{
+							SlotId      = Reader.GetInt32("slot_id"),
+							Caption     = Reader.GetString("caption"),
+							Image       = Reader.GetString("image"),
+							Type        = Reader.GetInt32("type"),
+							PageName    = Reader.GetString("page_name"),
+							PageId      = Reader.GetInt32("page_id"),
+							ProductName = Reader.GetString("product_name")
+						};
+						featured.Add(item);
+					}
 				}
 			}
 			return featured;

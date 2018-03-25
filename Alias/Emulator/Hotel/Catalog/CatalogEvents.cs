@@ -1,6 +1,5 @@
 using Alias.Emulator.Hotel.Catalog.Events;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Catalog
 {
@@ -8,11 +7,11 @@ namespace Alias.Emulator.Hotel.Catalog
     {
 		public static void Register()
 		{
-			MessageHandler.Register(Incoming.RequestCatalogIndexMessageEvent, new RequestCatalogIndexEvent());
-			MessageHandler.Register(Incoming.RequestCatalogModeMessageEvent, new RequestCatalogModeEvent());
-			MessageHandler.Register(Incoming.RequestCatalogPageMessageEvent, new RequestCatalogPageEvent());
-			MessageHandler.Register(Incoming.RequestDiscountMessageEvent, new RequestDiscountEvent());
-			MessageHandler.Register(Incoming.CatalogBuyItemMessageEvent, new CatalogBuyItemEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestCatalogIndexMessageEvent, new RequestCatalogIndexEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestCatalogModeMessageEvent, new RequestCatalogModeEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestCatalogPageMessageEvent, new RequestCatalogPageEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.RequestDiscountMessageEvent, new RequestDiscountEvent());
+			Alias.GetServer().GetPacketManager().Register(Incoming.CatalogBuyItemMessageEvent, new CatalogBuyItemEvent());
 		}
 	}
 }

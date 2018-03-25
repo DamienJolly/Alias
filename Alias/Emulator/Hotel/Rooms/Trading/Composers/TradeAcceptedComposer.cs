@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 {
-    public class TradeAcceptedComposer : IMessageComposer
+    public class TradeAcceptedComposer : IPacketComposer
 	{
 		private TradeUser tradeUser;
 

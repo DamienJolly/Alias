@@ -1,12 +1,12 @@
 using Alias.Emulator.Hotel.Rooms.Users.Chat;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Users.Events
 {
-	public class RoomUserTalkEvent : IMessageEvent
+	public class RoomUserTalkEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

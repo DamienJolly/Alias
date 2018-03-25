@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Data;
 using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Users;
+using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Rooms.Rights
 {
@@ -10,18 +11,20 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 		public static List<UserRight> ReadRights(int Id)
 		{
 			List<UserRight> rights = new List<UserRight>();
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
-				foreach (DataRow row in dbClient.DataTable("SELECT * FROM `room_rights` WHERE `id` = @id").Rows)
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `room_rights` WHERE `id` = @id"))
 				{
-					UserRight right = new UserRight()
+					while (Reader.Read())
 					{
-						Id = (int)row["user_id"],
-						Username = (string)UserDatabase.Variable((int)row["user_id"], "username")
-					};
-					rights.Add(right);
-					row.Delete();
+						UserRight right = new UserRight()
+						{
+							Id       = Reader.GetInt32("id"),
+							Username = (string)UserDatabase.Variable(Reader.GetInt32("user_id"), "username")
+						};
+						rights.Add(right);
+					}
 				}
 			}
 			return rights;
@@ -29,7 +32,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 
 		public static void GiveRights(int Id, int UserId)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
 				dbClient.AddParameter("userId", UserId);
@@ -39,7 +42,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 
 		public static void TakeRights(int Id, int UserId)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
 				dbClient.AddParameter("userId", UserId);

@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
-	public class ToggleFloorItemEvent : IMessageEvent
+	public class ToggleFloorItemEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{

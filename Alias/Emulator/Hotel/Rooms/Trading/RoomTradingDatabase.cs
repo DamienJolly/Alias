@@ -6,18 +6,19 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
     {
 		public static int CreateTradeLog(TradeUser userOne, TradeUser userTwo)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("userOneId", userOne.User.Habbo.Id);
 				dbClient.AddParameter("userTwoId", userTwo.User.Habbo.Id);
-				dbClient.AddParameter("timestamp", AliasEnvironment.GetUnixTimestamp());
-				return (int)dbClient.InsertQuery("INSERT INTO `room_trade_log` (`user_one_id`, `user_two_id`, `timestamp`) VALUES (@userOneId, @userTwoId, @timestamp)");
+				dbClient.AddParameter("timestamp", Alias.GetUnixTimestamp());
+				dbClient.Query("INSERT INTO `room_trade_log` (`user_one_id`, `user_two_id`, `timestamp`) VALUES (@userOneId, @userTwoId, @timestamp)");
+				return dbClient.LastInsertedId();
 			}
 		}
 
 		public static void LogTradeItem(int logId, int userId, int itemId)
 		{
-			using (DatabaseClient dbClient = DatabaseClient.Instance())
+			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
 			{
 				dbClient.AddParameter("id", logId);
 				dbClient.AddParameter("itemId", itemId);

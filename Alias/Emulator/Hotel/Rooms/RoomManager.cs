@@ -8,18 +8,27 @@ using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
-	public class RoomManager
+	sealed class RoomManager
 	{
-		private static List<RoomData> CachedRooms;
-		private static List<Room> LoadedRooms;
+		private RoomModelManager _roomModelManager;
+		private List<RoomData> _cachedRooms;
+		private List<Room> _loadedRooms;
 
-		public static void Initialize()
+		public RoomManager()
 		{
-			RoomManager.CachedRooms = new List<RoomData>();
-			RoomManager.LoadedRooms = new List<Room>();
+			this._roomModelManager = new RoomModelManager();
+			this._cachedRooms = new List<RoomData>();
+			this._loadedRooms = new List<Room>();
 		}
 
-		public static int TradeToInt(RoomTradeState tradeState)
+		public void Initialize()
+		{
+			this._roomModelManager.Initialize();
+		}
+
+		public RoomModelManager GetRoomModelManager() => this._roomModelManager;
+
+		public int TradeToInt(RoomTradeState tradeState)
 		{
 			switch (tradeState)
 			{
@@ -34,7 +43,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
-		public static RoomTradeState IntToTrade(int state)
+		public RoomTradeState IntToTrade(int state)
 		{
 			switch (state)
 			{
@@ -49,7 +58,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
-		public static RoomDoorState IntToDoor(int state)
+		public RoomDoorState IntToDoor(int state)
 		{
 			switch (state)
 			{
@@ -64,7 +73,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
-		public static int DoorToInt(RoomDoorState state)
+		public int DoorToInt(RoomDoorState state)
 		{
 			switch (state)
 			{
@@ -79,44 +88,46 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
-		public static RoomData RoomData(int RoomId)
+		public RoomData RoomData(int RoomId)
 		{
-			if (RoomManager.CachedRooms.Where(room => room.Id == RoomId).ToList().Count > 0)
+			if (this._cachedRooms.Where(room => room.Id == RoomId).ToList().Count > 0)
 			{
-				return RoomManager.CachedRooms.Where(room => room.Id == RoomId).First();
+				return this._cachedRooms.Where(room => room.Id == RoomId).First();
 			}
-			return RoomManager.AddToCache(RoomId);
+			return AddToCache(RoomId);
 		}
 
-		public static RoomData AddToCache(int RoomId)
+		public RoomData AddToCache(int RoomId)
 		{
 			RoomData roomData = RoomDatabase.RoomData(RoomId);
-			RoomManager.CachedRooms.Add(roomData);
+			this._cachedRooms.Add(roomData);
 			return roomData;
 		}
 
-		public static void DoRoomCycle()
+		public void DoRoomCycle()
 		{
-			RoomManager.LoadedRooms.Where(room => !room.Disposing).ToList().ForEach(room => room.Cycle());
+			this._loadedRooms.Where(room => !room.Disposing).ToList().ForEach(room => room.Cycle());
 		}
 
-		public static List<Room> ReadLoadedRooms()
+		public List<Room> ReadLoadedRooms()
 		{
-			return RoomManager.LoadedRooms;
+			return this._loadedRooms;
 		}
 
-		public static Room LoadRoom(int roomId)
+		public Room LoadRoom(int roomId)
 		{
 			if (RoomDatabase.RoomExists(roomId))
 			{
-				Room result = new Room();
-				result.Id = roomId;
-				result.RoomData = RoomManager.RoomData(roomId);
+				Room result = new Room()
+				{
+					Id = roomId,
+					RoomData = RoomData(roomId)
+				};
 				result.DynamicModel = new DynamicRoomModel(result);
 				result.ItemManager = new RoomItemManager(result);
 				result.UserManager = new RoomUserManager(result);
 				result.Initialize();
-				RoomManager.LoadedRooms.Add(result);
+				this._loadedRooms.Add(result);
 				return result;
 			}
 			else
@@ -126,23 +137,23 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
-		public static Room Room(int roomId)
+		public Room Room(int roomId)
 		{
-			if (RoomManager.LoadedRooms.Where(r => r.Id == roomId).Count() > 0)
+			if (this._loadedRooms.Where(r => r.Id == roomId).Count() > 0)
 			{
-				return RoomManager.LoadedRooms.Where(r => r.Id == roomId).First();
+				return this._loadedRooms.Where(r => r.Id == roomId).First();
 			}
 			else
 			{
-				return RoomManager.LoadRoom(roomId);
+				return LoadRoom(roomId);
 			}
 		}
 
-		public static void RemoveLoadedRoom(Room room)
+		public void RemoveLoadedRoom(Room room)
 		{
-			if (RoomManager.LoadedRooms.Where(r => r == room).Count() > 0)
+			if (this._loadedRooms.Where(r => r == room).Count() > 0)
 			{
-				RoomManager.LoadedRooms.Remove(room);
+				this._loadedRooms.Remove(room);
 			}
 		}
 	}

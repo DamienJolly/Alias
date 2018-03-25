@@ -1,28 +1,32 @@
+using System.Collections.Generic;
 using System.Linq;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Hotel.Navigator.Views;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Navigator.Composers
 {
-	public class RoomCategoriesComposer : IMessageComposer
+	public class RoomCategoriesComposer : IPacketComposer
 	{
-		int Rank;
+		private int rank;
+		private List<INavigatorCategory> categories;
 
-		public RoomCategoriesComposer(int rank)
+		public RoomCategoriesComposer(int rank, List<INavigatorCategory> categories)
 		{
-			this.Rank = rank;
+			this.rank = rank;
+			this.categories = categories;
 		}
 
 		public ServerMessage Compose()
 		{
 			ServerMessage message = new ServerMessage(Outgoing.RoomCategoriesMessageComposer);
-			message.Int(Navigator.GetCategories("hotel_view").Where(cat => cat.ExtraId > 0).Count());
-			Navigator.GetCategories("hotel_view").Where(cat => cat.ExtraId > 0).ToList().ForEach(category =>
+			message.Int(this.categories.Count);
+			this.categories.ForEach(category =>
 			{
 				message.Int(category.ExtraId);
 				message.String(category.Title);
-				message.Boolean(category.MinRank <= this.Rank);
+				message.Boolean(category.MinRank <= this.rank);
 				message.Boolean(false);
 				message.String(category.Title);
 

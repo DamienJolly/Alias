@@ -1,4 +1,4 @@
-namespace Alias.Emulator.Network.Messages.Headers
+namespace Alias.Emulator.Network.Packets.Headers
 {
 	public class Outgoing
 	{

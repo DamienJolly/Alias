@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Users;
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Catalog.Composers
 {
-	public class CatalogPagesListComposer : IMessageComposer
+	public class CatalogPagesListComposer : IPacketComposer
 	{
 		Habbo Habbo;
 		List<CatalogPage> Pages;
@@ -15,7 +15,7 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 		public CatalogPagesListComposer(Habbo habbo, string MODE)
 		{
 			Habbo = habbo;
-			this.Pages = CatalogManager.GetCatalogPages(-1, habbo);
+			this.Pages = Alias.GetServer().GetCatalogManager().GetCatalogPages(-1, habbo);
 			this.MODE = MODE;
 		}
 
@@ -42,7 +42,7 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 
 		private void Append(ServerMessage message, CatalogPage catalogPage)
 		{
-			List<CatalogPage> Pages = CatalogManager.GetCatalogPages(catalogPage.Id, Habbo);
+			List<CatalogPage> Pages = Alias.GetServer().GetCatalogManager().GetCatalogPages(catalogPage.Id, Habbo);
 
 			message.Boolean(catalogPage.Visible);
 			message.Int(catalogPage.Icon);

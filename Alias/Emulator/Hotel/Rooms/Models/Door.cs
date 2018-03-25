@@ -37,7 +37,7 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 			}
 			catch (Exception ex)
 			{
-				Logging.Error("Corrupted Door Data!!", ex, "Models.Door", "Parse");
+				Logging.Error("Corrupted Door Data!!", ex);
 				return new Door();
 			}
 		}

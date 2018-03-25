@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets.Headers;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Composers
 {
-	public class MeMenuSettingsComposer : IMessageComposer
+	public class MeMenuSettingsComposer : IPacketComposer
 	{
 		private Habbo habbo;
 
@@ -22,8 +22,9 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			result.Boolean(this.habbo.Settings.OldChat);
 			result.Boolean(this.habbo.Settings.IgnoreInvites);
 			result.Boolean(this.habbo.Settings.CameraFollow);
-			result.Int(1); // dunno?
-			result.Int(0); // chat colour
+			result.Int(1); // friend state?
+			result.Int(0); // chat colour?
+			result.Int(0); // dunno?
 			return result;
 		}
 	}

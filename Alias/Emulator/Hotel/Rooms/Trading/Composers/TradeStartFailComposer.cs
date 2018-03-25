@@ -1,10 +1,10 @@
-using Alias.Emulator.Network.Messages;
-using Alias.Emulator.Network.Messages.Headers;
+using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 {
-    public class TradeStartFailComposer : IMessageComposer
+    public class TradeStartFailComposer : IPacketComposer
 	{
 		public static int HOTEL_TRADING_NOT_ALLOWED = 1;
 		public static int YOU_TRADING_OFF = 2;

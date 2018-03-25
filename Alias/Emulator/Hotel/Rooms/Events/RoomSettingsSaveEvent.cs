@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.Composers;
 using Alias.Emulator.Hotel.Rooms.States;
-using Alias.Emulator.Network.Messages;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Events
 {
-	public class RoomSettingsSaveEvent : IMessageEvent
+	public class RoomSettingsSaveEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientMessage message)
 		{
 			int roomId = message.Integer();
 
-			Room room = RoomManager.Room(roomId);
+			Room room = Alias.GetServer().GetRoomManager().Room(roomId);
 			if (room == null || room.RoomData.OwnerId != session.Habbo.Id)
 			{
 				return;
@@ -35,7 +35,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 
 			room.RoomData.Description = message.String();
 			
-			RoomDoorState state = RoomManager.IntToDoor(message.Integer());
+			RoomDoorState state = Alias.GetServer().GetRoomManager().IntToDoor(message.Integer());
 
 			string password = message.String();
 			if (room.RoomData.DoorState == RoomDoorState.PASSWORD && password.Length <= 0)
@@ -75,7 +75,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 			}
 			
 			room.RoomData.Tags = tags;
-			room.RoomData.TradeState = RoomManager.IntToTrade(message.Integer());
+			room.RoomData.TradeState = Alias.GetServer().GetRoomManager().IntToTrade(message.Integer());
 			room.RoomData.Settings.AllowPets = message.Boolean();
 			room.RoomData.Settings.AllowPetsEat = message.Boolean();
 			room.RoomData.Settings.RoomBlocking = message.Boolean();

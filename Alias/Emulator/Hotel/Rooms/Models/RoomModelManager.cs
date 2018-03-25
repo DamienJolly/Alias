@@ -4,31 +4,30 @@ using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Rooms.Models
 {
-	public class RoomModelManager
+	sealed class RoomModelManager
 	{
-		private static List<RoomModel> Models;
+		private List<RoomModel> _models;
 
-		public static void Initialize()
+		public RoomModelManager()
 		{
-			RoomModelManager.Models = RoomModelDatabase.Models();
+			this._models = new List<RoomModel>();
 		}
 
-		public static void Reload()
+		public void Initialize()
 		{
-			Models.Clear();
-			Initialize();
+			this._models = RoomModelDatabase.Models();
 		}
 
-		public static bool ModelExists(string name)
+		public bool ModelExists(string name)
 		{
-			return RoomModelManager.Models.Where(m => m.Name.Equals(name)).Count() > 0;
+			return this._models.Where(m => m.Name.Equals(name)).Count() > 0;
 		}
 
-		public static RoomModel GetModel(string name)
+		public RoomModel GetModel(string name)
 		{
 			if (ModelExists(name))
 			{
-				return RoomModelManager.Models.Where(m => m.Name.Equals(name)).First();
+				return this._models.Where(m => m.Name.Equals(name)).First();
 			}
 			Logging.Info("Couldn't find Model with Name " + name + ". Returning an empty Model!");
 			return new RoomModel();
