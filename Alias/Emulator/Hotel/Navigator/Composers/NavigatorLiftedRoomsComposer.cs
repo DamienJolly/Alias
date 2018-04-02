@@ -6,11 +6,11 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 {
 	public class NavigatorLiftedRoomsComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.NavigatorLiftedRoomsMessageComposer);
-			result.Int(0);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.NavigatorLiftedRoomsMessageComposer);
+			message.WriteInteger(0);
+			return message;
 		}
 	}
 }

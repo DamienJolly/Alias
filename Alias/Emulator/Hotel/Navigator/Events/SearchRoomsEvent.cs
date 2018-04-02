@@ -7,9 +7,9 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 {
 	public class SearchRoomsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			session.Send(new NavigatorSearchResultsComposer(message.String(), message.String(), session));
+			session.Send(new NavigatorSearchResultsComposer(message.PopString(), message.PopString(), session));
 		}
 	}
 }

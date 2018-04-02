@@ -13,10 +13,10 @@ namespace Alias.Emulator.Hotel.Misc.Composers
 			this.ErrorCode = error;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.GenericErrorMessageComposer);
-			message.Int(this.ErrorCode);
+			ServerPacket message = new ServerPacket(Outgoing.GenericErrorMessageComposer);
+			message.WriteInteger(this.ErrorCode);
 			return message;
 		}
 	}

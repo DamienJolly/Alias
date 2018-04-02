@@ -22,12 +22,12 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 			this.Target = target;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.RoomInviteErrorMessageComposer);
-			message.Int(ErrorCode);
-			message.Int(Target);
-			message.String("");
+			ServerPacket message = new ServerPacket(Outgoing.RoomInviteErrorMessageComposer);
+			message.WriteInteger(ErrorCode);
+			message.WriteInteger(Target);
+			message.WriteString("");
 			return message;
 		}
 	}

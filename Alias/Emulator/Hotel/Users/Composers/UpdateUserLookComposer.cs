@@ -13,12 +13,12 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			this.habbo = habbo;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.UpdateUserLookMessageComposer);
-			result.String(this.habbo.Look);
-			result.String(this.habbo.Gender);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.UpdateUserLookMessageComposer);
+			message.WriteString(this.habbo.Look);
+			message.WriteString(this.habbo.Gender);
+			return message;
 		}
 	}
 }

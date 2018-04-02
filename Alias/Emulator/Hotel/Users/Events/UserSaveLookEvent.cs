@@ -1,4 +1,3 @@
-using Alias.Emulator.Hotel.Achievements;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
 using Alias.Emulator.Hotel.Users.Composers;
 using Alias.Emulator.Network.Packets;
@@ -9,15 +8,15 @@ namespace Alias.Emulator.Hotel.Users.Events
 {
 	public class UserSaveLookEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			string gender = message.String().ToUpper();
+			string gender = message.PopString().ToUpper();
 			if (gender != "M" && gender != "F")
 			{
 				return;
 			}
 
-			string look = message.String();
+			string look = message.PopString();
 
 			session.Habbo.Look = look;
 			session.Habbo.Gender = gender;
@@ -33,7 +32,7 @@ namespace Alias.Emulator.Hotel.Users.Events
 				session.Habbo.CurrentRoom.UserManager.Send(new RoomUserDataComposer(session.Habbo));
 			}
 
-			Alias.GetServer().GetAchievementManager().ProgressAchievement(session.Habbo, Alias.GetServer().GetAchievementManager().GetAchievement("AvatarLooks"));
+			Alias.Server.AchievementManager.ProgressAchievement(session.Habbo, Alias.Server.AchievementManager.GetAchievement("AvatarLooks"));
 		}
 	}
 }

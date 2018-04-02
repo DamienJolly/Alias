@@ -5,6 +5,6 @@ namespace Alias.Emulator.Network.Packets
 {
 	public interface IPacketEvent
 	{
-		void Handle(Session session, ClientMessage message);
+		void Handle(Session session, ClientPacket message);
 	}
 }

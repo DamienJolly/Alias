@@ -4,14 +4,14 @@ namespace Alias.Emulator.Hotel.Catalog.Layouts
 {
 	public class LayoutInfoLoyalty : ICatalogLayout
 	{
-		public void Serialize(ServerMessage message, CatalogPage page)
+		public void Serialize(ServerPacket message, CatalogPage page)
 		{
-			message.String("info_loyalty");
-			message.Int(1);
-			message.String(page.HeaderImage);
-			message.Int(1);
-			message.String(page.TextOne);
-			message.Int(0);
+			message.WriteString("info_loyalty");
+			message.WriteInteger(1);
+			message.WriteString(page.HeaderImage);
+			message.WriteInteger(1);
+			message.WriteString(page.TextOne);
+			message.WriteInteger(0);
 		}
 	}
 }

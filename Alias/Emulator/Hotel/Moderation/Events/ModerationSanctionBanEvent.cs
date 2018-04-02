@@ -14,23 +14,23 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 		public const int BAN_100_YEARS = 6;
 		public const int BAN_AVATAR_ONLY_100_YEARS = 106;
 
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (!session.Habbo.HasPermission("acc_modtool_user_ban"))
 			{
 				return;
 			}
 			
-			int userId = message.Integer();
+			int userId = message.PopInt();
 			if (userId <= 0)
 			{
 				return;
 			}
 
 			string reason = message.ToString();
-			int topic = message.Integer();
-			int banType = message.Integer();
-			bool unknown = message.Boolean();
+			int topic = message.PopInt();
+			int banType = message.PopInt();
+			bool unknown = message.PopBoolean();
 
 			int duration = 0;
 			switch (banType)
@@ -51,7 +51,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 					break;
 			}
 
-			Alias.GetServer().GetModerationManager().BanUser(userId, session, reason, duration, ModerationBanType.ACCOUNT, topic);
+			Alias.Server.ModerationManager.BanUser(userId, session, reason, duration, ModerationBanType.ACCOUNT, topic);
 		}
 	}
 }

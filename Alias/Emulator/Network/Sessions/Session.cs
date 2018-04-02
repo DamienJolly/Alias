@@ -25,15 +25,9 @@ namespace Alias.Emulator.Network.Sessions
 			this.Context = ctx;
 		}
 
-		public void Send(ServerMessage response, bool dispose = true)
+		public void Send(ServerPacket response, bool dispose = true)
 		{
-			byte[] array = response.ByteBuffer();
-			this.Context.Channel.WriteAndFlushAsync(Unpooled.CopiedBuffer(array));
-			if (dispose)
-			{
-				array = null;
-				response.Dispose();
-			}
+			this.Context.Channel.WriteAndFlushAsync(response);
 		}
 
 		public void Send(IPacketComposer composer, bool dispose = true)

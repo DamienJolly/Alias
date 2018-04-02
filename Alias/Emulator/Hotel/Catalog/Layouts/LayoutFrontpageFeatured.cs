@@ -4,16 +4,16 @@ namespace Alias.Emulator.Hotel.Catalog.Layouts
 {
 	public class LayoutFrontpageFeatured : ICatalogLayout
 	{
-		public void Serialize(ServerMessage message, CatalogPage page)
+		public void Serialize(ServerPacket message, CatalogPage page)
 		{
-			message.String("frontpage_featured");
-			message.Int(2);
-			message.String(page.HeaderImage);
-			message.String(page.TeaserImage);
-			message.Int(3);
-			message.String(page.TextOne);
-			message.String(page.TextTwo);
-			message.String(page.TextTeaser);
+			message.WriteString("frontpage_featured");
+			message.WriteInteger(2);
+			message.WriteString(page.HeaderImage);
+			message.WriteString(page.TeaserImage);
+			message.WriteInteger(3);
+			message.WriteString(page.TextOne);
+			message.WriteString(page.TextTwo);
+			message.WriteString(page.TextTeaser);
 		}
 	}
 }

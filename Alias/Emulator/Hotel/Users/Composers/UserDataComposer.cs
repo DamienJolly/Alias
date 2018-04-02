@@ -13,23 +13,23 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			this.Habbo = habbo;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.UserDataMessageComposer);
-			message.Int(this.Habbo.Id);
-			message.String(this.Habbo.Username);
-			message.String(this.Habbo.Look);
-			message.String(this.Habbo.Gender.ToUpper());
-			message.String(this.Habbo.Motto);
-			message.String("");
-			message.Boolean(false);
-			message.Int(0); //Respect
-			message.Int(0); //DailyRespect
-			message.Int(0); //DailyPetRespect
-			message.Boolean(false); //Friendstream
-			message.String("01.01.1970 00:00:00"); //Last Online
-			message.Boolean(false); //Can change name
-			message.Boolean(false);
+			ServerPacket message = new ServerPacket(Outgoing.UserDataMessageComposer);
+			message.WriteInteger(this.Habbo.Id);
+			message.WriteString(this.Habbo.Username);
+			message.WriteString(this.Habbo.Look);
+			message.WriteString(this.Habbo.Gender.ToUpper());
+			message.WriteString(this.Habbo.Motto);
+			message.WriteString("");
+			message.WriteBoolean(false);
+			message.WriteInteger(0); //Respect
+			message.WriteInteger(0); //DailyRespect
+			message.WriteInteger(0); //DailyPetRespect
+			message.WriteBoolean(false); //Friendstream
+			message.WriteString("01.01.1970 00:00:00"); //Last Online
+			message.WriteBoolean(false); //Can change name
+			message.WriteBoolean(false);
 			//todo: All this crap
 			return message;
 		}

@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Items
 		public static List<ItemData> ReadItemData()
 		{
 			List<ItemData> items = new List<ItemData>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `item_data`"))
 				{

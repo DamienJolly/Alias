@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 {
 	public class AlertLimitedSoldOutComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			return new ServerMessage(Outgoing.AlertLimitedSoldOutMessageComposer);
+			return new ServerPacket(Outgoing.AlertLimitedSoldOutMessageComposer);
 		}
 	}
 }

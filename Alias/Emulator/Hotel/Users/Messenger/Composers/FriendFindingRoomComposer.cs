@@ -16,10 +16,10 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 			this.errorCode = errorCode;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.FriendFindingRoomMessageComposer);
-			message.Int(this.errorCode);
+			ServerPacket message = new ServerPacket(Outgoing.FriendFindingRoomMessageComposer);
+			message.WriteInteger(this.errorCode);
 			return message;
 		}
 	}

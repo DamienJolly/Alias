@@ -33,19 +33,19 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 			get; set;
 		} = null;
 
-		public void Serialize(ServerMessage message)
+		public void Serialize(ServerPacket message)
 		{
-			message.Boolean(false);
-			message.Int(0);
-			message.Int(0);
-			message.Int(_item.ItemData.Id);
-			message.Int(_item.Id);
-			message.String("");
-			message.Int(0);
-			message.Int(0);
-			message.Int(0);
-			message.Int(0);
-			message.Int(0); //invalids
+			message.WriteBoolean(false);
+			message.WriteInteger(0);
+			message.WriteInteger(0);
+			message.WriteInteger(_item.ItemData.Id);
+			message.WriteInteger(_item.Id);
+			message.WriteString("");
+			message.WriteInteger(0);
+			message.WriteInteger(0);
+			message.WriteInteger(0);
+			message.WriteInteger(0);
+			message.WriteInteger(0); //invalids
 		}
 
 		public void LoadBox(RoomItem item)

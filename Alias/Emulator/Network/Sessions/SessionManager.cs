@@ -9,56 +9,56 @@ namespace Alias.Emulator.Network.Sessions
 {
 	public class SessionManager
 	{
-		private static Dictionary<IChannelHandlerContext, Session> RegisteredSessions;
+		private Dictionary<IChannelHandlerContext, Session> _registeredSessions;
 
-		public static void Initialize()
+		public SessionManager()
 		{
-			SessionManager.RegisteredSessions = new Dictionary<IChannelHandlerContext, Session>();
+			this._registeredSessions = new Dictionary<IChannelHandlerContext, Session>();
 		}
 
-		public static Habbo HabboById(int UserId)
+		public Habbo HabboById(int UserId)
 		{
-			return SessionManager.IsOnline(UserId) ? SessionManager.SessionById(UserId).Habbo : HandshakeDatabase.BuildHabbo(UserId);
+			return this.IsOnline(UserId) ? this.SessionById(UserId).Habbo : HandshakeDatabase.BuildHabbo(UserId);
 		}
 
-		public static int OnlineUsers()
+		public int OnlineUsers()
 		{
-			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.IsDisconnecting).Count();
+			return this._registeredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.IsDisconnecting).Count();
 		}
 
-		public static bool IsOnline(int userId)
+		public bool IsOnline(int userId)
 		{
-			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && o.Habbo.Id == userId && !o.Habbo.IsDisconnecting).Count() > 0;
+			return this._registeredSessions.Values.Where(o => o.Habbo != null && o.Habbo.Id == userId && !o.Habbo.IsDisconnecting).Count() > 0;
 		}
 
-		public static Session SessionById(int userId)
+		public Session SessionById(int userId)
 		{
-			return SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && o.Habbo.Id == userId).FirstOrDefault();
+			return this._registeredSessions.Values.Where(o => o.Habbo != null && o.Habbo.Id == userId).FirstOrDefault();
 		}
 
-		public static void Register(IChannelHandlerContext context)
+		public void Register(IChannelHandlerContext context)
 		{
-			SessionManager.RegisteredSessions.Add(context, new Session(context));
+			this._registeredSessions.Add(context, new Session(context));
 		}
 
-		public static Session SessionByContext(IChannelHandlerContext context)
+		public Session SessionByContext(IChannelHandlerContext context)
 		{
-			return SessionManager.RegisteredSessions[context];
+			return this._registeredSessions[context];
 		}
 
-		public static void Remove(IChannelHandlerContext context)
+		public void Remove(IChannelHandlerContext context)
 		{
-			SessionManager.RegisteredSessions.Remove(context);
+			this._registeredSessions.Remove(context);
 		}
 
-		public static void SendWithPermission(IPacketComposer message, string param)
+		public void SendWithPermission(IPacketComposer message, string param)
 		{
-			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.IsDisconnecting && o.Habbo.HasPermission(param)).ToList().ForEach(o => o.Send(message));
+			this._registeredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.IsDisconnecting && o.Habbo.HasPermission(param)).ToList().ForEach(o => o.Send(message));
 		}
 
-		public static void Send(IPacketComposer message)
+		public void Send(IPacketComposer message)
 		{
-			SessionManager.RegisteredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.IsDisconnecting).ToList().ForEach(o => o.Send(message));
+			this._registeredSessions.Values.Where(o => o.Habbo != null && !o.Habbo.IsDisconnecting).ToList().ForEach(o => o.Send(message));
 		}
 	}
 }

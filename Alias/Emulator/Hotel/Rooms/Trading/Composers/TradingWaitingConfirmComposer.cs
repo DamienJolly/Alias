@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 {
     public class TradingWaitingConfirmComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			return new ServerMessage(Outgoing.TradingWaitingConfirmMessageComposer);
+			return new ServerPacket(Outgoing.TradingWaitingConfirmMessageComposer);
 		}
 	}
 }

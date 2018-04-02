@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 {
 	public class TradeAcceptEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			Room room = session.Habbo.CurrentRoom;
 			if (room == null)

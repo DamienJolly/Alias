@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Users.Achievements
 		public static List<AchievementProgress> ReadAchievements(int userId)
 		{
 			List<AchievementProgress> achievements = new List<AchievementProgress>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `progress`, `name` FROM `habbo_achievements` WHERE `user_id` = @id"))
@@ -18,7 +18,7 @@ namespace Alias.Emulator.Hotel.Users.Achievements
 					{
 						AchievementProgress achievement = new AchievementProgress()
 						{
-							Achievement = Alias.GetServer().GetAchievementManager().GetAchievement(Reader.GetString("name")),
+							Achievement = Alias.Server.AchievementManager.GetAchievement(Reader.GetString("name")),
 							Progress    = Reader.GetInt32("progress")
 						};
 						achievements.Add(achievement);
@@ -30,7 +30,7 @@ namespace Alias.Emulator.Hotel.Users.Achievements
 
 		public static void SaveAchievements(AchievementComponent achievement)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				foreach (AchievementProgress ach in achievement.RequestAchievementProgress())
 				{

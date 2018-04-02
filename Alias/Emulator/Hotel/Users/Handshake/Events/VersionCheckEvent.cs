@@ -6,7 +6,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Events
 {
 	public class VersionCheckEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			// not used
 			return;

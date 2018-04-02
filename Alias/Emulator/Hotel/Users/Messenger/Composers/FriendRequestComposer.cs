@@ -13,12 +13,12 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 			this.Request = request;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.FriendRequestMessageComposer);
-			message.Int(this.Request.Id);
-			message.String(this.Request.Username);
-			message.String(this.Request.Look);
+			ServerPacket message = new ServerPacket(Outgoing.FriendRequestMessageComposer);
+			message.WriteInteger(this.Request.Id);
+			message.WriteString(this.Request.Username);
+			message.WriteString(this.Request.Look);
 			return message;
 		}
 	}

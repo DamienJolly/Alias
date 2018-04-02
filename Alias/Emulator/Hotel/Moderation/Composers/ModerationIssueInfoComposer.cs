@@ -13,29 +13,29 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			this.issue = issue;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.ModerationIssueInfoMessageComposer);
-			result.Int(this.issue.Id);
-			result.Int(ModerationTicketStates.GetIntFromState(this.issue.State));
-			result.Int(ModerationTicketTypes.GetIntFromType(this.issue.Type));
-			result.Int(this.issue.Category);
-			result.Int((int)Alias.GetUnixTimestamp() - this.issue.Id);
-			result.Int(this.issue.Priority);
-			result.Int(1); // ??
-			result.Int(this.issue.SenderId);
-			result.String(this.issue.SenderUsername);
-			result.Int(this.issue.ReportedId);
-			result.String(this.issue.ReportedUsername);
-			result.Int(this.issue.ModId);
-			result.String(this.issue.ModUsername);
-			result.String(this.issue.Message + " - AutomaticAlertWord");
-			result.Int(this.issue.RoomId);
-			result.Int(1);
-			result.String("Banned Word");
-			result.Int(0);
-			result.Int(4);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.ModerationIssueInfoMessageComposer);
+			message.WriteInteger(this.issue.Id);
+			message.WriteInteger(ModerationTicketStates.GetIntFromState(this.issue.State));
+			message.WriteInteger(ModerationTicketTypes.GetIntFromType(this.issue.Type));
+			message.WriteInteger(this.issue.Category);
+			message.WriteInteger((int)Alias.GetUnixTimestamp() - this.issue.Id);
+			message.WriteInteger(this.issue.Priority);
+			message.WriteInteger(1); // ??
+			message.WriteInteger(this.issue.SenderId);
+			message.WriteString(this.issue.SenderUsername);
+			message.WriteInteger(this.issue.ReportedId);
+			message.WriteString(this.issue.ReportedUsername);
+			message.WriteInteger(this.issue.ModId);
+			message.WriteString(this.issue.ModUsername);
+			message.WriteString(this.issue.Message + " - AutomaticAlertWord");
+			message.WriteInteger(this.issue.RoomId);
+			message.WriteInteger(1);
+			message.WriteString("Banned Word");
+			message.WriteInteger(0);
+			message.WriteInteger(4);
+			return message;
 		}
 	}
 }

@@ -14,15 +14,15 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 			this.Rank = rank;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.NavigatorEventCategoriesMessageComposer);
-			message.Int(Alias.GetServer().GetNavigatorManager().GetCategories("roomads_view").Where(cat => cat.ExtraId > 0).Count());
-			Alias.GetServer().GetNavigatorManager().GetCategories("roomads_view").Where(cat => cat.ExtraId > 0).ToList().ForEach(category =>
+			ServerPacket message = new ServerPacket(Outgoing.NavigatorEventCategoriesMessageComposer);
+			message.WriteInteger(Alias.Server.NavigatorManager.GetCategories("roomads_view").Where(cat => cat.ExtraId > 0).Count());
+			Alias.Server.NavigatorManager.GetCategories("roomads_view").Where(cat => cat.ExtraId > 0).ToList().ForEach(category =>
 			{
-				message.Int(category.ExtraId);
-				message.String(category.Title);
-				message.Boolean(category.MinRank <= this.Rank);
+				message.WriteInteger(category.ExtraId);
+				message.WriteString(category.Title);
+				message.WriteBoolean(category.MinRank <= this.Rank);
 			});
 			return message;
 		}

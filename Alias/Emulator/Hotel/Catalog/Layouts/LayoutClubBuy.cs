@@ -4,13 +4,13 @@ namespace Alias.Emulator.Hotel.Catalog.Layouts
 {
 	public class LayoutClubBuy : ICatalogLayout
 	{
-		public void Serialize(ServerMessage message, CatalogPage page)
+		public void Serialize(ServerPacket message, CatalogPage page)
 		{
-			message.String("club_buy");
-			message.Int(2);
-			message.String(page.HeaderImage);
-			message.String(page.TeaserImage);
-			message.Int(0);
+			message.WriteString("club_buy");
+			message.WriteInteger(2);
+			message.WriteString(page.HeaderImage);
+			message.WriteString(page.TeaserImage);
+			message.WriteInteger(0);
 		}
 	}
 }

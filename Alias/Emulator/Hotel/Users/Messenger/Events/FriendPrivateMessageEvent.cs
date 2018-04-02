@@ -6,14 +6,14 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
 	public class FriendPrivateMessageEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (session.Habbo.Muted)
 			{
 				return;
 			}
 
-			session.Habbo.Messenger.Message(message.Integer(), message.String());
+			session.Habbo.Messenger.Message(message.PopInt(), message.PopString());
 		}
 	}
 }

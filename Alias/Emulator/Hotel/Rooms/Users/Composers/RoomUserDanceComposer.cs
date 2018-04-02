@@ -15,12 +15,12 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 			this.danceId = danceId;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomUserDanceMessageComposer);
-			result.Int(this.user.VirtualId);
-			result.Int(this.danceId);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomUserDanceMessageComposer);
+			message.WriteInteger(this.user.VirtualId);
+			message.WriteInteger(this.danceId);
+			return message;
 		}
 	}
 }

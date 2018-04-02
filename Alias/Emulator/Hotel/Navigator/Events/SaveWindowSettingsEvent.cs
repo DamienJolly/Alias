@@ -6,14 +6,14 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 {
 	public class SaveWindowSettingsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			session.Habbo.NavigatorPreference.X = message.Integer();
-			session.Habbo.NavigatorPreference.Y = message.Integer();
-			session.Habbo.NavigatorPreference.Width = message.Integer();
-			session.Habbo.NavigatorPreference.Height = message.Integer();
-			session.Habbo.NavigatorPreference.ShowSearches = message.Boolean();
-			session.Habbo.NavigatorPreference.UnknownInt = message.Integer();
+			session.Habbo.NavigatorPreference.X = message.PopInt();
+			session.Habbo.NavigatorPreference.Y = message.PopInt();
+			session.Habbo.NavigatorPreference.Width = message.PopInt();
+			session.Habbo.NavigatorPreference.Height = message.PopInt();
+			session.Habbo.NavigatorPreference.ShowSearches = message.PopBoolean();
+			session.Habbo.NavigatorPreference.UnknownInt = message.PopInt();
 			NavigatorDatabase.SavePreferences(session.Habbo.NavigatorPreference, session.Habbo.Id);
 		}
 	}

@@ -20,36 +20,36 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			this.roomName = roomName;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.ModerationIssueChatlogMessageComposer);
-			result.Int(this.issue.Id);
-			result.Int(this.issue.SenderId);
-			result.Int(this.issue.ReportedId);
-			result.Int(this.issue.RoomId);
+			ServerPacket message = new ServerPacket(Outgoing.ModerationIssueChatlogMessageComposer);
+			message.WriteInteger(this.issue.Id);
+			message.WriteInteger(this.issue.SenderId);
+			message.WriteInteger(this.issue.ReportedId);
+			message.WriteInteger(this.issue.RoomId);
 
-			result.Byte(1); //1 = context, 2 = im session, 3 = forum thread, 4 = forum message, 5 = selfie report, 6 = photo report, 7 =
-			result.Short(2);
-			result.String("roomName");
-			result.Byte(2);
-			result.String(this.roomName);
-			result.String("roomId");
-			result.Byte(1);
-			result.Int(this.issue.RoomId);
+			message.WriteByte(1); //1 = context, 2 = im session, 3 = forum thread, 4 = forum message, 5 = selfie report, 6 = photo report, 7 =
+			message.WriteShort(2);
+			message.WriteString("roomName");
+			message.WriteByte(2);
+			message.WriteString(this.roomName);
+			message.WriteString("roomId");
+			message.WriteByte(1);
+			message.WriteInteger(this.issue.RoomId);
 
-			result.Short(this.chatlog.Count);
+			message.WriteShort(this.chatlog.Count);
 			this.chatlog.ForEach(chatlog =>
 			{
 				DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 				dt = dt.AddSeconds(chatlog.Timestamp).ToLocalTime();
 
-				result.String(dt.ToString("HH:mm"));
-				result.Int(chatlog.UserId);
-				result.String(chatlog.Username);
-				result.String(chatlog.Message);
-				result.Boolean(chatlog.Type == ChatType.SHOUT);
+				message.WriteString(dt.ToString("HH:mm"));
+				message.WriteInteger(chatlog.UserId);
+				message.WriteString(chatlog.Username);
+				message.WriteString(chatlog.Message);
+				message.WriteBoolean(chatlog.Type == ChatType.SHOUT);
 			});
-			return result;
+			return message;
 		}
 	}
 }

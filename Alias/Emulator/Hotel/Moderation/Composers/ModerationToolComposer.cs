@@ -17,63 +17,63 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			this.tickets = tickets;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.ModerationToolMessageComposer);
+			ServerPacket message = new ServerPacket(Outgoing.ModerationToolMessageComposer);
 			if (this.habbo.HasPermission("acc_modtool_ticket_queue"))
 			{
-				result.Int(tickets.Count);
+				message.WriteInteger(tickets.Count);
 				tickets.ForEach(ticket =>
 				{
-					result.Int(ticket.Id);
-					result.Int(ModerationTicketStates.GetIntFromState(ticket.State));
-					result.Int(ModerationTicketTypes.GetIntFromType(ticket.Type));
-					result.Int(ticket.Category);
-					result.Int((int)Alias.GetUnixTimestamp() - ticket.Id);
-					result.Int(ticket.Priority);
-					result.Int(1); // ??
-					result.Int(ticket.SenderId);
-					result.String(ticket.SenderUsername);
-					result.Int(ticket.ReportedId);
-					result.String(ticket.ReportedUsername);
-					result.Int(ticket.ModId);
-					result.String(ticket.ModUsername);
-					result.String(ticket.Message);
-					result.Int(ticket.RoomId);
-					result.Int(0);
+					message.WriteInteger(ticket.Id);
+					message.WriteInteger(ModerationTicketStates.GetIntFromState(ticket.State));
+					message.WriteInteger(ModerationTicketTypes.GetIntFromType(ticket.Type));
+					message.WriteInteger(ticket.Category);
+					message.WriteInteger((int)Alias.GetUnixTimestamp() - ticket.Id);
+					message.WriteInteger(ticket.Priority);
+					message.WriteInteger(1); // ??
+					message.WriteInteger(ticket.SenderId);
+					message.WriteString(ticket.SenderUsername);
+					message.WriteInteger(ticket.ReportedId);
+					message.WriteString(ticket.ReportedUsername);
+					message.WriteInteger(ticket.ModId);
+					message.WriteString(ticket.ModUsername);
+					message.WriteString(ticket.Message);
+					message.WriteInteger(ticket.RoomId);
+					message.WriteInteger(0);
 				});
 			}
 			else
 			{
-				result.Int(0);
+				message.WriteInteger(0);
 			}
 
-			result.Int(Alias.GetServer().GetModerationManager().GetPresets("user").Count);
-			Alias.GetServer().GetModerationManager().GetPresets("user").ForEach(preset =>
+			message.WriteInteger(Alias.Server.ModerationManager.GetPresets("user").Count);
+			Alias.Server.ModerationManager.GetPresets("user").ForEach(preset =>
 			{
-				result.String(preset.Data);
+				message.WriteString(preset.Data);
 			});
 
-			result.Int(Alias.GetServer().GetModerationManager().GetPresets("category").Count);
-			Alias.GetServer().GetModerationManager().GetPresets("category").ForEach(preset =>
+			message.WriteInteger(Alias.Server.ModerationManager.GetPresets("category").Count);
+			Alias.Server.ModerationManager.GetPresets("category").ForEach(preset =>
 			{
-				result.String(preset.Data);
+				message.WriteString(preset.Data);
 			});
 
-			result.Boolean(this.habbo.HasPermission("acc_modtool_ticket_queue")); //ticket queue
-			result.Boolean(this.habbo.HasPermission("acc_modtool_user_logs")); //user chatlogs
-			result.Boolean(this.habbo.HasPermission("acc_modtool_user_alert")); //can send caution
-			result.Boolean(this.habbo.HasPermission("acc_modtool_user_kick")); //can send kick
-			result.Boolean(this.habbo.HasPermission("acc_modtool_user_ban")); //can send ban
-			result.Boolean(this.habbo.HasPermission("acc_modtool_room_info")); //room info ??Not sure
-			result.Boolean(this.habbo.HasPermission("acc_modtool_room_logs")); //room chatlogs ??Not sure
+			message.WriteBoolean(this.habbo.HasPermission("acc_modtool_ticket_queue")); //ticket queue
+			message.WriteBoolean(this.habbo.HasPermission("acc_modtool_user_logs")); //user chatlogs
+			message.WriteBoolean(this.habbo.HasPermission("acc_modtool_user_alert")); //can send caution
+			message.WriteBoolean(this.habbo.HasPermission("acc_modtool_user_kick")); //can send kick
+			message.WriteBoolean(this.habbo.HasPermission("acc_modtool_user_ban")); //can send ban
+			message.WriteBoolean(this.habbo.HasPermission("acc_modtool_room_info")); //room info ??Not sure
+			message.WriteBoolean(this.habbo.HasPermission("acc_modtool_room_logs")); //room chatlogs ??Not sure
 
-			result.Int(Alias.GetServer().GetModerationManager().GetPresets("room").Count);
-			Alias.GetServer().GetModerationManager().GetPresets("room").ForEach(preset =>
+			message.WriteInteger(Alias.Server.ModerationManager.GetPresets("room").Count);
+			Alias.Server.ModerationManager.GetPresets("room").ForEach(preset =>
 			{
-				result.String(preset.Data);
+				message.WriteString(preset.Data);
 			});
-			return result;
+			return message;
 		}
 	}
 }

@@ -7,35 +7,35 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 {
     public class ModerationCloseTicketEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (!session.Habbo.HasPermission("acc_modtool_ticket_queue"))
 			{
 				return;
 			}
 
-			int state = message.Integer();
-			message.Integer();
+			int state = message.PopInt();
+			message.PopInt();
 
-			int ticketId = message.Integer();
+			int ticketId = message.PopInt();
 			if (ticketId <= 0)
 			{
 				return;
 			}
 
-			ModerationTicket issue = Alias.GetServer().GetModerationManager().GetTicket(ticketId);
+			ModerationTicket issue = Alias.Server.ModerationManager.GetTicket(ticketId);
 			if (issue == null || issue.ModId != session.Habbo.Id)
 			{
 				return;
 			}
 
-			Habbo habbo = SessionManager.HabboById(issue.SenderId);
+			Habbo habbo = Alias.Server.SocketServer.SessionManager.HabboById(issue.SenderId);
 			if (habbo == null)
 			{
 				return;
 			}
 
-			Alias.GetServer().GetModerationManager().ResolveTicket(issue, habbo, state);
+			Alias.Server.ModerationManager.ResolveTicket(issue, habbo, state);
 		}
 	}
 }

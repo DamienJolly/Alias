@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Landing.Composers
 {
 	public class HotelViewComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			return new ServerMessage(Outgoing.HotelViewMessageComposer);
+			return new ServerPacket(Outgoing.HotelViewMessageComposer);
 		}
 	}
 }

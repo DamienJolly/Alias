@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 {
 	public class RequestPromotedRoomsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			session.Send(new PrivateRoomsComposer()); //todo:
 		}

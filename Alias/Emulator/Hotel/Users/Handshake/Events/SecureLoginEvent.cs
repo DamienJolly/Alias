@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Events
 {
 	public class SecureLoginEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			Handshake.OnLogin(message.String(), session);
+			Handshake.OnLogin(message.PopString(), session);
 		}
 	}
 }

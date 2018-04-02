@@ -6,7 +6,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
 	public class RequestFriendsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			//
 		}

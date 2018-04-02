@@ -15,12 +15,12 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.val = v;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomPaintMessageComposer);
-			result.String(this.type);
-			result.String(this.val);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomPaintMessageComposer);
+			message.WriteString(this.type);
+			message.WriteString(this.val);
+			return message;
 		}
 	}
 }

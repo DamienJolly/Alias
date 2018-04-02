@@ -5,7 +5,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 {
 	public interface IWiredInteractor
 	{
-		void Serialize(ServerMessage message);
+		void Serialize(ServerPacket message);
 		void LoadBox(RoomItem item);
 		void OnTrigger(RoomUser target = null);
 		void OnCycle();

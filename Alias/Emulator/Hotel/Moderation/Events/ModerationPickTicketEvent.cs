@@ -8,21 +8,21 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 {
     public class ModerationPickTicketEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (!session.Habbo.HasPermission("acc_modtool_ticket_queue"))
 			{
 				return;
 			}
 
-			message.Integer();
-			int ticketId = message.Integer();
+			message.PopInt();
+			int ticketId = message.PopInt();
 			if (ticketId <= 0)
 			{
 				return;
 			}
 
-			ModerationTicket issue = Alias.GetServer().GetModerationManager().GetTicket(ticketId);
+			ModerationTicket issue = Alias.Server.ModerationManager.GetTicket(ticketId);
 			if (issue == null)
 			{
 				session.Send(new GenericAlertComposer("Picking issue failed: \rTicket already picked or does not exist!", session));
@@ -36,7 +36,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			Alias.GetServer().GetModerationManager().PickTicket(issue, session.Habbo);
+			Alias.Server.ModerationManager.PickTicket(issue, session.Habbo);
 		}
 	}
 }

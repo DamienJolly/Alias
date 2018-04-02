@@ -12,7 +12,7 @@ namespace Alias.Emulator.Hotel.Moderation
 		public static List<ModerationTicket> ReadTickets()
 		{
 			List<ModerationTicket> tickets = new List<ModerationTicket>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `support_tickets` WHERE `state` != 0"))
 				{
@@ -55,7 +55,7 @@ namespace Alias.Emulator.Hotel.Moderation
 		public static List<ModerationPresets> ReadPresets()
 		{
 			List<ModerationPresets> presets = new List<ModerationPresets>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `type`, `preset` FROM `support_presets`"))
 				{
@@ -76,7 +76,7 @@ namespace Alias.Emulator.Hotel.Moderation
 		public static List<ModerationChatlog> ReadRoomChatlogs(int roomId)
 		{
 			List<ModerationChatlog> chatlogs = new List<ModerationChatlog>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("roomId", roomId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `chatlogs` WHERE `room_id` = @roomId ORDER BY `timestamp` DESC LIMIT 150"))
@@ -104,7 +104,7 @@ namespace Alias.Emulator.Hotel.Moderation
 		public static List<ModerationChatlog> ReadUserChatlogs(int senderId, int targetId)
 		{
 			List<ModerationChatlog> chatlogs = new List<ModerationChatlog>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("senderId", senderId);
 				dbClient.AddParameter("targetId", targetId);

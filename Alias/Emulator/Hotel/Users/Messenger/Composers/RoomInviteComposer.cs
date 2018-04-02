@@ -15,11 +15,11 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 			this.Message = message;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.RoomInviteMessageComposer);
-			message.Int(this.Sender);
-			message.String(this.Message);
+			ServerPacket message = new ServerPacket(Outgoing.RoomInviteMessageComposer);
+			message.WriteInteger(this.Sender);
+			message.WriteString(this.Message);
 			return message;
 		}
 	}

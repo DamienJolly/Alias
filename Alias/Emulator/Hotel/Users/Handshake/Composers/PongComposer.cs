@@ -13,11 +13,11 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Composers
 			this.id = id;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.PongMessageComposer);
-			result.Int(this.id);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.PongMessageComposer);
+			message.WriteInteger(this.id);
+			return message;
 		}
 	}
 }

@@ -16,12 +16,12 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.habbo = h;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomEntryInfoMessageComposer);
-			result.Int(this.room.Id);
-			result.Boolean(this.room.RoomRights.HasRights(this.habbo.Id));
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomEntryInfoMessageComposer);
+			message.WriteInteger(this.room.Id);
+			message.WriteBoolean(this.room.RoomRights.HasRights(this.habbo.Id));
+			return message;
 		}
 	}
 }

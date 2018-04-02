@@ -13,15 +13,15 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.roomData = roomData;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomChatSettingsMessageComposer);
-			result.Int(this.roomData.Settings.ChatMode);
-			result.Int(this.roomData.Settings.ChatSize);
-			result.Int(this.roomData.Settings.ChatSpeed);
-			result.Int(this.roomData.Settings.ChatDistance);
-			result.Int(this.roomData.Settings.ChatFlood);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomChatSettingsMessageComposer);
+			message.WriteInteger(this.roomData.Settings.ChatMode);
+			message.WriteInteger(this.roomData.Settings.ChatSize);
+			message.WriteInteger(this.roomData.Settings.ChatSpeed);
+			message.WriteInteger(this.roomData.Settings.ChatDistance);
+			message.WriteInteger(this.roomData.Settings.ChatFlood);
+			return message;
 		}
 	}
 }

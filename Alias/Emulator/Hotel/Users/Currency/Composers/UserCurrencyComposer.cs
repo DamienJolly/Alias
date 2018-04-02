@@ -13,16 +13,16 @@ namespace Alias.Emulator.Hotel.Users.Currency.Composers
 			this.habbo = habbo;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.UserCurrencyMessageComposer);
-			result.Int(habbo.Currency.RequestCurrencies().Count);
+			ServerPacket message = new ServerPacket(Outgoing.UserCurrencyMessageComposer);
+			message.WriteInteger(habbo.Currency.RequestCurrencies().Count);
 			habbo.Currency.RequestCurrencies().ForEach(currency =>
 			{
-				result.Int(currency.Type);
-				result.Int(currency.Amount);
+				message.WriteInteger(currency.Type);
+				message.WriteInteger(currency.Amount);
 			});
-			return result;
+			return message;
 		}
 	}
 }

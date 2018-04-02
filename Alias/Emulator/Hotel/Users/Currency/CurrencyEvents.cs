@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Users.Currency
 	{
 		public static void Register()
 		{
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestUserCreditsMessageEvent, new RequestUserCreditsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestUserCreditsMessageEvent, new RequestUserCreditsEvent());
 		}
 	}
 }

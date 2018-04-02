@@ -12,7 +12,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
 	public class RedeemItemEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
@@ -20,7 +20,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 			
-			int itemId = message.Integer();
+			int itemId = message.PopInt();
 			RoomItem rItem = room.ItemManager.GetItem(itemId);
 			if (rItem == null || rItem.Owner != session.Habbo.Id)
 			{

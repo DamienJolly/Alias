@@ -6,7 +6,7 @@ namespace Alias.Emulator.Hotel.Users.Events
 {
 	public class UsernameEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			//todo: daily login achivements ext
 		}

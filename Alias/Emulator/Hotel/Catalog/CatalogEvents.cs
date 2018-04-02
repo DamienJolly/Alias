@@ -7,11 +7,11 @@ namespace Alias.Emulator.Hotel.Catalog
     {
 		public static void Register()
 		{
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestCatalogIndexMessageEvent, new RequestCatalogIndexEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestCatalogModeMessageEvent, new RequestCatalogModeEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestCatalogPageMessageEvent, new RequestCatalogPageEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestDiscountMessageEvent, new RequestDiscountEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.CatalogBuyItemMessageEvent, new CatalogBuyItemEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestCatalogIndexMessageEvent, new RequestCatalogIndexEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestCatalogModeMessageEvent, new RequestCatalogModeEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestCatalogPageMessageEvent, new RequestCatalogPageEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestDiscountMessageEvent, new RequestDiscountEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.CatalogBuyItemMessageEvent, new CatalogBuyItemEvent());
 		}
 	}
 }

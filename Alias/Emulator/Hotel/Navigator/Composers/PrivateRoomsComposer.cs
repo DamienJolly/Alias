@@ -6,24 +6,24 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 {
 	public class PrivateRoomsComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.PrivateRoomsMessageComposer);
-			result.Int(2);
-			result.String("");
-			result.Int(0);
-			result.Boolean(true);
-			result.Int(0);
-			result.String("A");
-			result.String("B");
-			result.Int(1);
-			result.String("C");
-			result.String("D");
-			result.Int(1);
-			result.Int(1);
-			result.Int(1);
-			result.String("E");
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.PrivateRoomsMessageComposer);
+			message.WriteInteger(2);
+			message.WriteString("");
+			message.WriteInteger(0);
+			message.WriteBoolean(true);
+			message.WriteInteger(0);
+			message.WriteString("A");
+			message.WriteString("B");
+			message.WriteInteger(1);
+			message.WriteString("C");
+			message.WriteString("D");
+			message.WriteInteger(1);
+			message.WriteInteger(1);
+			message.WriteInteger(1);
+			message.WriteString("E");
+			return message;
 		}
 	}
 }

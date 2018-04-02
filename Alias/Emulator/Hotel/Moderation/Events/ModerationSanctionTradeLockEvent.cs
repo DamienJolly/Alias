@@ -6,14 +6,14 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 {
     public class ModerationSanctionTradeLockEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (!session.Habbo.HasPermission("acc_modtool_user_alert"))
 			{
 				return;
 			}
 
-			int userId = message.Integer();
+			int userId = message.PopInt();
 			if (userId <= 0)
 			{
 				return;

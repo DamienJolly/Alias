@@ -7,14 +7,14 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 {
 	public class CatalogBuyItemEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			int pageId = message.Integer();
-			int itemId = message.Integer();
-			string extraData = message.String();
-			int count = message.Integer();
+			int pageId = message.PopInt();
+			int itemId = message.PopInt();
+			string extraData = message.PopString();
+			int count = message.PopInt();
 
-			CatalogPage page = Alias.GetServer().GetCatalogManager().GetCatalogPage(pageId);
+			CatalogPage page = Alias.Server.CatalogManager.GetCatalogPage(pageId);
 			if (page == null)
 			{
 				session.Send(new AlertPurchaseFailedComposer(AlertPurchaseFailedComposer.SERVER_ERROR));
@@ -29,7 +29,7 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 
 			CatalogItem item = page.GetCatalogItem(itemId);
 
-			Alias.GetServer().GetCatalogManager().PurchaseItem(page, item, session.Habbo, count, extraData);
+			Alias.Server.CatalogManager.PurchaseItem(page, item, session.Habbo, count, extraData);
 		}
 	}
 }

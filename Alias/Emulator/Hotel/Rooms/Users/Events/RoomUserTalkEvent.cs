@@ -8,13 +8,13 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 {
 	public class RoomUserTalkEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (session.Habbo != null && session.Habbo.CurrentRoom != null)
 			{
-				string text = message.String();
+				string text = message.PopString();
 				RoomUser target = null;
-				if (GetChatType(message.Id) == ChatType.WHISPER)
+				if (GetChatType(message.Header) == ChatType.WHISPER)
 				{
 					target = session.Habbo.CurrentRoom.UserManager.UserByName(text.Split(' ')[0]);
 					if (target == null || target.Habbo.CurrentRoom == null)
@@ -26,7 +26,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 				}
 
 				RoomUser usr = session.Habbo.CurrentRoom.UserManager.UserBySession(session);
-				usr.OnChat(text, message.Integer(), GetChatType(message.Id), target);
+				usr.OnChat(text, message.PopInt(), GetChatType(message.Header), target);
 			}
 		}
 

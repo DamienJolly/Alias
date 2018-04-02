@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Landing.Events
 {
 	public class HotelViewRequestBonusRareEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			session.Send(new BonusRareComposer());
 		}

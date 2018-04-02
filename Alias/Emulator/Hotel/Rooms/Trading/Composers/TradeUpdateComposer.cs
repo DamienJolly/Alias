@@ -13,36 +13,36 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 			this.roomTrade = roomTrade;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.TradeUpdateMessageComposer);
+			ServerPacket message = new ServerPacket(Outgoing.TradeUpdateMessageComposer);
 			roomTrade.Users.ForEach(user =>
 			{
-				result.Int(user.User.Habbo.Id);
-				result.Int(user.OfferedItems.Count);
+				message.WriteInteger(user.User.Habbo.Id);
+				message.WriteInteger(user.OfferedItems.Count);
 				user.OfferedItems.ForEach(item =>
 				{
-					result.Int(item.Id);
-					result.String(item.ItemData.Type.ToUpper());
-					result.Int(item.Id);
-					result.Int(item.ItemData.SpriteId);
-					result.Int(0);
-					result.Boolean(true); //can stack
-					result.Int(0); //todo: extradata
-					result.String(item.ItemData.ExtraData);
-					result.Int(0); //rent shit v
-					result.Int(0);
-					result.Int(0);
+					message.WriteInteger(item.Id);
+					message.WriteString(item.ItemData.Type.ToUpper());
+					message.WriteInteger(item.Id);
+					message.WriteInteger(item.ItemData.SpriteId);
+					message.WriteInteger(0);
+					message.WriteBoolean(true); //can stack
+					message.WriteInteger(0); //todo: extradata
+					message.WriteString(item.ItemData.ExtraData);
+					message.WriteInteger(0); //rent shit v
+					message.WriteInteger(0);
+					message.WriteInteger(0);
 
 					if (item.ItemData.Type.ToUpper() == "S")
 					{
-						result.Int(0);
+						message.WriteInteger(0);
 					}
 				});
-				result.Int(user.OfferedItems.Count);
-				result.Int(0); // todo: exchange items value
+				message.WriteInteger(user.OfferedItems.Count);
+				message.WriteInteger(0); // todo: exchange items value
 			});
-			return result;
+			return message;
 		}
 	}
 }

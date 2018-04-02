@@ -20,45 +20,45 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.session = s;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.RoomDataMessageComposer);
-			message.Boolean(this.Loading);
-			message.Int(this.Data.Id);
-			message.String(this.Data.Name);
-			message.Int(this.Data.OwnerId);
-			message.String(this.Data.OwnerName);
-			message.Int(Alias.GetServer().GetRoomManager().DoorToInt(this.Data.DoorState));
-			message.Int(this.Data.UsersNow);
-			message.Int(this.Data.MaxUsers);
-			message.String(this.Data.Description);
-			message.Int(Alias.GetServer().GetRoomManager().TradeToInt(this.Data.TradeState));
-			message.Int(this.Data.Likes.Count);
-			message.Int(0);
-			message.Int(this.Data.Category);
-			message.Int(this.Data.Tags.Count);
-			this.Data.Tags.ForEach(tag => message.String(tag));
-			message.Int(this.Data.EnumType);
+			ServerPacket message = new ServerPacket(Outgoing.RoomDataMessageComposer);
+			message.WriteBoolean(this.Loading);
+			message.WriteInteger(this.Data.Id);
+			message.WriteString(this.Data.Name);
+			message.WriteInteger(this.Data.OwnerId);
+			message.WriteString(this.Data.OwnerName);
+			message.WriteInteger(Alias.Server.RoomManager.DoorToInt(this.Data.DoorState));
+			message.WriteInteger(this.Data.UsersNow);
+			message.WriteInteger(this.Data.MaxUsers);
+			message.WriteString(this.Data.Description);
+			message.WriteInteger(Alias.Server.RoomManager.TradeToInt(this.Data.TradeState));
+			message.WriteInteger(this.Data.Likes.Count);
+			message.WriteInteger(0);
+			message.WriteInteger(this.Data.Category);
+			message.WriteInteger(this.Data.Tags.Count);
+			this.Data.Tags.ForEach(tag => message.WriteString(tag));
+			message.WriteInteger(this.Data.EnumType);
 			if (this.Data.Image.Length > 0)
 			{
-				message.String(this.Data.Image);
+				message.WriteString(this.Data.Image);
 			}
 			//62 -> group & promo // Id name badge // name description minutesleft
 			//58 -> group // Id Name Badge
 			//60 -> promo // name description minutesleft
-			message.Boolean(this.Entry);
-			message.Boolean(false); // staff picked
-			message.Boolean(true); // public room
-			message.Boolean(false); // is muted
-			message.Int(this.Data.Settings.WhoMutes);
-			message.Int(this.Data.Settings.WhoKicks);
-			message.Int(this.Data.Settings.WhoBans);
-			message.Boolean(session.Habbo.Id == this.Data.OwnerId);
-			message.Int(this.Data.Settings.ChatMode);
-			message.Int(this.Data.Settings.ChatSize);
-			message.Int(this.Data.Settings.ChatSpeed);
-			message.Int(this.Data.Settings.ChatDistance);
-			message.Int(this.Data.Settings.ChatFlood);
+			message.WriteBoolean(this.Entry);
+			message.WriteBoolean(false); // staff picked
+			message.WriteBoolean(true); // public room
+			message.WriteBoolean(false); // is muted
+			message.WriteInteger(this.Data.Settings.WhoMutes);
+			message.WriteInteger(this.Data.Settings.WhoKicks);
+			message.WriteInteger(this.Data.Settings.WhoBans);
+			message.WriteBoolean(session.Habbo.Id == this.Data.OwnerId);
+			message.WriteInteger(this.Data.Settings.ChatMode);
+			message.WriteInteger(this.Data.Settings.ChatSize);
+			message.WriteInteger(this.Data.Settings.ChatSpeed);
+			message.WriteInteger(this.Data.Settings.ChatDistance);
+			message.WriteInteger(this.Data.Settings.ChatFlood);
 			return message;
 		}
 	}

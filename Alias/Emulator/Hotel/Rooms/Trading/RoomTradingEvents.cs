@@ -7,14 +7,14 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
     {
 		public static void Register()
 		{
-			Alias.GetServer().GetPacketManager().Register(Incoming.TradeStartMessageEvent, new TradeStartEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.TradeOfferItemMessageEvent, new TradeOfferItemEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.TradeOfferMultipleItemsMessageEvent, new TradeOfferMultipleItemsEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.TradeCancelOfferItemMessageEvent, new TradeCancelOfferItemEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.TradeAcceptMessageEvent, new TradeAcceptEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.TradeUnAcceptMessageEvent, new TradeUnAcceptEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.TradeConfirmMessageEvent, new TradeConfirmEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.TradeCloseMessageEvent, new TradeCloseEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.TradeStartMessageEvent, new TradeStartEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.TradeOfferItemMessageEvent, new TradeOfferItemEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.TradeOfferMultipleItemsMessageEvent, new TradeOfferMultipleItemsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.TradeCancelOfferItemMessageEvent, new TradeCancelOfferItemEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.TradeAcceptMessageEvent, new TradeAcceptEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.TradeUnAcceptMessageEvent, new TradeUnAcceptEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.TradeConfirmMessageEvent, new TradeConfirmEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.TradeCloseMessageEvent, new TradeCloseEvent());
 		}
 	}
 }

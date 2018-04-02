@@ -13,13 +13,13 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Composers
 			this.room = r;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomRelativeMapMessageComposer);
+			ServerPacket message = new ServerPacket(Outgoing.RoomRelativeMapMessageComposer);
 			string[] split = this.room.Model.Map.Replace("\n", "").Split('\r');
 
-			result.Int(split[0].Length);
-			result.Int((split.Length) * split[0].Length);
+			message.WriteInteger(split[0].Length);
+			message.WriteInteger((split.Length) * split[0].Length);
 			for (int y = 0; y < split.Length; y++)
 			{
 				for (int x = 0; x < split[0].Length; x++)
@@ -27,15 +27,15 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Composers
 					char position = split[y][x];
 					if (position == 'x')
 					{
-						result.Short(-1);
+						message.WriteShort(-1);
 					}
 					else
 					{
-						result.Short((int)Alias.ParseChar(position) * 256);
+						message.WriteShort((int)Alias.ParseChar(position) * 256);
 					}
 				}
 			}
-			return result;
+			return message;
 		}
 	}
 }

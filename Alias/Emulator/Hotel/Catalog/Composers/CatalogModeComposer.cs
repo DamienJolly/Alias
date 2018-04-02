@@ -13,11 +13,11 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 			this.mode = mode;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.CatalogModeMessageComposer);
-			result.Int(this.mode);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.CatalogModeMessageComposer);
+			message.WriteInteger(this.mode);
+			return message;
 		}
 	}
 }

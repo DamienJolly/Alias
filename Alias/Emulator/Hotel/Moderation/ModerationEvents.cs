@@ -7,25 +7,25 @@ namespace Alias.Emulator.Hotel.Moderation
     {
 		public static void Register()
 		{
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationAlertMessageEvent, new ModerationAlertEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationRequestUserInfoMessageEvent, new ModerationRequestUserInfoEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationRequestRoomInfoMessageEvent, new ModerationRequestRoomInfoEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationRequestRoomVisitsMessageEvent, new ModerationRequestRoomVisitsEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationRequestRoomChatlogMessageEvent, new ModerationRequestRoomChatlogEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationChangeRoomSettingsMessageEvent, new ModerationChangeRoomSettingsEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationRequestUserChatlogMessageEvent, new ModerationRequestUserChatlogEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationKickMessageEvent, new ModerationKickEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationPickTicketMessageEvent, new ModerationPickTicketEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationReleaseTicketMessageEvent, new ModerationReleaseTicketEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationCloseTicketMessageEvent, new ModerationCloseTicketEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationRoomAlertMessageEvent, new ModerationRoomAlertEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationRequestIssueChatlogMessageEvent, new ModerationRequestIssueChatlogEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationAlertMessageEvent, new ModerationAlertEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationRequestUserInfoMessageEvent, new ModerationRequestUserInfoEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationRequestRoomInfoMessageEvent, new ModerationRequestRoomInfoEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationRequestRoomVisitsMessageEvent, new ModerationRequestRoomVisitsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationRequestRoomChatlogMessageEvent, new ModerationRequestRoomChatlogEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationChangeRoomSettingsMessageEvent, new ModerationChangeRoomSettingsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationRequestUserChatlogMessageEvent, new ModerationRequestUserChatlogEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationKickMessageEvent, new ModerationKickEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationPickTicketMessageEvent, new ModerationPickTicketEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationReleaseTicketMessageEvent, new ModerationReleaseTicketEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationCloseTicketMessageEvent, new ModerationCloseTicketEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationRoomAlertMessageEvent, new ModerationRoomAlertEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationRequestIssueChatlogMessageEvent, new ModerationRequestIssueChatlogEvent());
 
 			//sanction shit
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationSanctionAlertMessageEvent, new ModerationSanctionAlertEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationSanctionMuteMessageEvent, new ModerationSanctionMuteEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationSanctionBanMessageEvent, new ModerationSanctionBanEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ModerationSanctionTradeLockMessageEvent, new ModerationSanctionTradeLockEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationSanctionAlertMessageEvent, new ModerationSanctionAlertEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationSanctionMuteMessageEvent, new ModerationSanctionMuteEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationSanctionBanMessageEvent, new ModerationSanctionBanEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ModerationSanctionTradeLockMessageEvent, new ModerationSanctionTradeLockEvent());
 		}
 	}
 }

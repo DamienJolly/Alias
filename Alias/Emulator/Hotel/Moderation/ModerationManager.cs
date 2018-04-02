@@ -46,7 +46,7 @@ namespace Alias.Emulator.Hotel.Moderation
 		{
 			//todo: add to db
 			this._modTickets.Add(issue);
-			SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
+			Alias.Server.SocketServer.SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
 		}
 
 		public List<ModerationChatlog> GetRoomChatlog(int roomId)
@@ -61,7 +61,7 @@ namespace Alias.Emulator.Hotel.Moderation
 
 		public void BanUser(int targetUserId, Session moderator, string reason, int duration, ModerationBanType type, int topic)
 		{
-			Habbo target = SessionManager.HabboById(targetUserId);
+			Habbo target = Alias.Server.SocketServer.SessionManager.HabboById(targetUserId);
 			if (target.Rank >= moderator.Habbo.Rank)
 			{
 				return;
@@ -91,7 +91,7 @@ namespace Alias.Emulator.Hotel.Moderation
 			issue.State       = ModerationTicketState.PICKED;
 
 			//todo: update in db
-			SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
+			Alias.Server.SocketServer.SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
 		}
 
 		public void ReleaseTicket(ModerationTicket issue)
@@ -101,7 +101,7 @@ namespace Alias.Emulator.Hotel.Moderation
 			issue.State       = ModerationTicketState.OPEN;
 
 			//todo: update in db
-			SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
+			Alias.Server.SocketServer.SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
 		}
 
 		public void ResolveTicket(ModerationTicket issue, Habbo sender, int state)
@@ -126,7 +126,7 @@ namespace Alias.Emulator.Hotel.Moderation
 				}
 			}
 
-			SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
+			Alias.Server.SocketServer.SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
 			RemoveTicket(issue);
 		}
 

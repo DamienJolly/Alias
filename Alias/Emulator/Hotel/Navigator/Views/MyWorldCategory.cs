@@ -20,7 +20,7 @@ namespace Alias.Emulator.Hotel.Navigator.Views
 					{
 						RoomDatabase.UserRooms(session.Habbo.Id).ForEach(Id =>
 						{
-							result.Add(Alias.GetServer().GetRoomManager().RoomData(Id));
+							result.Add(Alias.Server.RoomManager.RoomData(Id));
 						});
 						return result.Where(room => room.Name.ToLower().Contains(query)).ToList();
 					}

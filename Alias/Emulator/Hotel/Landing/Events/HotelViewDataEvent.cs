@@ -7,11 +7,11 @@ namespace Alias.Emulator.Hotel.Landing.Events
 {
 	public class HotelViewDataEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			try
 			{
-				string data = message.String();
+				string data = message.PopString();
 				if (data.Contains(";"))
 				{
 					string[] d = data.Split(';');

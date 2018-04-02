@@ -7,9 +7,9 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
 	public class SearchUserEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			string username = message.String().Replace(" ", "");
+			string username = message.PopString().Replace(" ", "");
 
 			if (string.IsNullOrEmpty(username))
 			{

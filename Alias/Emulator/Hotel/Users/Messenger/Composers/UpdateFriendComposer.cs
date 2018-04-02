@@ -20,35 +20,35 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 			this.friendId = friendId;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.UpdateFriendMessageComposer);
+			ServerPacket message = new ServerPacket(Outgoing.UpdateFriendMessageComposer);
 			if (this.friendId > 0)
 			{
-				message.Int(0);
-				message.Int(1);
-				message.Int(-1);
-				message.Int(this.friendId);
+				message.WriteInteger(0);
+				message.WriteInteger(1);
+				message.WriteInteger(-1);
+				message.WriteInteger(this.friendId);
 			}
 			else
 			{
-				message.Int(0);
-				message.Int(1);
-				message.Int(0);
-				message.Int(this.friend.Id);
-				message.String(this.friend.Username);
-				message.Int(1); //Gender???
-				message.Boolean(SessionManager.IsOnline(this.friend.Id));
-				message.Boolean(this.friend.InRoom);
-				message.String(this.friend.Look);
-				message.Int(0); //category id
-				message.String(this.friend.Motto);
-				message.String("");
-				message.String("");
-				message.Boolean(true);
-				message.Boolean(false);
-				message.Boolean(false);
-				message.Short(this.friend.Relation);
+				message.WriteInteger(0);
+				message.WriteInteger(1);
+				message.WriteInteger(0);
+				message.WriteInteger(this.friend.Id);
+				message.WriteString(this.friend.Username);
+				message.WriteInteger(1); //Gender???
+				message.WriteBoolean(Alias.Server.SocketServer.SessionManager.IsOnline(this.friend.Id));
+				message.WriteBoolean(this.friend.InRoom);
+				message.WriteString(this.friend.Look);
+				message.WriteInteger(0); //category id
+				message.WriteString(this.friend.Motto);
+				message.WriteString("");
+				message.WriteString("");
+				message.WriteBoolean(true);
+				message.WriteBoolean(false);
+				message.WriteBoolean(false);
+				message.WriteShort(this.friend.Relation);
 			}
 			return message;
 		}

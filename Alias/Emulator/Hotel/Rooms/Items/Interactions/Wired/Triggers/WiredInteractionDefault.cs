@@ -5,7 +5,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 {
 	public class WiredInteractionDefault : IWiredInteractor
 	{
-		public void Serialize(ServerMessage message)
+		public void Serialize(ServerPacket message)
 		{
 
 		}

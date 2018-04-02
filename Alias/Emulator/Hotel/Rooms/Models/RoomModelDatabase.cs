@@ -10,7 +10,7 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 		public static List<RoomModel> Models()
 		{
 			List<RoomModel> result = new List<RoomModel>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `room_models`"))
 				{

@@ -12,10 +12,10 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
 	public class FindNewFriendsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			Random rnd = new Random();
-			List<Room> rooms = Alias.GetServer().GetRoomManager().ReadLoadedRooms().OrderBy(a => rnd.Next()).ToList();
+			List<Room> rooms = Alias.Server.RoomManager.ReadLoadedRooms().OrderBy(a => rnd.Next()).ToList();
 
 			foreach (Room room in rooms)
 			{

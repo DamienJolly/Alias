@@ -15,48 +15,48 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 		public CatalogPagesListComposer(Habbo habbo, string MODE)
 		{
 			Habbo = habbo;
-			this.Pages = Alias.GetServer().GetCatalogManager().GetCatalogPages(-1, habbo);
+			this.Pages = Alias.Server.CatalogManager.GetCatalogPages(-1, habbo);
 			this.MODE = MODE;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.CatalogPagesListMessageComposer);
-			message.Boolean(true);
-			message.Int(0);
-			message.Int(-1);
-			message.String("root");
-			message.String("");
-			message.Int(0);
+			ServerPacket message = new ServerPacket(Outgoing.CatalogPagesListMessageComposer);
+			message.WriteBoolean(true);
+			message.WriteInteger(0);
+			message.WriteInteger(-1);
+			message.WriteString("root");
+			message.WriteString("");
+			message.WriteInteger(0);
 
-			message.Int(Pages.Count);
+			message.WriteInteger(Pages.Count);
 			Pages.ForEach(page =>
 			{
 				Append(message, page);
 			});
 
-			message.Boolean(false);
-			message.String(this.MODE);
+			message.WriteBoolean(false);
+			message.WriteString(this.MODE);
 			return message;
 		}
 
-		private void Append(ServerMessage message, CatalogPage catalogPage)
+		private void Append(ServerPacket message, CatalogPage catalogPage)
 		{
-			List<CatalogPage> Pages = Alias.GetServer().GetCatalogManager().GetCatalogPages(catalogPage.Id, Habbo);
+			List<CatalogPage> Pages = Alias.Server.CatalogManager.GetCatalogPages(catalogPage.Id, Habbo);
 
-			message.Boolean(catalogPage.Visible);
-			message.Int(catalogPage.Icon);
-			message.Int(catalogPage.Enabled ? catalogPage.Id : -1);
-			message.String(catalogPage.Name);
-			message.String(catalogPage.Caption + " (" + catalogPage.Id + ")");
+			message.WriteBoolean(catalogPage.Visible);
+			message.WriteInteger(catalogPage.Icon);
+			message.WriteInteger(catalogPage.Enabled ? catalogPage.Id : -1);
+			message.WriteString(catalogPage.Name);
+			message.WriteString(catalogPage.Caption + " (" + catalogPage.Id + ")");
 
-			message.Int(catalogPage.OfferIds.Count);
+			message.WriteInteger(catalogPage.OfferIds.Count);
 			catalogPage.OfferIds.ForEach(id =>
 			{
-				message.Int(id);
+				message.WriteInteger(id);
 			});
 
-			message.Int(Pages.Count);
+			message.WriteInteger(Pages.Count);
 			Pages.ForEach(page =>
 			{
 				Append(message, page);

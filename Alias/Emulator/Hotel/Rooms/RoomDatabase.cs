@@ -10,7 +10,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		public static RoomData RoomData(int Id)
 		{
 			RoomData result = new RoomData();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `room_data` WHERE `id` = @id LIMIT 1"))
@@ -20,10 +20,10 @@ namespace Alias.Emulator.Hotel.Rooms
 						result.Id          = Id;
 						result.Name        = Reader.GetString("name");
 						result.OwnerId     = Reader.GetInt32("owner");
-						result.DoorState   = Alias.GetServer().GetRoomManager().IntToDoor(Reader.GetInt32("door"));
+						result.DoorState   = Alias.Server.RoomManager.IntToDoor(Reader.GetInt32("door"));
 						result.MaxUsers    = Reader.GetInt32("max_users");
 						result.Description = Reader.GetString("description");
-						result.TradeState  = Alias.GetServer().GetRoomManager().IntToTrade(Reader.GetInt32("trade"));
+						result.TradeState  = Alias.Server.RoomManager.IntToTrade(Reader.GetInt32("trade"));
 						result.Likes       = RoomDatabase.ReadLikes(Id);
 						result.Rankings    = Reader.GetInt32("ranking");
 						result.Category    = Reader.GetInt32("category");
@@ -41,7 +41,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		private static RoomSettings ReadSettings(int Id)
 		{
 			RoomSettings result = new RoomSettings();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `room_settings` WHERE `id` = @id LIMIT 1"))
@@ -71,7 +71,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		private static List<string> ReadTags(int Id)
 		{
 			List<string> tags = new List<string>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `room_tags` WHERE `id` = @id"))
@@ -88,7 +88,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		private static List<int> ReadLikes(int Id)
 		{
 			List<int> likes = new List<int>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `room_likes` WHERE `id` = @id"))
@@ -104,15 +104,15 @@ namespace Alias.Emulator.Hotel.Rooms
 
 		public static void SaveRoom(RoomData data)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", data.Id);
 				dbClient.AddParameter("name", data.Name);
 				dbClient.AddParameter("ownerId", data.OwnerId);
-				dbClient.AddParameter("door", Alias.GetServer().GetRoomManager().DoorToInt(data.DoorState) + "");
+				dbClient.AddParameter("door", Alias.Server.RoomManager.DoorToInt(data.DoorState) + "");
 				dbClient.AddParameter("maxusers", data.MaxUsers);
 				dbClient.AddParameter("description", data.Description);
-				dbClient.AddParameter("trade", Alias.GetServer().GetRoomManager().TradeToInt(data.TradeState) + "");
+				dbClient.AddParameter("trade", Alias.Server.RoomManager.TradeToInt(data.TradeState) + "");
 				dbClient.AddParameter("ranking", data.Rankings);
 				dbClient.AddParameter("category", data.Category);
 				dbClient.AddParameter("image", data.Image);
@@ -147,7 +147,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		public static List<int> AllRooms()
 		{
 			List<int> result = new List<int>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `room_data`"))
 				{
@@ -163,7 +163,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		public static List<int> UserRooms(int userId)
 		{
 			List<int> result = new List<int>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `room_data` WHERE `owner` = @id"))
@@ -180,7 +180,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		public static bool RoomExists(int roomId)
 		{
 			bool exists = false;
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", roomId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `room_data` WHERE `id` = @id"))

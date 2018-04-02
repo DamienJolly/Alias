@@ -15,12 +15,12 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.UserId = userId;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomRemoveRightsListMessageComposer);
-			result.Int(this.RoomId);
-			result.Int(this.UserId);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomRemoveRightsListMessageComposer);
+			message.WriteInteger(this.RoomId);
+			message.WriteInteger(this.UserId);
+			return message;
 		}
 	}
 }

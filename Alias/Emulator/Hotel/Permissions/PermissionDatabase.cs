@@ -12,7 +12,7 @@ namespace Alias.Emulator.Hotel.Permissions
 		public static List<Permission> ReadPermissions()
 		{
 			List<Permission> permissions = new List<Permission>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `permission`, `ranks` FROM `permissions`"))
 				{
@@ -34,7 +34,7 @@ namespace Alias.Emulator.Hotel.Permissions
 		public static List<Permission> ReadCommandPermissions()
 		{
 			List<Permission> permissions = new List<Permission>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `command`, `ranks` FROM `permissions_commands`"))
 				{

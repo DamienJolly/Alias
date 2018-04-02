@@ -4,11 +4,11 @@ namespace Alias.Emulator.Hotel.Catalog.Layouts
 {
 	public class LayoutMarketplaceOwnItems : ICatalogLayout
 	{
-		public void Serialize(ServerMessage message, CatalogPage page)
+		public void Serialize(ServerPacket message, CatalogPage page)
 		{
-			message.String("marketplace_own_items");
-			message.Int(0);
-			message.Int(0);
+			message.WriteString("marketplace_own_items");
+			message.WriteInteger(0);
+			message.WriteInteger(0);
 		}
 	}
 }

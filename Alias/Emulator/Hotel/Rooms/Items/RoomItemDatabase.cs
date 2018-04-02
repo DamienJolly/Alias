@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		public static List<RoomItem> ReadRoomItems(Room room)
 		{
 			List<RoomItem> items = new List<RoomItem>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("roomId", room.Id);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `items` INNER JOIN `items_room_data` ON `items`.`id` = `items_room_data`.`id` WHERE `items`.`room_id` = @roomId"))
@@ -32,7 +32,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 							Owner         = Reader.GetInt32("user_id"),
 							LimitedNumber = Reader.GetInt32("limited_number"),
 							LimitedStack  = Reader.GetInt32("limited_stack"),
-							ItemData      = Alias.GetServer().GetItemManager().GetItemData(Reader.GetInt32("base_id"))
+							ItemData      = Alias.Server.ItemManager.GetItemData(Reader.GetInt32("base_id"))
 						};
 						items.Add(item);
 					}
@@ -43,7 +43,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 
 		public static void AddItem(RoomItem item)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("itemId", item.Id);
 				dbClient.AddParameter("xPos", item.Position.X);
@@ -56,7 +56,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 
 		public static void RemoveItem(int itemId)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("itemId", itemId);
 				dbClient.Query("DELETE FROM `items_room_data` WHERE `id` = @itemId");
@@ -65,7 +65,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 
 		public static void SaveFurniture(List<RoomItem> items)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				foreach (RoomItem item in items)
 				{

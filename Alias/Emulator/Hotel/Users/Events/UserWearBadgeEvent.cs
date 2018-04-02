@@ -9,15 +9,15 @@ namespace Alias.Emulator.Hotel.Users.Events
 {
 	public class UserWearBadgeEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			session.Habbo.Badges.ResetSlots();
 
 			List<BadgeDefinition> badges = new List<BadgeDefinition>();
 			for (int i = 0; i < 5; i++)
 			{
-				int slot = message.Integer();
-				string code = message.String();
+				int slot = message.PopInt();
+				string code = message.PopString();
 
 				if ((slot < 1 || slot > 5) || code.Length == 0)
 				{

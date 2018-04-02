@@ -6,10 +6,10 @@ namespace Alias.Emulator.Hotel.Users.Events
 {
 	public class UserActivityEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			string type = message.String();
-			string value = message.String();
+			string type = message.PopString();
+			string value = message.PopString();
 
 			//todo: do some shit here or w.e
 		}

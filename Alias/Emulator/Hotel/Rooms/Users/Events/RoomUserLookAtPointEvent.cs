@@ -6,7 +6,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 {
 	public class RoomUserLookAtPointEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
@@ -16,8 +16,8 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 
 			RoomUser user = room.UserManager.UserBySession(session);
 
-			int x = message.Integer();
-			int y = message.Integer();
+			int x = message.PopInt();
+			int y = message.PopInt();
 
 			user.LookAtPoint(x, y);
 		}

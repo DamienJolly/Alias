@@ -8,7 +8,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 	{
 		public static bool SSOExists(string sso)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("sso", sso);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT null FROM `habbos` WHERE `username` = @sso"))
@@ -22,7 +22,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 		{
 			int userId = 0;
 
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("sso", sso);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `habbos` WHERE `username` = @sso"))
@@ -40,7 +40,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 		public static Habbo BuildHabbo(int userId)
 		{
 			Habbo habbo = null;
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `habbos` WHERE `id` = @id"))
@@ -72,7 +72,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 
 		public static bool IsBanned(int userId)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				dbClient.AddParameter("now", Alias.GetUnixTimestamp());

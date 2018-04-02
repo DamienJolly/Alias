@@ -4,6 +4,6 @@ namespace Alias.Emulator.Hotel.Catalog.Layouts
 {
 	public interface ICatalogLayout
 	{
-		void Serialize(ServerMessage message, CatalogPage page);
+		void Serialize(ServerPacket message, CatalogPage page);
 	}
 }

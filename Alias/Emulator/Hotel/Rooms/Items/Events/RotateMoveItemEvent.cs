@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
 	public class RotateMoveItemEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
@@ -17,7 +17,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			RoomItem item = room.ItemManager.GetItem(message.Integer());
+			RoomItem item = room.ItemManager.GetItem(message.PopInt());
 			if (item == null)
 			{
 				return;
@@ -28,8 +28,8 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			int x = message.Integer();
-			int y = message.Integer();
+			int x = message.PopInt();
+			int y = message.PopInt();
 
 			if (room.DynamicModel.CanStackAt(x, y, item))
 			{
@@ -41,7 +41,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				item.Position.Z = height;
 				item.Position.X = x;
 				item.Position.Y = y;
-				item.Position.Rotation = message.Integer();
+				item.Position.Rotation = message.PopInt();
 			}
 			else
 			{

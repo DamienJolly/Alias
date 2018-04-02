@@ -22,19 +22,19 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 			this.Type = type;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(this.Id);
-			result.Int(this.VirtualId);
-			result.String(this.Message);
-			result.Int(this.FaceExpression);
-			result.Int(this.MessageColour);
-			result.Int(0);
-			result.Int(-1);
-			return result;
+			ServerPacket message = new ServerPacket(this.Id);
+			message.WriteInteger(this.VirtualId);
+			message.WriteString(this.Message);
+			message.WriteInteger(this.FaceExpression);
+			message.WriteInteger(this.MessageColour);
+			message.WriteInteger(0);
+			message.WriteInteger(-1);
+			return message;
 		}
 
-		private int Id
+		private short Id
 		{
 			get
 			{

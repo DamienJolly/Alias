@@ -6,12 +6,12 @@ namespace Alias.Emulator.Hotel.Users.Composers
 {
 	public class UserClothesComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.UserClothesMessageComposer);
-			result.Int(0);
-			result.Int(0);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.UserClothesMessageComposer);
+			message.WriteInteger(0);
+			message.WriteInteger(0);
+			return message;
 		}
 	}
 }

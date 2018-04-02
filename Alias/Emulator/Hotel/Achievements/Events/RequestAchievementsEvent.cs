@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Achievements.Events
 {
     public class RequestAchievementsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			session.Send(new AchievementListComposer(session.Habbo));
 		}

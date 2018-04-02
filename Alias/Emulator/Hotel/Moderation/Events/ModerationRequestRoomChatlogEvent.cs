@@ -8,24 +8,24 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 {
     public class ModerationRequestRoomChatlogEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (!session.Habbo.HasPermission("acc_modtool_room_logs"))
 			{
 				return;
 			}
 
-			message.Integer();
-			int roomId = message.Integer();
+			message.PopInt();
+			int roomId = message.PopInt();
 			if (roomId <= 0)
 			{
 				return;
 			}
 
-			Room room = Alias.GetServer().GetRoomManager().Room(roomId);
+			Room room = Alias.Server.RoomManager.Room(roomId);
 			if (room != null)
 			{
-				session.Send(new ModerationRoomChatlogComposer(room, Alias.GetServer().GetModerationManager().GetRoomChatlog(room.RoomData.Id)));
+				session.Send(new ModerationRoomChatlogComposer(room, Alias.Server.ModerationManager.GetRoomChatlog(room.RoomData.Id)));
 			}
 		}
 	}

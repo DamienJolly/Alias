@@ -13,19 +13,19 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			this.habbo = habbo;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.MeMenuSettingsMessageComposer);
-			result.Int(this.habbo.Settings.VolumeSystem);
-			result.Int(this.habbo.Settings.VolumeFurni);
-			result.Int(this.habbo.Settings.VolumeTrax);
-			result.Boolean(this.habbo.Settings.OldChat);
-			result.Boolean(this.habbo.Settings.IgnoreInvites);
-			result.Boolean(this.habbo.Settings.CameraFollow);
-			result.Int(1); // friend state?
-			result.Int(0); // chat colour?
-			result.Int(0); // dunno?
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.MeMenuSettingsMessageComposer);
+			message.WriteInteger(this.habbo.Settings.VolumeSystem);
+			message.WriteInteger(this.habbo.Settings.VolumeFurni);
+			message.WriteInteger(this.habbo.Settings.VolumeTrax);
+			message.WriteBoolean(this.habbo.Settings.OldChat);
+			message.WriteBoolean(this.habbo.Settings.IgnoreInvites);
+			message.WriteBoolean(this.habbo.Settings.CameraFollow);
+			message.WriteInteger(1); // friend state?
+			message.WriteInteger(0); // chat colour?
+			message.WriteInteger(0); // dunno?
+			return message;
 		}
 	}
 }

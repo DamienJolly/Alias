@@ -4,14 +4,14 @@ namespace Alias.Emulator.Hotel.Catalog.Layouts
 {
 	public class LayoutSoldLTDItems : ICatalogLayout
 	{
-		public void Serialize(ServerMessage message, CatalogPage page)
+		public void Serialize(ServerPacket message, CatalogPage page)
 		{
-			message.String("sold_ltd_items");
-			message.Int(3);
-			message.String(page.HeaderImage);
-			message.String(page.TeaserImage);
-			message.String(page.SpecialImage);
-			message.Int(0);
+			message.WriteString("sold_ltd_items");
+			message.WriteInteger(3);
+			message.WriteString(page.HeaderImage);
+			message.WriteString(page.TeaserImage);
+			message.WriteString(page.SpecialImage);
+			message.WriteInteger(0);
 		}
 	}
 }

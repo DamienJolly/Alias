@@ -11,18 +11,18 @@ namespace Alias.Emulator.Hotel.Users
 	{
 		public static void Register()
 		{
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestUserProfileMessageEvent, new RequestUserProfileEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestMeMenuSettingsMessageEvent, new RequestMeMenuSettingsEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.UsernameMessageEvent, new UsernameEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.SaveUserVolumesMessageEvent, new SaveUserVolumesEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.SavePreferOldChatMessageEvent, new SavePreferOldChatEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.SaveIgnoreRoomInvitesMessageEvent, new SaveIgnoreRoomInvitesEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.SaveBlockCameraFollowMessageEvent, new SaveBlockCameraFollowEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.UserWearBadgeMessageEvent, new UserWearBadgeEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestWearingBadgesMessageEvent, new RequestWearingBadgesEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.UserSaveLookMessageEvent, new UserSaveLookEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestProfileFriendsMessageEvent, new RequestProfileFriendsEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.UserActivityMessageEvent, new UserActivityEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestUserProfileMessageEvent, new RequestUserProfileEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestMeMenuSettingsMessageEvent, new RequestMeMenuSettingsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.UsernameMessageEvent, new UsernameEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.SaveUserVolumesMessageEvent, new SaveUserVolumesEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.SavePreferOldChatMessageEvent, new SavePreferOldChatEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.SaveIgnoreRoomInvitesMessageEvent, new SaveIgnoreRoomInvitesEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.SaveBlockCameraFollowMessageEvent, new SaveBlockCameraFollowEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.UserWearBadgeMessageEvent, new UserWearBadgeEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestWearingBadgesMessageEvent, new RequestWearingBadgesEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.UserSaveLookMessageEvent, new UserSaveLookEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestProfileFriendsMessageEvent, new RequestProfileFriendsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.UserActivityMessageEvent, new UserActivityEvent());
 
 			MessengerEvents.Register();
 			CurrencyEvents.Register();

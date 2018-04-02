@@ -17,25 +17,25 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 			this.achievement = achievement;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.AchievementUnlockedMessageComposer);
+			ServerPacket message = new ServerPacket(Outgoing.AchievementUnlockedMessageComposer);
 			
 			AchievementProgress achievementProgress = habbo.Achievements.GetAchievementProgress(this.achievement);
 			AchievementLevel level = achievement.GetLevelForProgress(achievementProgress.Progress);
-			result.Int(this.achievement.Id);
-			result.Int(level.Level);
-			result.Int(144);
-			result.String("ACH_" + this.achievement.Name + level.Level);
-			result.Int(level.RewardAmount);
-			result.Int(level.RewardType);
-			result.Int(0);
-			result.Int(10);
-			result.Int(21);
-			result.String(level.Level > 1 ? "ACH_" + this.achievement.Name + (level.Level - 1) : "");
-			result.String(this.achievement.Category.ToString().ToLower());
-			result.Boolean(true);
-			return result;
+			message.WriteInteger(this.achievement.Id);
+			message.WriteInteger(level.Level);
+			message.WriteInteger(144);
+			message.WriteString("ACH_" + this.achievement.Name + level.Level);
+			message.WriteInteger(level.RewardAmount);
+			message.WriteInteger(level.RewardType);
+			message.WriteInteger(0);
+			message.WriteInteger(10);
+			message.WriteInteger(21);
+			message.WriteString(level.Level > 1 ? "ACH_" + this.achievement.Name + (level.Level - 1) : "");
+			message.WriteString(this.achievement.Category.ToString().ToLower());
+			message.WriteBoolean(true);
+			return message;
 		}
 	}
 }

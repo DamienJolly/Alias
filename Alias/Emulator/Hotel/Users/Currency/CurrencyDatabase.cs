@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Users.Currency
 		public static List<CurrencyType> ReadCurrencies(int userId)
 		{
 			List<CurrencyType> currenies = new List<CurrencyType>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `type`, `amount` FROM `habbo_currencies` WHERE `user_id` = @id"))
@@ -30,7 +30,7 @@ namespace Alias.Emulator.Hotel.Users.Currency
 
 		public static void SaveCurrencies(CurrencyComponent currency)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				foreach (CurrencyType cType in currency.RequestCurrencies())
 				{

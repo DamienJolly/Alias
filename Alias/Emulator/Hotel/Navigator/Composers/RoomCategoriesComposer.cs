@@ -18,28 +18,28 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 			this.categories = categories;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.RoomCategoriesMessageComposer);
-			message.Int(this.categories.Count);
+			ServerPacket message = new ServerPacket(Outgoing.RoomCategoriesMessageComposer);
+			message.WriteInteger(this.categories.Count);
 			this.categories.ForEach(category =>
 			{
-				message.Int(category.ExtraId);
-				message.String(category.Title);
-				message.Boolean(category.MinRank <= this.rank);
-				message.Boolean(false);
-				message.String(category.Title);
+				message.WriteInteger(category.ExtraId);
+				message.WriteString(category.Title);
+				message.WriteBoolean(category.MinRank <= this.rank);
+				message.WriteBoolean(false);
+				message.WriteString(category.Title);
 
 				if (category.Title.StartsWith("${"))
 				{
-					message.String("");
+					message.WriteString("");
 				}
 				else
 				{
-					message.String(category.Title);
+					message.WriteString(category.Title);
 				}
 
-				message.Boolean(false);
+				message.WriteBoolean(false);
 			});
 			return message;
 		}

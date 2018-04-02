@@ -14,19 +14,19 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			this.habbo = habbo;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.ModerationUserRoomVisitsMessageComposer);
-			result.Int(this.habbo.Id);
-			result.String(this.habbo.Username);
-			result.Int(0); //todo: room visits
+			ServerPacket message = new ServerPacket(Outgoing.ModerationUserRoomVisitsMessageComposer);
+			message.WriteInteger(this.habbo.Id);
+			message.WriteString(this.habbo.Username);
+			message.WriteInteger(0); //todo: room visits
 			{
 				//int - roomid
 				//string - roomname
 				//int - hours ago
 				//int - mins ago
 			}
-			return result;
+			return message;
 		}
 	}
 }

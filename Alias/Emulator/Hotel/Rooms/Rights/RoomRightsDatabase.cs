@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 		public static List<UserRight> ReadRights(int Id)
 		{
 			List<UserRight> rights = new List<UserRight>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `room_rights` WHERE `id` = @id"))
@@ -32,7 +32,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 
 		public static void GiveRights(int Id, int UserId)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
 				dbClient.AddParameter("userId", UserId);
@@ -42,7 +42,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 
 		public static void TakeRights(int Id, int UserId)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
 				dbClient.AddParameter("userId", UserId);

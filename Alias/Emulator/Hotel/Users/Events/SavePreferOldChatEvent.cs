@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Users.Events
 {
 	public class SavePreferOldChatEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			bool oldChat = message.Boolean();
+			bool oldChat = message.PopBoolean();
 
 			session.Habbo.Settings.OldChat = oldChat;
 		}

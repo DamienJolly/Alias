@@ -5,7 +5,7 @@ namespace Alias.Emulator
 {
     class Alias
     {
-		private static AliasServer _server = null;
+		public static AliasServer Server { get; set; }
 
 		private static DateTime _started = DateTime.Now;
 
@@ -41,12 +41,10 @@ namespace Alias.Emulator
 
 		public Alias(string[] args)
 		{
-			_server = new AliasServer();
-			_server.Initialize();
-			GC.KeepAlive(_server);
+			Server = new AliasServer();
+			Server.Initialize();
+			GC.KeepAlive(Server);
 		}
-		
-		public static AliasServer GetServer() => _server;
 		
 		/// <summary>
 		/// Current server time in unix timestamp format.

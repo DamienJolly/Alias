@@ -15,11 +15,11 @@ namespace Alias.Emulator.Hotel.Landing.Composers
 			this.key = key;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.HotelViewDataMessageComposer);
-			message.String(this.data);
-			message.String(this.key);
+			ServerPacket message = new ServerPacket(Outgoing.HotelViewDataMessageComposer);
+			message.WriteString(this.data);
+			message.WriteString(this.key);
 			return message;
 		}
 	}

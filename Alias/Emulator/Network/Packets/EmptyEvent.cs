@@ -6,9 +6,9 @@ namespace Alias.Emulator.Network.Packets
 {
 	public class EmptyEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			Logging.Debug("Unregistered Event with Id " + message.Id + " handled by the Placeholder event.");
+			Logging.Debug("Unregistered Event with Id " + message.Header + " handled by the Placeholder event.");
 		}
 	}
 }

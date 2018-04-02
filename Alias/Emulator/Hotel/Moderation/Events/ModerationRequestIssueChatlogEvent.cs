@@ -9,20 +9,20 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 {
     public class ModerationRequestIssueChatlogEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (!session.Habbo.HasPermission("acc_modtool_ticket_queue"))
 			{
 				return;
 			}
 
-			int ticketId = message.Integer();
+			int ticketId = message.PopInt();
 			if (ticketId <= 0)
 			{
 				return;
 			}
 
-			ModerationTicket issue = Alias.GetServer().GetModerationManager().GetTicket(ticketId);
+			ModerationTicket issue = Alias.Server.ModerationManager.GetTicket(ticketId);
 			if (issue == null || issue.ModId != session.Habbo.Id)
 			{
 				return;
@@ -32,16 +32,16 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 			List<ModerationChatlog> chatlogs = new List<ModerationChatlog>();
 			if (issue.RoomId > 0)
 			{
-				Room room = Alias.GetServer().GetRoomManager().Room(issue.RoomId);
+				Room room = Alias.Server.RoomManager.Room(issue.RoomId);
 				if (room != null)
 				{
 					roomName = room.RoomData.Name;
 				}
-				chatlogs = Alias.GetServer().GetModerationManager().GetRoomChatlog(issue.RoomId);
+				chatlogs = Alias.Server.ModerationManager.GetRoomChatlog(issue.RoomId);
 			}
 			else
 			{
-				chatlogs = Alias.GetServer().GetModerationManager().GetUserChatlog(issue.SenderId, issue.ReportedId);
+				chatlogs = Alias.Server.ModerationManager.GetUserChatlog(issue.SenderId, issue.ReportedId);
 			}
 			
 			session.Send(new ModerationIssueChatlogComposer(issue, chatlogs, roomName));

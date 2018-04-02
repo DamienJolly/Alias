@@ -76,20 +76,20 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 				text = text.Substring(0, 100);
 			}
 			
-			if (Alias.GetServer().GetChatManager().GetFilter().CheckBanned(text))
+			if (Alias.Server.ChatManager.GetFilter().CheckBanned(text))
 			{
-				Alias.GetServer().GetModerationManager().QuickTicket(this.Habbo, "User said a banned word");
+				Alias.Server.ModerationManager.QuickTicket(this.Habbo, "User said a banned word");
 				return;
 			}
 
-			text = Alias.GetServer().GetChatManager().GetFilter().Filter(text);
+			text = Alias.Server.ChatManager.GetFilter().Filter(text);
 
-			if (text.StartsWith(":") && Alias.GetServer().GetChatManager().GetCommands().Parse(this.Habbo.Session, text))
+			if (text.StartsWith(":") && Alias.Server.ChatManager.GetCommands().Parse(this.Habbo.Session, text))
 			{
 				return;
 			}
 
-			RoomUserChatComposer packet = new RoomUserChatComposer(this.VirtualId, text, Alias.GetServer().GetChatManager().GetEmotions().GetEmotionsForText(text), colour, chatType);
+			RoomUserChatComposer packet = new RoomUserChatComposer(this.VirtualId, text, Alias.Server.ChatManager.GetEmotions().GetEmotionsForText(text), colour, chatType);
 
 			if (target != null)
 			{

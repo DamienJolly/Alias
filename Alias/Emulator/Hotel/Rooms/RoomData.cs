@@ -38,7 +38,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			get
 			{
-				return (int)Alias.GetServer().GetRoomManager().Room(this.Id).UserManager.UserCount;
+				return (int)Alias.Server.RoomManager.Room(this.Id).UserManager.UserCount;
 			}
 		}
 

@@ -15,12 +15,12 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.CanVote = vote;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomScoreMessageComposer);
-			result.Int(this.Score);
-			result.Boolean(this.CanVote);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomScoreMessageComposer);
+			message.WriteInteger(this.Score);
+			message.WriteBoolean(this.CanVote);
+			return message;
 		}
 	}
 }

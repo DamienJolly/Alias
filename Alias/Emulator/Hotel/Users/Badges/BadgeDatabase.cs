@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Users.Badges
 		public static List<BadgeDefinition> InitBadges(int userId)
 		{
 			List<BadgeDefinition> badges = new List<BadgeDefinition>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("userId", userId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `badge_code`, `slot_id` FROM `habbo_badges` WHERE `user_id` = @userId"))
@@ -30,7 +30,7 @@ namespace Alias.Emulator.Hotel.Users.Badges
 
 		public static void GiveBadge(Habbo habbo, string code)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("userId", habbo.Id);
 				dbClient.AddParameter("badgeCode", code);
@@ -40,7 +40,7 @@ namespace Alias.Emulator.Hotel.Users.Badges
 
 		public static void TakeBadge(Habbo habbo, string code)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("userId", habbo.Id);
 				dbClient.AddParameter("badgeCode", code);
@@ -50,7 +50,7 @@ namespace Alias.Emulator.Hotel.Users.Badges
 
 		public static void UpdateBadge(Habbo habbo, BadgeDefinition badge, string code)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("userId", habbo.Id);
 				dbClient.AddParameter("badgeCode", code);

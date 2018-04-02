@@ -7,9 +7,9 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 {
 	public class RemoveSavedSearchEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			int id = message.Integer();
+			int id = message.PopInt();
 
 			session.Habbo.NavigatorPreference.RemoveSearch(id);
 

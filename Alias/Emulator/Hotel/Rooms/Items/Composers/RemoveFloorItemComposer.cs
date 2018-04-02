@@ -13,13 +13,13 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Composers
 			this.item = item;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.RemoveFloorItemMessageComposer);
-			message.String(this.item.Id + "");
-			message.Boolean(false);
-			message.Int(this.item.Owner);
-			message.Int(0);
+			ServerPacket message = new ServerPacket(Outgoing.RemoveFloorItemMessageComposer);
+			message.WriteString(this.item.Id + "");
+			message.WriteBoolean(false);
+			message.WriteInteger(this.item.Owner);
+			message.WriteInteger(0);
 			return message;
 		}
 	}

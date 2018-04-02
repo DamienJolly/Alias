@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 {
 	public class RequestRoomHeightmapEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (session.Habbo.CurrentRoom == null)
 			{

@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			if (RoomDatabase.RoomExists(roomId))
 			{
-				session.Send(new RoomDataComposer(Alias.GetServer().GetRoomManager().RoomData(roomId), !(num == 0 && num2 == 1), true, session));
+				session.Send(new RoomDataComposer(Alias.Server.RoomManager.RoomData(roomId), !(num == 0 && num2 == 1), true, session));
 			}
 			else
 			{
@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			if (RoomDatabase.RoomExists(roomId))
 			{
-				RoomData rdata = Alias.GetServer().GetRoomManager().RoomData(roomId);
+				RoomData rdata = Alias.Server.RoomManager.RoomData(roomId);
 				switch (rdata.DoorState)
 				{
 					case RoomDoorState.OPEN:

@@ -14,26 +14,26 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			this.roomData = roomData;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.ModerationRoomInfoMessageComposer);
-			result.Int(this.roomData.Id);
-			result.Int(this.roomData.UsersNow);
-			result.Boolean(false); //todo: owner in room
-			result.Int(this.roomData.OwnerId);
-			result.String(this.roomData.OwnerName);
-			result.Boolean(false); //todo: public room
+			ServerPacket message = new ServerPacket(Outgoing.ModerationRoomInfoMessageComposer);
+			message.WriteInteger(this.roomData.Id);
+			message.WriteInteger(this.roomData.UsersNow);
+			message.WriteBoolean(false); //todo: owner in room
+			message.WriteInteger(this.roomData.OwnerId);
+			message.WriteString(this.roomData.OwnerName);
+			message.WriteBoolean(false); //todo: public room
 			//if () //!= public room
 			{
-				result.String(this.roomData.Name);
-				result.String(this.roomData.Description);
-				result.Int(this.roomData.Tags.Count);
+				message.WriteString(this.roomData.Name);
+				message.WriteString(this.roomData.Description);
+				message.WriteInteger(this.roomData.Tags.Count);
 				this.roomData.Tags.ForEach(tag =>
 				{
-					result.String(tag);
+					message.WriteString(tag);
 				});
 			}
-			return result;
+			return message;
 		}
 	}
 }

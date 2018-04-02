@@ -13,10 +13,10 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 			this.itemId = itemId;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.RemoveHabboItemMessageComposer);
-			message.Int(this.itemId);
+			ServerPacket message = new ServerPacket(Outgoing.RemoveHabboItemMessageComposer);
+			message.WriteInteger(this.itemId);
 			return message;
 		}
 	}

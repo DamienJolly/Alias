@@ -7,10 +7,10 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 {
 	public class AddSavedSearchEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			string page = message.String();
-			string searchCode = message.String();
+			string page = message.PopString();
+			string searchCode = message.PopString();
 
 			if (session.Habbo.NavigatorPreference.HasPage(page, searchCode))
 				return;

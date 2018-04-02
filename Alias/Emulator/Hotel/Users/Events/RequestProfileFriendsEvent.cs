@@ -8,10 +8,10 @@ namespace Alias.Emulator.Hotel.Users.Events
 {
     class RequestProfileFriendsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			int userId = message.Integer();
-			Habbo habbo = SessionManager.HabboById(userId);
+			int userId = message.PopInt();
+			Habbo habbo = Alias.Server.SocketServer.SessionManager.HabboById(userId);
 
 			if (habbo.Messenger != null)
 			{

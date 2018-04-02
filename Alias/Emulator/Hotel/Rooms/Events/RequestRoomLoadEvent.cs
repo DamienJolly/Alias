@@ -9,15 +9,15 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 {
 	public class RequestRoomLoadEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			int roomId = message.Integer();
-			string password = message.String();
+			int roomId = message.PopInt();
+			string password = message.PopString();
 
 			if (RoomLoader.CanEnter(session, roomId, password))
 			{
 				session.Send(new RoomOpenComposer());
-				RoomLoader.Enter(session, Alias.GetServer().GetRoomManager().Room(roomId));
+				RoomLoader.Enter(session, Alias.Server.RoomManager.Room(roomId));
 			}
 			else
 			{

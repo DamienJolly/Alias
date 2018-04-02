@@ -19,31 +19,31 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			this.chatlog = chatlog;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.ModerationRoomChatlogMessageComposer);
-			result.Byte(1);
-			result.Short(2);
-			result.String("roomName");
-			result.Byte(2);
-			result.String(this.room.RoomData.Name);
-			result.String("roomId");
-			result.Byte(1);
-			result.Int(this.room.RoomData.Id);
+			ServerPacket message = new ServerPacket(Outgoing.ModerationRoomChatlogMessageComposer);
+			message.WriteByte(1);
+			message.WriteShort(2);
+			message.WriteString("roomName");
+			message.WriteByte(2);
+			message.WriteString(this.room.RoomData.Name);
+			message.WriteString("roomId");
+			message.WriteByte(1);
+			message.WriteInteger(this.room.RoomData.Id);
 
-			result.Short(this.chatlog.Count);
+			message.WriteShort(this.chatlog.Count);
 			this.chatlog.ForEach(chatlog =>
 			{
 				DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 				dt = dt.AddSeconds(chatlog.Timestamp).ToLocalTime();
 
-				result.String(dt.ToString("HH:mm"));
-				result.Int(chatlog.UserId);
-				result.String(chatlog.Username);
-				result.String(chatlog.Message);
-				result.Boolean(chatlog.Type == ChatType.SHOUT);
+				message.WriteString(dt.ToString("HH:mm"));
+				message.WriteInteger(chatlog.UserId);
+				message.WriteString(chatlog.Username);
+				message.WriteString(chatlog.Message);
+				message.WriteBoolean(chatlog.Type == ChatType.SHOUT);
 			});
-			return result;
+			return message;
 		}
 	}
 }

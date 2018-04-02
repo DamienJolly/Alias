@@ -6,57 +6,57 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 {
 	public class NavigatorCollapsedCategoriesComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.NavigatorCollapsedCategoriesMessageComposer);
-			result.Int(46);
-			result.String("new_ads");
-			result.String("friend_finding");
-			result.String("staffpicks");
-			result.String("with_friends");
-			result.String("with_rights");
-			result.String("query");
-			result.String("recommended");
-			result.String("my_groups");
-			result.String("favorites");
-			result.String("history");
-			result.String("top_promotions");
-			result.String("campaign_target");
-			result.String("friends_rooms");
-			result.String("groups");
-			result.String("metadata");
-			result.String("history_freq");
-			result.String("highest_score");
-			result.String("competition");
-			result.String("category__Agencies");
-			result.String("category__Role Playing");
-			result.String("category__Global Chat & Discussi");
-			result.String("category__GLOBAL BUILDING AND DE");
-			result.String("category__global party");
-			result.String("category__global games");
-			result.String("category__global fansite");
-			result.String("category__global help");
-			result.String("category__Trading");
-			result.String("category__global personal space");
-			result.String("category__Habbo Life");
-			result.String("category__TRADING");
-			result.String("category__global official");
-			result.String("category__global trade");
-			result.String("category__global reviews");
-			result.String("category__global bc");
-			result.String("category__global personal space");
-			result.String("eventcategory__Hottest Events");
-			result.String("eventcategory__Parties & Music");
-			result.String("eventcategory__Role Play");
-			result.String("eventcategory__Help Desk");
-			result.String("eventcategory__Trading");
-			result.String("eventcategory__Games");
-			result.String("eventcategory__Debates & Discuss");
-			result.String("eventcategory__Grand Openings");
-			result.String("eventcategory__Friending");
-			result.String("eventcategory__Jobs");
-			result.String("eventcategory__Group Events");
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.NavigatorCollapsedCategoriesMessageComposer);
+			message.WriteInteger(46);
+			message.WriteString("new_ads");
+			message.WriteString("friend_finding");
+			message.WriteString("staffpicks");
+			message.WriteString("with_friends");
+			message.WriteString("with_rights");
+			message.WriteString("query");
+			message.WriteString("recommended");
+			message.WriteString("my_groups");
+			message.WriteString("favorites");
+			message.WriteString("history");
+			message.WriteString("top_promotions");
+			message.WriteString("campaign_target");
+			message.WriteString("friends_rooms");
+			message.WriteString("groups");
+			message.WriteString("metadata");
+			message.WriteString("history_freq");
+			message.WriteString("highest_score");
+			message.WriteString("competition");
+			message.WriteString("category__Agencies");
+			message.WriteString("category__Role Playing");
+			message.WriteString("category__Global Chat & Discussi");
+			message.WriteString("category__GLOBAL BUILDING AND DE");
+			message.WriteString("category__global party");
+			message.WriteString("category__global games");
+			message.WriteString("category__global fansite");
+			message.WriteString("category__global help");
+			message.WriteString("category__Trading");
+			message.WriteString("category__global personal space");
+			message.WriteString("category__Habbo Life");
+			message.WriteString("category__TRADING");
+			message.WriteString("category__global official");
+			message.WriteString("category__global trade");
+			message.WriteString("category__global reviews");
+			message.WriteString("category__global bc");
+			message.WriteString("category__global personal space");
+			message.WriteString("eventcategory__Hottest Events");
+			message.WriteString("eventcategory__Parties & Music");
+			message.WriteString("eventcategory__Role Play");
+			message.WriteString("eventcategory__Help Desk");
+			message.WriteString("eventcategory__Trading");
+			message.WriteString("eventcategory__Games");
+			message.WriteString("eventcategory__Debates & Discuss");
+			message.WriteString("eventcategory__Grand Openings");
+			message.WriteString("eventcategory__Friending");
+			message.WriteString("eventcategory__Jobs");
+			message.WriteString("eventcategory__Group Events");
+			return message;
 		}
 	}
 }

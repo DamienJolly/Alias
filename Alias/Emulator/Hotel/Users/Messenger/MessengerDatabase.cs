@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		public static List<MessengerFriend> ReadFriendships(int userId)
 		{
 			List<MessengerFriend> friends = new List<MessengerFriend>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `target_id`, `relation` FROM `messenger_friends` WHERE `user_id` = @id"))
@@ -19,7 +19,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 					while (Reader.Read())
 					{
 						int targetId = Reader.GetInt32("target_id");
-						Habbo habbo  = SessionManager.HabboById(targetId);
+						Habbo habbo  = Alias.Server.SocketServer.SessionManager.HabboById(targetId);
 						MessengerFriend friend = new MessengerFriend
 						{
 							Id       = targetId,
@@ -39,7 +39,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		public static List<MessengerRequest> ReadFriendRequests(int userId)
 		{
 			List<MessengerRequest> requests = new List<MessengerRequest>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `sender` FROM `messenger_requests` WHERE `reciever` = @id"))
@@ -47,7 +47,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 					while (Reader.Read())
 					{
 						int targetId = Reader.GetInt32("sender");
-						Habbo habbo  = SessionManager.HabboById(targetId);
+						Habbo habbo  = Alias.Server.SocketServer.SessionManager.HabboById(targetId);
 						MessengerRequest request = new MessengerRequest
 						{
 							Id       = targetId,
@@ -67,14 +67,14 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 			{
 				query = query.Replace("%", "");
 				List<Habbo> result = new List<Habbo>();
-				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+				using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 				{
 					dbClient.AddParameter("query", "%" + query + "%");
 					using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `habbos` WHERE `username` LIKE @query"))
 					{
 						while (Reader.Read())
 						{
-							result.Add(SessionManager.HabboById(Reader.GetInt32("Id")));
+							result.Add(Alias.Server.SocketServer.SessionManager.HabboById(Reader.GetInt32("Id")));
 						}
 					}
 				}
@@ -87,7 +87,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (sender > 0 && reciever > 0)
 			{
-				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+				using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 				{
 					dbClient.AddParameter("sender", sender);
 					dbClient.AddParameter("reciever", reciever);
@@ -98,7 +98,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 
 		public static bool RequestExists(int userId, int otherUser)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				dbClient.AddParameter("other", otherUser);
@@ -113,7 +113,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (Sender > 0 && Reciever > 0)
 			{
-				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+				using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 				{
 					dbClient.AddParameter("sender", Sender);
 					dbClient.AddParameter("reciever", Reciever);
@@ -126,7 +126,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (targetId > 0 && userId > 0 && type > 0)
 			{
-				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+				using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 				{
 					dbClient.AddParameter("targetId", targetId);
 					dbClient.AddParameter("userId", userId);
@@ -140,7 +140,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (targetId > 0 && userId > 0)
 			{
-				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+				using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 				{
 					dbClient.AddParameter("targetId", targetId);
 					dbClient.AddParameter("userId", userId);
@@ -154,7 +154,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (targetId > 0 && userId > 0)
 			{
-				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+				using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 				{
 					dbClient.AddParameter("targetId", targetId);
 					dbClient.AddParameter("userId", userId);
@@ -167,7 +167,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (from > 0 && to > 0 && !string.IsNullOrEmpty(message) && !string.IsNullOrWhiteSpace(message))
 			{
-				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+				using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 				{
 					dbClient.AddParameter("from", from);
 					dbClient.AddParameter("to", to);
@@ -182,7 +182,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 		{
 			if (from > 0 && !string.IsNullOrEmpty(message) && !string.IsNullOrWhiteSpace(message))
 			{
-				using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+				using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 				{
 					dbClient.AddParameter("from", from);
 					dbClient.AddParameter("message", message);

@@ -14,27 +14,27 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			this.habbo = habbo;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.ModerationUserInfoMessageComposer);
-			result.Int(this.habbo.Id);
-			result.String(this.habbo.Username);
-			result.String(this.habbo.Look);
-			result.Int(0); //account created
-			result.Int(0); //last online
-			result.Boolean(true); //isOnline
-			result.Int(0); //cfh sent
-			result.Int(0); //cfh abuse
-			result.Int(0); //cfh warning
-			result.Int(0); //cfh bans
-			result.Int(0); //trade locks
-			result.String(string.Empty); //trading lock
-			result.String(string.Empty); //purchases
-			result.Int(0); //??
-			result.Int(0); //??
-			result.String(this.habbo.Mail);
-			result.String(string.Empty); //??
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.ModerationUserInfoMessageComposer);
+			message.WriteInteger(this.habbo.Id);
+			message.WriteString(this.habbo.Username);
+			message.WriteString(this.habbo.Look);
+			message.WriteInteger(0); //account created
+			message.WriteInteger(0); //last online
+			message.WriteBoolean(true); //isOnline
+			message.WriteInteger(0); //cfh sent
+			message.WriteInteger(0); //cfh abuse
+			message.WriteInteger(0); //cfh warning
+			message.WriteInteger(0); //cfh bans
+			message.WriteInteger(0); //trade locks
+			message.WriteString(string.Empty); //trading lock
+			message.WriteString(string.Empty); //purchases
+			message.WriteInteger(0); //??
+			message.WriteInteger(0); //??
+			message.WriteString(this.habbo.Mail);
+			message.WriteString(string.Empty); //??
+			return message;
 		}
 	}
 }

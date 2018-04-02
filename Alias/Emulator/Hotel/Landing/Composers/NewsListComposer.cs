@@ -6,10 +6,10 @@ namespace Alias.Emulator.Hotel.Landing.Composers
 {
 	public class NewsListComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.NewsListMessageComposer);
-			message.Int(0);
+			ServerPacket message = new ServerPacket(Outgoing.NewsListMessageComposer);
+			message.WriteInteger(0);
 			return message;
 		}
 	}

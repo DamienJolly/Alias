@@ -7,14 +7,14 @@ namespace Alias.Emulator.Hotel.Navigator
 	{
 		public static void Register()
 		{
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestNavigatorSettingsMessageEvent, new RequestNavigatorSettingsEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.SaveWindowSettingsMessageEvent, new SaveWindowSettingsEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.SearchRoomsMessageEvent, new SearchRoomsEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestRoomCategoriesMessageEvent, new RequestRoomCategoriesEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestNavigatorDataMessageEvent, new RequestNavigatorDataEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestPromotedRoomsMessageEvent, new RequestPromotedRoomsEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.AddSavedSearchMessageEvent, new AddSavedSearchEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RemoveSavedSearchMessageEvent, new RemoveSavedSearchEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestNavigatorSettingsMessageEvent, new RequestNavigatorSettingsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.SaveWindowSettingsMessageEvent, new SaveWindowSettingsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.SearchRoomsMessageEvent, new SearchRoomsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestRoomCategoriesMessageEvent, new RequestRoomCategoriesEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestNavigatorDataMessageEvent, new RequestNavigatorDataEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestPromotedRoomsMessageEvent, new RequestPromotedRoomsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.AddSavedSearchMessageEvent, new AddSavedSearchEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RemoveSavedSearchMessageEvent, new RemoveSavedSearchEvent());
 		}
 	}
 }

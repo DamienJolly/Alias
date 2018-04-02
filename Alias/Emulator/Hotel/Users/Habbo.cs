@@ -43,7 +43,7 @@ namespace Alias.Emulator.Hotel.Users
 		/// </summary>
 		public Session Session
 		{
-			get { return SessionManager.SessionById(this.Id); }
+			get { return Alias.Server.SocketServer.SessionManager.SessionById(this.Id); }
 		}
 
 		/// <summary>
@@ -104,7 +104,7 @@ namespace Alias.Emulator.Hotel.Users
 
 		public bool HasPermission(string param)
 		{
-			return Alias.GetServer().GetPermissionManager().HasPermission(this.Rank, param);
+			return Alias.Server.PermissionManager.HasPermission(this.Rank, param);
 		}
 	}
 }

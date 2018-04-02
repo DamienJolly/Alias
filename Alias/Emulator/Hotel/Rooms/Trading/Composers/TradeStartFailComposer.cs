@@ -22,12 +22,12 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 			this.username = username;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.TradeStartFailMessageComposer);
-			result.Int(this.code);
-			result.String(this.username);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.TradeStartFailMessageComposer);
+			message.WriteInteger(this.code);
+			message.WriteString(this.username);
+			return message;
 		}
 	}
 }

@@ -6,13 +6,13 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Composers
 {
 	public class SessionRightsComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.SessionRightsMessageComposer);
-			result.Boolean(true);
-			result.Boolean(false);
-			result.Boolean(true);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.SessionRightsMessageComposer);
+			message.WriteBoolean(true);
+			message.WriteBoolean(false);
+			message.WriteBoolean(true);
+			return message;
 		}
 	}
 }

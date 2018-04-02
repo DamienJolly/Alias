@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 {
 	public class RoomOpenComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			return new ServerMessage(Outgoing.RoomOpenMessageComposer);
+			return new ServerPacket(Outgoing.RoomOpenMessageComposer);
 		}
 	}
 }

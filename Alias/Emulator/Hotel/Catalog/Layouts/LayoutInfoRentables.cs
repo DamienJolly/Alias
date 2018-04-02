@@ -4,17 +4,17 @@ namespace Alias.Emulator.Hotel.Catalog.Layouts
 {
 	public class LayoutInfoRentables : ICatalogLayout
 	{
-		public void Serialize(ServerMessage message, CatalogPage page)
+		public void Serialize(ServerPacket message, CatalogPage page)
 		{
 			//TODO
 			string[] data = { };
-			message.String("info_rentables");
-			message.Int(1);
-			message.String(page.HeaderImage);
-			message.Int(data.Length);
+			message.WriteString("info_rentables");
+			message.WriteInteger(1);
+			message.WriteString(page.HeaderImage);
+			message.WriteInteger(data.Length);
 			foreach (string str in data)
-				message.String(str);
-			message.Int(0);
+				message.WriteString(str);
+			message.WriteInteger(0);
 		}
 	}
 }

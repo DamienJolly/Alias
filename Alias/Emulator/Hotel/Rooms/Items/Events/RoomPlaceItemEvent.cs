@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
 	public class RoomPlaceItemEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
@@ -24,7 +24,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			string[] values = message.String().Split(' ');
+			string[] values = message.PopString().Split(' ');
 
 			if (values.Length < 1)
 			{

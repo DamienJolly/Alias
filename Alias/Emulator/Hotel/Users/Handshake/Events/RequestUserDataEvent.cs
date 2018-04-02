@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Events
 {
 	public class RequestUserDataEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			session.Send(new UserDataComposer(session.Habbo));
 			session.Send(new UserPerksComposer(session.Habbo));

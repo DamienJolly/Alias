@@ -13,13 +13,13 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.room = r;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomThicknessMessageComposer);
-			result.Boolean(this.room.RoomData.Settings.HideWalls);
-			result.Int(this.room.RoomData.Settings.FloorSize);
-			result.Int(this.room.RoomData.Settings.WallHeight);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomThicknessMessageComposer);
+			message.WriteBoolean(this.room.RoomData.Settings.HideWalls);
+			message.WriteInteger(this.room.RoomData.Settings.FloorSize);
+			message.WriteInteger(this.room.RoomData.Settings.WallHeight);
+			return message;
 		}
 	}
 }

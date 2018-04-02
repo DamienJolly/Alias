@@ -13,16 +13,16 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 			this.messenger = messenger;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.LoadFriendRequestsMessageComposer);
-			message.Int(this.messenger.RequestList().Count);
-			message.Int(this.messenger.RequestList().Count);
+			ServerPacket message = new ServerPacket(Outgoing.LoadFriendRequestsMessageComposer);
+			message.WriteInteger(this.messenger.RequestList().Count);
+			message.WriteInteger(this.messenger.RequestList().Count);
 			this.messenger.RequestList().ForEach(req =>
 			{
-				message.Int(req.Id);
-				message.String(req.Username);
-				message.String(req.Look);
+				message.WriteInteger(req.Id);
+				message.WriteString(req.Username);
+				message.WriteString(req.Look);
 			});
 			return message;
 		}

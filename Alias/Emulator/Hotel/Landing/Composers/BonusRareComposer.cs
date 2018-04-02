@@ -6,14 +6,14 @@ namespace Alias.Emulator.Hotel.Landing.Composers
 {
 	public class BonusRareComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.BonusRareMessageComposer);
-			result.String("prizetrophy_breed_gold");
-			result.Int(230);
-			result.Int(120);
-			result.Int(120);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.BonusRareMessageComposer);
+			message.WriteString("prizetrophy_breed_gold");
+			message.WriteInteger(230);
+			message.WriteInteger(120);
+			message.WriteInteger(120);
+			return message;
 		}
 	}
 }

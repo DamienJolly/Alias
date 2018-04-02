@@ -9,25 +9,25 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 {
     public class ModerationChangeRoomSettingsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (!session.Habbo.HasPermission("acc_modtool_room_settings"))
 			{
 				return;
 			}
 
-			int roomId = message.Integer();
+			int roomId = message.PopInt();
 			if (roomId <= 0)
 			{
 				return;
 			}
 
-			Room room = Alias.GetServer().GetRoomManager().Room(roomId);
+			Room room = Alias.Server.RoomManager.Room(roomId);
 			if (room != null)
 			{
-				bool lockDoor = message.Integer() == 1;
-				bool changeTitle = message.Integer() == 1;
-				bool kickUsers = message.Integer() == 1;
+				bool lockDoor = message.PopInt() == 1;
+				bool changeTitle = message.PopInt() == 1;
+				bool kickUsers = message.PopInt() == 1;
 
 				if (changeTitle)
 				{

@@ -6,20 +6,20 @@ namespace Alias.Emulator.Hotel.Users.Composers
 {
 	public class UserClubComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.UserClubMessageComposer);
-			result.String("club_habbo");
-			result.Int(0);
-			result.Int(2);
-			result.Int(0);
-			result.Int(1);
-			result.Boolean(true);
-			result.Boolean(true);
-			result.Int(0);
-			result.Int(0);
-			result.Int(int.MaxValue);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.UserClubMessageComposer);
+			message.WriteString("club_habbo");
+			message.WriteInteger(0);
+			message.WriteInteger(2);
+			message.WriteInteger(0);
+			message.WriteInteger(1);
+			message.WriteBoolean(true);
+			message.WriteBoolean(true);
+			message.WriteInteger(0);
+			message.WriteInteger(0);
+			message.WriteInteger(int.MaxValue);
+			return message;
 		}
 	}
 }

@@ -6,14 +6,14 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
 	public class MessengerInitComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.MessengerInitMessageComposer);
-			message.Int(Constant.MaximalFriends);
-			message.Int(300);
-			message.Int(800);
-			message.Int(0);
-			message.Boolean(true);
+			ServerPacket message = new ServerPacket(Outgoing.MessengerInitMessageComposer);
+			message.WriteInteger(Constant.MaximalFriends);
+			message.WriteInteger(300);
+			message.WriteInteger(800);
+			message.WriteInteger(0);
+			message.WriteBoolean(true);
 			return message;
 		}
 	}

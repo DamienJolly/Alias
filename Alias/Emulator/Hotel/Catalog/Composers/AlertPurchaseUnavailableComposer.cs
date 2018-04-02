@@ -16,10 +16,10 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 			this.code = code;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.AlertPurchaseUnavailableMessageComposer);
-			message.Int(this.code);
+			ServerPacket message = new ServerPacket(Outgoing.AlertPurchaseUnavailableMessageComposer);
+			message.WriteInteger(this.code);
 			return message;
 		}
 	}

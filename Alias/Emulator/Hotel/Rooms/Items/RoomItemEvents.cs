@@ -7,13 +7,13 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 	{
 		public static void Register()
 		{
-			Alias.GetServer().GetPacketManager().Register(Incoming.RotateMoveItemMessageEvent, new RotateMoveItemEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RoomPlaceItemMessageEvent, new RoomPlaceItemEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RoomPickupItemMessageEvent, new RoomPickupItemEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.ToggleFloorItemMessageEvent, new ToggleFloorItemEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RedeemItemMessageEvent, new RedeemItemEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.TriggerDiceMessageEvent, new TriggerDiceEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.CloseDiceMessageEvent, new CloseDiceEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RotateMoveItemMessageEvent, new RotateMoveItemEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomPlaceItemMessageEvent, new RoomPlaceItemEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomPickupItemMessageEvent, new RoomPickupItemEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ToggleFloorItemMessageEvent, new ToggleFloorItemEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RedeemItemMessageEvent, new RedeemItemEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.TriggerDiceMessageEvent, new TriggerDiceEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.CloseDiceMessageEvent, new CloseDiceEvent());
 		}
 	}
 }

@@ -13,11 +13,11 @@ namespace Alias.Emulator.Hotel.Users.Currency.Composers
 			this.habbo = habbo;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.UserCreditsMessageComposer);
-			result.String(habbo.Credits + ".0");
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.UserCreditsMessageComposer);
+			message.WriteString(habbo.Credits + ".0");
+			return message;
 		}
 	}
 }

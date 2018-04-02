@@ -7,9 +7,9 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 {
 	public class RoomUserDanceEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			int danceId = message.Integer();
+			int danceId = message.PopInt();
 
 			if (danceId < 0 || danceId > 5)
 			{

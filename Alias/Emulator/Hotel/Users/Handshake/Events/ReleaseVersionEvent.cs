@@ -7,9 +7,9 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Events
 {
 	public class ReleaseVersionEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			string version = message.String();
+			string version = message.PopString();
 
 			if (version != Constant.ProductionVersion)
 			{

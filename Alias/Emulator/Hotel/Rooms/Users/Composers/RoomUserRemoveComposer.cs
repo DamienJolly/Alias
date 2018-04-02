@@ -13,11 +13,11 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 			this.VirtualId = virtualId;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomUserRemoveMessageComposer);
-			result.String(this.VirtualId.ToString());
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomUserRemoveMessageComposer);
+			message.WriteString(this.VirtualId.ToString());
+			return message;
 		}
 	}
 }

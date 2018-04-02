@@ -13,11 +13,11 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			this.achievementScore = achievementScore;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.UserAchievementScoreMessageComposer);
-			result.Int(this.achievementScore);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.UserAchievementScoreMessageComposer);
+			message.WriteInteger(this.achievementScore);
+			return message;
 		}
 	}
 }

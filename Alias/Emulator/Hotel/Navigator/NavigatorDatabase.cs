@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Navigator
 		public static NavigatorPreference Preference(int UserId)
 		{
 			NavigatorPreference preference = new NavigatorPreference();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", UserId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `navigator_preferences` WHERE `id` = @id"))
@@ -25,10 +25,6 @@ namespace Alias.Emulator.Hotel.Navigator
 						preference.ShowSearches = Reader.GetBoolean("show_searches");
 						preference.UnknownInt   = Reader.GetInt32("unknown_int");
 					}
-					else
-					{
-						// todo: insert default values
-					}
 				}
 			}
 			return preference;
@@ -37,7 +33,7 @@ namespace Alias.Emulator.Hotel.Navigator
 		public static List<NavigatorSearches> ReadSavedSearches(int UserId)
 		{
 			List<NavigatorSearches> searches = new List<NavigatorSearches>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("userId", UserId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `habbo_saved_searches` WHERE `user_id` = @userId"))
@@ -59,7 +55,7 @@ namespace Alias.Emulator.Hotel.Navigator
 		public static List<RoomData> ReadPublicRooms(int extraId)
 		{
 			List<RoomData> result = new List<RoomData>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("categoryId", extraId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `room_data` WHERE `category` = @categoryId"))
@@ -67,7 +63,7 @@ namespace Alias.Emulator.Hotel.Navigator
 					while (Reader.Read())
 					{
 						int roomId = Reader.GetInt32("id");
-						result.Add(Alias.GetServer().GetRoomManager().RoomData(roomId));
+						result.Add(Alias.Server.RoomManager.RoomData(roomId));
 					}
 				}
 			}
@@ -76,7 +72,7 @@ namespace Alias.Emulator.Hotel.Navigator
 
 		public static void SavePreferences(NavigatorPreference preference, int UserId)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("x", preference.X);
 				dbClient.AddParameter("y", preference.Y);
@@ -85,7 +81,7 @@ namespace Alias.Emulator.Hotel.Navigator
 				dbClient.AddParameter("showsearches", Alias.BoolToString(preference.ShowSearches));
 				dbClient.AddParameter("unknownInt", preference.UnknownInt);
 				dbClient.AddParameter("id", UserId);
-				dbClient.Query("DELETE FROM `navigator_preferences` WHERE `id` = @id; INSERT INTO `navigator_preferences` (`Id`, `x`, `y`, `width`, `height`, `show_searches`, `unknown_int`) VALUES (@id, @x, @y, @width, @height, @showsearches, @unknownInt);");
+				dbClient.Query("REPLACE INTO `navigator_preferences` (`Id`, `x`, `y`, `width`, `height`, `show_searches`, `unknown_int`) VALUES (@id, @x, @y, @width, @height, @showsearches, @unknownInt)");
 			}
 		}
 
@@ -97,13 +93,13 @@ namespace Alias.Emulator.Hotel.Navigator
 		public static List<INavigatorCategory> ReadCategories()
 		{
 			List<INavigatorCategory> result = new List<INavigatorCategory>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `navigator_categories`"))
 				{
 					while (Reader.Read())
 					{
-						INavigatorCategory category = Alias.GetServer().GetNavigatorManager().NewCategory(Reader.GetString("type"));
+						INavigatorCategory category = Alias.Server.NavigatorManager.NewCategory(Reader.GetString("type"));
 						category.Id                 = Reader.GetString("id");
 						category.Title              = Reader.GetString("title");
 						category.ShowButtons        = Reader.GetBoolean("show_buttons");

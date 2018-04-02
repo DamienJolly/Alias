@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 {
     public class TradeCompleteComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			return new ServerMessage(Outgoing.TradeCompleteMessageComposer);
+			return new ServerPacket(Outgoing.TradeCompleteMessageComposer);
 		}
 	}
 }

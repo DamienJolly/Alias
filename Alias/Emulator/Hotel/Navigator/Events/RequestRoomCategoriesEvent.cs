@@ -8,9 +8,9 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 {
 	public class RequestRoomCategoriesEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			session.Send(new RoomCategoriesComposer(session.Habbo.Rank, Alias.GetServer().GetNavigatorManager().GetCategories("hotel_view").Where(cat => cat.ExtraId > 0).ToList()));
+			session.Send(new RoomCategoriesComposer(session.Habbo.Rank, Alias.Server.NavigatorManager.GetCategories("hotel_view").Where(cat => cat.ExtraId > 0).ToList()));
 		}
 	}
 }

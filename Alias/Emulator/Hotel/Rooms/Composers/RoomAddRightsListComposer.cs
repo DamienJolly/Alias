@@ -17,13 +17,13 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.Username = username;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomAddRightsListMessageComposer);
-			result.Int(this.RoomId);
-			result.Int(this.UserId);
-			result.String(this.Username);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomAddRightsListMessageComposer);
+			message.WriteInteger(this.RoomId);
+			message.WriteInteger(this.UserId);
+			message.WriteString(this.Username);
+			return message;
 		}
 	}
 }

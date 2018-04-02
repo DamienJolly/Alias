@@ -13,13 +13,13 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Composers
 			this.room = r;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomHeightMapMessageComposer);
-			result.Boolean(true);
-			result.Int(-1); //todo: Wall height
-			result.String(this.room.Model.Map.Replace("\r\n", "\r").Substring(0, this.room.Model.Map.Replace("\r\n", "\r").Length));
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomHeightMapMessageComposer);
+			message.WriteBoolean(true);
+			message.WriteInteger(-1); //todo: Wall height
+			message.WriteString(this.room.Model.Map.Replace("\r\n", "\r").Substring(0, this.room.Model.Map.Replace("\r\n", "\r").Length));
+			return message;
 		}
 	}
 }

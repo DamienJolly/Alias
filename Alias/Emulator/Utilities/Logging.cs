@@ -58,10 +58,10 @@ namespace Alias.Emulator.Utilities
 			Console.ForegroundColor = ConsoleColor.Gray;
 		}
 
-		internal static void Message(ClientMessage message, string id)
+		internal static void Message(ClientPacket message, string id)
 		{
 			Console.ForegroundColor = ConsoleColor.Cyan;
-			Console.WriteLine("[Alias] [Message] [" + id + "] [" + message.Id + "] : " + message.ToString());
+			Console.WriteLine("[Alias] [Message] [" + id + "] [" + message.Header + "] : " + message.ToString());
 			Console.ForegroundColor = ConsoleColor.Gray;
 		}
 

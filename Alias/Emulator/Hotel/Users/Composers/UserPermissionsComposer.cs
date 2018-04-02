@@ -13,12 +13,12 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			this.Rank = rank;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.UserPermissionsMessageComposer);
-			message.Int(2); //club level
-			message.Int(this.Rank);
-			message.Boolean(false); //ambassador
+			ServerPacket message = new ServerPacket(Outgoing.UserPermissionsMessageComposer);
+			message.WriteInteger(2); //club level
+			message.WriteInteger(this.Rank);
+			message.WriteBoolean(false); //ambassador
 			return message;
 		}
 	}

@@ -7,9 +7,9 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 {
 	public class InventoryRefreshComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			return new ServerMessage(Outgoing.InventoryRefreshMessageComposer);
+			return new ServerPacket(Outgoing.InventoryRefreshMessageComposer);
 		}
 	}
 }

@@ -1,7 +1,5 @@
 using System;
 using System.Threading;
-using Alias.Emulator.Network.Sessions;
-using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Tasks
 {
@@ -23,10 +21,10 @@ namespace Alias.Emulator.Tasks
 			{
 				TimeSpan Uptime = DateTime.Now - Alias.ServerStarted;
 				string uptime = Uptime.Days + " day(s), " + Uptime.Hours + " hour(s) and " + Uptime.Minutes + " minute(s)";
-				Console.Title = "Alias Emulator - " + SessionManager.OnlineUsers() + " users online - " + Alias.GetServer().GetRoomManager().ReadLoadedRooms().Count + " rooms loaded - " + uptime + " uptime";
+				Console.Title = "Alias Emulator - " + Alias.Server.SocketServer.SessionManager.OnlineUsers() + " users online - " + Alias.Server.RoomManager.ReadLoadedRooms().Count + " rooms loaded - " + uptime + " uptime";
 				this._tick = 0;
 			}
-			Alias.GetServer().GetRoomManager().DoRoomCycle();
+			Alias.Server.RoomManager.DoRoomCycle();
 		}
 
 		public void Dispose()

@@ -148,7 +148,7 @@ namespace Alias.Emulator.Hotel.Catalog
 											Id = 0,
 											LimitedNumber = limitedNumber,
 											LimitedStack = limitedStack,
-											ItemData = Alias.GetServer().GetItemManager().GetItemData(baseItem.Id)
+											ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id)
 										};
 										itemsList.Add(habboItem);
 									}

@@ -43,7 +43,7 @@ namespace Alias.Emulator.Hotel.Achievements
 		{
 			if (achievement != null)
 			{
-				Habbo habbo = SessionManager.SessionById(habboId).Habbo;
+				Habbo habbo = Alias.Server.SocketServer.SessionManager.SessionById(habboId).Habbo;
 				if (habbo != null)
 				{
 					ProgressAchievement(habbo, achievement, amount);

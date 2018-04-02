@@ -19,77 +19,77 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 			this.mode = mode;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.CatalogPageMessageComposer);
-			message.Int(this.page.Id);
-			message.String(this.mode);
+			ServerPacket message = new ServerPacket(Outgoing.CatalogPageMessageComposer);
+			message.WriteInteger(this.page.Id);
+			message.WriteString(this.mode);
 			this.page.GetLayout().Serialize(message, this.page);
 			
 			if (this.page.Layout == CatalogLayout.RECENT_PURCHASES)
 			{
-				message.Int(0);
+				message.WriteInteger(0);
 				//todo:
 			}
 			else
 			{
-				message.Int(this.page.Items.Count);
+				message.WriteInteger(this.page.Items.Count);
 				this.page.Items.ForEach(item =>
 				{
-					message.Int(item.Id);
-					message.String(item.Name);
-					message.Boolean(false);
-					message.Int(item.Credits);
-					message.Int(item.Points);
-					message.Int(item.PointsType);
-					message.Boolean(item.CanGift);
+					message.WriteInteger(item.Id);
+					message.WriteString(item.Name);
+					message.WriteBoolean(false);
+					message.WriteInteger(item.Credits);
+					message.WriteInteger(item.Points);
+					message.WriteInteger(item.PointsType);
+					message.WriteBoolean(item.CanGift);
 					
-					message.Int(item.GetItems().Count);
+					message.WriteInteger(item.GetItems().Count);
 					item.GetItems().ForEach(data =>
 					{
-						message.String(data.Type);
-						message.Int(data.SpriteId);
-						message.String(data.ExtraData);
-						message.Int(item.GetItemAmount(data.Id));
+						message.WriteString(data.Type);
+						message.WriteInteger(data.SpriteId);
+						message.WriteString(data.ExtraData);
+						message.WriteInteger(item.GetItemAmount(data.Id));
 
-						message.Boolean(item.IsLimited);
+						message.WriteBoolean(item.IsLimited);
 						if (item.IsLimited)
 						{
-							message.Int(item.LimitedStack);
-							message.Int(item.LimitedStack - item.LimitedSells);
+							message.WriteInteger(item.LimitedStack);
+							message.WriteInteger(item.LimitedStack - item.LimitedSells);
 						}
 					});
 
-					message.Int(item.ClubLevel);
-					message.Boolean(item.HasOffer);
-					message.Boolean(false);
-					message.String(item.Name + ".png");
+					message.WriteInteger(item.ClubLevel);
+					message.WriteBoolean(item.HasOffer);
+					message.WriteBoolean(false);
+					message.WriteString(item.Name + ".png");
 				});
 			}
 
-			message.Int(0);
-			message.Boolean(false);
+			message.WriteInteger(0);
+			message.WriteBoolean(false);
 
 			if (this.page.Layout == CatalogLayout.FRONTPAGE || this.page.Layout == CatalogLayout.FRONTPAGE_FEATURED)
 			{
-				message.Int(Alias.GetServer().GetCatalogManager().GetFeaturedPages().Count);
-				Alias.GetServer().GetCatalogManager().GetFeaturedPages().ForEach(feature =>
+				message.WriteInteger(Alias.Server.CatalogManager.GetFeaturedPages().Count);
+				Alias.Server.CatalogManager.GetFeaturedPages().ForEach(feature =>
 				{
-					message.Int(feature.SlotId);
-					message.String(feature.Caption);
-					message.String(feature.Image);
-					message.Int(feature.Type);
+					message.WriteInteger(feature.SlotId);
+					message.WriteString(feature.Caption);
+					message.WriteString(feature.Image);
+					message.WriteInteger(feature.Type);
 					switch (feature.Type)
 					{
 						case 0:
 						default:
-							message.String(feature.PageName); break;
+							message.WriteString(feature.PageName); break;
 						case 1:
-							message.Int(feature.PageId); break;
+							message.WriteInteger(feature.PageId); break;
 						case 2:
-							message.String(feature.ProductName); break;
+							message.WriteString(feature.ProductName); break;
 					}
-					message.Int(-1);
+					message.WriteInteger(-1);
 				});
 
 			}

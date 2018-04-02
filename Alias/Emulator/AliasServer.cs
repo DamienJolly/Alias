@@ -22,33 +22,30 @@ namespace Alias.Emulator
 		/// <summary>
 		/// Server database factory for handling entities and running queries.
 		/// </summary>
-		private DatabaseManager _database;
+		public DatabaseManager DatabaseManager { get; set; }
 
-		/// <summary>
-		/// Stores globally registered packets
-		/// </summary>
-		private PacketManager _packetManager;
+		public SocketServer SocketServer { get; set; }
 
 		/// <summary>
 		/// Task manager factory for handling our tasks.
 		/// </summary>
-		private TaskManager _taskManager;
-		
-		private RoomManager _roomManager;
-		private ItemManager _itemManager;
-		private CatalogManager _catalogManager;
-		private NavigatorManager _navigatorManager;
-		private AchievementManager _achievementManager;
-		private PermissionManager _permissionManager;
-		private ChatManager _chatManager;
-		private ModerationManager _moderationManager;
+		public TaskManager TaskManager { get; set; }
+
+		public RoomManager RoomManager { get; set; }
+		public ItemManager ItemManager { get; set; }
+		public CatalogManager CatalogManager { get; set; }
+		public NavigatorManager NavigatorManager { get; set; }
+		public AchievementManager AchievementManager { get; set; }
+		public PermissionManager PermissionManager { get; set; }
+		public ChatManager ChatManager { get; set; }
+		public ModerationManager ModerationManager { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the AliasServer.
 		/// </summary>
 		public AliasServer()
 		{
-			//todo:
+
 		}
 
 		public void Initialize()
@@ -71,9 +68,9 @@ namespace Alias.Emulator
 				SslMode               = MySqlSslMode.None
 			};
 
-			_database = new DatabaseManager(cs.ToString());
+			this.DatabaseManager = new DatabaseManager(cs.ToString());
 
-			if (!_database.TestConnection())
+			if (!this.DatabaseManager.TestConnection())
 			{
 				Logging.Error("Unable to connect to database, check settings and restart Alias. Press any key to quit.");
 				Console.ReadKey();
@@ -81,39 +78,39 @@ namespace Alias.Emulator
 				Environment.Exit(0);
 			}
 
-			this._packetManager = new PacketManager();
-			this._packetManager.Initialize();
+			this.SocketServer = new SocketServer(Configuration.Value("tcp.host"), int.Parse(Configuration.Value("tcp.port")));
+			this.SocketServer.Initialize();
 
-			//todo:
-			SessionManager.Initialize();
+			this.RoomManager = new RoomManager();
+			this.RoomManager.Initialize();
 
-			this._roomManager = new RoomManager();
-			this._roomManager.Initialize();
+			this.ItemManager = new ItemManager();
+			this.ItemManager.Initialize();
 
-			this._itemManager = new ItemManager();
-			this._itemManager.Initialize();
+			this.CatalogManager = new CatalogManager();
+			this.CatalogManager.Initialize();
 
-			this._catalogManager = new CatalogManager();
-			this._catalogManager.Initialize();
+			this.NavigatorManager = new NavigatorManager();
+			this.NavigatorManager.Initialize();
 
-			this._navigatorManager = new NavigatorManager();
-			this._navigatorManager.Initialize();
+			this.AchievementManager = new AchievementManager();
+			this.AchievementManager.Initialize();
 
-			this._achievementManager = new AchievementManager();
-			this._achievementManager.Initialize();
+			this.PermissionManager = new PermissionManager();
+			this.PermissionManager.Initialize();
 
-			this._permissionManager = new PermissionManager();
-			this._permissionManager.Initialize();
+			this.ChatManager = new ChatManager();
+			this.ChatManager.Initialize();
 
-			this._chatManager = new ChatManager();
-			this._chatManager.Initialize();
-
-			this._moderationManager = new ModerationManager();
-			this._moderationManager.Initialize();
+			this.ModerationManager = new ModerationManager();
+			this.ModerationManager.Initialize();
 			
-			this._taskManager = new TaskManager();
+			this.TaskManager = new TaskManager();
 
-			SocketServer.Initialize();
+			this.SocketServer.PacketManager.Initialize();
+
+			// Lets start our socket server
+			this.SocketServer.Connect();
 
 			Logging.Info("Server is now online");
 		}
@@ -128,32 +125,11 @@ namespace Alias.Emulator
 			Console.WriteLine("Server is shutting down, do not terminate Alias Server.");
 
 			//todo:
+			this.SocketServer.Stop();
 
 			Console.WriteLine("All done... Press any key to exit.");
 			Console.ReadKey();
 			Environment.Exit(0);
 		}
-
-		public DatabaseManager GetDatabase() => this._database;
-
-		public PacketManager GetPacketManager() => this._packetManager;
-
-		public CatalogManager GetCatalogManager() => this._catalogManager;
-
-		public ItemManager GetItemManager() => this._itemManager;
-
-		public NavigatorManager GetNavigatorManager() => this._navigatorManager;
-
-		public RoomManager GetRoomManager() => this._roomManager;
-
-		public AchievementManager GetAchievementManager() => this._achievementManager;
-
-		public PermissionManager GetPermissionManager() => this._permissionManager;
-
-		public ChatManager GetChatManager() => this._chatManager;
-
-		public ModerationManager GetModerationManager() => this._moderationManager;
-
-		public TaskManager GetTaskManager() => this._taskManager;
 	}
 }

@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
 	public class RemoveFriendEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			int amount = message.Integer();
+			int amount = message.PopInt();
 			if (amount > 100)
 			{
 				amount = 100;
@@ -20,7 +20,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 
 			for (int i = 0; i < amount; i++)
 			{
-				session.Habbo.Messenger.RemoveFriend(message.Integer());
+				session.Habbo.Messenger.RemoveFriend(message.PopInt());
 			}
 		}
 	}

@@ -4,16 +4,16 @@ namespace Alias.Emulator.Hotel.Catalog.Layouts
 {
 	public class LayoutRecycler : ICatalogLayout
 	{
-		public void Serialize(ServerMessage message, CatalogPage page)
+		public void Serialize(ServerPacket message, CatalogPage page)
 		{
-			message.String("recycler");
-			message.Int(2);
-			message.String(page.HeaderImage);
-			message.String(page.TeaserImage);
-			message.Int(1);
-			message.String(page.TextOne);
-			message.Int(-1);
-			message.Boolean(false);
+			message.WriteString("recycler");
+			message.WriteInteger(2);
+			message.WriteString(page.HeaderImage);
+			message.WriteString(page.TeaserImage);
+			message.WriteInteger(1);
+			message.WriteString(page.TextOne);
+			message.WriteInteger(-1);
+			message.WriteBoolean(false);
 		}
 	}
 }

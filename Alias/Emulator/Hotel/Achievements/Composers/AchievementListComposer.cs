@@ -15,12 +15,12 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 			this.habbo = habbo;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.AchievementListMessageComposer);
-			result.Int(Alias.GetServer().GetAchievementManager().GetAchievements().Count);
+			ServerPacket message = new ServerPacket(Outgoing.AchievementListMessageComposer);
+			message.WriteInteger(Alias.Server.AchievementManager.GetAchievements().Count);
 
-			Alias.GetServer().GetAchievementManager().GetAchievements().ForEach(achievement =>
+			Alias.Server.AchievementManager.GetAchievements().ForEach(achievement =>
 			{
 				int amount = 0;
 				AchievementProgress achievementProgress = habbo.Achievements.GetAchievementProgress(achievement);
@@ -49,22 +49,22 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 					targetLevel = currentLevel.Level;
 				}
 
-				result.Int(achievement.Id);
-				result.Int(targetLevel);
-				result.String("ACH_" + achievement.Name + targetLevel);
-				result.Int(currentLevel != null ? currentLevel.Progress : 0);
-				result.Int(nextLevel != null ? nextLevel.Progress : 0);
-				result.Int(nextLevel != null ? nextLevel.RewardAmount : 0);
-				result.Int(nextLevel != null ? nextLevel.RewardType : 0);
-				result.Int(amount);
-				result.Boolean(Alias.GetServer().GetAchievementManager().HasAchieved(habbo, achievement));
-				result.String(achievement.Category.ToString().ToLower());
-				result.String(string.Empty);
-				result.Int(achievement.Levels.Count);
-				result.Int(0); //1 = Progressbar visible if the achievement is completed
+				message.WriteInteger(achievement.Id);
+				message.WriteInteger(targetLevel);
+				message.WriteString("ACH_" + achievement.Name + targetLevel);
+				message.WriteInteger(currentLevel != null ? currentLevel.Progress : 0);
+				message.WriteInteger(nextLevel != null ? nextLevel.Progress : 0);
+				message.WriteInteger(nextLevel != null ? nextLevel.RewardAmount : 0);
+				message.WriteInteger(nextLevel != null ? nextLevel.RewardType : 0);
+				message.WriteInteger(amount);
+				message.WriteBoolean(Alias.Server.AchievementManager.HasAchieved(habbo, achievement));
+				message.WriteString(achievement.Category.ToString().ToLower());
+				message.WriteString(string.Empty);
+				message.WriteInteger(achievement.Levels.Count);
+				message.WriteInteger(0); //1 = Progressbar visible if the achievement is completed
 			});
-			result.String(string.Empty);
-			return result;
+			message.WriteString(string.Empty);
+			return message;
 		}
 	}
 }

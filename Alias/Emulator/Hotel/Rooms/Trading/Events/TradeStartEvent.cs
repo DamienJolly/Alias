@@ -9,9 +9,9 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 {
 	public class TradeStartEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			int userId = message.Integer();
+			int userId = message.PopInt();
 
 			Room room = session.Habbo.CurrentRoom;
 			if (room == null)

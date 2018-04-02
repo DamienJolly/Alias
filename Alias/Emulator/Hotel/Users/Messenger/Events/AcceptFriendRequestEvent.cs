@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
 	public class AcceptFriendRequestEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			int amount = message.Integer();
+			int amount = message.PopInt();
 			if (amount > 50)
 			{
 				amount = 50;
@@ -19,7 +19,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 			}
 			for (int i = 0; i < amount; i++)
 			{
-				session.Habbo.Messenger.Accept(message.Integer());
+				session.Habbo.Messenger.Accept(message.PopInt());
 			}
 		}
 	}

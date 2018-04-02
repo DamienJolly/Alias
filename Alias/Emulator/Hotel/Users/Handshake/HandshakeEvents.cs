@@ -7,12 +7,12 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 	{
 		public static void Register()
 		{
-			Alias.GetServer().GetPacketManager().Register(Incoming.ReleaseVersionMessageEvent, new ReleaseVersionEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.SecureLoginMessageEvent, new SecureLoginEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.MachineIDMessageEvent, new MachineIDEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestUserDataMessageEvent, new RequestUserDataEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.VersionCheckMessageEvent, new VersionCheckEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.PingMessageEvent, new PingEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ReleaseVersionMessageEvent, new ReleaseVersionEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.SecureLoginMessageEvent, new SecureLoginEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.MachineIDMessageEvent, new MachineIDEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestUserDataMessageEvent, new RequestUserDataEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.VersionCheckMessageEvent, new VersionCheckEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.PingMessageEvent, new PingEvent());
 		}
 	}
 }

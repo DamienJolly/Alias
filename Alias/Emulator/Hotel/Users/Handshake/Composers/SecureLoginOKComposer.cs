@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Composers
 {
 	public class SecureLoginOKComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			return new ServerMessage(Outgoing.SecureLoginOKMessageComposer);
+			return new ServerPacket(Outgoing.SecureLoginOKMessageComposer);
 		}
 	}
 }

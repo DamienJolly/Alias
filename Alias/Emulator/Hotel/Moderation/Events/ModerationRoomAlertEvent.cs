@@ -8,14 +8,14 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 {
     public class ModerationRoomAlertEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (!session.Habbo.HasPermission("acc_modtool_room_alert"))
 			{
 				return;
 			}
 
-			int type = message.Integer(); //message - caution
+			int type = message.PopInt(); //message - caution
 
 			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			room.UserManager.Send(new ModerationIssueHandledComposer(message.String()));
+			room.UserManager.Send(new ModerationIssueHandledComposer(message.PopString()));
 		}
 	}
 }

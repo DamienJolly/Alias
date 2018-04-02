@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Achievements
     {
 		public static void Register()
 		{
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestAchievementsMessageEvent, new RequestAchievementsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestAchievementsMessageEvent, new RequestAchievementsEvent());
 		}
 	}
 }

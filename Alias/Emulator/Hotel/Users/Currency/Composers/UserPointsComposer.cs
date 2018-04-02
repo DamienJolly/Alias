@@ -17,13 +17,13 @@ namespace Alias.Emulator.Hotel.Users.Currency.Composers
 			this.type = type;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.UserPointsMessageComposer);
-			result.Int(this.currentAmount);
-			result.Int(this.amountAdded);
-			result.Int(this.type);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.UserPointsMessageComposer);
+			message.WriteInteger(this.currentAmount);
+			message.WriteInteger(this.amountAdded);
+			message.WriteInteger(this.type);
+			return message;
 		}
 	}
 }

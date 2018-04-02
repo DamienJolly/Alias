@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
 	public class FriendRequestEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			session.Habbo.Messenger.Request(message.String());
+			session.Habbo.Messenger.Request(message.PopString());
 		}
 	}
 }

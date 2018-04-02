@@ -6,7 +6,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
     {
 		public static int CreateTradeLog(TradeUser userOne, TradeUser userTwo)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("userOneId", userOne.User.Habbo.Id);
 				dbClient.AddParameter("userTwoId", userTwo.User.Habbo.Id);
@@ -18,7 +18,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 
 		public static void LogTradeItem(int logId, int userId, int itemId)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", logId);
 				dbClient.AddParameter("itemId", itemId);

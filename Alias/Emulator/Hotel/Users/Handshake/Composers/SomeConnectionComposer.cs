@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Composers
 {
 	public class SomeConnectionComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			return new ServerMessage(Outgoing.SomeConnectionMessageComposer);
+			return new ServerPacket(Outgoing.SomeConnectionMessageComposer);
 		}
 	}
 }

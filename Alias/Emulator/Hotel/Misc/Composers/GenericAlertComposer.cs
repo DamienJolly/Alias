@@ -14,11 +14,11 @@ namespace Alias.Emulator.Hotel.Misc.Composers
 			this.message = message.Replace("%username%", session.Habbo.Username);
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.GenericAlertMessageComposer);
-			result.String(this.message);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.GenericAlertMessageComposer);
+			message.WriteString(this.message);
+			return message;
 		}
 	}
 }

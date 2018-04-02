@@ -8,20 +8,20 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 {
     public class ModerationRequestUserInfoEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (!session.Habbo.HasPermission("acc_modtool_user_info"))
 			{
 				return;
 			}
 
-			int userId = message.Integer();
+			int userId = message.PopInt();
 			if (userId <= 0)
 			{
 				return;
 			}
 
-			Habbo target = SessionManager.HabboById(userId);
+			Habbo target = Alias.Server.SocketServer.SessionManager.HabboById(userId);
 			if (target != null)
 			{
 				session.Send(new ModerationUserInfoComposer(target));

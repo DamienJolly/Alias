@@ -4,7 +4,6 @@ using System.IO;
 using System.Runtime;
 using Alias.Emulator.Utilities;
 
-[assembly: CLSCompliant(true)]
 namespace Alias
 {
     static class Program

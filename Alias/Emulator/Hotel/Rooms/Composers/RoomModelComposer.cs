@@ -13,12 +13,12 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.room = r;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomModelMessageComposer);
-			result.String(room.RoomData.ModelName);
-			result.Int(room.Id);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomModelMessageComposer);
+			message.WriteString(room.RoomData.ModelName);
+			message.WriteInteger(room.Id);
+			return message;
 		}
 	}
 }

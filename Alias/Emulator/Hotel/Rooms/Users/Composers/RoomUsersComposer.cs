@@ -20,32 +20,32 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 			this.users = users;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomUsersMessageComposer);
-			result.Int(this.users.Count);
+			ServerPacket message = new ServerPacket(Outgoing.RoomUsersMessageComposer);
+			message.WriteInteger(this.users.Count);
 			this.users.ForEach(user =>
 			{
-				result.Int(user.Habbo.Id);
-				result.String(user.Habbo.Username);
-				result.String(user.Habbo.Motto);
-				result.String(user.Habbo.Look);
-				result.Int(user.VirtualId);
-				result.Int(user.Position.X);
-				result.Int(user.Position.Y);
-				result.String(user.Position.Z.ToString());
-				result.Int(2);
-				result.Int(1);
-				result.String(user.Habbo.Gender.ToLower());
-				result.Int(-1); //groupid
-				result.Int(0); //groupwhat
-				result.String(""); //Groupname?
-				result.String("");
-				result.Int(user.Habbo.AchievementScore); //achievement points
-				result.Boolean(false); //idk
+				message.WriteInteger(user.Habbo.Id);
+				message.WriteString(user.Habbo.Username);
+				message.WriteString(user.Habbo.Motto);
+				message.WriteString(user.Habbo.Look);
+				message.WriteInteger(user.VirtualId);
+				message.WriteInteger(user.Position.X);
+				message.WriteInteger(user.Position.Y);
+				message.WriteString(user.Position.Z.ToString());
+				message.WriteInteger(2);
+				message.WriteInteger(1);
+				message.WriteString(user.Habbo.Gender.ToLower());
+				message.WriteInteger(-1); //groupid
+				message.WriteInteger(0); //groupwhat
+				message.WriteString(""); //Groupname?
+				message.WriteString("");
+				message.WriteInteger(user.Habbo.AchievementScore); //achievement points
+				message.WriteBoolean(false); //idk
 
 			});
-			return result;
+			return message;
 		}
 	}
 }

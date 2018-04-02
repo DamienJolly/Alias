@@ -17,15 +17,15 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.Data = data;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.BubbleAlertMessageComposer);
-			message.String(this.Type);
-			message.Int(this.Data.Count);
+			ServerPacket message = new ServerPacket(Outgoing.BubbleAlertMessageComposer);
+			message.WriteString(this.Type);
+			message.WriteInteger(this.Data.Count);
 			this.Data.ToList().ForEach(part =>
 			{
-				message.String(part.Key);
-				message.String(part.Value);
+				message.WriteString(part.Key);
+				message.WriteString(part.Value);
 			});
 			return message;
 		}

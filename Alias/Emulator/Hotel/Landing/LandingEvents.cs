@@ -7,10 +7,10 @@ namespace Alias.Emulator.Hotel.Landing
     {
 		public static void Register()
 		{
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestNewsListMessageEvent, new RequestNewsListEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.HotelViewDataMessageEvent, new HotelViewDataEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.HotelViewMessageEvent, new HotelViewEvent());
-			Alias.GetServer().GetPacketManager().Register(Incoming.HotelViewRequestBonusRareMessageEvent, new HotelViewRequestBonusRareEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestNewsListMessageEvent, new RequestNewsListEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.HotelViewDataMessageEvent, new HotelViewDataEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.HotelViewMessageEvent, new HotelViewEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.HotelViewRequestBonusRareMessageEvent, new HotelViewRequestBonusRareEvent());
 		}
 	}
 }

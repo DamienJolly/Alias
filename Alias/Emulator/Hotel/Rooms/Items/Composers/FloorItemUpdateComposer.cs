@@ -13,27 +13,27 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Composers
 			this.Item = item;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.FloorItemUpdateMessageComposer);
-			result.Int(this.Item.Id);
-			result.Int(this.Item.ItemData.SpriteId);
-			result.Int(this.Item.Position.X);
-			result.Int(this.Item.Position.Y);
-			result.Int(this.Item.Position.Rotation);
-			result.String(this.Item.Position.Z.ToString());
-			result.String(this.Item.ItemData.Height.ToString());
-			result.Int(1);
-			this.Item.GetInteractor().Serialize(result, this.Item);
+			ServerPacket message = new ServerPacket(Outgoing.FloorItemUpdateMessageComposer);
+			message.WriteInteger(this.Item.Id);
+			message.WriteInteger(this.Item.ItemData.SpriteId);
+			message.WriteInteger(this.Item.Position.X);
+			message.WriteInteger(this.Item.Position.Y);
+			message.WriteInteger(this.Item.Position.Rotation);
+			message.WriteString(this.Item.Position.Z.ToString());
+			message.WriteString(this.Item.ItemData.Height.ToString());
+			message.WriteInteger(1);
+			this.Item.GetInteractor().Serialize(message, this.Item);
 			if (Item.IsLimited)
 			{
-				result.Int(Item.LimitedNumber);
-				result.Int(Item.LimitedStack);
+				message.WriteInteger(Item.LimitedNumber);
+				message.WriteInteger(Item.LimitedStack);
 			}
-			result.Int(-1); // item Rent time
-			result.Int((this.Item.ItemData.Modes > 1) ? 1 : 0);
-			result.Int(this.Item.Owner); // Borrowed = -12345678
-			return result;
+			message.WriteInteger(-1); // item Rent time
+			message.WriteInteger((this.Item.ItemData.Modes > 1) ? 1 : 0);
+			message.WriteInteger(this.Item.Owner); // Borrowed = -12345678
+			return message;
 		}
 	}
 }

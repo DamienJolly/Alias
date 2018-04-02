@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Events
 {
 	public class RequestInventoryItemsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			int totalItems = session.Habbo.Inventory.FloorItems.Count;
 			int pages = (int)Math.Ceiling((double)totalItems / 1000.0);

@@ -7,10 +7,10 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 {
 	public class InteractionWired : IItemInteractor
 	{
-		public void Serialize(ServerMessage message, RoomItem item)
+		public void Serialize(ServerPacket message, RoomItem item)
 		{
-			message.Int(item.IsLimited ? 256 : 0);
-			message.String(item.Mode.ToString());
+			message.WriteInteger(item.IsLimited ? 256 : 0);
+			message.WriteString(item.Mode.ToString());
 		}
 
 		public void OnUserEnter(RoomUser user, RoomItem item)

@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 {
 	public class TradeOfferItemEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
@@ -29,7 +29,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				return;
 			}
 
-			InventoryItem item = session.Habbo.Inventory.GetFloorItem(message.Integer());
+			InventoryItem item = session.Habbo.Inventory.GetFloorItem(message.PopInt());
 			if (item == null)
 			{
 				return;

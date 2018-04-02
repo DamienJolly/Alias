@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
     {
 		public static void Register()
 		{
-			Alias.GetServer().GetPacketManager().Register(Incoming.RequestRoomRightsMessageEvent, new RequestRoomRightsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestRoomRightsMessageEvent, new RequestRoomRightsEvent());
 		}
     }
 }

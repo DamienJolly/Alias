@@ -13,17 +13,17 @@ namespace Alias.Emulator.Hotel.Rooms.Rights.Composers
 			this.Room = room;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomRightsListMessageComposer);
-			result.Int(this.Room.Id);
-			result.Int(this.Room.RoomRights.UserRights.Count);
+			ServerPacket message = new ServerPacket(Outgoing.RoomRightsListMessageComposer);
+			message.WriteInteger(this.Room.Id);
+			message.WriteInteger(this.Room.RoomRights.UserRights.Count);
 			this.Room.RoomRights.UserRights.ForEach(right =>
 			{
-				result.Int(right.Id);
-				result.String(right.Username);
+				message.WriteInteger(right.Id);
+				message.WriteString(right.Username);
 			});
-			return result;
+			return message;
 		}
 	}
 }

@@ -6,10 +6,10 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 {
 	public class CatalogUpdatedComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.CatalogUpdatedMessageComposer);
-			message.Boolean(false);
+			ServerPacket message = new ServerPacket(Outgoing.CatalogUpdatedMessageComposer);
+			message.WriteBoolean(false);
 			return message;
 		}
 	}

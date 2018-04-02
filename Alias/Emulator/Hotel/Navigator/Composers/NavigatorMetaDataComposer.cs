@@ -6,18 +6,18 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 {
 	public class NavigatorMetaDataComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.NavigatorMetaDataMessageComposer);
-			message.Int(4);
-			message.String("official_view");
-			message.Int(0);
-			message.String("hotel_view");
-			message.Int(0);
-			message.String("roomads_view");
-			message.Int(0);
-			message.String("myworld_view");
-			message.Int(0);
+			ServerPacket message = new ServerPacket(Outgoing.NavigatorMetaDataMessageComposer);
+			message.WriteInteger(4);
+			message.WriteString("official_view");
+			message.WriteInteger(0);
+			message.WriteString("hotel_view");
+			message.WriteInteger(0);
+			message.WriteString("roomads_view");
+			message.WriteInteger(0);
+			message.WriteString("myworld_view");
+			message.WriteInteger(0);
 			return message;
 		}
 	}

@@ -14,17 +14,17 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 			this.bots = bots;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.InventoryBotsMessageComposer);
-			message.Int(this.bots.Count);
+			ServerPacket message = new ServerPacket(Outgoing.InventoryBotsMessageComposer);
+			message.WriteInteger(this.bots.Count);
 			this.bots.ForEach(bot =>
 			{
-				message.Int(bot.Id);
-				message.String(bot.Name);
-				message.String(bot.Motto);
-				message.String(bot.Gender.ToLower());
-				message.String(bot.Look);
+				message.WriteInteger(bot.Id);
+				message.WriteString(bot.Name);
+				message.WriteString(bot.Motto);
+				message.WriteString(bot.Gender.ToLower());
+				message.WriteString(bot.Look);
 			});
 			return message;
 		}

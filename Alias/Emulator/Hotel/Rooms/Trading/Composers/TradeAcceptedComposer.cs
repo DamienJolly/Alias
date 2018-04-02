@@ -13,12 +13,12 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 			this.tradeUser = tradeUser;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.TradeAcceptedMessageComposer);
-			result.Int(this.tradeUser.User.Habbo.Id);
-			result.Int(this.tradeUser.Accepted ? 1 : 0);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.TradeAcceptedMessageComposer);
+			message.WriteInteger(this.tradeUser.User.Habbo.Id);
+			message.WriteInteger(this.tradeUser.Accepted ? 1 : 0);
+			return message;
 		}
 	}
 }

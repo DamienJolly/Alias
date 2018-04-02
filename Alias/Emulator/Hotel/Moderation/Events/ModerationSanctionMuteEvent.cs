@@ -7,28 +7,28 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 {
     public class ModerationSanctionMuteEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (!session.Habbo.HasPermission("acc_modtool_user_mute"))
 			{
 				return;
 			}
 			
-			int userId = message.Integer();
+			int userId = message.PopInt();
 			if (userId <= 0)
 			{
 				return;
 			}
 
-			Session target = SessionManager.SessionById(message.Integer());
+			Session target = Alias.Server.SocketServer.SessionManager.SessionById(message.PopInt());
 			if (target != null)
 			{
-				string text = message.String();
+				string text = message.PopString();
 				double duration = 60 * 60;
 
 				// todo: muting
 				target.Habbo.Muted = true;
-				target.Send(new ModerationIssueHandledComposer(message.String()));
+				target.Send(new ModerationIssueHandledComposer(message.PopString()));
 			}
 		}
 	}

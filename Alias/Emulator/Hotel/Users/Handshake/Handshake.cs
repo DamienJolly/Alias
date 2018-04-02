@@ -47,9 +47,9 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					//session.Send(new GameCenterAccountInfoComposer()); //todo:
 					session.Send(new UserClubComposer()); //todo:
 
-					if (Alias.GetServer().GetPermissionManager().HasPermission(session.Habbo.Rank, "acc_modtool"))
+					if (Alias.Server.PermissionManager.HasPermission(session.Habbo.Rank, "acc_modtool"))
 					{
-						session.Send(new ModerationToolComposer(session.Habbo, Alias.GetServer().GetModerationManager().GetTickets));
+						session.Send(new ModerationToolComposer(session.Habbo, Alias.Server.ModerationManager.GetTickets));
 					}
 
 					session.Send(new NavigatorMetaDataComposer());

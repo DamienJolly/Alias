@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Events
 {
 	public class RequestInventoryBotsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			session.Send(new InventoryBotsComposer(session.Habbo.Inventory.GetBots));
 		}

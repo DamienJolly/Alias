@@ -14,22 +14,22 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 			this.searches = searches;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.NavigatorSavedSearchesMessageComposer);
-			result.Int(searches.Count);
+			ServerPacket message = new ServerPacket(Outgoing.NavigatorSavedSearchesMessageComposer);
+			message.WriteInteger(searches.Count);
 
 			int count = 0;
 			searches.ForEach(search =>
 			{
 				count++;
-				result.Int(count);
-				result.String(search.Page);
-				result.String(search.SearchCode);
-				result.String("");
+				message.WriteInteger(count);
+				message.WriteString(search.Page);
+				message.WriteString(search.SearchCode);
+				message.WriteString("");
 			});
 
-			return result;
+			return message;
 		}
 	}
 }

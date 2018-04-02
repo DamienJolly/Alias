@@ -14,15 +14,15 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 			this.habbo = habbo;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomUserDataMessageComposer);
-			result.Int(this.habbo.CurrentRoom.UserManager == null ? -1 : this.habbo.CurrentRoom.UserManager.UserByUserid(habbo.Id).VirtualId);
-			result.String(this.habbo.Look);
-			result.String(this.habbo.Gender);
-			result.String(this.habbo.Motto);
-			result.Int(this.habbo.AchievementScore);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomUserDataMessageComposer);
+			message.WriteInteger(this.habbo.CurrentRoom.UserManager == null ? -1 : this.habbo.CurrentRoom.UserManager.UserByUserid(habbo.Id).VirtualId);
+			message.WriteString(this.habbo.Look);
+			message.WriteString(this.habbo.Gender);
+			message.WriteString(this.habbo.Motto);
+			message.WriteInteger(this.habbo.AchievementScore);
+			return message;
 		}
 	}
 }

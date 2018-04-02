@@ -44,7 +44,7 @@ namespace Alias.Emulator.Database
 			catch (MySqlException e)
 			{
 				Logging.Error("MySql Error: ", e);
-				throw e;
+				//throw e;
 			}
 			finally
 			{

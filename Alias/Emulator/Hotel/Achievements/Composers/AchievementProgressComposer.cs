@@ -17,9 +17,9 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 			this.achievement = achievement;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.AchievementProgressMessageComposer);
+			ServerPacket message = new ServerPacket(Outgoing.AchievementProgressMessageComposer);
 
 			int amount = 0;
 			AchievementProgress achievementProgress = habbo.Achievements.GetAchievementProgress(this.achievement);
@@ -48,20 +48,20 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 				targetLevel = currentLevel.Level;
 			}
 
-			result.Int(this.achievement.Id);
-			result.Int(targetLevel);
-			result.String("ACH_" + this.achievement.Name + targetLevel);
-			result.Int(currentLevel != null ? currentLevel.Progress : 0);
-			result.Int(nextLevel != null ? nextLevel.Progress : 0);
-			result.Int(nextLevel != null ? nextLevel.RewardAmount : 0);
-			result.Int(nextLevel != null ? nextLevel.RewardType : 0);
-			result.Int(amount);
-			result.Boolean(Alias.GetServer().GetAchievementManager().HasAchieved(habbo, this.achievement));
-			result.String(this.achievement.Category.ToString().ToLower());
-			result.String(string.Empty);
-			result.Int(this.achievement.Levels.Count);
-			result.Int(0); //1 = Progressbar visible if the achievement is completed
-			return result;
+			message.WriteInteger(this.achievement.Id);
+			message.WriteInteger(targetLevel);
+			message.WriteString("ACH_" + this.achievement.Name + targetLevel);
+			message.WriteInteger(currentLevel != null ? currentLevel.Progress : 0);
+			message.WriteInteger(nextLevel != null ? nextLevel.Progress : 0);
+			message.WriteInteger(nextLevel != null ? nextLevel.RewardAmount : 0);
+			message.WriteInteger(nextLevel != null ? nextLevel.RewardType : 0);
+			message.WriteInteger(amount);
+			message.WriteBoolean(Alias.Server.AchievementManager.HasAchieved(habbo, this.achievement));
+			message.WriteString(this.achievement.Category.ToString().ToLower());
+			message.WriteString(string.Empty);
+			message.WriteInteger(this.achievement.Levels.Count);
+			message.WriteInteger(0); //1 = Progressbar visible if the achievement is completed
+			return message;
 		}
 	}
 }

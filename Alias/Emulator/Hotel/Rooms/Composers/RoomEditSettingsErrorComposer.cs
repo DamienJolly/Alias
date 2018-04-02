@@ -25,13 +25,13 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.info = info;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomEditSettingsErrorMessageComposer);
-			result.Int(this.roomId);
-			result.Int(this.errorCode);
-			result.String(this.info);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomEditSettingsErrorMessageComposer);
+			message.WriteInteger(this.roomId);
+			message.WriteInteger(this.errorCode);
+			message.WriteString(this.info);
+			return message;
 		}
 	}
 }

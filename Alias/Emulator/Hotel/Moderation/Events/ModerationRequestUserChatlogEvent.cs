@@ -8,14 +8,14 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 {
     public class ModerationRequestUserChatlogEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (!session.Habbo.HasPermission("acc_modtool_user_logs"))
 			{
 				return;
 			}
 
-			int userId = message.Integer();
+			int userId = message.PopInt();
 			if (userId <= 0)
 			{
 				return;

@@ -20,15 +20,15 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 			this.items = items;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.AddHabboItemsMessageComposer);
-			message.Int(1);
-			message.Int(1);
-			message.Int(this.items.Count);
+			ServerPacket message = new ServerPacket(Outgoing.AddHabboItemsMessageComposer);
+			message.WriteInteger(1);
+			message.WriteInteger(1);
+			message.WriteInteger(this.items.Count);
 			this.items.ForEach(item =>
 			{
-				message.Int(item.Id);
+				message.WriteInteger(item.Id);
 			});
 			return message;
 		}

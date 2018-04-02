@@ -8,7 +8,7 @@ namespace Alias.Emulator.Hotel.Users
     {
 		public static object Variable(int userId, string column)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `" + column + "` FROM `habbos` WHERE `id` = @id"))
@@ -24,7 +24,7 @@ namespace Alias.Emulator.Hotel.Users
 
 		public static int Id(string username)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("username", username);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `habbos` WHERE `Username` = @username"))
@@ -42,7 +42,7 @@ namespace Alias.Emulator.Hotel.Users
 		{
 			UserSettings settings = new UserSettings();
 
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `habbo_settings` WHERE `id` = @id LIMIT 1"))
@@ -73,7 +73,7 @@ namespace Alias.Emulator.Hotel.Users
 
 		public static void UpdateSettings(UserSettings settings, int userId)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
 				dbClient.AddParameter("volumeSystem", settings.VolumeSystem);

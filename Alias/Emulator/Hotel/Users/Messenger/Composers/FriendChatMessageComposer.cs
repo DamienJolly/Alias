@@ -15,12 +15,12 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 			this.Message = message;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.FriendChatMessageMessageComposer);
-			message.Int(this.FromId);
-			message.String(this.Message);
-			message.Int(0); //time
+			ServerPacket message = new ServerPacket(Outgoing.FriendChatMessageMessageComposer);
+			message.WriteInteger(this.FromId);
+			message.WriteString(this.Message);
+			message.WriteInteger(0); //time
 			return message;
 		}
 	}

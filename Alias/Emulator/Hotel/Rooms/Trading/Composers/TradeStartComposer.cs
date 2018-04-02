@@ -13,15 +13,15 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 			this.roomTrade = roomTrade;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.TradeStartMessageComposer);
+			ServerPacket message = new ServerPacket(Outgoing.TradeStartMessageComposer);
 			roomTrade.Users.ForEach(user =>
 			{
-				result.Int(user.User.Habbo.Id);
-				result.Int(1);
+				message.WriteInteger(user.User.Habbo.Id);
+				message.WriteInteger(1);
 			});
-			return result;
+			return message;
 		}
 	}
 }

@@ -13,11 +13,11 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			this.Username = username;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomAccessDeniedMessageComposer);
-			result.String(this.Username);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.RoomAccessDeniedMessageComposer);
+			message.WriteString(this.Username);
+			return message;
 		}
 	}
 }

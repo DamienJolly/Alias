@@ -6,11 +6,11 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Composers
 {
 	public class FurnitureAliasesComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.FurnitureAliasesMessageComposer);
-			result.Int(0);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.FurnitureAliasesMessageComposer);
+			message.WriteInteger(0);
+			return message;
 		}
 	}
 }

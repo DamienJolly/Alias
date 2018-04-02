@@ -13,15 +13,15 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 			this.UserPreference = userpref;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.NavigatorSettingsMessageComposer);
-			message.Int(this.UserPreference.X);
-			message.Int(this.UserPreference.Y);
-			message.Int(this.UserPreference.Width);
-			message.Int(this.UserPreference.Height);
-			message.Boolean(this.UserPreference.ShowSearches);
-			message.Int(this.UserPreference.UnknownInt);
+			ServerPacket message = new ServerPacket(Outgoing.NavigatorSettingsMessageComposer);
+			message.WriteInteger(this.UserPreference.X);
+			message.WriteInteger(this.UserPreference.Y);
+			message.WriteInteger(this.UserPreference.Width);
+			message.WriteInteger(this.UserPreference.Height);
+			message.WriteBoolean(this.UserPreference.ShowSearches);
+			message.WriteInteger(this.UserPreference.UnknownInt);
 			return message;
 		}
 	}

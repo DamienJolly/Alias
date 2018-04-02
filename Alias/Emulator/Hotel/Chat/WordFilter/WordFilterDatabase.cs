@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Chat.WordFilter
 		public static List<WordFilterData> ReadSwearWords()
 		{
 			List<WordFilterData> result = new List<WordFilterData>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `word`, `bannable` FROM `wordfilter`"))
 				{
@@ -29,7 +29,7 @@ namespace Alias.Emulator.Hotel.Chat.WordFilter
 
 		public static void StoreMessage(int userId, int roomId, string message, int type, int toId)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("userId", userId);
 				dbClient.AddParameter("roomId", roomId);

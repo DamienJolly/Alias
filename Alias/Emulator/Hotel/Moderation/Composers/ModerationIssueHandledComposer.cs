@@ -23,12 +23,12 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			this.message = message;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.ModerationIssueHandledMessageComposer);
-			result.Int(this.code);
-			result.String(this.message);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.ModerationIssueHandledMessageComposer);
+			message.WriteInteger(this.code);
+			message.WriteString(this.message);
+			return message;
 		}
 	}
 }

@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Users.Events
 {
 	public class SaveBlockCameraFollowEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			bool cameraFollow = message.Boolean();
+			bool cameraFollow = message.PopBoolean();
 
 			session.Habbo.Settings.CameraFollow = cameraFollow;
 		}

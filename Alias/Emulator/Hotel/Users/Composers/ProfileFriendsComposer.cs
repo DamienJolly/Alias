@@ -25,10 +25,10 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			this.sad = friends.Where(friend => friend.Relation == 3).ToList();
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.ProfileFriendsMessageComposer);
-			result.Int(this.userId);
+			ServerPacket message = new ServerPacket(Outgoing.ProfileFriendsMessageComposer);
+			message.WriteInteger(this.userId);
 
 			int total = 0;
 
@@ -39,36 +39,36 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			if (this.sad.Count > 0)
 				total++;
 
-			result.Int(total);
+			message.WriteInteger(total);
 
 			if (this.love.Count > 0)
 			{
 				MessengerFriend friend = this.love[rand.Next(this.love.Count)];
-				result.Int(1);
-				result.Int(love.Count);
-				result.Int(friend.Id);
-				result.String(friend.Username);
-				result.String(friend.Look);
+				message.WriteInteger(1);
+				message.WriteInteger(love.Count);
+				message.WriteInteger(friend.Id);
+				message.WriteString(friend.Username);
+				message.WriteString(friend.Look);
 			}
 			if (this.happy.Count > 0)
 			{
 				MessengerFriend friend = this.happy[rand.Next(this.happy.Count)];
-				result.Int(2);
-				result.Int(happy.Count);
-				result.Int(friend.Id);
-				result.String(friend.Username);
-				result.String(friend.Look);
+				message.WriteInteger(2);
+				message.WriteInteger(happy.Count);
+				message.WriteInteger(friend.Id);
+				message.WriteString(friend.Username);
+				message.WriteString(friend.Look);
 			}
 			if (this.sad.Count > 0)
 			{
 				MessengerFriend friend = this.sad[rand.Next(this.sad.Count)];
-				result.Int(3);
-				result.Int(love.Count);
-				result.Int(friend.Id);
-				result.String(friend.Username);
-				result.String(friend.Look);
+				message.WriteInteger(3);
+				message.WriteInteger(love.Count);
+				message.WriteInteger(friend.Id);
+				message.WriteString(friend.Username);
+				message.WriteString(friend.Look);
 			}
-			return result;
+			return message;
 		}
 	}
 }

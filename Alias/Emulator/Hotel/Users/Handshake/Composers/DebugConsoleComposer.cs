@@ -6,11 +6,11 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Composers
 {
 	public class DebugConsoleComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.DebugConsoleMessageComposer);
-			result.Boolean(true);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.DebugConsoleMessageComposer);
+			message.WriteBoolean(true);
+			return message;
 		}
 	}
 }

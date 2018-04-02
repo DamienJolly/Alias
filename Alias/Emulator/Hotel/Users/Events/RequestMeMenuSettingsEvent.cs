@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Users.Events
 {
 	public class RequestMeMenuSettingsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			session.Send(new MeMenuSettingsComposer(session.Habbo));
 		}

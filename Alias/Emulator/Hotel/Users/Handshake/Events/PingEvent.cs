@@ -7,9 +7,9 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Events
 {
 	public class PingEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			session.Send(new PongComposer(message.Integer()));
+			session.Send(new PongComposer(message.PopInt()));
 		}
 	}
 }

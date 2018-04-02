@@ -13,15 +13,15 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 			this.bot = bot;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.AddBotMessageComposer);
-			message.Int(bot.Id);
-			message.String(bot.Name);
-			message.String(bot.Motto);
-			message.String(bot.Gender.ToLower());
-			message.String(bot.Look);
-			message.Boolean(true);
+			ServerPacket message = new ServerPacket(Outgoing.AddBotMessageComposer);
+			message.WriteInteger(bot.Id);
+			message.WriteString(bot.Name);
+			message.WriteString(bot.Motto);
+			message.WriteString(bot.Gender.ToLower());
+			message.WriteString(bot.Look);
+			message.WriteBoolean(true);
 			return message;
 		}
 	}

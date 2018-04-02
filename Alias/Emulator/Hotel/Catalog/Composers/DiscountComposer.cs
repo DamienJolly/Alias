@@ -6,17 +6,17 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 {
 	public class DiscountComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.DiscountMessageComposer);
-			message.Int(100); //Most you can get.
-			message.Int(6);
-			message.Int(1);
-			message.Int(1);
-			message.Int(2); //Count
+			ServerPacket message = new ServerPacket(Outgoing.DiscountMessageComposer);
+			message.WriteInteger(100); //Most you can get.
+			message.WriteInteger(6);
+			message.WriteInteger(1);
+			message.WriteInteger(1);
+			message.WriteInteger(2); //Count
 			{
-				message.Int(40);
-				message.Int(99);
+				message.WriteInteger(40);
+				message.WriteInteger(99);
 			}
 			return message;
 		}

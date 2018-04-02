@@ -17,21 +17,21 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			this.viewer = viewer;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.UserProfileMessageComposer);
-			result.Int(habbo.Id);
-			result.String(habbo.Username);
-			result.String(habbo.Look);
-			result.String(habbo.Motto);
-			result.String("01.01.1970 00:00:00"); //Account created
-			result.Int(habbo.AchievementScore);
-			result.Int(SessionManager.IsOnline(habbo.Id) ? habbo.Messenger.FriendList().Count : MessengerComponent.GetFriendList(habbo.Id).Count);
-			result.Boolean(viewer.Habbo.Messenger.IsFriend(habbo.Id));
-			result.Boolean(viewer.Habbo.Messenger.RequestExists(habbo.Id));
-			result.Boolean(SessionManager.IsOnline(habbo.Id));
+			ServerPacket message = new ServerPacket(Outgoing.UserProfileMessageComposer);
+			message.WriteInteger(habbo.Id);
+			message.WriteString(habbo.Username);
+			message.WriteString(habbo.Look);
+			message.WriteString(habbo.Motto);
+			message.WriteString("01.01.1970 00:00:00"); //Account created
+			message.WriteInteger(habbo.AchievementScore);
+			message.WriteInteger(Alias.Server.SocketServer.SessionManager.IsOnline(habbo.Id) ? habbo.Messenger.FriendList().Count : MessengerComponent.GetFriendList(habbo.Id).Count);
+			message.WriteBoolean(viewer.Habbo.Messenger.IsFriend(habbo.Id));
+			message.WriteBoolean(viewer.Habbo.Messenger.RequestExists(habbo.Id));
+			message.WriteBoolean(Alias.Server.SocketServer.SessionManager.IsOnline(habbo.Id));
 
-			result.Int(0); // Count - groups
+			message.WriteInteger(0); // Count - groups
 			{
 				// int    - group id
 				// string - group name
@@ -43,9 +43,9 @@ namespace Alias.Emulator.Hotel.Users.Composers
 				// bool   - is owner
 			}
 
-			result.Int(0); //Last online (seconds)
-			result.Boolean(true);
-			return result;
+			message.WriteInteger(0); //Last online (seconds)
+			message.WriteBoolean(true);
+			return message;
 		}
 	}
 }

@@ -6,11 +6,11 @@ namespace Alias.Emulator.Hotel.Misc.Composers
 {
 	public class UnknownComposer5 : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.UnknownComposer5);
-			result.Int(0);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.UnknownComposer5);
+			message.WriteInteger(0);
+			return message;
 		}
 	}
 }

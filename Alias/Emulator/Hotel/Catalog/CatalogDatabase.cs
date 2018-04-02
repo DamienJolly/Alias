@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Catalog
 		public static List<CatalogPage> ReadPages()
 		{
 			List<CatalogPage> pages = new List<CatalogPage>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_pages` ORDER BY `order_id` ASC, `caption` ASC"))
 				{
@@ -48,7 +48,7 @@ namespace Alias.Emulator.Hotel.Catalog
 		public static List<CatalogBots> ReadBots()
 		{
 			List<CatalogBots> bots = new List<CatalogBots>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_bot_items`"))
 				{
@@ -72,7 +72,7 @@ namespace Alias.Emulator.Hotel.Catalog
 		public static List<CatalogItem> ReadItems(CatalogPage page)
 		{
 			List<CatalogItem> items = new List<CatalogItem>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("pageId", page.Id);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_items` WHERE `page_id` = @pageId"))
@@ -111,7 +111,7 @@ namespace Alias.Emulator.Hotel.Catalog
 		public static List<int> ReadLimited(int itemId, int size)
 		{
 			List<int> takenNumbers = new List<int>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("itemId", itemId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_limited_items` WHERE `item_id` = @itemId"))
@@ -122,12 +122,12 @@ namespace Alias.Emulator.Hotel.Catalog
 					}
 				}
 			}
-			return Alias.GetServer().GetCatalogManager().GetAvailableNumbers(takenNumbers, size);
+			return Alias.Server.CatalogManager.GetAvailableNumbers(takenNumbers, size);
 		}
 
 		public static void AddLimited(int itemId, int number)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("itemId", itemId);
 				dbClient.AddParameter("number", number);
@@ -138,7 +138,7 @@ namespace Alias.Emulator.Hotel.Catalog
 		public static List<CatalogFeatured> ReadFeatured()
 		{
 			List<CatalogFeatured> featured = new List<CatalogFeatured>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_featured`"))
 				{

@@ -10,7 +10,7 @@ namespace Alias.Emulator.Hotel.Achievements
 		public static List<Achievement> ReadAchievements()
 		{
 			List<Achievement> achievements = new List<Achievement>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `achievements`"))
 				{
@@ -33,7 +33,7 @@ namespace Alias.Emulator.Hotel.Achievements
 		public static List<AchievementLevel> ReadLevels(int id)
 		{
 			List<AchievementLevel> levels = new List<AchievementLevel>();
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", id);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `achievement_levels` WHERE `id` = @id"))
@@ -57,7 +57,7 @@ namespace Alias.Emulator.Hotel.Achievements
 
 		public static void AddUserAchievement(Habbo habbo, Achievement achievement, int amount)
 		{
-			using (DatabaseConnection dbClient = Alias.GetServer().GetDatabase().GetConnection())
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("userId", habbo.Id);
 				dbClient.AddParameter("name", achievement.Name);

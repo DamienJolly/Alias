@@ -13,21 +13,21 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 			this.habbo = habbo;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.InventoryBadgesMessageComposer);
-			message.Int(this.habbo.Badges.GetBadges().Count);
+			ServerPacket message = new ServerPacket(Outgoing.InventoryBadgesMessageComposer);
+			message.WriteInteger(this.habbo.Badges.GetBadges().Count);
 			this.habbo.Badges.GetBadges().ForEach(badge =>
 			{
-				message.Int(badge.Slot);
-				message.String(badge.Code);
+				message.WriteInteger(badge.Slot);
+				message.WriteString(badge.Code);
 			});
 
-			message.Int(this.habbo.Badges.GetWearingBadges().Count);
+			message.WriteInteger(this.habbo.Badges.GetWearingBadges().Count);
 			this.habbo.Badges.GetWearingBadges().ForEach(badge =>
 			{
-				message.Int(badge.Slot);
-				message.String(badge.Code);
+				message.WriteInteger(badge.Slot);
+				message.WriteString(badge.Code);
 			});
 			return message;
 		}

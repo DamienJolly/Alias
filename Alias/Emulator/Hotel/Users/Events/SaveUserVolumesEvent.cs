@@ -6,11 +6,11 @@ namespace Alias.Emulator.Hotel.Users.Events
 {
 	public class SaveUserVolumesEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			int system = message.Integer();
-			int furni = message.Integer();
-			int trax = message.Integer();
+			int system = message.PopInt();
+			int furni = message.PopInt();
+			int trax = message.PopInt();
 
 			session.Habbo.Settings.VolumeSystem = system;
 			session.Habbo.Settings.VolumeFurni = furni;

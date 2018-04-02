@@ -18,12 +18,12 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 			this.code = code;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.TradeClosedMessageComposer);
-			result.Int(this.userId);
-			result.Int(this.code);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.TradeClosedMessageComposer);
+			message.WriteInteger(this.userId);
+			message.WriteInteger(this.code);
+			return message;
 		}
 	}
 }

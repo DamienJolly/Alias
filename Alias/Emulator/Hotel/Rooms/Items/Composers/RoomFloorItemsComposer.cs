@@ -14,34 +14,34 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Composers
 			this.Items = items;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomFloorItemsMessageComposer);
-			result.Int(0); //TODO
-						   //result.Int(0); //userId
-						   //result.String(""); //username
-			result.Int(this.Items.Count);
+			ServerPacket message = new ServerPacket(Outgoing.RoomFloorItemsMessageComposer);
+			message.WriteInteger(0); //TODO
+						   //message.WriteInteger(0); //userId
+						   //message.WriteString(""); //username
+			message.WriteInteger(this.Items.Count);
 			this.Items.ForEach(item =>
 			{
-				result.Int(item.Id);
-				result.Int(item.ItemData.SpriteId);
-				result.Int(item.Position.X);
-				result.Int(item.Position.Y);
-				result.Int(item.Position.Rotation);
-				result.String(item.Position.Z.ToString());
-				result.String(item.ItemData.Height.ToString());
-				result.Int(1);
-				item.GetInteractor().Serialize(result, item);
+				message.WriteInteger(item.Id);
+				message.WriteInteger(item.ItemData.SpriteId);
+				message.WriteInteger(item.Position.X);
+				message.WriteInteger(item.Position.Y);
+				message.WriteInteger(item.Position.Rotation);
+				message.WriteString(item.Position.Z.ToString());
+				message.WriteString(item.ItemData.Height.ToString());
+				message.WriteInteger(1);
+				item.GetInteractor().Serialize(message, item);
 				if (item.IsLimited)
 				{
-					result.Int(item.LimitedNumber);
-					result.Int(item.LimitedStack);
+					message.WriteInteger(item.LimitedNumber);
+					message.WriteInteger(item.LimitedStack);
 				}
-				result.Int(-1); // item Rent time
-				result.Int((item.ItemData.Modes > 1) ? 1 : 0);
-				result.Int(item.Owner); // Borrowed = -12345678
+				message.WriteInteger(-1); // item Rent time
+				message.WriteInteger((item.ItemData.Modes > 1) ? 1 : 0);
+				message.WriteInteger(item.Owner); // Borrowed = -12345678
 			});
-			return result;
+			return message;
 		}
 	}
 }

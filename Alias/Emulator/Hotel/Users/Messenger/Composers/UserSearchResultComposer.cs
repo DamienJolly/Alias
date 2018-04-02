@@ -28,36 +28,36 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 			});
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.UserSearchResultMessageComposer);
-			result.Int(this.Friends.Count);
+			ServerPacket message = new ServerPacket(Outgoing.UserSearchResultMessageComposer);
+			message.WriteInteger(this.Friends.Count);
 			this.Friends.ForEach(habbo =>
 			{
-				result.Int(habbo.Id);
-				result.String(habbo.Username);
-				result.String(habbo.Motto);
-				result.Boolean(SessionManager.IsOnline(habbo.Id));
-				result.Boolean(false);
-				result.String("");
-				result.Int(0);
-				result.String(habbo.Look);
-				result.String("01.01.1970 00:00:00"); //LastOnline
+				message.WriteInteger(habbo.Id);
+				message.WriteString(habbo.Username);
+				message.WriteString(habbo.Motto);
+				message.WriteBoolean(Alias.Server.SocketServer.SessionManager.IsOnline(habbo.Id));
+				message.WriteBoolean(false);
+				message.WriteString("");
+				message.WriteInteger(0);
+				message.WriteString(habbo.Look);
+				message.WriteString("01.01.1970 00:00:00"); //LastOnline
 			});
-			result.Int(this.NotFriends.Count);
+			message.WriteInteger(this.NotFriends.Count);
 			this.NotFriends.ForEach(habbo =>
 			{
-				result.Int(habbo.Id);
-				result.String(habbo.Username);
-				result.String(habbo.Motto);
-				result.Boolean(SessionManager.IsOnline(habbo.Id));
-				result.Boolean(false);
-				result.String("");
-				result.Int(0);
-				result.String(habbo.Look);
-				result.String("01.01.1970 00:00:00"); //LastOnline
+				message.WriteInteger(habbo.Id);
+				message.WriteString(habbo.Username);
+				message.WriteString(habbo.Motto);
+				message.WriteBoolean(Alias.Server.SocketServer.SessionManager.IsOnline(habbo.Id));
+				message.WriteBoolean(false);
+				message.WriteString("");
+				message.WriteInteger(0);
+				message.WriteString(habbo.Look);
+				message.WriteString("01.01.1970 00:00:00"); //LastOnline
 			});
-			return result;
+			return message;
 		}
 	}
 }

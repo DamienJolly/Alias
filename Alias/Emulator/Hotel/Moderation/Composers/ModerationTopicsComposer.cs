@@ -6,19 +6,19 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 {
 	public class ModerationTopicsComposer : IPacketComposer
 	{
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.ModerationTopicsMessageComposer);
-			result.Int(1);
-			result.String("Sexually Explicit");
-			result.Int(2);
-			result.String("test");
-			result.Int(1);
-			result.String("testing");
-			result.String("test2");
-			result.Int(2);
-			result.String("testing2");
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.ModerationTopicsMessageComposer);
+			message.WriteInteger(1);
+			message.WriteString("Sexually Explicit");
+			message.WriteInteger(2);
+			message.WriteString("test");
+			message.WriteInteger(1);
+			message.WriteString("testing");
+			message.WriteString("test2");
+			message.WriteInteger(2);
+			message.WriteString("testing2");
+			return message;
 		}
 	}
 }

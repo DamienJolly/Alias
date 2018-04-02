@@ -6,12 +6,12 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 {
 	public class RoomUserWalkEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (session.Habbo != null && session.Habbo.CurrentRoom != null)
 			{
-				int x = message.Integer();
-				int y = message.Integer();
+				int x = message.PopInt();
+				int y = message.PopInt();
 				
 				RoomUser usr = session.Habbo.CurrentRoom.UserManager.UserBySession(session);
 

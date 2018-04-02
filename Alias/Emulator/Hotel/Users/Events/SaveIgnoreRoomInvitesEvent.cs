@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Users.Events
 {
 	public class SaveIgnoreRoomInvitesEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
-			bool ignoreInvites = message.Boolean();
+			bool ignoreInvites = message.PopBoolean();
 
 			session.Habbo.Settings.IgnoreInvites = ignoreInvites;
 		}

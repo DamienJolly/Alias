@@ -26,8 +26,8 @@ namespace Alias.Emulator.Hotel.Chat.Commands.Staff
 				case "catalog":
 				case "catalogue":
 					{
-						Alias.GetServer().GetCatalogManager().Initialize();
-						SessionManager.Send(new CatalogUpdatedComposer());
+						Alias.Server.CatalogManager.Initialize();
+						Alias.Server.SocketServer.SessionManager.Send(new CatalogUpdatedComposer());
 						break;
 					}
 
@@ -35,27 +35,27 @@ namespace Alias.Emulator.Hotel.Chat.Commands.Staff
 				case "furni":
 				case "furniture":
 					{
-						Alias.GetServer().GetItemManager().Initialize();
+						Alias.Server.ItemManager.Initialize();
 						break;
 					}
 
 				case "ach":
 				case "achievements":
 					{
-						Alias.GetServer().GetAchievementManager().Initialize();
+						Alias.Server.AchievementManager.Initialize();
 						break;
 					}
 
 				case "navi":
 				case "navigator":
 					{
-						Alias.GetServer().GetNavigatorManager().Initialize();
+						Alias.Server.NavigatorManager.Initialize();
 						break;
 					}
 
 				case "models":
 					{
-						Alias.GetServer().GetRoomManager().Initialize();
+						Alias.Server.RoomManager.Initialize();
 						break;
 					}
 

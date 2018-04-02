@@ -20,21 +20,21 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 			this.users = users;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.RoomUserStatusMessageComposer);
-			result.Int(this.users.Count);
+			ServerPacket message = new ServerPacket(Outgoing.RoomUserStatusMessageComposer);
+			message.WriteInteger(this.users.Count);
 			this.users.ForEach(user =>
 			{
-				result.Int(user.VirtualId);
-				result.Int(user.Position.X);
-				result.Int(user.Position.Y);
-				result.String(user.Position.Z.ToString("0.00"));
-				result.Int(user.Position.HeadRotation);
-				result.Int(user.Position.Rotation);
-				result.String(user.Actions.String);
+				message.WriteInteger(user.VirtualId);
+				message.WriteInteger(user.Position.X);
+				message.WriteInteger(user.Position.Y);
+				message.WriteString(user.Position.Z.ToString("0.00"));
+				message.WriteInteger(user.Position.HeadRotation);
+				message.WriteInteger(user.Position.Rotation);
+				message.WriteString(user.Actions.String);
 			});
-			return result;
+			return message;
 		}
 	}
 }

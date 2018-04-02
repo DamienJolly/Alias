@@ -13,11 +13,11 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			this.HomeRoomId = homeRoom;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.UserHomeRoomMessageComposer);
-			message.Int(this.HomeRoomId);
-			message.Int(this.HomeRoomId);
+			ServerPacket message = new ServerPacket(Outgoing.UserHomeRoomMessageComposer);
+			message.WriteInteger(this.HomeRoomId);
+			message.WriteInteger(this.HomeRoomId);
 			return message;
 		}
 	}

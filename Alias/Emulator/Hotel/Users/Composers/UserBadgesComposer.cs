@@ -17,15 +17,15 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			this.id = id;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage message = new ServerMessage(Outgoing.UserBadgesMessageComposer);
-			message.Int(this.id);
-			message.Int(badges.Count);
+			ServerPacket message = new ServerPacket(Outgoing.UserBadgesMessageComposer);
+			message.WriteInteger(this.id);
+			message.WriteInteger(badges.Count);
 			badges.ForEach(badge =>
 			{
-				message.Int(badge.Slot);
-				message.String(badge.Code);
+				message.WriteInteger(badge.Slot);
+				message.WriteString(badge.Code);
 			});
 			return message;
 		}

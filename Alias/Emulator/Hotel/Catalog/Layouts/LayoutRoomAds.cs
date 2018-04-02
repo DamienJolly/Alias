@@ -4,15 +4,15 @@ namespace Alias.Emulator.Hotel.Catalog.Layouts
 {
 	public class LayoutRoomAds : ICatalogLayout
 	{
-		public void Serialize(ServerMessage message, CatalogPage page)
+		public void Serialize(ServerPacket message, CatalogPage page)
 		{
-			message.String("roomads");
-			message.Int(2);
-			message.String(page.HeaderImage);
-			message.String(page.TeaserImage);
-			message.Int(2);
-			message.String(page.TextOne);
-			message.String(page.TextTwo);
+			message.WriteString("roomads");
+			message.WriteInteger(2);
+			message.WriteString(page.HeaderImage);
+			message.WriteString(page.TeaserImage);
+			message.WriteInteger(2);
+			message.WriteString(page.TextOne);
+			message.WriteString(page.TextTwo);
 		}
 	}
 }

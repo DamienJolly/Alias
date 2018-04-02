@@ -16,11 +16,11 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 			this.error = error;
 		}
 
-		public ServerMessage Compose()
+		public ServerPacket Compose()
 		{
-			ServerMessage result = new ServerMessage(Outgoing.AlertPurchaseFailedMessageComposer);
-			result.Int(this.error);
-			return result;
+			ServerPacket message = new ServerPacket(Outgoing.AlertPurchaseFailedMessageComposer);
+			message.WriteInteger(this.error);
+			return message;
 		}
 	}
 }

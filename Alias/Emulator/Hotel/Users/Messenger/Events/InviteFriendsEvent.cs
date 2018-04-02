@@ -7,14 +7,14 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
 	public class InviteFriendsEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientMessage message)
+		public void Handle(Session session, ClientPacket message)
 		{
 			if (session.Habbo.Muted)
 			{
 				return;
 			}
 
-			int amount = message.Integer();
+			int amount = message.PopInt();
 			if (amount > 100)
 			{
 				amount = 100;
@@ -27,10 +27,10 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 			List<int> friends = new List<int>();
 			for (int i = 0; i < amount; i++)
 			{
-				friends.Add(message.Integer());
+				friends.Add(message.PopInt());
 			}
 
-			session.Habbo.Messenger.RoomInvitation(friends, message.String());
+			session.Habbo.Messenger.RoomInvitation(friends, message.PopString());
 		}
 	}
 }
