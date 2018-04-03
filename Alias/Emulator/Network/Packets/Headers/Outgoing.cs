@@ -80,6 +80,8 @@ namespace Alias.Emulator.Network.Packets.Headers
 			// Models
 			public const int RoomHeightMapMessageComposer = 1909;
 			public const int RoomRelativeMapMessageComposer = 322;
+			public const int FloorPlanEditorDoorSettingsMessageComposer = 1569;
+			public const int FloorPlanEditorBlockedTilesMessageComposer = 889;
 
 			// Users
 			public const int RoomUsersMessageComposer = 633;
@@ -124,7 +126,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int HallOfFameMessageComposer = 1243;
 		public const int NewsListMessageComposer = 811;
 		public const int BonusRareMessageComposer = 761;
-		public const int HotelViewMessageComposer = 730;
+		public const int HotelViewMessageComposer = 2484;
 
 		// Moderation
 		public const int ModToolMessageComposer = 258;

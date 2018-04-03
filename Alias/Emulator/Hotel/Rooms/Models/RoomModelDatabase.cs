@@ -23,6 +23,7 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 							MinRank  = Reader.GetInt32("min_rank"),
 							Map      = Reader.GetString("map"),
 							ClubOnly = Reader.GetBoolean("club_only"),
+							IsCustom = Reader.GetBoolean("is_custom"),
 							Door     = Door.Parse(Reader.GetString("door"))
 						};
 						result.Add(model);
@@ -30,6 +31,21 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 				}
 			}
 			return result;
+		}
+
+		public static void SaveModel(RoomModel model)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("name", model.Name);
+				dbClient.AddParameter("users", model.MaxUsers);
+				dbClient.AddParameter("rank", model.MinRank);
+				dbClient.AddParameter("map", model.Map);
+				dbClient.AddParameter("club", Alias.BoolToString(model.ClubOnly));
+				dbClient.AddParameter("custom", Alias.BoolToString(model.IsCustom));
+				dbClient.AddParameter("door", model.Door.X + "," + model.Door.Y + "," + model.Door.Rotation);
+				dbClient.Query("REPLACE INTO `room_models` (`name`, `max_user`, `min_rank`, `map`, `club_only`, `is_custom`, `door`) VALUES (@name, @users, @rank, @map, @club, @custom, @door)");
+			}
 		}
 	}
 }

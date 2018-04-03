@@ -32,5 +32,15 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 			Logging.Info("Couldn't find Model with Name " + name + ". Returning an empty Model!");
 			return new RoomModel();
 		}
+
+		public void AddModel(RoomModel model)
+		{
+			this._models.Add(model);
+		}
+
+		public void SaveModel(RoomModel model)
+		{
+			RoomModelDatabase.SaveModel(model);
+		}
 	}
 }

@@ -123,6 +123,7 @@ namespace Alias.Emulator.Hotel.Rooms
 					Id = roomId,
 					RoomData = RoomData(roomId)
 				};
+				result.Model = GetRoomModelManager().GetModel(result.RoomData.ModelName);
 				result.DynamicModel = new DynamicRoomModel(result);
 				result.ItemManager = new RoomItemManager(result);
 				result.UserManager = new RoomUserManager(result);

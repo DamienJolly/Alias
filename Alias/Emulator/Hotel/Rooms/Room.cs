@@ -37,10 +37,7 @@ namespace Alias.Emulator.Hotel.Rooms
 
 		public RoomModel Model
 		{
-			get
-			{
-				return Alias.Server.RoomManager.GetRoomModelManager().GetModel(this.RoomData.ModelName);
-			}
+			get; set;
 		}
 
 		public DynamicRoomModel DynamicModel

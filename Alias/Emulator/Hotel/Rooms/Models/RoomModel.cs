@@ -32,6 +32,11 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 			get; set;
 		} = false;
 
+		public bool IsCustom
+		{
+			get; set;
+		} = false;
+
 		public void Initialize()
 		{
 

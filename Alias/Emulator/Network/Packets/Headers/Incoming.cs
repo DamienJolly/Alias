@@ -87,6 +87,11 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int TriggerDiceMessageEvent = 237;
 			public const int CloseDiceMessageEvent = 1285;
 
+			// Models
+			public const int FloorPlanEditorRequestDoorSettingsMessageEvent = 2314;
+			public const int FloorPlanEditorRequestBlockedTilesMessageEvent = 24;
+			public const int FloorPlanEditorSaveMessageEvent = 40;
+
 		// Moderation
 		public const int ModerationAlertMessageEvent = 1932;
 		public const int ModerationRequestUserInfoMessageEvent = 3939;

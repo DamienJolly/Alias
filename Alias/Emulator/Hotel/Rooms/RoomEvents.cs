@@ -1,5 +1,6 @@
 using Alias.Emulator.Hotel.Rooms.Events;
 using Alias.Emulator.Hotel.Rooms.Items;
+using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.Rights;
 using Alias.Emulator.Hotel.Rooms.Trading;
 using Alias.Emulator.Hotel.Rooms.Users;
@@ -18,6 +19,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestRoomSettingsMessageEvent, new RequestRoomSettingsEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomSettingsSaveMessageEvent, new RoomSettingsSaveEvent());
 
+			RoomModelEvents.Register();
 			RoomTradingEvents.Register();
 			RoomRightsEvents.Register();
 			RoomUserEvents.Register();

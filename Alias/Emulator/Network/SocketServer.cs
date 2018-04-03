@@ -45,7 +45,7 @@ namespace Alias.Emulator.Network
 				channel.Pipeline.AddLast("logger", new LoggingHandler());
 				channel.Pipeline.AddLast("bytesEncoder", new SocketByteEncoder());
 				channel.Pipeline.AddLast("bytesDecoder", new SocketByteDecoder());
-				channel.Pipeline.AddLast("clientHandler", new SocketMessageHandler());
+				channel.Pipeline.AddLast("MessageHandler", new SocketMessageHandler());
 			}));
 			this.serverBootstrap.ChildOption(ChannelOption.TcpNodelay, true);
 			this.serverBootstrap.ChildOption(ChannelOption.SoKeepalive, true);
