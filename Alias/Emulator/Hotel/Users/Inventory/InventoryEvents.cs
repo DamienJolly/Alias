@@ -10,6 +10,7 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestInventoryItemsMessageEvent, new RequestInventoryItemsEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestInventoryBadgesMessageEvent, new RequestInventoryBadgesEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestInventoryBotsMessageEvent, new RequestInventoryBotsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestInventoryPetsMessageEvent, new RequestInventoryPetsEvent());
 		}
 	}
 }

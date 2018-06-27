@@ -5,7 +5,7 @@ using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Users.Handshake.Events
 {
-	public class ReleaseVersionEvent : IPacketEvent
+	class ReleaseVersionEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

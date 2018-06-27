@@ -3,10 +3,11 @@ using System.Linq;
 
 namespace Alias.Emulator.Hotel.Users.Inventory
 {
-	public class InventoryComponent
+	sealed class InventoryComponent
 	{
 		private List<InventoryItem> floorItems;
 		private List<InventoryBots> bots;
+		public List<InventoryPets> Pets { get; set; }
 
 		private Habbo habbo;
 
@@ -14,6 +15,7 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 		{
 			this.floorItems = InventoryDatabase.ReadFloorItems(h.Id);
 			this.bots = InventoryDatabase.ReadBots(h.Id);
+			this.Pets = InventoryDatabase.ReadPets(h.Id);
 
 			this.habbo = h;
 		}
@@ -59,6 +61,11 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 		public InventoryItem GetFloorItem(int itemId)
 		{
 			return this.floorItems.Where(item => item.Id == itemId).FirstOrDefault();
+		}
+
+		public InventoryBots GetBot(int botId)
+		{
+			return this.bots.Where(bot => bot.Id == botId).FirstOrDefault();
 		}
 
 		public List<InventoryItem> FloorItems

@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation.Events
 {
-    public class ModerationReleaseTicketEvent : IPacketEvent
+    class ModerationReleaseTicketEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

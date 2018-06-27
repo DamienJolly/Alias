@@ -7,7 +7,7 @@ using DotNetty.Transport.Channels;
 
 namespace Alias.Emulator.Network.Sessions
 {
-	public class SessionManager
+	class SessionManager
 	{
 		private Dictionary<IChannelHandlerContext, Session> _registeredSessions;
 

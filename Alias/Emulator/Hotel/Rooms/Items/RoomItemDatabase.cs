@@ -1,12 +1,10 @@
 using System.Collections.Generic;
-using System.Data;
 using Alias.Emulator.Database;
-using Alias.Emulator.Hotel.Items;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Rooms.Items
 {
-	public class RoomItemDatabase
+	class RoomItemDatabase
 	{
 		public static List<RoomItem> ReadRoomItems(Room room)
 		{

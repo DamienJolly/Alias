@@ -3,7 +3,7 @@ using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Rooms.Tasks
 {
-	public class RoomTask
+	class RoomTask
 	{
 		public static void Start(Room room)
 		{

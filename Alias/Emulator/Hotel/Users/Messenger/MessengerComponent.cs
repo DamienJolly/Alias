@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Users.Messenger.Composers;
-using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger
 {
-	public class MessengerComponent
+	sealed class MessengerComponent
 	{
 		private List<MessengerFriend> Friends;
 		private List<MessengerRequest> Requests;

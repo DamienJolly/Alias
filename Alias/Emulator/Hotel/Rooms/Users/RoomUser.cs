@@ -4,7 +4,7 @@ using Alias.Emulator.Hotel.Rooms.Users.Composers;
 
 namespace Alias.Emulator.Hotel.Rooms.Users
 {
-	public class RoomUser : RoomUserData
+	class RoomUser : RoomUserData
 	{
 		public int VirtualId
 		{

@@ -86,6 +86,10 @@ namespace Alias.Emulator.Hotel.Rooms
 				{
 					type += 1;
 				}
+				if (this.Settings.AllowPets)
+				{
+					type += 16;
+				}
 				return type;
 				/*  int RoomType = 0;
 			   if (Data.Group != null)
@@ -94,8 +98,6 @@ namespace Alias.Emulator.Hotel.Rooms
 				   RoomType += 4;
 			   if (Data.Type == "private")
 				   RoomType += 8;
-			   if (Data.AllowPets == 1)
-				   RoomType += 16;
 				   */
 			}
 		}

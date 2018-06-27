@@ -3,7 +3,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 {
-	public class WiredHabboWalkOffFurni : IWiredInteractor
+	class WiredHabboWalkOffFurni : IWiredInteractor
 	{
 		private RoomItem _item
 		{

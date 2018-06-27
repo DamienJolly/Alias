@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Users.Inventory.Composers;
@@ -9,7 +8,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
-	public class RoomPickupItemEvent : IPacketEvent
+	class RoomPickupItemEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

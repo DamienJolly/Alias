@@ -3,7 +3,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 {
-	public class WiredInteractionDefault : IWiredInteractor
+	class WiredInteractionDefault : IWiredInteractor
 	{
 		public void Serialize(ServerPacket message)
 		{

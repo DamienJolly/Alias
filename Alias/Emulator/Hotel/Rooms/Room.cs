@@ -13,7 +13,7 @@ using Alias.Emulator.Hotel.Rooms.Users.Tasks;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
-	public class Room
+	class Room
 	{
 		public int Id
 		{

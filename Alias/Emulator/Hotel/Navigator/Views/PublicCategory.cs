@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Views
 {
-	public class PublicCategory : INavigatorCategory
+	class PublicCategory : INavigatorCategory
 	{
 		private List<RoomData> Rooms;
 

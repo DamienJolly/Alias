@@ -7,7 +7,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
-	public class RotateMoveItemEvent : IPacketEvent
+	class RotateMoveItemEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

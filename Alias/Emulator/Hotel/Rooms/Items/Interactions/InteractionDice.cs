@@ -6,7 +6,7 @@ using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 {
-	public class InteractionDice : IItemInteractor
+	class InteractionDice : IItemInteractor
 	{
 		private int count = 0;
 

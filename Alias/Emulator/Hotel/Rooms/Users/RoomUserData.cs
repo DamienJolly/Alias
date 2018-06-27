@@ -4,8 +4,38 @@ using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Users
 {
-    public class RoomUserData
+    class RoomUserData
     {
+		public int Id
+		{
+			get; set;
+		}
+
+		public string Name
+		{
+			get; set;
+		}
+
+		public string Motto
+		{
+			get; set;
+		}
+
+		public string Look
+		{
+			get; set;
+		}
+
+		public string Gender
+		{
+			get; set;
+		}
+
+		public int OwnerId
+		{
+			get; set;
+		} = 0;
+
 		public Habbo Habbo
 		{
 			get; set;

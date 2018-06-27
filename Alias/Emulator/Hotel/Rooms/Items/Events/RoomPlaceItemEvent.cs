@@ -9,7 +9,7 @@ using Alias.Emulator.Hotel.Users.Inventory.Composers;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
-	public class RoomPlaceItemEvent : IPacketEvent
+	class RoomPlaceItemEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

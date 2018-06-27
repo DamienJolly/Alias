@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Composers
 {
-	public class MeMenuSettingsComposer : IPacketComposer
+	class MeMenuSettingsComposer : IPacketComposer
 	{
 		private Habbo habbo;
 

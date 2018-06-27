@@ -2,7 +2,7 @@ using Alias.Emulator.Database;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading
 {
-    public class RoomTradingDatabase
+    class RoomTradingDatabase
     {
 		public static int CreateTradeLog(TradeUser userOne, TradeUser userTwo)
 		{

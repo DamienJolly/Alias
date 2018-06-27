@@ -6,7 +6,7 @@ using Alias.Emulator.Hotel.Rooms.Users.Composers;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading
 {
-    public class RoomTrading
+    class RoomTrading
     {
 		private Room Room;
 

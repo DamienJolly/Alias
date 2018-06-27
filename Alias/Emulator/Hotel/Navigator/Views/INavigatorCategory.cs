@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Views
 {
-	public abstract class INavigatorCategory
+	abstract class INavigatorCategory
 	{
 		public string Id
 		{

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Alias.Emulator.Hotel.Users.Currency
 {
-	public class CurrencyComponent
+	sealed class CurrencyComponent
 	{
 		private List<CurrencyType> currencies;
 		private Habbo habbo;

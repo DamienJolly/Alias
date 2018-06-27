@@ -1,7 +1,6 @@
 using System;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Navigator;
-using Alias.Emulator.Hotel.Permissions;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Rooms.Users.Chat;
@@ -10,11 +9,12 @@ using Alias.Emulator.Hotel.Users.Badges;
 using Alias.Emulator.Hotel.Users.Currency;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Users.Messenger;
+using Alias.Emulator.Hotel.Users.Wardrobe;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users
 {
-	public class Habbo : HabboData
+	class Habbo : HabboData
 	{
 		/// <summary>
 		/// Mark the Habbo as disconnecting.
@@ -29,6 +29,7 @@ namespace Alias.Emulator.Hotel.Users
 		public CurrencyComponent Currency { get; set; }
 		public AchievementComponent Achievements { get; set; }
 		public BadgeComponent Badges { get; set; }
+		public WardrobeComponent Wardrobe { get; set; }
 		
 		/// <summary>
 		/// Initializes a new Habbo instance.
@@ -61,6 +62,7 @@ namespace Alias.Emulator.Hotel.Users
 			this.Inventory = new InventoryComponent(this);
 			this.Messenger = new MessengerComponent(this);
 			this.Achievements = new AchievementComponent(this);
+			this.Wardrobe = new WardrobeComponent(this);
 
 			this.Messenger.UpdateStatus(true);
 			this.NavigatorPreference = NavigatorDatabase.Preference(this.Id);

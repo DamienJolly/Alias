@@ -3,7 +3,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 {
-	public interface IWiredInteractor
+	interface IWiredInteractor
 	{
 		void Serialize(ServerPacket message);
 		void LoadBox(RoomItem item);

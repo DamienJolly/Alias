@@ -6,7 +6,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Events
 {
-	public class RequestWearingBadgesEvent : IPacketEvent
+	class RequestWearingBadgesEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

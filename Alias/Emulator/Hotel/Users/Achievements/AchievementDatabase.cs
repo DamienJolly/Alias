@@ -4,7 +4,7 @@ using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Achievements
 {
-    public class AchievementDatabase
+    class AchievementDatabase
     {
 		public static List<AchievementProgress> ReadAchievements(int userId)
 		{

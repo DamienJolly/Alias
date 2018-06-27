@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Alias.Emulator.Hotel.Navigator.Views;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
@@ -7,7 +6,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Navigator.Composers
 {
-	public class RoomCategoriesComposer : IPacketComposer
+	class RoomCategoriesComposer : IPacketComposer
 	{
 		private int rank;
 		private List<INavigatorCategory> categories;

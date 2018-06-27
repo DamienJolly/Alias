@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Handshake.Events
 {
-	public class SecureLoginEvent : IPacketEvent
+	class SecureLoginEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

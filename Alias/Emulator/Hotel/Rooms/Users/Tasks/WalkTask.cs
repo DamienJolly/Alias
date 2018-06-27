@@ -7,7 +7,7 @@ using Alias.Emulator.Hotel.Rooms.Users.Composers;
 
 namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 {
-	public class WalkTask
+	class WalkTask
 	{
 		public static void Start(List<RoomUser> users)
 		{

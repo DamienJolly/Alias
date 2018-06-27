@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Composers
 {
-	public class RoomDataComposer : IPacketComposer
+	class RoomDataComposer : IPacketComposer
 	{
 		private RoomData Data;
 		private bool Loading;
@@ -48,7 +48,7 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			//60 -> promo // name description minutesleft
 			message.WriteBoolean(this.Entry);
 			message.WriteBoolean(false); // staff picked
-			message.WriteBoolean(true); // public room
+			message.WriteBoolean(false); // public room
 			message.WriteBoolean(false); // is muted
 			message.WriteInteger(this.Data.Settings.WhoMutes);
 			message.WriteInteger(this.Data.Settings.WhoKicks);

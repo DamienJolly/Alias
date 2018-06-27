@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
-using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class UserSearchResultComposer : IPacketComposer
+	class UserSearchResultComposer : IPacketComposer
 	{
 		private List<Habbo> NotFriends;
 		private List<Habbo> Friends;

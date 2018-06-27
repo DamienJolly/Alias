@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Composers
 {
-	public class UpdateUserLookComposer : IPacketComposer
+	class UpdateUserLookComposer : IPacketComposer
 	{
 		private Habbo habbo;
 

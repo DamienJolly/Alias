@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Landing.Events
 {
-	public class RequestNewsListEvent : IPacketEvent
+	class RequestNewsListEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

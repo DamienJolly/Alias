@@ -3,7 +3,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 {
-	public interface IItemInteractor
+	interface IItemInteractor
 	{
 		void Serialize(ServerPacket message, RoomItem item);
 		void OnUserWalkOn(Session session, Room room, RoomItem item);

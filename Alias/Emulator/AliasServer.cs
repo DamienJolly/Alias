@@ -2,8 +2,6 @@ using Alias.Emulator.Utilities;
 using Alias.Emulator.Database;
 using Alias.Emulator.Network;
 using System;
-using Alias.Emulator.Network.Packets;
-using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Items;
 using Alias.Emulator.Hotel.Catalog;
@@ -14,6 +12,7 @@ using Alias.Emulator.Hotel.Chat;
 using Alias.Emulator.Hotel.Moderation;
 using Alias.Emulator.Tasks;
 using MySql.Data.MySqlClient;
+using Alias.Emulator.Hotel.Groups;
 
 namespace Alias.Emulator
 {
@@ -36,6 +35,7 @@ namespace Alias.Emulator
 		public CatalogManager CatalogManager { get; set; }
 		public NavigatorManager NavigatorManager { get; set; }
 		public AchievementManager AchievementManager { get; set; }
+		public GroupManager GroupManager { get; set; }
 		public PermissionManager PermissionManager { get; set; }
 		public ChatManager ChatManager { get; set; }
 		public ModerationManager ModerationManager { get; set; }
@@ -95,6 +95,9 @@ namespace Alias.Emulator
 
 			this.AchievementManager = new AchievementManager();
 			this.AchievementManager.Initialize();
+
+			this.GroupManager = new GroupManager();
+			//this.GroupManager.Initialize();
 
 			this.PermissionManager = new PermissionManager();
 			this.PermissionManager.Initialize();

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Achievements;
+using Alias.Emulator.Hotel.Camera;
 using Alias.Emulator.Hotel.Catalog;
+using Alias.Emulator.Hotel.Groups;
 using Alias.Emulator.Hotel.Landing;
 using Alias.Emulator.Hotel.Moderation;
 using Alias.Emulator.Hotel.Navigator;
@@ -22,7 +24,9 @@ namespace Alias.Emulator.Network.Packets
 		{
 			ModerationEvents.Register();
 			AchievementEvents.Register();
+			GroupEvents.Register();
 			CatalogEvents.Register();
+			CameraEvents.Register();
 			UserEvents.Register();
 			RoomEvents.Register();
 			LandingEvents.Register();

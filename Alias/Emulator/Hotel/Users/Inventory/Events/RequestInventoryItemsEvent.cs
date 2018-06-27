@@ -7,7 +7,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Inventory.Events
 {
-	public class RequestInventoryItemsEvent : IPacketEvent
+	class RequestInventoryItemsEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

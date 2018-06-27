@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 {
-	public class RoomUserActionComposer : IPacketComposer
+	class RoomUserActionComposer : IPacketComposer
 	{
 		private RoomUser user;
 		private int actionId;

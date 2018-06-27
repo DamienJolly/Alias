@@ -14,6 +14,9 @@ namespace Alias.Emulator.Network.Protocol
 			Header = buffer.ReadShort();
 		}
 
+		public IByteBuffer GetBuffer() =>
+			buffer;
+
 		public string PopString()
 		{
 			int length = buffer.ReadShort();
@@ -26,5 +29,8 @@ namespace Alias.Emulator.Network.Protocol
 
 		public bool PopBoolean() =>
 			buffer.ReadByte() == 1;
+
+		public int BytesAvailable() =>
+			buffer.ReadableBytes;
 	}
 }

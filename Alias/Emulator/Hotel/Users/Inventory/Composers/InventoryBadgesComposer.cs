@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 {
-	public class InventoryBadgesComposer : IPacketComposer
+	class InventoryBadgesComposer : IPacketComposer
 	{
 		private Habbo habbo;
 

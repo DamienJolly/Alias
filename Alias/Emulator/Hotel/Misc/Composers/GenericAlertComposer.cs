@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Misc.Composers
 {
-	public class GenericAlertComposer : IPacketComposer
+	class GenericAlertComposer : IPacketComposer
 	{
 		private string message;
 

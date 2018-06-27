@@ -5,7 +5,7 @@ using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Rights
 {
-	public class RoomRights
+	class RoomRights
 	{
 		private Room Room;
 

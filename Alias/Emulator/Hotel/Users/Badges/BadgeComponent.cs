@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Alias.Emulator.Hotel.Users.Badges
 {
-    public class BadgeComponent
+    sealed class BadgeComponent
     {
 		private List<BadgeDefinition> badges;
 		private Habbo habbo;

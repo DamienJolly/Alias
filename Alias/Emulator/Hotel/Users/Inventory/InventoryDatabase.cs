@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using System.Data;
 using Alias.Emulator.Database;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Inventory
 {
-	public class InventoryDatabase
+	class InventoryDatabase
 	{
 		public static List<InventoryItem> ReadFloorItems(int userId)
 		{
@@ -55,6 +54,31 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 				}
 			}
 			return bots;
+		}
+
+		public static List<InventoryPets> ReadPets(int userId)
+		{
+			List<InventoryPets> pets = new List<InventoryPets>();
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("id", userId);
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `pets` WHERE `user_id` = @id AND `room_id` = 0"))
+				{
+					while (Reader.Read())
+					{
+						InventoryPets pet = new InventoryPets
+						{
+							Id     = Reader.GetInt32("id"),
+							Name   = Reader.GetString("name"),
+							Type   = Reader.GetInt32("type"),
+							Race   = Reader.GetInt32("race"),
+							Colour = Reader.GetString("colour")
+						};
+						pets.Add(pet);
+					}
+				}
+			}
+			return pets;
 		}
 
 		public static int AddBot(InventoryBots bot, int userId)

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Alias.Emulator.Hotel.Users.Achievements
 {
-    public class AchievementComponent
+    sealed class AchievementComponent
     {
 		private List<AchievementProgress> achievementProgress;
 		private Habbo habbo;

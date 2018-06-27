@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation.Events
 {
-    public class ModerationSanctionBanEvent : IPacketEvent
+    class ModerationSanctionBanEvent : IPacketEvent
 	{
 		public const int BAN_18_HOURS = 3;
 		public const int BAN_7_DAYS = 4;

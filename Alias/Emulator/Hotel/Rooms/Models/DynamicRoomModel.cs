@@ -5,7 +5,7 @@ using Alias.Emulator.Hotel.Rooms.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Models
 {
-	public class DynamicRoomModel
+	class DynamicRoomModel
 	{
 		public Room Room
 		{

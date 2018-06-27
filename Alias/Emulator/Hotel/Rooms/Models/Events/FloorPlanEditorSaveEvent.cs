@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Rooms.Composers;
-using Alias.Emulator.Hotel.Rooms.Models.Composers;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
@@ -9,7 +8,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Models.Events
 {
-	public class FloorPlanEditorSaveEvent : IPacketEvent
+	class FloorPlanEditorSaveEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

@@ -1,10 +1,9 @@
-using System.Data;
 using Alias.Emulator.Database;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Handshake
 {
-	public class HandshakeDatabase
+	class HandshakeDatabase
 	{
 		public static bool SSOExists(string sso)
 		{
@@ -55,13 +54,14 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 							Look             = Reader.GetString("look"),
 							Motto            = Reader.GetString("motto"),
 							Gender           = Reader.GetString("gender"),
-							Rank             = 6,
-							ClubLevel        = 1,
-							Credits          = 9999,
-							HomeRoom         = 0,
-							AchievementScore = 10,
+							Rank             = Reader.GetInt32("rank"),
+							ClubLevel        = Reader.GetInt32("club_level"),
+							Credits          = Reader.GetInt32("credits"),
+							HomeRoom         = Reader.GetInt32("home_room"),
+							AchievementScore = Reader.GetInt32("achievement_score"),
 							Muted            = false,
-							AllowTrading     = true
+							AllowTrading     = true,
+							GroupId          = Reader.GetInt32("group_id")
 						};
 					}
 				}

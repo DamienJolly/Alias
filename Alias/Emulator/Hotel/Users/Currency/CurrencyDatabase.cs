@@ -4,7 +4,7 @@ using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Currency
 {
-	public class CurrencyDatabase
+	class CurrencyDatabase
 	{
 		public static List<CurrencyType> ReadCurrencies(int userId)
 		{

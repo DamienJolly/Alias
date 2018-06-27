@@ -9,7 +9,7 @@ using Alias.Emulator.Network.Packets;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading
 {
-    public class RoomTrade
+    class RoomTrade
     {
 		public List<TradeUser> Users
 		{

@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Views
 {
-	public class MyWorldCategory : INavigatorCategory
+	class MyWorldCategory : INavigatorCategory
 	{
 		public override void Init()
 		{

@@ -1,11 +1,10 @@
-using Alias.Emulator.Hotel.Rooms.Items.Composers;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 {
-	public class InteractionWired : IItemInteractor
+	class InteractionWired : IItemInteractor
 	{
 		public void Serialize(ServerPacket message, RoomItem item)
 		{

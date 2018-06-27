@@ -3,7 +3,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 {
-	public class WiredInteractionRepeater : IWiredInteractor
+	class WiredInteractionRepeater : IWiredInteractor
 	{
 		private RoomItem _item
 		{

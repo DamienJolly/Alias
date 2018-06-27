@@ -5,7 +5,7 @@ using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
-	public class RoomLoader
+	class RoomLoader
 	{
 		public static void PrepareLoading(Session session, int roomId, int num, int num2)
 		{

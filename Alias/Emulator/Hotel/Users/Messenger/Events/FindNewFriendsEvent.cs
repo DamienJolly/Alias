@@ -10,7 +10,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
-	public class FindNewFriendsEvent : IPacketEvent
+	class FindNewFriendsEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

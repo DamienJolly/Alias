@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
@@ -6,7 +5,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Catalog.Composers
 {
-	public class CatalogPageComposer : IPacketComposer
+	class CatalogPageComposer : IPacketComposer
 	{
 		CatalogPage page;
 		Habbo habbo;

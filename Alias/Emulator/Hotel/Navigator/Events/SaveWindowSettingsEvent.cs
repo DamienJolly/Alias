@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Events
 {
-	public class SaveWindowSettingsEvent : IPacketEvent
+	class SaveWindowSettingsEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

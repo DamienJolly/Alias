@@ -4,7 +4,7 @@ using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Badges
 {
-    public class BadgeDatabase
+    class BadgeDatabase
     {
 		public static List<BadgeDefinition> InitBadges(int userId)
 		{

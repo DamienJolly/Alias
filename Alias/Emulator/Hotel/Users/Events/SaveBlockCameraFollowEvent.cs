@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Events
 {
-	public class SaveBlockCameraFollowEvent : IPacketEvent
+	class SaveBlockCameraFollowEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

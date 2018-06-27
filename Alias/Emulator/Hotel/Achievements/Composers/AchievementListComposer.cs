@@ -6,7 +6,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Achievements.Composers
 {
-    public class AchievementListComposer : IPacketComposer
+    class AchievementListComposer : IPacketComposer
 	{
 		private Habbo habbo;
 

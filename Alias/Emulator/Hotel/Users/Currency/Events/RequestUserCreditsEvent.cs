@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Currency.Events
 {
-	public class RequestUserCreditsEvent : IPacketEvent
+	class RequestUserCreditsEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

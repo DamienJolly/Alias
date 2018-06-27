@@ -7,7 +7,7 @@ using Alias.Emulator.Hotel.Rooms.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Pathfinding
 {
-	public class PathFinder
+	class PathFinder
 	{
 		public Point[] DiagonalMovement = new[]
 		{

@@ -13,6 +13,8 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int UserWearBadgeMessageEvent = 3804;
 		public const int RequestWearingBadgesMessageEvent = 1318;
 		public const int UserSaveLookMessageEvent = 1588;
+		public const int SaveWardrobeMessageEvent = 2020;
+		public const int RequestUserWardrobeMessageEvent = 3960;
 		public const int RequestProfileFriendsMessageEvent = 3763;
 		public const int UserActivityMessageEvent = 1187;
 
@@ -45,6 +47,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RequestInventoryItemsMessageEvent = 2835;
 			public const int RequestInventoryBadgesMessageEvent = 1023;
 			public const int RequestInventoryBotsMessageEvent = 1278;
+			public const int RequestInventoryPetsMessageEvent = 86;
 
 		// Rooms
 		public const int RequestHeightmapMessageEvent = 2443;
@@ -67,6 +70,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RoomUserDanceMessageEvent = 3911;
 			public const int RoomUserGiveRightsMessageEvent = 3880;
 			public const int RoomUserRemoveRightsMessageEvent = 404;
+			public const int RoomUserPlaceBotMessageEvent = 3798;
 
 			// Trading
 			public const int TradeStartMessageEvent = 3586;
@@ -136,5 +140,11 @@ namespace Alias.Emulator.Network.Packets.Headers
 
 		// Achievements
 		public const int RequestAchievementsMessageEvent = 3280;
+
+		// Camera
+		public const int CameraRoomPictureMessageEvent = 2210;
+
+		// Groups
+		public const int RequestGroupInfoMessageEvent = 2873;
 	}
 }

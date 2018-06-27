@@ -6,7 +6,7 @@ using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Navigator
 {
-	public class NavigatorDatabase
+	class NavigatorDatabase
 	{
 		public static NavigatorPreference Preference(int UserId)
 		{

@@ -5,7 +5,7 @@ using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Items
 {
-	public class RoomItem
+	class RoomItem
 	{
 		public int Id
 		{

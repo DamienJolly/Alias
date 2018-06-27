@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Alias.Emulator.Hotel.Rooms.Items
 {
-	public class RoomItemManager
+	class RoomItemManager
 	{
 		public List<RoomItem> Items
 		{

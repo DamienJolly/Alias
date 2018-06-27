@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Trading;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
@@ -11,7 +10,7 @@ using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Rooms.Users
 {
-	public class RoomUserManager
+	class RoomUserManager
 	{
 		public List<RoomUser> Users
 		{
@@ -42,6 +41,11 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			{
 				RoomUser user = new RoomUser()
 				{
+					Id        = session.Habbo.Id,
+					Name      = session.Habbo.Username,
+					Motto     = session.Habbo.Motto,
+					Look      = session.Habbo.Look,
+					Gender    = session.Habbo.Gender,
 					Habbo     = session.Habbo,
 					Room      = Room,
 					VirtualId = NextVirtualId(),

@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 {
-	public class TradeConfirmEvent : IPacketEvent
+	class TradeConfirmEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

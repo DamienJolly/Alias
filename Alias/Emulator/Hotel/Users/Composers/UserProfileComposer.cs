@@ -1,3 +1,4 @@
+using Alias.Emulator.Hotel.Groups;
 using Alias.Emulator.Hotel.Users.Messenger;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
@@ -6,7 +7,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Composers
 {
-	public class UserProfileComposer : IPacketComposer
+	class UserProfileComposer : IPacketComposer
 	{
 		private Habbo habbo;
 		private Session viewer;
@@ -30,17 +31,20 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			message.WriteBoolean(viewer.Habbo.Messenger.IsFriend(habbo.Id));
 			message.WriteBoolean(viewer.Habbo.Messenger.RequestExists(habbo.Id));
 			message.WriteBoolean(Alias.Server.SocketServer.SessionManager.IsOnline(habbo.Id));
-
-			message.WriteInteger(0); // Count - groups
+			
+			if (Alias.Server.GroupManager.TryGetGroup(1, out Group group))
 			{
-				// int    - group id
-				// string - group name
-				// string - group badge
-				// string - group colour1
-				// string - group colour2
-				// bool   - Fav. group
-				// int    - group owner id
-				// bool   - is owner
+				message.WriteInteger(1); // group count
+				{
+					message.WriteInteger(group.Id); // group id
+					message.WriteString(group.Name); // group name
+					message.WriteString(""); // group badge
+					message.WriteString(""); // group colour1
+					message.WriteString(""); // group colour2
+					message.WriteBoolean(group.Id == habbo.GroupId); // Fav. group
+					message.WriteInteger(group.OwnerId); // group owner id
+					message.WriteBoolean(group.OwnerId == habbo.Id); // is owner
+				}
 			}
 
 			message.WriteInteger(0); //Last online (seconds)

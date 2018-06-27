@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 {
-	public class InteractionDefault : IItemInteractor
+	class InteractionDefault : IItemInteractor
 	{
 		public void Serialize(ServerPacket message, RoomItem item)
 		{

@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Handshake.Events
 {
-	public class PingEvent : IPacketEvent
+	class PingEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 {
-    public class TradeAcceptedComposer : IPacketComposer
+    class TradeAcceptedComposer : IPacketComposer
 	{
 		private TradeUser tradeUser;
 

@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Events
 {
-	public class FriendRequestEvent : IPacketEvent
+	class FriendRequestEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

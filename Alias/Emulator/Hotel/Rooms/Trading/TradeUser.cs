@@ -4,7 +4,7 @@ using Alias.Emulator.Hotel.Users.Inventory;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading
 {
-    public class TradeUser
+    class TradeUser
     {
 		public RoomUser User
 		{

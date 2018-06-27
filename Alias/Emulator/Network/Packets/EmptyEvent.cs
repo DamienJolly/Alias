@@ -4,7 +4,7 @@ using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Network.Packets
 {
-	public class EmptyEvent : IPacketEvent
+	class EmptyEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

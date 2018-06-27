@@ -12,7 +12,7 @@ using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Users.Handshake
 {
-	public class Handshake
+	class Handshake
 	{
 		public static void OnLogin(string sso, Session session)
 		{

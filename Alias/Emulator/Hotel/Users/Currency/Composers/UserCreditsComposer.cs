@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Currency.Composers
 {
-	public class UserCreditsComposer : IPacketComposer
+	class UserCreditsComposer : IPacketComposer
 	{
 		private Habbo habbo;
 

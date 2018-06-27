@@ -1,4 +1,3 @@
-using System;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Rooms.Users.Chat;
 using Alias.Emulator.Hotel.Rooms.Users.Composers;
@@ -6,7 +5,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 {
-	public class WiredInteractionMessage : IWiredInteractor
+	class WiredInteractionMessage : IWiredInteractor
 	{
 		private RoomItem _item
 		{

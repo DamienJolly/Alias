@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Moderation.Composers
 {
-	public class ModerationUserInfoComposer : IPacketComposer
+	class ModerationUserInfoComposer : IPacketComposer
 	{
 		private Habbo habbo;
 

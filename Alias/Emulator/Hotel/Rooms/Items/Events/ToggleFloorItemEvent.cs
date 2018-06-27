@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
-	public class ToggleFloorItemEvent : IPacketEvent
+	class ToggleFloorItemEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

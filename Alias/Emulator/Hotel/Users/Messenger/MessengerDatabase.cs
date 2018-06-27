@@ -1,12 +1,10 @@
 using System.Collections.Generic;
-using System.Data;
 using Alias.Emulator.Database;
-using Alias.Emulator.Network.Sessions;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Messenger
 {
-	public class MessengerDatabase
+	class MessengerDatabase
 	{
 		public static List<MessengerFriend> ReadFriendships(int userId)
 		{

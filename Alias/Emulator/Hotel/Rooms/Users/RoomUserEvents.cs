@@ -19,6 +19,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomUserActionMessageEvent, new RoomUserActionEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomUserGiveRightsMessageEvent, new RoomUserGiveRightsEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomUserRemoveRightsMessageEvent, new RoomUserRemoveRightsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomUserPlaceBotMessageEvent, new RoomUserPlaceBotEvent());
 		}
 	}
 }

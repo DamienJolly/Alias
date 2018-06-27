@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Models.Composers
 {
-    public class FloorPlanEditorDoorSettingsComposer : IPacketComposer
+    class FloorPlanEditorDoorSettingsComposer : IPacketComposer
 	{
 		private Room room;
 

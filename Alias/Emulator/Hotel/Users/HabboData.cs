@@ -15,6 +15,7 @@ namespace Alias.Emulator.Hotel.Users
 		public int AchievementScore { get; set; }
 		public bool Muted { get; set; }
 		public bool AllowTrading { get; set; }
+		public int GroupId { get; set; }
 
 		public HabboData()
 		{

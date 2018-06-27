@@ -4,7 +4,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Messenger.Composers
 {
-	public class LoadFriendRequestsComposer : IPacketComposer
+	class LoadFriendRequestsComposer : IPacketComposer
 	{
 		private MessengerComponent messenger;
 

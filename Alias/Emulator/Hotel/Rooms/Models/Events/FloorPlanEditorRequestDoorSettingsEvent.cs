@@ -6,7 +6,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Models.Events
 {
-	public class FloorPlanEditorRequestDoorSettingsEvent : IPacketEvent
+	class FloorPlanEditorRequestDoorSettingsEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

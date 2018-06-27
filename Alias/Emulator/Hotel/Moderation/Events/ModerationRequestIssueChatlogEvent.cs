@@ -7,7 +7,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation.Events
 {
-    public class ModerationRequestIssueChatlogEvent : IPacketEvent
+    class ModerationRequestIssueChatlogEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

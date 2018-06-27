@@ -6,7 +6,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation.Events
 {
-    public class ModerationPickTicketEvent : IPacketEvent
+    class ModerationPickTicketEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

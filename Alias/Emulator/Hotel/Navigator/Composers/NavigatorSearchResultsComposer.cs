@@ -8,7 +8,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Composers
 {
-	public class NavigatorSearchResultsComposer : IPacketComposer
+	class NavigatorSearchResultsComposer : IPacketComposer
 	{
 		private string Category;
 		private string Search;

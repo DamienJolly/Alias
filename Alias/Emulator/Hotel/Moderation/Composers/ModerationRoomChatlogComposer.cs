@@ -8,7 +8,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Moderation.Composers
 {
-	public class ModerationRoomChatlogComposer : IPacketComposer
+	class ModerationRoomChatlogComposer : IPacketComposer
 	{
 		private Room room;
 		private List<ModerationChatlog> chatlog;

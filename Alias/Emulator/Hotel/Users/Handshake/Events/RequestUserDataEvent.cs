@@ -5,7 +5,7 @@ using Alias.Emulator.Hotel.Users.Composers;
 
 namespace Alias.Emulator.Hotel.Users.Handshake.Events
 {
-	public class RequestUserDataEvent : IPacketEvent
+	class RequestUserDataEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

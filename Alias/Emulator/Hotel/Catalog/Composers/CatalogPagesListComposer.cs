@@ -6,7 +6,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Catalog.Composers
 {
-	public class CatalogPagesListComposer : IPacketComposer
+	class CatalogPagesListComposer : IPacketComposer
 	{
 		Habbo Habbo;
 		List<CatalogPage> Pages;

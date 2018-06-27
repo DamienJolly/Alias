@@ -7,7 +7,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Events
 {
-	public class RequestRoomHeightmapEvent : IPacketEvent
+	class RequestRoomHeightmapEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
