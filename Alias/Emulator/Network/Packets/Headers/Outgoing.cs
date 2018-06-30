@@ -162,6 +162,9 @@ namespace Alias.Emulator.Network.Packets.Headers
 
 		// Groups
 		public const int GroupInfoMessageComposer = 102;
+		public const int GroupBuyRoomsMessageComposer = 2601;
+		public const int GuildPartsMessageComposer = 2770;
+		public const int GroupBoughtMessageComposer = 3656;
 
 		// Misc
 		public const int GenericAlertMessageComposer = 524;

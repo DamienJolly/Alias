@@ -146,5 +146,8 @@ namespace Alias.Emulator.Network.Packets.Headers
 
 		// Groups
 		public const int RequestGroupInfoMessageEvent = 2873;
+		public const int RequestGroupBuyRoomsMessageEvent = 2627;
+		public const int RequestGroupPartsMessageEvent = 1252;
+		public const int RequestGroupBuyMessageEvent = 730;
 	}
 }

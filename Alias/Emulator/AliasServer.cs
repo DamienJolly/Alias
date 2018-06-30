@@ -97,7 +97,7 @@ namespace Alias.Emulator
 			this.AchievementManager.Initialize();
 
 			this.GroupManager = new GroupManager();
-			//this.GroupManager.Initialize();
+			this.GroupManager.Initialize();
 
 			this.PermissionManager = new PermissionManager();
 			this.PermissionManager.Initialize();

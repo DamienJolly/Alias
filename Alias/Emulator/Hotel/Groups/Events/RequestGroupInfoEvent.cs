@@ -12,7 +12,8 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			int guildId = message.PopInt();
 			bool newWindow = message.PopBoolean();
 
-			if (Alias.Server.GroupManager.TryGetGroup(guildId, out Group group))
+			Group group = Alias.Server.GroupManager.GetGroup(guildId);
+			if (group != null)
 			{
 				session.Send(new GroupInfoComposer(group, session.Habbo, newWindow));
 			}

@@ -1,34 +1,62 @@
-using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Groups
 {
     sealed class GroupManager
     {
 		private readonly object _groupLoadingSync;
-		private ConcurrentDictionary<int, Group> _groups;
+		public List<Group> Groups { get; set; }
+
+		public List<GroupBadgeParts> BadgeParts { get; set; }
 
 		public GroupManager()
 		{
 			this._groupLoadingSync = new object();
-			this._groups = new ConcurrentDictionary<int, Group>();
+			this.Groups = new List<Group>();
+
+			this.BadgeParts = new List<GroupBadgeParts>();
 		}
 
-		public bool TryGetGroup(int id, out Group group)
+		public void Initialize()
+		{
+			this.BadgeParts.Clear();
+
+			GroupDatabase.ReadBadgeParts(this);
+		}
+
+		public Group CreateGroup(Habbo habbo, int roomId, string roomName, string name, string description, string badge, int colourOne, int colourTwo)
+		{
+			Group group = new Group(0, name, description, habbo.Id, 0, roomId, colourOne, colourTwo, badge);
+			group.Id = GroupDatabase.CreateGroup(group);
+			Groups.Add(group);
+			return group;
+		}
+
+		public Group GetGroup(int id)
 		{
 			lock (this._groupLoadingSync)
 			{
-				if (this._groups.ContainsKey(id))
+				if (this.Groups.Where(group => group.Id == id).ToList().Count > 0)
 				{
-					return this._groups.TryGetValue(id, out group);
+					return this.Groups.Where(group => group.Id == id).First();
 				}
-
-				group = GroupDatabase.TryGetGroup(id);
-				if (this._groups.TryAdd(id, group))
+				else
 				{
-					return true;
+					return GroupDatabase.TryGetGroup(id);
 				}
 			}
-			return false;
 		}
+
+		public List<GroupBadgeParts> GetBases => this.BadgeParts.Where(part => part.Type == BadgePartType.BASE).ToList();
+
+		public List<GroupBadgeParts> GetSymbols => this.BadgeParts.Where(part => part.Type == BadgePartType.SYMBOL).ToList();
+
+		public List<GroupBadgeParts> GetBaseColours => this.BadgeParts.Where(part => part.Type == BadgePartType.BASE_COLOUR).ToList();
+
+		public List<GroupBadgeParts> GetSymbolColours => this.BadgeParts.Where(part => part.Type == BadgePartType.SYMBOL_COLOUR).ToList();
+
+		public List<GroupBadgeParts> GetBackgroundColours => this.BadgeParts.Where(part => part.Type == BadgePartType.BACKGROUND_COLOUR).ToList();
 	}
 }

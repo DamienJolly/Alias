@@ -32,7 +32,22 @@ namespace Alias.Emulator.Hotel.Groups
 			get; set;
 		}
 
-		public Group(int id, string name, string description, int ownerId, int createdAt, int roomId)
+		public int ColourOne
+		{
+			get; set;
+		}
+
+		public int ColourTwo
+		{
+			get; set;
+		}
+
+		public string Badge
+		{
+			get; set;
+		}
+
+		public Group(int id, string name, string description, int ownerId, int createdAt, int roomId, int colourOne, int colourTwo, string badge)
 		{
 			this.Id = id;
 			this.Name = name;
@@ -40,6 +55,9 @@ namespace Alias.Emulator.Hotel.Groups
 			this.OwnerId = ownerId;
 			this.CreatedAt = createdAt;
 			this.RoomId = roomId;
+			this.ColourOne = colourOne;
+			this.ColourTwo = colourTwo;
+			this.Badge = badge;
 		}
 	}
 }

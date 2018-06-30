@@ -29,6 +29,11 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
+		public int GroupId
+		{
+			get; set;
+		} = 0;
+
 		public RoomDoorState DoorState
 		{
 			get; set;

@@ -42,18 +42,12 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Composers
 							message.WriteInteger(2);
 							message.WriteInteger(1);
 							message.WriteString(user.Gender.ToLower());
-							if (Alias.Server.GroupManager.TryGetGroup(user.Habbo.GroupId, out Group group))
-							{
-								message.WriteInteger(group.Id);
-								message.WriteInteger(0); //??
-								message.WriteString(group.Name);
-							}
-							else
-							{
-								message.WriteInteger(-1);
-								message.WriteInteger(0); //??
-								message.WriteString("");
-							}
+
+							Group group = Alias.Server.GroupManager.GetGroup(user.Habbo.GroupId);
+							message.WriteInteger(group != null ? group.Id : -1);
+							message.WriteInteger(0); //??
+							message.WriteString(group != null ? group.Name : "");
+							
 							message.WriteString("");
 							message.WriteInteger(user.Habbo.AchievementScore); //achievement points
 							message.WriteBoolean(false); //idk
