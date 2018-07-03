@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using System.Data;
 using Alias.Emulator.Database;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
-	public class RoomDatabase
+	class RoomDatabase
 	{
 		public static RoomData RoomData(int Id)
 		{
@@ -19,7 +18,7 @@ namespace Alias.Emulator.Hotel.Rooms
 					{
 						result.Id          = Id;
 						result.Name        = Reader.GetString("name");
-						result.GroupId     = Reader.GetInt32("group_id");
+						result.Group       = Alias.Server.GroupManager.GetGroup(Reader.GetInt32("group_id"));
 						result.OwnerId     = Reader.GetInt32("owner");
 						result.DoorState   = Alias.Server.RoomManager.IntToDoor(Reader.GetInt32("door"));
 						result.MaxUsers    = Reader.GetInt32("max_users");

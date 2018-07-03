@@ -22,7 +22,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			int roomId = message.PopInt();
 
 			RoomData room = Alias.Server.RoomManager.RoomData(roomId);
-			if (room == null || room.GroupId != 0)
+			if (room == null || room.Group != null)
 			{
 				return;
 			}
@@ -57,7 +57,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			}
 
 			Group group = Alias.Server.GroupManager.CreateGroup(session.Habbo, roomId, room.Name, name, description, badge, colorOne, colorTwo);
-			room.GroupId = group.Id;
+			room.Group = group;
 
 			// gen badge
 
@@ -74,11 +74,6 @@ namespace Alias.Emulator.Hotel.Groups.Events
 					return;
 				}
 			}
-
-			/*if (session.Habbo.CurrentRoom != null && session.Habbo.CurrentRoom.Id != roomId)
-			{
-				session.Send(new RoomForwardComposer(room.Id));
-			}*/
 
 			session.Send(new PurchaseOKComposer());
 			session.Send(new GroupBoughtComposer(group));

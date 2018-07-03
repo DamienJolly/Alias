@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Alias.Emulator.Hotel.Groups
 {
     class Group
@@ -47,7 +50,12 @@ namespace Alias.Emulator.Hotel.Groups
 			get; set;
 		}
 
-		public Group(int id, string name, string description, int ownerId, int createdAt, int roomId, int colourOne, int colourTwo, string badge)
+		public List<GroupMember> Members
+		{
+			get; set;
+		}
+		
+		public Group(int id, string name, string description, int ownerId, int createdAt, int roomId, int colourOne, int colourTwo, string badge, List<GroupMember> members)
 		{
 			this.Id = id;
 			this.Name = name;
@@ -58,6 +66,59 @@ namespace Alias.Emulator.Hotel.Groups
 			this.ColourOne = colourOne;
 			this.ColourTwo = colourTwo;
 			this.Badge = badge;
+			this.Members = members;
+		}
+
+		public GroupMember GetMember(int userId)
+		{
+			return this.Members.Where(member => member.UserId == userId).FirstOrDefault();
+		}
+
+		public bool TrySetMemberRank(int userId, int rank)
+		{
+			GroupMember member = GetMember(userId);
+			if (member == null || (int)member.Rank == rank)
+			{
+				return false;
+			}
+
+			GroupDatabase.SetMemberRank(this.Id, userId, rank);
+			member.Rank = (GroupRank)rank;
+			return true;
+		}
+
+		public List<GroupMember> SearchMembers(int page, int levelId, string query)
+		{
+			List<GroupMember> members = new List<GroupMember>();
+			switch (levelId)
+			{
+				case 2: members = this.Members.Where(member => (int)member.Rank == 3 && member.Username.Contains(query)).ToList(); break;
+				case 1: members = this.Members.Where(member => (int)member.Rank <= 1 && member.Username.Contains(query)).ToList(); break;
+				default: members = this.Members.Where(member => (int)member.Rank <= 2 && member.Username.Contains(query)).ToList(); break;
+			}
+
+			while (page * 14 > members.Count)
+			{
+				page--;
+			}
+
+			return members.GetRange(page * 14, (page * 14) + 14 > members.Count ? members.Count - page * 14 : (page * 14) + 14);
+		}
+
+		public int GetMembers
+		{
+			get
+			{
+				return this.Members.Where(Members => (int)Members.Rank <= 2).Count();
+			}
+		}
+
+		public int GetRequests
+		{
+			get
+			{
+				return this.Members.Where(Members => (int)Members.Rank == 3).Count();
+			}
 		}
 	}
 }

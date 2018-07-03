@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using Alias.Emulator.Hotel.Groups;
 using Alias.Emulator.Hotel.Rooms.States;
 using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
-	public class RoomData
+	class RoomData
 	{
 		public int Id
 		{
@@ -29,10 +30,10 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
-		public int GroupId
+		public Group Group
 		{
 			get; set;
-		} = 0;
+		} = null;
 
 		public RoomDoorState DoorState
 		{
@@ -86,10 +87,14 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			get
 			{
-				int type = 8;
+				int type = 0;
 				if (this.Image.Length > 0)
 				{
 					type += 1;
+				}
+				if (this.Group != null)
+				{
+					type += 2;
 				}
 				if (this.Settings.AllowPets)
 				{

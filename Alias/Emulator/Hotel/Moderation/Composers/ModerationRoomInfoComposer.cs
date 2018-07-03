@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Moderation.Composers
 {
-	public class ModerationRoomInfoComposer : IPacketComposer
+	class ModerationRoomInfoComposer : IPacketComposer
 	{
 		private RoomData roomData;
 

@@ -18,7 +18,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 				result.Add(Alias.Server.RoomManager.RoomData(Id));
 			});
 			
-			session.Send(new GroupBuyRoomsComposer(result.Where(room => room.GroupId == 0).ToList()));
+			session.Send(new GroupBuyRoomsComposer(result.Where(room => room.Group == null).ToList()));
 		}
 	}
 }

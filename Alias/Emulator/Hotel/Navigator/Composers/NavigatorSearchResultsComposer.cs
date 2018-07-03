@@ -77,6 +77,13 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 					{
 						message.WriteString(room.Image);
 					}
+
+					if (room.Group != null)
+					{
+						message.WriteInteger(room.Group.Id);
+						message.WriteString(room.Group.Name);
+						message.WriteString(room.Group.Badge);
+					}
 				});
 			});
 			return message;

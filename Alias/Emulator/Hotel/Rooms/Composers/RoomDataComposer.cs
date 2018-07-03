@@ -1,3 +1,4 @@
+using Alias.Emulator.Hotel.Groups;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
@@ -43,6 +44,14 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			{
 				message.WriteString(this.Data.Image);
 			}
+			
+			if (this.Data.Group != null)
+			{
+				message.WriteInteger(this.Data.Group.Id);
+				message.WriteString(this.Data.Group.Name);
+				message.WriteString(this.Data.Group.Badge);
+			}
+
 			//62 -> group & promo // Id name badge // name description minutesleft
 			//58 -> group // Id Name Badge
 			//60 -> promo // name description minutesleft
