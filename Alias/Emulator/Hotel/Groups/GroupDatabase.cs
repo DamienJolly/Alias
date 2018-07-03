@@ -43,6 +43,16 @@ namespace Alias.Emulator.Hotel.Groups
 			}
 		}
 
+		public static void RemoveMember(int groupId, int userId)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("groupId", groupId);
+				dbClient.AddParameter("userId", userId);
+				dbClient.Query("DELETE FROM `group_members` WHERE `user_id` = @userId AND `group_id` = @groupId");
+			}
+		}
+
 		public static Group TryGetGroup(int groupId)
 		{
 			Group group = null;

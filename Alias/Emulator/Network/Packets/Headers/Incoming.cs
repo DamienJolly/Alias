@@ -153,5 +153,6 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int RequestGroupMembersMessageEvent = 3272;
 		public const int GroupSetAdminMessageEvent = 3830;
 		public const int GroupRemoveAdminMessageEvent = 438;
+		public const int GroupRemoveMemberMessageEvent = 489;
 	}
 }

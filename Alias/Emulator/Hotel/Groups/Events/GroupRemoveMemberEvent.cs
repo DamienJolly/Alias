@@ -1,13 +1,12 @@
 using Alias.Emulator.Hotel.Groups.Composers;
 using Alias.Emulator.Hotel.Rooms;
-using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Groups.Events
 {
-    class GroupRemoveAdminEvent : IPacketEvent
+    class GroupRemoveMemberEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
@@ -15,17 +14,23 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			int userId = message.PopInt();
 
 			Group group = Alias.Server.GroupManager.GetGroup(groupId);
-			if (group == null || group.OwnerId != session.Habbo.Id)
+			if (group == null)
 			{
 				return;
 			}
 
-			group.SetMemberRank(userId, 2);
+			if ((group.OwnerId == session.Habbo.Id && userId != session.Habbo.Id) || userId == session.Habbo.Id)
+			{
+				group.RemoveMember(userId);
+
+				if (userId != session.Habbo.Id)
+				{
+					session.Send(new GroupRefreshMembersListComposer(group));
+				}
 
 				// todo: update rights and remove fav group
-
-			GroupMember member = group.GetMember(userId);
-			session.Send(new GroupMemberUpdateComposer(group, member));
+				// todo: eject furni
+			}
 		}
 	}
 }

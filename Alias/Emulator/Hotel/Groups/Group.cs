@@ -74,17 +74,28 @@ namespace Alias.Emulator.Hotel.Groups
 			return this.Members.Where(member => member.UserId == userId).FirstOrDefault();
 		}
 
-		public bool TrySetMemberRank(int userId, int rank)
+		public void RemoveMember(int userId)
+		{
+			GroupMember member = GetMember(userId);
+			if (member == null)
+			{
+				return;
+			}
+
+			GroupDatabase.RemoveMember(this.Id, userId);
+			this.Members.Remove(member);
+		}
+
+		public void SetMemberRank(int userId, int rank)
 		{
 			GroupMember member = GetMember(userId);
 			if (member == null || (int)member.Rank == rank)
 			{
-				return false;
+				return;
 			}
 
 			GroupDatabase.SetMemberRank(this.Id, userId, rank);
 			member.Rank = (GroupRank)rank;
-			return true;
 		}
 
 		public List<GroupMember> SearchMembers(int page, int levelId, string query)

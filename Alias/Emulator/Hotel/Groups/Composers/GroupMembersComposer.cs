@@ -43,7 +43,7 @@ namespace Alias.Emulator.Hotel.Groups.Composers
 				message.WriteInteger(member.UserId);
 				message.WriteString(member.Username);
 				message.WriteString(member.Look);
-				message.WriteString(created.Day + "/" + created.Month + "/" + created.Year);
+				message.WriteString((int)member.Rank < 3 && (int)member.Rank > 0 ? created.Day + "/" + created.Month + "/" + created.Year : "");
 			});
 
 			message.WriteBoolean(this.group.OwnerId == this.habbo.Id);

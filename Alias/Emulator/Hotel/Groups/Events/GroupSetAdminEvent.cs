@@ -19,17 +19,12 @@ namespace Alias.Emulator.Hotel.Groups.Events
 				return;
 			}
 
-			if (group.TrySetMemberRank(userId, 1))
-			{
-				Room room = session.Habbo.CurrentRoom;
-				if (room != null && room.RoomData.Group == group)
-				{
-					//room.RoomRights.RefreshRights(habbo);
-				}
+			group.SetMemberRank(userId, 1);
 
-				GroupMember member = group.GetMember(userId);
-				session.Send(new GroupMemberUpdateComposer(group, member));
-			}
+			// todo: update rights and remove fav group
+
+			GroupMember member = group.GetMember(userId);
+			session.Send(new GroupMemberUpdateComposer(group, member));
 		}
 	}
 }
