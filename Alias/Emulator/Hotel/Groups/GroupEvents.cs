@@ -16,6 +16,7 @@ namespace Alias.Emulator.Hotel.Groups
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.GroupSetAdminMessageEvent, new GroupSetAdminEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.GroupRemoveAdminMessageEvent, new GroupRemoveAdminEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.GroupRemoveMemberMessageEvent, new GroupRemoveMemberEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.GroupDeleteMessageEvent, new GroupDeleteEvent());
 		}
 	}
 }

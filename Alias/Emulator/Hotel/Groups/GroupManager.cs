@@ -35,6 +35,12 @@ namespace Alias.Emulator.Hotel.Groups
 			return group;
 		}
 
+		public void DeleteGroup(Group group)
+		{
+			GroupDatabase.RemoveGroup(group);
+			Groups.Remove(group);
+		}
+
 		public Group GetGroup(int id)
 		{
 			lock (this._groupLoadingSync)

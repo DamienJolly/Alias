@@ -140,7 +140,7 @@ namespace Alias.Emulator.Hotel.Rooms
 
 		public Room Room(int roomId)
 		{
-			if (this._loadedRooms.Where(r => r.Id == roomId).Count() > 0)
+			if (IsRoomLoaded(roomId))
 			{
 				return this._loadedRooms.Where(r => r.Id == roomId).First();
 			}
@@ -150,9 +150,14 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
+		public bool IsRoomLoaded(int roomId)
+		{
+			return this._loadedRooms.Where(r => r.Id == roomId).Count() > 0;
+		}
+
 		public void RemoveLoadedRoom(Room room)
 		{
-			if (this._loadedRooms.Where(r => r == room).Count() > 0)
+			if (IsRoomLoaded(room.Id))
 			{
 				this._loadedRooms.Remove(room);
 			}

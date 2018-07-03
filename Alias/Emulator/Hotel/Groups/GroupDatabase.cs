@@ -32,6 +32,21 @@ namespace Alias.Emulator.Hotel.Groups
 			return groupId;
 		}
 
+		public static void RemoveGroup(Group group)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("groupId", group.Id);
+				dbClient.Query("DELETE FROM `groups` WHERE `id` = @groupId");
+				dbClient.AddParameter("groupId", group.Id);
+				dbClient.Query("DELETE FROM `group_members` WHERE `group_id` = @groupId");
+				dbClient.AddParameter("groupId", group.Id);
+				dbClient.Query("UPDATE `room_data` SET `group_id` = 0 WHERE `group_id` = @groupId");
+				dbClient.AddParameter("groupId", group.Id);
+				dbClient.Query("UPDATE `habbos` SET `group_id` = 0 WHERE `group_id` = @groupId");
+			}
+		}
+
 		public static void SetMemberRank(int groupId, int userId, int rank)
 		{
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
