@@ -26,7 +26,7 @@ namespace Alias.Emulator.Hotel.Groups.Composers
 			ServerPacket message = new ServerPacket(Outgoing.GroupInfoMessageComposer);
 			message.WriteInteger(this.group.Id);
 			message.WriteBoolean(true); // ??
-			message.WriteInteger(0); // state
+			message.WriteInteger((int)this.group.State);
 			message.WriteString(this.group.Name);
 			message.WriteString(this.group.Description);
 			message.WriteString(this.group.Badge);
@@ -40,7 +40,7 @@ namespace Alias.Emulator.Hotel.Groups.Composers
 			message.WriteBoolean(true); // is admin
 			message.WriteString("Damien"); // owner name
 			message.WriteBoolean(this.newWindow);
-			message.WriteBoolean(false); // user can furni
+			message.WriteBoolean(this.group.Rights);
 			message.WriteInteger(this.group.GetRequests);
 			message.WriteBoolean(true); // forum
 			return message;

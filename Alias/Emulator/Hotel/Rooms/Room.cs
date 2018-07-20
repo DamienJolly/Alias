@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Alias.Emulator.Hotel.Groups.Composers;
 using Alias.Emulator.Hotel.Landing.Composers;
 using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Items.Tasks;
@@ -94,6 +95,21 @@ namespace Alias.Emulator.Hotel.Rooms
 			this.PathFinder = new PathFinder(this);
 			this.RoomRights = new RoomRights(this);
 			this.RoomTrading = new RoomTrading(this);
+		}
+
+		public void RefreshGroup()
+		{
+			if (this.RoomData != null)
+			{
+				List<RoomUser> users = this.UserManager.Users;
+				foreach (RoomUser user in users)
+				{
+					if (user.Habbo != null)
+					{
+						user.Habbo.Session.Send(new GroupInfoComposer(this.RoomData.Group, user.Habbo, false));
+					}
+				}
+			}
 		}
 
 		public void Unload()

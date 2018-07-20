@@ -28,7 +28,7 @@ namespace Alias.Emulator.Hotel.Groups
 
 		public Group CreateGroup(Habbo habbo, int roomId, string roomName, string name, string description, string badge, int colourOne, int colourTwo)
 		{
-			Group group = new Group(0, name, description, habbo.Id, 0, roomId, colourOne, colourTwo, badge, new List<GroupMember>());
+			Group group = new Group(0, name, description, habbo.Id, 0, roomId, 0, true, colourOne, colourTwo, badge, new List<GroupMember>());
 			group.Id = GroupDatabase.CreateGroup(group);
 			group.Members.Add(new GroupMember(habbo.Id, habbo.Username, habbo.Look, group.CreatedAt, 0));
 			Groups.Add(group);

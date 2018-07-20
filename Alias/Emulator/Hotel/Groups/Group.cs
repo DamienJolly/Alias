@@ -35,6 +35,16 @@ namespace Alias.Emulator.Hotel.Groups
 			get; set;
 		}
 
+		public GroupState State
+		{
+			get; set;
+		}
+
+		public bool Rights
+		{
+			get; set;
+		}
+
 		public int ColourOne
 		{
 			get; set;
@@ -55,7 +65,7 @@ namespace Alias.Emulator.Hotel.Groups
 			get; set;
 		}
 		
-		public Group(int id, string name, string description, int ownerId, int createdAt, int roomId, int colourOne, int colourTwo, string badge, List<GroupMember> members)
+		public Group(int id, string name, string description, int ownerId, int createdAt, int roomId, int state, bool rights, int colourOne, int colourTwo, string badge, List<GroupMember> members)
 		{
 			this.Id = id;
 			this.Name = name;
@@ -63,10 +73,18 @@ namespace Alias.Emulator.Hotel.Groups
 			this.OwnerId = ownerId;
 			this.CreatedAt = createdAt;
 			this.RoomId = roomId;
+			this.State = (GroupState)state;
+			this.Rights = rights;
 			this.ColourOne = colourOne;
 			this.ColourTwo = colourTwo;
 			this.Badge = badge;
 			this.Members = members;
+		}
+
+		// temp
+		public void Save()
+		{
+			GroupDatabase.UpdateGroup(this);
 		}
 
 		public GroupMember GetMember(int userId)

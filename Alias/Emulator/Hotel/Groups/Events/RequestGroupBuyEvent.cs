@@ -77,6 +77,11 @@ namespace Alias.Emulator.Hotel.Groups.Events
 
 			session.Send(new PurchaseOKComposer());
 			session.Send(new GroupBoughtComposer(group));
+
+			if (Alias.Server.RoomManager.IsRoomLoaded(group.RoomId))
+			{
+				Alias.Server.RoomManager.Room(group.RoomId).RefreshGroup();
+			}
 		}
 	}
 }

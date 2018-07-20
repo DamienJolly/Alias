@@ -16,10 +16,12 @@ namespace Alias.Emulator.Hotel.Groups
 				dbClient.AddParameter("badge", group.Badge);
 				dbClient.AddParameter("userId", group.OwnerId);
 				dbClient.AddParameter("roomId", group.RoomId);
+				dbClient.AddParameter("state", ((int)group.State).ToString());
+				dbClient.AddParameter("rights", group.Rights == true ? "1" : "0");
 				dbClient.AddParameter("col1", group.ColourOne);
 				dbClient.AddParameter("col2", group.ColourTwo);
-				dbClient.Query("INSERT INTO `groups` (`name`, `desc`, `badge`, `owner_id`, `created`, `room_id`, `colour1`, `colour2`) " +
-					"VALUES (@name, @desc, @badge, @userId, UNIX_TIMESTAMP(), @roomId, @col1, @col2)");
+				dbClient.Query("INSERT INTO `groups` (`name`, `desc`, `badge`, `owner_id`, `created`, `room_id`, `state`, `rights`, `colour1`, `colour2`) " +
+					"VALUES (@name, @desc, @badge, @userId, UNIX_TIMESTAMP(), @roomId, @state, @rights, @col1, @col2)");
 				groupId = dbClient.LastInsertedId();
 				dbClient.AddParameter("groupId", groupId);
 				dbClient.AddParameter("userId", group.OwnerId);
@@ -44,6 +46,22 @@ namespace Alias.Emulator.Hotel.Groups
 				dbClient.Query("UPDATE `room_data` SET `group_id` = 0 WHERE `group_id` = @groupId");
 				dbClient.AddParameter("groupId", group.Id);
 				dbClient.Query("UPDATE `habbos` SET `group_id` = 0 WHERE `group_id` = @groupId");
+			}
+		}
+
+		public static void UpdateGroup(Group group)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("groupId", group.Id);
+				dbClient.AddParameter("name", group.Name);
+				dbClient.AddParameter("desc", group.Description);
+				dbClient.AddParameter("state", ((int)group.State).ToString());
+				dbClient.AddParameter("rights", group.Rights == true ? "1" : "0");
+				dbClient.AddParameter("col1", group.ColourOne);
+				dbClient.AddParameter("col2", group.ColourTwo);
+				dbClient.AddParameter("badge", group.Badge);
+				dbClient.Query("UPDATE `groups` SET `name` = @name, `desc` = @desc, `state` = @state, `rights` = @rights, `colour1` = @col1, `colour2` = @col2, `badge` = @badge WHERE `id` = @groupId");
 			}
 		}
 
@@ -79,7 +97,7 @@ namespace Alias.Emulator.Hotel.Groups
 					if (Reader.Read())
 					{
 						group = new Group(Reader.GetInt32("id"), Reader.GetString("name"), Reader.GetString("desc"), Reader.GetInt32("owner_id"), Reader.GetInt32("created"),
-							Reader.GetInt32("room_id"), Reader.GetInt32("colour1"), Reader.GetInt32("colour2"), Reader.GetString("badge"), TryGetMemmbers(Reader.GetInt32("id")));
+							Reader.GetInt32("room_id"), Reader.GetInt32("state"), Reader.GetBoolean("rights"), Reader.GetInt32("colour1"), Reader.GetInt32("colour2"), Reader.GetString("badge"), TryGetMemmbers(Reader.GetInt32("id")));
 					}
 				}
 			}

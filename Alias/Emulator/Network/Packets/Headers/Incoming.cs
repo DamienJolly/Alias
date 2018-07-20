@@ -155,5 +155,9 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int GroupRemoveAdminMessageEvent = 438;
 		public const int GroupRemoveMemberMessageEvent = 489;
 		public const int GroupDeleteMessageEvent = 3492;
+		public const int GroupChangeNameDescMessageEvent = 629;
+		public const int GroupChangeBadgeMessageEvent = 172;
+		public const int GroupChangeColorsMessageEvent = 175;
+		public const int GroupChangeSettingsMessageEvent = 332;
 	}
 }

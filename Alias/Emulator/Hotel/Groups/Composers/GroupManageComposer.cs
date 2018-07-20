@@ -24,8 +24,8 @@ namespace Alias.Emulator.Hotel.Groups.Composers
 			message.WriteInteger(this.group.RoomId);
 			message.WriteInteger(this.group.ColourOne);
 			message.WriteInteger(this.group.ColourTwo);
-			message.WriteInteger(0);
-			message.WriteInteger(0);
+			message.WriteInteger((int)this.group.State);
+			message.WriteInteger(this.group.Rights == false ? 1 : 0);
 			message.WriteBoolean(false);
 			message.WriteString("");
 			message.WriteInteger(5);
