@@ -18,8 +18,14 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			Group group = Alias.Server.GroupManager.GetGroup(groupId);
 			if (group != null)
 			{
-				List<GroupMember> members = group.SearchMembers(pageId, levelId, query);
-				session.Send(new GroupMembersComposer(group, members, session.Habbo, pageId, levelId, query));
+				List<GroupMember> members = group.SearchMembers(levelId, query);
+				while (pageId * 14 > members.Count)
+				{
+					pageId--;
+				}
+
+				List<GroupMember> actuallMembers = members.GetRange(pageId * 14, (pageId * 14) + 14 > members.Count ? members.Count - pageId * 14 : (pageId * 14) + 14);
+				session.Send(new GroupMembersComposer(group, members.Count, actuallMembers, session.Habbo, pageId, levelId, query));
 			}
 		}
 	}

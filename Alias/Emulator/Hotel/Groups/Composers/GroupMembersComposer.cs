@@ -10,15 +10,17 @@ namespace Alias.Emulator.Hotel.Groups.Composers
     class GroupMembersComposer : IPacketComposer
 	{
 		private Group group;
+		private int membersCount;
 		private List<GroupMember> members;
 		private Habbo habbo;
 		private int pageId;
 		private int levelId;
 		private string query;
 
-		public GroupMembersComposer(Group group, List<GroupMember> members, Habbo habbo, int pageId, int levelId, string query)
+		public GroupMembersComposer(Group group, int membersCount, List<GroupMember> members, Habbo habbo, int pageId, int levelId, string query)
 		{
 			this.group = group;
+			this.membersCount = membersCount;
 			this.members = members;
 			this.habbo = habbo;
 			this.pageId = pageId;
@@ -33,8 +35,8 @@ namespace Alias.Emulator.Hotel.Groups.Composers
 			message.WriteString(this.group.Name);
 			message.WriteInteger(this.group.RoomId);
 			message.WriteString(this.group.Badge);
-			message.WriteInteger(this.group.GetMembers);
-			
+			message.WriteInteger(this.membersCount);
+
 			message.WriteInteger(this.members.Count);
 			this.members.ForEach(member =>
 			{

@@ -159,7 +159,7 @@ namespace Alias.Emulator.Hotel.Groups
 			member.Rank = (GroupRank)rank;
 		}
 
-		public List<GroupMember> SearchMembers(int page, int levelId, string query)
+		public List<GroupMember> SearchMembers(int levelId, string query)
 		{
 			List<GroupMember> members = new List<GroupMember>();
 			switch (levelId)
@@ -168,13 +168,7 @@ namespace Alias.Emulator.Hotel.Groups
 				case 1: members = this.Members.Where(member => (int)member.Rank <= 1 && member.Username.Contains(query)).ToList(); break;
 				default: members = this.Members.Where(member => (int)member.Rank <= 2 && member.Username.Contains(query)).ToList(); break;
 			}
-
-			while (page * 14 > members.Count)
-			{
-				page--;
-			}
-
-			return members.GetRange(page * 14, (page * 14) + 14 > members.Count ? members.Count - page * 14 : (page * 14) + 14);
+			return members;
 		}
 
 		public int GetMembers
