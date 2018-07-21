@@ -32,7 +32,6 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			
 			group.State = (GroupState)state;
 			group.Rights = rights;
-			group.Save();
 
 			RoomData room = Alias.Server.RoomManager.RoomData(group.RoomId);
 			if (room != null && room.Group != null)

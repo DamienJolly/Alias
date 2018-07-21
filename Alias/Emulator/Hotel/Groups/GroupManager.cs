@@ -6,14 +6,12 @@ namespace Alias.Emulator.Hotel.Groups
 {
     sealed class GroupManager
     {
-		private readonly object _groupLoadingSync;
 		public List<Group> Groups { get; set; }
 
 		public List<GroupBadgeParts> BadgeParts { get; set; }
 
 		public GroupManager()
 		{
-			this._groupLoadingSync = new object();
 			this.Groups = new List<Group>();
 
 			this.BadgeParts = new List<GroupBadgeParts>();
@@ -26,6 +24,11 @@ namespace Alias.Emulator.Hotel.Groups
 			GroupDatabase.ReadBadgeParts(this);
 		}
 
+		public void DoGroupCycle()
+		{
+			this.Groups.Where(group => !group.Disposing).ToList().ForEach(group => group.Cycle());
+		}
+
 		public Group CreateGroup(Habbo habbo, int roomId, string roomName, string name, string description, string badge, int colourOne, int colourTwo)
 		{
 			Group group = new Group(0, name, description, habbo.Id, 0, roomId, 0, true, colourOne, colourTwo, badge, new List<GroupMember>());
@@ -35,25 +38,37 @@ namespace Alias.Emulator.Hotel.Groups
 			return group;
 		}
 
+		public void RemoveGroup(Group group)
+		{
+			if (Groups.Contains(group))
+			{
+				Groups.Remove(group);
+			}
+		}
+
 		public void DeleteGroup(Group group)
 		{
 			GroupDatabase.RemoveGroup(group);
-			Groups.Remove(group);
+			RemoveGroup(group);
 		}
 
 		public Group GetGroup(int id)
 		{
-			lock (this._groupLoadingSync)
+			Group group = null;
+			if (this.Groups.Where(g => g.Id == id && !g.Disposing).ToList().Count > 0)
 			{
-				if (this.Groups.Where(group => group.Id == id).ToList().Count > 0)
+				group = this.Groups.Where(g => g.Id == id).First();
+				group.IdleTime = 0;
+			}
+			else
+			{
+				group = GroupDatabase.TryGetGroup(id);
+				if (group != null)
 				{
-					return this.Groups.Where(group => group.Id == id).First();
-				}
-				else
-				{
-					return GroupDatabase.TryGetGroup(id);
+					this.Groups.Add(group);
 				}
 			}
+			return group;
 		}
 
 		public List<GroupBadgeParts> GetBases => this.BadgeParts.Where(part => part.Type == BadgePartType.BASE).ToList();

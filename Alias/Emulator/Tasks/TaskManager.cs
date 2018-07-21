@@ -25,6 +25,7 @@ namespace Alias.Emulator.Tasks
 				this._tick = 0;
 			}
 			Alias.Server.RoomManager.DoRoomCycle();
+			Alias.Server.GroupManager.DoGroupCycle();
 		}
 
 		public void Dispose()

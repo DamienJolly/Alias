@@ -44,7 +44,6 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			}
 
 			group.Badge = badge;
-			group.Save();
 
 			//todo: gen badge
 

@@ -66,7 +66,10 @@ namespace Alias.Emulator.Hotel.Groups
 		{
 			get; set;
 		}
-		
+
+		public int IdleTime = 0;
+		public bool Disposing = false;
+
 		public Group(int id, string name, string description, int ownerId, int createdAt, int roomId, int state, bool rights, int colourOne, int colourTwo, string badge, List<GroupMember> members)
 		{
 			this.Id = id;
@@ -83,10 +86,20 @@ namespace Alias.Emulator.Hotel.Groups
 			this.Members = members;
 		}
 
-		// temp
-		public void Save()
+		public void Cycle()
 		{
+			if (IdleTime >= 120)
+			{
+				Dispose();
+			}
+			IdleTime++;
+		}
+
+		public void Dispose()
+		{
+			this.Disposing = true;
 			GroupDatabase.UpdateGroup(this);
+			Alias.Server.GroupManager.RemoveGroup(this);
 		}
 
 		public GroupMember GetMember(int userId)
