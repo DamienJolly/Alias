@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Alias.Emulator.Hotel.Groups.Composers;
+using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Groups
 {
@@ -90,6 +92,47 @@ namespace Alias.Emulator.Hotel.Groups
 		public GroupMember GetMember(int userId)
 		{
 			return this.Members.Where(member => member.UserId == userId).FirstOrDefault();
+		}
+
+		public void JoinGroup(Session session, int userId, bool acceptRequest)
+		{
+			int groupsCount = GroupDatabase.GetGroupsCount(userId);
+			if (groupsCount >= 100)
+			{
+				if (acceptRequest)
+				{
+					session.Send(new GroupJoinErrorComposer(GroupJoinErrorComposer.MEMBER_FAIL_JOIN_LIMIT_EXCEED_NON_HC));
+					return;
+				}
+				else
+				{
+					session.Send(new GroupJoinErrorComposer(GroupJoinErrorComposer.GROUP_LIMIT_EXCEED));
+					return;
+				}
+			}
+
+			if (this.GetMembers >= 50000)
+			{
+				session.Send(new GroupJoinErrorComposer(GroupJoinErrorComposer.GROUP_FULL));
+				return;
+			}
+
+			if (!acceptRequest && this.GetRequests >= 100)
+			{
+				session.Send(new GroupJoinErrorComposer(GroupJoinErrorComposer.GROUP_NOT_ACCEPT_REQUESTS));
+				return;
+			}
+
+			if (acceptRequest)
+			{
+				this.SetMemberRank(userId, (int)GroupRank.MEMBER);
+			}
+			else
+			{
+				GroupMember member = new GroupMember(userId, session.Habbo.Username, session.Habbo.Look, (int)Alias.GetUnixTimestamp(), this.State == GroupState.LOCKED ? (int)GroupRank.REQUESTED : (int)GroupRank.MEMBER);
+				GroupDatabase.AddMemmber(this.Id, userId, (int)member.Rank);
+				this.Members.Add(member);
+			}
 		}
 
 		public void RemoveMember(int userId)

@@ -21,6 +21,9 @@ namespace Alias.Emulator.Hotel.Groups
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.GroupChangeBadgeMessageEvent, new GroupChangeBadgeEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.GroupChangeColorsMessageEvent, new GroupChangeColorsEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.GroupChangeSettingsMessageEvent, new GroupChangeSettingsEvent());
-	}
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestGroupJoinMessageEvent, new RequestGroupJoinEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.GroupAcceptMembershipMessageEvent, new GroupAcceptMembershipEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.GroupDeclineMembershipMessageEvent, new GroupDeclineMembershipEvent());
+		}
 	}
 }

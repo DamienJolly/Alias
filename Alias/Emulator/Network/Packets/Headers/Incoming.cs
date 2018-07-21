@@ -151,6 +151,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int RequestGroupBuyMessageEvent = 730;
 		public const int RequestGroupManageMessageEvent = 601;
 		public const int RequestGroupMembersMessageEvent = 3272;
+		public const int RequestGroupJoinMessageEvent = 3314;
 		public const int GroupSetAdminMessageEvent = 3830;
 		public const int GroupRemoveAdminMessageEvent = 438;
 		public const int GroupRemoveMemberMessageEvent = 489;
@@ -159,5 +160,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int GroupChangeBadgeMessageEvent = 172;
 		public const int GroupChangeColorsMessageEvent = 175;
 		public const int GroupChangeSettingsMessageEvent = 332;
+		public const int GroupAcceptMembershipMessageEvent = 1624;
+		public const int GroupDeclineMembershipMessageEvent = 670;
 	}
 }

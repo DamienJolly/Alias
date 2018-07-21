@@ -65,6 +65,23 @@ namespace Alias.Emulator.Hotel.Groups
 			}
 		}
 
+		public static int GetGroupsCount(int userId)
+		{
+			int count = 0;
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("userId", userId);
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT COUNT(*) as `total` FROM `group_members` WHERE `user_id` = @userId"))
+				{
+					if (Reader.Read())
+					{
+						count = Reader.GetInt32("total");
+					}
+				}
+			}
+			return count;
+		}
+
 		public static void SetMemberRank(int groupId, int userId, int rank)
 		{
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
@@ -83,6 +100,18 @@ namespace Alias.Emulator.Hotel.Groups
 				dbClient.AddParameter("groupId", groupId);
 				dbClient.AddParameter("userId", userId);
 				dbClient.Query("DELETE FROM `group_members` WHERE `user_id` = @userId AND `group_id` = @groupId");
+			}
+		}
+
+		public static void AddMemmber(int groupId, int userId, int rank)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("groupId", groupId);
+				dbClient.AddParameter("userId", userId);
+				dbClient.AddParameter("rank", rank);
+				dbClient.Query("INSERT INTO `group_members` (`user_id`, `group_id`, `join_date`, `rank`) " +
+					"VALUES (@userId, @groupId, UNIX_TIMESTAMP(), @rank)");
 			}
 		}
 

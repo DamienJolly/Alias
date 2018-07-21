@@ -33,7 +33,7 @@ namespace Alias.Emulator.Hotel.Users.Composers
 			message.WriteBoolean(Alias.Server.SocketServer.SessionManager.IsOnline(habbo.Id));
 
 			// todo:
-			Group group = Alias.Server.GroupManager.GetGroup(1);
+			Group group = Alias.Server.GroupManager.GetGroup(7);
 			message.WriteInteger(1); // group count
 			{
 				message.WriteInteger(group.Id); // group id

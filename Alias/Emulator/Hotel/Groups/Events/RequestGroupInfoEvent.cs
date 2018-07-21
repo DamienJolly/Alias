@@ -15,7 +15,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			Group group = Alias.Server.GroupManager.GetGroup(guildId);
 			if (group != null)
 			{
-				session.Send(new GroupInfoComposer(group, session.Habbo, newWindow));
+				session.Send(new GroupInfoComposer(group, session.Habbo, newWindow, group.GetMember(session.Habbo.Id)));
 			}
 		}
 	}

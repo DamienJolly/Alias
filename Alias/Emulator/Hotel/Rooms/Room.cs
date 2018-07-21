@@ -106,7 +106,7 @@ namespace Alias.Emulator.Hotel.Rooms
 				{
 					if (user.Habbo != null)
 					{
-						user.Habbo.Session.Send(new GroupInfoComposer(this.RoomData.Group, user.Habbo, false));
+						user.Habbo.Session.Send(new GroupInfoComposer(this.RoomData.Group, user.Habbo, false, this.RoomData.Group.GetMember(user.Habbo.Id)));
 					}
 				}
 			}
