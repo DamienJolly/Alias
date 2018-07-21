@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Alias.Emulator.Hotel.Groups;
 using Alias.Emulator.Hotel.Rooms.Rights.Composers;
 using Alias.Emulator.Hotel.Users;
 
@@ -49,22 +50,32 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 
 		public void RefreshRights(Habbo habbo)
 		{
+			RoomRightLevels flatCtrl = RoomRightLevels.NONE;
+
 			if (this.Room.RoomData.OwnerId == habbo.Id)
 			{
 				habbo.Session.Send(new RoomOwnerComposer());
-				habbo.Session.Send(new RoomRightsComposer(5));
-				Room.UserManager.UserBySession(habbo.Session).Actions.Add("flatctrl", 5 + "");
+				flatCtrl = RoomRightLevels.MODERATOR;
+			}
+			else if (this.Room.RoomData.Group != null)
+			{
+				GroupMember member = this.Room.RoomData.Group.GetMember(habbo.Id);
+				if (member.Rank == GroupRank.ADMIN || member.Rank == GroupRank.MOD)
+				{
+					flatCtrl = RoomRightLevels.GROUP_ADMIN;
+				}
+				else if (member.Rank == GroupRank.MEMBER && this.Room.RoomData.Group.Rights)
+				{
+					flatCtrl = RoomRightLevels.GROUP_RIGHTS;
+				}
 			}
 			else if (this.HasRights(habbo.Id))
 			{
-				habbo.Session.Send(new RoomRightsComposer(1));
-				Room.UserManager.UserBySession(habbo.Session).Actions.Add("flatctrl", 1 + "");
+				flatCtrl = RoomRightLevels.RIGHTS;
 			}
-			else
-			{
-				habbo.Session.Send(new RoomRightsComposer(0));
-				Room.UserManager.UserBySession(habbo.Session).Actions.Add("flatctrl", 0 + "");
-			}
+
+			habbo.Session.Send(new RoomRightsComposer((int)flatCtrl));
+			Room.UserManager.UserBySession(habbo.Session).Actions.Add("flatctrl", (int)flatCtrl + "");
 		}
 
 		public bool HasRights(int userId)
