@@ -30,7 +30,7 @@ namespace Alias.Emulator.Hotel.Users
 		public AchievementComponent Achievements { get; set; }
 		public BadgeComponent Badges { get; set; }
 		public WardrobeComponent Wardrobe { get; set; }
-		
+
 		/// <summary>
 		/// Initializes a new Habbo instance.
 		/// </summary>

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Alias.Emulator.Database;
 using MySql.Data.MySqlClient;
 
@@ -61,13 +62,31 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 							AchievementScore = Reader.GetInt32("achievement_score"),
 							Muted            = false,
 							AllowTrading     = true,
-							GroupId          = Reader.GetInt32("group_id")
+							GroupId          = Reader.GetInt32("group_id"),
+							Groups           = ReadGroups(Reader.GetInt32("id"))
 						};
 					}
 				}
 			}
 			
 			return habbo;
+		}
+
+		public static List<int> ReadGroups(int userId)
+		{
+			List<int> groups = new List<int>();
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("id", userId);
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `group_id` FROM `group_members` WHERE `user_id` = @id AND `rank` <= 2"))
+				{
+					while (Reader.Read())
+					{
+						groups.Add(Reader.GetInt32("group_id"));
+					}
+				}
+			}
+			return groups;
 		}
 
 		public static bool IsBanned(int userId)

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Alias.Emulator.Hotel.Users
 {
     public class HabboData
@@ -16,6 +18,7 @@ namespace Alias.Emulator.Hotel.Users
 		public bool Muted { get; set; }
 		public bool AllowTrading { get; set; }
 		public int GroupId { get; set; }
+		public List<int> Groups { get; set; }
 
 		public HabboData()
 		{

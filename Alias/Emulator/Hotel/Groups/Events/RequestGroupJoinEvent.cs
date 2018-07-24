@@ -18,6 +18,12 @@ namespace Alias.Emulator.Hotel.Groups.Events
 				return;
 			}
 
+			GroupMember member = group.GetMember(session.Habbo.Id);
+			if (member != null)
+			{
+				return;
+			}
+
 			if (group.State == GroupState.CLOSED)
 			{
 				session.Send(new GroupJoinErrorComposer(GroupJoinErrorComposer.GROUP_CLOSED));
@@ -25,7 +31,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			}
 
 			group.JoinGroup(session, session.Habbo.Id, false);
-			session.Send(new GroupInfoComposer(group, session.Habbo, false, group.GetMember(session.Habbo.Id)));
+			session.Send(new GroupInfoComposer(group, session.Habbo, false, member));
 
 			Room room = session.Habbo.CurrentRoom;
 			if (room != null && room.RoomData.Group == group)
