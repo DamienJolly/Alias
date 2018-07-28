@@ -44,7 +44,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 				return;
 			}
 
-			//if (room.DynamicModel.TilesAdjecent(item.Position.X, item.Position.Y, user.Position.X, user.Position.Y))
+			if (room.Mapping.Tiles[item.Position.X, item.Position.Y].TilesAdjecent(room.Mapping.Tiles[user.Position.X, user.Position.Y]))
 			{
 				if (item.Mode != -1)
 				{

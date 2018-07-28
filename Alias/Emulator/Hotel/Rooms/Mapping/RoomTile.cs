@@ -67,5 +67,13 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 
 			return true;
 		}
+
+		public bool TilesAdjecent(RoomTile targetTile)
+		{
+			int dx = this.Position.X - targetTile.Position.X;
+			int dy = this.Position.Y - targetTile.Position.Y;
+
+			return (dx * dx) + (dy * dy) <= 2;
+		}
 	}
 }
