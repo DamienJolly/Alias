@@ -68,10 +68,11 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 			{
 				if (_tick == 0)
 				{
-					foreach (RoomItem wItem in _room.DynamicModel.GetWiredEffects(_item.Position.X, _item.Position.Y))
+					//todo: Mapping
+					/*foreach (RoomItem wItem in _room.DynamicModel.GetWiredEffects(_item.Position.X, _item.Position.Y))
 					{
 						wItem.GetWiredInteractor().OnTrigger(_target);
-					}
+					}*/
 					_active = false;
 				}
 				_tick--;

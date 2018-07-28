@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Emulator\Hotel\Rooms\Models\DynamicRoomModel.cs" />
+    <Compile Remove="Emulator\Hotel\Rooms\Models\RoomTile.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DotNetty.Codecs" Version="0.4.7" />
     <PackageReference Include="DotNetty.Handlers" Version="0.4.7" />
     <PackageReference Include="DotNetty.Transport" Version="0.4.7" />

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Items;
+using Alias.Emulator.Hotel.Rooms.Mapping;
 using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.States;
 using Alias.Emulator.Hotel.Rooms.Users;
@@ -124,10 +125,11 @@ namespace Alias.Emulator.Hotel.Rooms
 					RoomData = RoomData(roomId)
 				};
 				result.Model = GetRoomModelManager().GetModel(result.RoomData.ModelName);
-				result.DynamicModel = new DynamicRoomModel(result);
+				result.Mapping = new RoomMapping(result);
 				result.ItemManager = new RoomItemManager(result);
 				result.UserManager = new RoomUserManager(result);
 				result.Initialize();
+				result.Mapping.RegenerateCollisionMap();
 				this._loadedRooms.Add(result);
 				return result;
 			}

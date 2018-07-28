@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Alias.Emulator.Hotel.Rooms.Models;
+using Alias.Emulator.Hotel.Rooms.Mapping;
 using Alias.Emulator.Hotel.Rooms.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Pathfinding
@@ -39,24 +39,21 @@ namespace Alias.Emulator.Hotel.Rooms.Pathfinding
 			this.Room = r;
 		}
 
-		public LinkedList<Point> Path(UserPosition position, UserPosition target)
+		public LinkedList<Point> Path(RoomUser user)
 		{
 			LinkedList<Node> openNodes = new LinkedList<Node>();
-			for (int x = 0; x < this.Room.DynamicModel.SizeX; x++)
+			for (int x = 0; x < this.Room.Mapping.SizeX; x++)
 			{
-				for (int y = 0; y < this.Room.DynamicModel.SizeY; y++)
+				for (int y = 0; y < this.Room.Mapping.SizeY; y++)
 				{
-					if (this.Room.DynamicModel.Tiles[x, y].State == TileState.OPEN)
+					if (this.Room.Mapping.Tiles[x, y].State == RoomTileState.OPEN && this.Room.Mapping.Tiles[x, y].IsValidTile(user))
 					{
-						if (this.Room.DynamicModel.ValidTile(x, y, target.X == x && target.Y == y) || (position.X == x && position.Y == y))
-						{
-							openNodes.AddLast(new Node(x, y));
-						}
+						openNodes.AddLast(new Node(x, y));
 					}
 				}
 			}
 			LinkedList<Node> duplicated = new LinkedList<Node>(openNodes);
-			Node startNode = openNodes.Where(n => n.X == position.X && n.Y == position.Y).First();
+			Node startNode = openNodes.Where(n => n.X == user.Position.X && n.Y == user.Position.Y).First();
 			startNode.CostsToStartPoint = 0;
 			startNode.ParentNode = startNode;
 			LinkedList<Node> queue = new LinkedList<Node>();
@@ -65,7 +62,7 @@ namespace Alias.Emulator.Hotel.Rooms.Pathfinding
 			while (queue.Count > 0)
 			{
 				Node current = queue.OrderBy(n => n.FullCosts).First();
-				if (current.X == target.X && current.Y == target.Y)
+				if (current.X == user.TargetPosition.X && current.Y == user.TargetPosition.Y)
 				{
 					while (current != startNode)
 					{
@@ -75,7 +72,7 @@ namespace Alias.Emulator.Hotel.Rooms.Pathfinding
 					break;
 				}
 				queue.Remove(current);
-				AdjacentNodes(duplicated, current, target, queue, position);
+				AdjacentNodes(duplicated, current, user.TargetPosition, queue, user.Position);
 				current.Closed = true;
 			}
 			duplicated.Clear();

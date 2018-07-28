@@ -15,7 +15,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 				
 				RoomUser usr = session.Habbo.CurrentRoom.UserManager.UserBySession(session);
 
-				if ((usr.Position.X == x && usr.Position.Y == y) || !usr.Room.DynamicModel.ValidTile(x, y, true))
+				if ((usr.Position.X == x && usr.Position.Y == y) || !usr.Room.Mapping.Tiles[x, y].IsValidTile(usr))
 				{
 					return;
 				}
@@ -26,7 +26,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 					Y = y
 				};
 
-				usr.Path = usr.Room.PathFinder.Path(usr.Position, usr.TargetPosition);
+				usr.Path = usr.Room.PathFinder.Path(usr);
 			}
 		}
 	}

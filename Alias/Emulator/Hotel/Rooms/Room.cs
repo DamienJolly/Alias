@@ -4,6 +4,7 @@ using Alias.Emulator.Hotel.Groups.Composers;
 using Alias.Emulator.Hotel.Landing.Composers;
 using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Items.Tasks;
+using Alias.Emulator.Hotel.Rooms.Mapping;
 using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.Pathfinding;
 using Alias.Emulator.Hotel.Rooms.Rights;
@@ -41,7 +42,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		}
 
-		public DynamicRoomModel DynamicModel
+		public RoomMapping Mapping
 		{
 			get; set;
 		}

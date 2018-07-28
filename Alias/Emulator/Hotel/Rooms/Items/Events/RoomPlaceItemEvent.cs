@@ -6,6 +6,7 @@ using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Hotel.Users.Inventory.Composers;
+using Alias.Emulator.Hotel.Rooms.Mapping;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
@@ -57,7 +58,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				if (!int.TryParse(values[2], out int y)) { return; }
 				if (!int.TryParse(values[3], out int rotation)) { return; }
 
-				if (room.DynamicModel.CanStackAt(x, y))
+				RoomTile tile = room.Mapping.Tiles[x, y];
 				{
 					RoomItem rItem = new RoomItem()
 					{
@@ -71,7 +72,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 						{
 							X = x,
 							Y = y,
-							Z = room.DynamicModel.GetTileHeight(x, y),
+							Z = tile.Position.Z,
 							Rotation = rotation
 						}
 					};
@@ -82,7 +83,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 					session.Habbo.Inventory.UpdateItem(iItem);
 					session.Send(new RemoveHabboItemComposer(iItem.Id));
 				}
-				else
+				/*else
 				{
 					Dictionary<string, string> data = new Dictionary<string, string>
 					{
@@ -90,7 +91,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 					};
 					session.Send(new BubbleAlertComposer("furni_placement_error", data));
 					return;
-				}
+				}*/
 			}
 		}
 	}
