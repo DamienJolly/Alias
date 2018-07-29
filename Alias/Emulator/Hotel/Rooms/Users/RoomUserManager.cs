@@ -154,14 +154,13 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 
 		public void Send(IPacketComposer composer, RoomUser except)
 		{
-			ServerPacket message = composer.Compose();
 			this.Users.ForEach(user =>
 			{
 				if (user.Habbo.Session != null && user.VirtualId != except.VirtualId)
 				{
 					try
 					{
-						user.Habbo.Session.Send(message, false);
+						user.Habbo.Session.Send(composer, false);
 					}
 					catch (Exception ex)
 					{
@@ -173,14 +172,13 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 
 		public void Send(IPacketComposer composer)
 		{
-			ServerPacket message = composer.Compose();
 			this.Users.ForEach(user =>
 			{
 				if (user.Habbo.Session != null)
 				{
 					try
 					{
-						user.Habbo.Session.Send(message, false);
+						user.Habbo.Session.Send(composer, false);
 					}
 					catch (Exception ex)
 					{

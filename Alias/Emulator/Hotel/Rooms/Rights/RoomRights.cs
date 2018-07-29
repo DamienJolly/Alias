@@ -60,13 +60,20 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 			else if (this.Room.RoomData.Group != null)
 			{
 				GroupMember member = this.Room.RoomData.Group.GetMember(habbo.Id);
-				if (member.Rank == GroupRank.ADMIN || member.Rank == GroupRank.MOD)
+				if (member != null)
 				{
-					flatCtrl = RoomRightLevels.GROUP_ADMIN;
+					if (member.Rank == GroupRank.ADMIN || member.Rank == GroupRank.MOD)
+					{
+						flatCtrl = RoomRightLevels.GROUP_ADMIN;
+					}
+					else if (member.Rank == GroupRank.MEMBER && this.Room.RoomData.Group.Rights)
+					{
+						flatCtrl = RoomRightLevels.GROUP_RIGHTS;
+					}
 				}
-				else if (member.Rank == GroupRank.MEMBER && this.Room.RoomData.Group.Rights)
+				else if (this.HasRights(habbo.Id))
 				{
-					flatCtrl = RoomRightLevels.GROUP_RIGHTS;
+					flatCtrl = RoomRightLevels.RIGHTS;
 				}
 			}
 			else if (this.HasRights(habbo.Id))

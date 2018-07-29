@@ -30,8 +30,12 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 							usr.Actions.Remove("lay");
 						}
 
+						RoomTile oldTile = usr.Room.Mapping.Tiles[usr.Position.X, usr.Position.Y];
+						oldTile.RemoveEntity(usr);
+
 						Point p = usr.Path.First();
 						RoomTile tile = usr.Room.Mapping.Tiles[p.X, p.Y];
+						tile.AddEntity(usr);
 
 						usr.Actions.Add("mv", p.X + "," + p.Y + "," + tile.Position.Z);
 						usr.Position.Rotation = usr.Room.PathFinder.Rotation(usr.Position.X, usr.Position.Y, p.X, p.Y);
