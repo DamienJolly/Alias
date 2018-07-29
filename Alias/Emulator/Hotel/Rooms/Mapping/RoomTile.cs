@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Users;
 
@@ -36,6 +37,37 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 			this.State = RoomTileState.OPEN;
 		}
 
+		public void AddItem(RoomItem item)
+		{
+			this.Items.Add(item);
+		}
+
+		public void HasItem(RoomItem item)
+		{
+			this.Items.Contains(item);
+		}
+
+		public void RemoveItem(RoomItem item)
+		{
+			this.Items.Remove(item);
+		}
+
+		public RoomItem TopItem
+		{
+			get
+			{
+				RoomItem topItem = null;
+				foreach (RoomItem item in this.Items)
+				{
+					if (topItem == null || (item.Position.Z + item.ItemData.Height) > (topItem.Position.Z + topItem.ItemData.Height))
+					{
+						topItem = item;
+					}
+				}
+				return topItem;
+			}
+		}
+
 		public void AddEntity(RoomUser entity)
 		{
 			if (this.Position.X == this.room.Model.Door.X && this.Position.Y == this.room.Model.Door.Y)
@@ -63,7 +95,10 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 				return user != null && this.HasEntity(user);
 			}
 
-			// todo: furni check
+			if (this.Items.Count > 0)
+			{
+				return this.TopItem.ItemData.CanWalk;
+			}
 
 			return true;
 		}

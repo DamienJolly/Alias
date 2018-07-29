@@ -37,14 +37,45 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 						RoomTile tile = usr.Room.Mapping.Tiles[p.X, p.Y];
 						tile.AddEntity(usr);
 
-						usr.Actions.Add("mv", p.X + "," + p.Y + "," + tile.Position.Z);
+						double height = 0.0;
+						
+						if (oldTile.TopItem != null)
+						{
+							// walk off
+							if (tile.TopItem == null || tile.TopItem != oldTile.TopItem)
+							{
+								oldTile.TopItem.GetInteractor().OnUserWalkOff(usr.Habbo.Session, usr.Room, oldTile.TopItem);
+							}
+						}
+						
+						if (tile.TopItem != null)
+						{
+							// walk on
+							if (oldTile.TopItem == null || oldTile.TopItem != tile.TopItem)
+							{
+								tile.TopItem.GetInteractor().OnUserWalkOn(usr.Habbo.Session, usr.Room, tile.TopItem);
+							}
+
+							height += tile.TopItem.Position.Z;
+							if (!tile.TopItem.ItemData.CanSit && !tile.TopItem.ItemData.CanLay)
+							{
+								// todo: multiheight furni
+								height += tile.TopItem.ItemData.Height;
+							}
+						}
+						else
+						{
+							height += tile.Position.Z;
+						}
+
+						usr.Actions.Add("mv", p.X + "," + p.Y + "," + height);
 						usr.Position.Rotation = usr.Room.PathFinder.Rotation(usr.Position.X, usr.Position.Y, p.X, p.Y);
 						usr.Position.HeadRotation = usr.Position.Rotation;
 						usr.Path.RemoveFirst();
 						usr.Room.UserManager.Send(new RoomUserStatusComposer(usr));
 						usr.Position.X = p.X;
 						usr.Position.Y = p.Y;
-						usr.Position.Z = tile.Position.Z;
+						usr.Position.Z = height;
 
 						if (usr.Path.Count() != 0)
 						{
@@ -61,12 +92,26 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 								usr.Actions.Remove("mv");
 								update = true;
 							}
-							
-							if (!usr.isSitting && usr.Actions.Has("sit"))
+
+							RoomTile tile = usr.Room.Mapping.Tiles[usr.TargetPosition.X, usr.TargetPosition.Y];
+
+							if (tile.TopItem != null && tile.TopItem.ItemData.CanSit)
 							{
-								usr.Actions.Remove("sit");
-								usr.Position.Z = usr.Room.Mapping.Tiles[usr.TargetPosition.X, usr.TargetPosition.Y].Position.Z;
+								usr.Actions.Add("sit", tile.TopItem.ItemData.Height.ToString());
+								usr.Position.Rotation = tile.TopItem.Position.Rotation;
+								usr.Position.HeadRotation = usr.Position.Rotation;
+								usr.Position.Z = tile.TopItem.ItemData.Height + tile.TopItem.Position.Z;
+								usr.isSitting = false;
 								update = true;
+							}
+							else
+							{
+								if (!usr.isSitting && usr.Actions.Has("sit"))
+								{
+									usr.Actions.Remove("sit");
+									usr.Position.Z = tile.Position.Z;
+									update = true;
+								}
 							}
 
 							if (update)

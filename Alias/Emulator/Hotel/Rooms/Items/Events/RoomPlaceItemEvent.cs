@@ -77,6 +77,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 						}
 					};
 					room.ItemManager.AddItem(rItem);
+					room.Mapping.AddItem(rItem);
 					room.UserManager.Send(new AddFloorItemComposer(rItem));
 
 					iItem.RoomId = room.Id;

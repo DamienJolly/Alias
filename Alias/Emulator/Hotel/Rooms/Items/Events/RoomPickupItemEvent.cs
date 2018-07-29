@@ -33,6 +33,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
+			room.Mapping.RemoveItem(rItem);
 			room.ItemManager.RemoveItem(rItem);
 			room.UserManager.Send(new RemoveFloorItemComposer(rItem));
 

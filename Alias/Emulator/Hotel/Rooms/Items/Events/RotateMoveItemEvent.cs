@@ -33,11 +33,13 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 			int y = message.PopInt();
 
 			RoomTile tile = room.Mapping.Tiles[x, y];
-			
-				item.Position.Z = tile.Position.Z;
+
+			room.Mapping.RemoveItem(item);
+			item.Position.Z = tile.Position.Z;
 				item.Position.X = x;
 				item.Position.Y = y;
 				item.Position.Rotation = message.PopInt();
+				room.Mapping.AddItem(item);
 
 			/*else
 			{

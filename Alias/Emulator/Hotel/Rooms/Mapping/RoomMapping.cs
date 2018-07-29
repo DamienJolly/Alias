@@ -1,3 +1,4 @@
+using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Mapping
@@ -72,7 +73,38 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 
 		public void RegenerateItemsCollision()
 		{
-			// todo:
+			foreach (RoomTile tile in this.Tiles)
+			{
+				tile.Items.Clear();
+			}
+
+			foreach (RoomItem item in this.room.ItemManager.Items)
+			{
+				AddItem(item);
+			}
+		}
+
+		public void AddItem(RoomItem item)
+		{
+			System.Console.WriteLine(item.Position.Rotation);
+			for (int x = item.Position.X; x <= item.Position.X + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Width : item.ItemData.Length) - 1; x++)
+			{
+				for (int y = item.Position.Y; y <= item.Position.Y + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Length : item.ItemData.Width) - 1; y++)
+				{
+					this.Tiles[x, y].AddItem(item);
+				}
+			}
+		}
+
+		public void RemoveItem(RoomItem item)
+		{
+			for (int x = item.Position.X; x <= item.Position.X + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Width : item.ItemData.Length) - 1; x++)
+			{
+				for (int y = item.Position.Y; y <= item.Position.Y + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Length : item.ItemData.Width) - 1; y++)
+				{
+					this.Tiles[x, y].RemoveItem(item);
+				}
+			}
 		}
 	}
 }
