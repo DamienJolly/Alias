@@ -88,7 +88,7 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 			this.Entities.Remove(entity);
 		}
 
-		public bool IsValidTile(RoomUser user)
+		public bool IsValidTile(RoomUser user, bool final)
 		{
 			if (this.Entities.Count > 0)
 			{
@@ -97,7 +97,23 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 
 			if (this.Items.Count > 0)
 			{
-				return this.TopItem.ItemData.CanWalk;
+				if (this.TopItem.ItemData.CanWalk || ((this.TopItem.ItemData.CanSit && final)))
+				{
+					return true;
+				}
+				else if (this.TopItem.ItemData.CanLay && final)
+				{
+					if (this.TopItem.Position.X == user.TargetPosition.X && this.TopItem.Position.Y == user.TargetPosition.Y)
+					{
+						// todo: finish
+						return true;
+					}
+					return false;
+				}
+				else
+				{
+					return false;
+				}
 			}
 
 			return true;
@@ -107,12 +123,15 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 		{
 			if (this.Entities.Count > 0)
 			{
-				return false;
+				if (this.Items.Count > 0)
+				{
+					return this.TopItem == item && item.ItemData.CanSit;
+				}
 			}
 
 			if (this.Items.Count > 0)
 			{
-				return false;
+				return this.TopItem == item;
 			}
 
 			return true;

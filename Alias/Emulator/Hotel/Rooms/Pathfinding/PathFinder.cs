@@ -46,7 +46,7 @@ namespace Alias.Emulator.Hotel.Rooms.Pathfinding
 			{
 				for (int y = 0; y < this.Room.Mapping.SizeY; y++)
 				{
-					if (this.Room.Mapping.Tiles[x, y].State == RoomTileState.OPEN && this.Room.Mapping.Tiles[x, y].IsValidTile(user))
+					if (this.Room.Mapping.Tiles[x, y].State == RoomTileState.OPEN && this.Room.Mapping.Tiles[x, y].IsValidTile(user, x == user.TargetPosition.X && y == user.TargetPosition.Y))
 					{
 						openNodes.AddLast(new Node(x, y));
 					}

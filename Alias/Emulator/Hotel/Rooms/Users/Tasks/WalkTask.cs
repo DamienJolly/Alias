@@ -104,11 +104,27 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 								usr.isSitting = false;
 								update = true;
 							}
+							else if (tile.TopItem != null && tile.TopItem.ItemData.CanLay)
+							{
+								usr.Actions.Add("lay", tile.TopItem.ItemData.Height.ToString());
+								usr.Position.Rotation = tile.TopItem.Position.Rotation;
+								usr.Position.HeadRotation = usr.Position.Rotation;
+								usr.Position.Z = tile.TopItem.ItemData.Height + tile.TopItem.Position.Z;
+								usr.isSitting = false;
+								update = true;
+							}
 							else
 							{
 								if (!usr.isSitting && usr.Actions.Has("sit"))
 								{
 									usr.Actions.Remove("sit");
+									usr.Position.Z = tile.Position.Z;
+									update = true;
+								}
+
+								if (usr.Actions.Has("lay"))
+								{
+									usr.Actions.Remove("lay");
 									usr.Position.Z = tile.Position.Z;
 									update = true;
 								}

@@ -15,16 +15,16 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Events
 				
 				RoomUser usr = session.Habbo.CurrentRoom.UserManager.UserBySession(session);
 
-				if ((usr.Position.X == x && usr.Position.Y == y) || !usr.Room.Mapping.Tiles[x, y].IsValidTile(usr))
-				{
-					return;
-				}
-
 				usr.TargetPosition = new UserPosition
 				{
 					X = x,
 					Y = y
 				};
+
+				if ((usr.Position.X == x && usr.Position.Y == y) || !usr.Room.Mapping.Tiles[x, y].IsValidTile(usr, true))
+				{
+					return;
+				}
 
 				usr.Path = usr.Room.PathFinder.Path(usr);
 			}
