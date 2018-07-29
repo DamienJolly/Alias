@@ -103,6 +103,21 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 			return true;
 		}
 
+		public bool CanStack(RoomItem item)
+		{
+			if (this.Entities.Count > 0)
+			{
+				return false;
+			}
+
+			if (this.Items.Count > 0)
+			{
+				return false;
+			}
+
+			return true;
+		}
+
 		public bool TilesAdjecent(RoomTile targetTile)
 		{
 			int dx = this.Position.X - targetTile.Position.X;

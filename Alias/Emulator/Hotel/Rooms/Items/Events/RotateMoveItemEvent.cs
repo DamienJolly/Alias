@@ -32,24 +32,23 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 			int x = message.PopInt();
 			int y = message.PopInt();
 
-			RoomTile tile = room.Mapping.Tiles[x, y];
-
-			room.Mapping.RemoveItem(item);
-			item.Position.Z = tile.Position.Z;
+			if (room.Mapping.CanStackAt(x, y, item))
+			{
+				room.Mapping.RemoveItem(item);
+				item.Position.Z = room.Mapping.Tiles[x, y].Position.Z;
 				item.Position.X = x;
 				item.Position.Y = y;
 				item.Position.Rotation = message.PopInt();
 				room.Mapping.AddItem(item);
-
-			/*else
+			}
+			else
 			{
 				Dictionary<string, string> data = new Dictionary<string, string>
 				{
 					{ "message", "${room.error.cant_set_item}" }
 				};
 				session.Send(new BubbleAlertComposer("furni_placement_error", data));
-			}*/
-
+			}
 
 			room.UserManager.Send(new FloorItemUpdateComposer(item));
 		}

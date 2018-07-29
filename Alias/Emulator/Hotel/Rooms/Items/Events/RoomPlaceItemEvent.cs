@@ -57,25 +57,25 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				if (!int.TryParse(values[1], out int x)) { return; }
 				if (!int.TryParse(values[2], out int y)) { return; }
 				if (!int.TryParse(values[3], out int rotation)) { return; }
-
-				RoomTile tile = room.Mapping.Tiles[x, y];
+				
+				RoomItem rItem = new RoomItem()
 				{
-					RoomItem rItem = new RoomItem()
+					Id = iItem.Id,
+					Room = room,
+					ItemData = iItem.ItemData,
+					LimitedNumber = iItem.LimitedNumber,
+					LimitedStack = iItem.LimitedStack,
+					Owner = session.Habbo.Id,
+					Position = new ItemPosition()
 					{
-						Id = iItem.Id,
-						Room = room,
-						ItemData = iItem.ItemData,
-						LimitedNumber = iItem.LimitedNumber,
-						LimitedStack = iItem.LimitedStack,
-						Owner = session.Habbo.Id,
-						Position = new ItemPosition()
-						{
-							X = x,
-							Y = y,
-							Z = tile.Position.Z,
-							Rotation = rotation
-						}
-					};
+						X = x,
+						Y = y,
+						Z = room.Mapping.Tiles[x, y].Position.Z,
+						Rotation = rotation
+					}
+				};
+				if (room.Mapping.CanStackAt(x, y, rItem))
+				{
 					room.ItemManager.AddItem(rItem);
 					room.Mapping.AddItem(rItem);
 					room.UserManager.Send(new AddFloorItemComposer(rItem));
@@ -84,7 +84,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 					session.Habbo.Inventory.UpdateItem(iItem);
 					session.Send(new RemoveHabboItemComposer(iItem.Id));
 				}
-				/*else
+				else
 				{
 					Dictionary<string, string> data = new Dictionary<string, string>
 					{
@@ -92,7 +92,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 					};
 					session.Send(new BubbleAlertComposer("furni_placement_error", data));
 					return;
-				}*/
+				}
 			}
 		}
 	}

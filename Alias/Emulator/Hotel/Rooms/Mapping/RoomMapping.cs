@@ -84,6 +84,21 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 			}
 		}
 
+		public bool CanStackAt(int targertX, int targetY, RoomItem item)
+		{
+			for (int x = targertX; x <= targertX + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Width : item.ItemData.Length) - 1; x++)
+			{
+				for (int y = targetY; y <= targetY + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Length : item.ItemData.Width) - 1; y++)
+				{
+					if (!this.Tiles[x, y].CanStack(item))
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
 		public void AddItem(RoomItem item)
 		{
 			System.Console.WriteLine(item.Position.Rotation);
