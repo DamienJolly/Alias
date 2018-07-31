@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Users;
 
@@ -84,42 +85,40 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 			}
 		}
 
-		public bool CanStackAt(int targertX, int targetY, RoomItem item)
+		public List<RoomTile> GetTilesFromItem(int targetX, int targetY, RoomItem item)
 		{
-			for (int x = targertX; x <= targertX + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Width : item.ItemData.Length) - 1; x++)
+			List<RoomTile> tiles = new List<RoomTile>();
+			for (int x = targetX; x <= targetX + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Width : item.ItemData.Length) - 1; x++)
 			{
 				for (int y = targetY; y <= targetY + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Length : item.ItemData.Width) - 1; y++)
 				{
-					if (!this.Tiles[x, y].CanStack(item))
-					{
-						return false;
-					}
+					tiles.Add(this.Tiles[x, y]);
 				}
 			}
-			return true;
+			return tiles;
+		}
+
+		public bool CanStackAt(int targertX, int targetY, RoomItem item)
+		{
+			bool canStack = true;
+			GetTilesFromItem(targertX, targetY, item).ForEach(tile =>
+			{
+				if (!tile.CanStack(item))
+				{
+					canStack = false;
+				}
+			});
+			return canStack;
 		}
 
 		public void AddItem(RoomItem item)
 		{
-			System.Console.WriteLine(item.Position.Rotation);
-			for (int x = item.Position.X; x <= item.Position.X + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Width : item.ItemData.Length) - 1; x++)
-			{
-				for (int y = item.Position.Y; y <= item.Position.Y + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Length : item.ItemData.Width) - 1; y++)
-				{
-					this.Tiles[x, y].AddItem(item);
-				}
-			}
+			GetTilesFromItem(item.Position.X, item.Position.Y, item).ForEach(tile => tile.AddItem(item));
 		}
 
 		public void RemoveItem(RoomItem item)
 		{
-			for (int x = item.Position.X; x <= item.Position.X + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Width : item.ItemData.Length) - 1; x++)
-			{
-				for (int y = item.Position.Y; y <= item.Position.Y + (item.Position.Rotation == 0 || item.Position.Rotation == 4 ? item.ItemData.Length : item.ItemData.Width) - 1; y++)
-				{
-					this.Tiles[x, y].RemoveItem(item);
-				}
-			}
+			GetTilesFromItem(item.Position.X, item.Position.Y, item).ForEach(tile => tile.RemoveItem(item));
 		}
 	}
 }
