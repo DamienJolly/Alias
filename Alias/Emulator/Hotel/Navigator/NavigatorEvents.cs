@@ -15,6 +15,7 @@ namespace Alias.Emulator.Hotel.Navigator
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestPromotedRoomsMessageEvent, new RequestPromotedRoomsEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.AddSavedSearchMessageEvent, new AddSavedSearchEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RemoveSavedSearchMessageEvent, new RemoveSavedSearchEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestCreateRoomMessageEvent, new RequestCreateRoomEvent());
 		}
 	}
 }

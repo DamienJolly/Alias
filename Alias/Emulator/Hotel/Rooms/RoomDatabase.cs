@@ -102,6 +102,27 @@ namespace Alias.Emulator.Hotel.Rooms
 			return likes;
 		}
 
+		public static int CreateRoom(int ownerId, string name, string description, string modelName, int maxUsers, int tradeType, int categoryId)
+		{
+			int roomId = 0;
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("name", name);
+				dbClient.AddParameter("owner", ownerId);
+				dbClient.AddParameter("maxusers", maxUsers);
+				dbClient.AddParameter("description", description);
+				dbClient.AddParameter("trade", tradeType.ToString());
+				dbClient.AddParameter("category", categoryId);
+				dbClient.AddParameter("model", modelName);
+				dbClient.Query("INSERT INTO `room_data` (`name`, `owner`, `max_users`, `description`, `trade`, `category`, `model`) VALUES (@name, @owner, @maxusers, @description, @trade, @category, @model)");
+				roomId = dbClient.LastInsertedId();
+
+				dbClient.AddParameter("roomId", roomId);
+				dbClient.Query("INSERT INTO `room_settings` (`id`) VALUES (@roomId)");
+			}
+			return roomId;
+		}
+
 		public static void SaveRoom(RoomData data)
 		{
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())

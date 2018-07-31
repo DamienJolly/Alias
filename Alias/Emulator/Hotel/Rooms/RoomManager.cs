@@ -11,23 +11,25 @@ namespace Alias.Emulator.Hotel.Rooms
 {
 	sealed class RoomManager
 	{
-		private RoomModelManager _roomModelManager;
+		public RoomModelManager RoomModelManager
+		{
+			get; set;
+		}
+
 		private List<RoomData> _cachedRooms;
 		private List<Room> _loadedRooms;
 
 		public RoomManager()
 		{
-			this._roomModelManager = new RoomModelManager();
+			this.RoomModelManager = new RoomModelManager();
 			this._cachedRooms = new List<RoomData>();
 			this._loadedRooms = new List<Room>();
 		}
 
 		public void Initialize()
 		{
-			this._roomModelManager.Initialize();
+			this.RoomModelManager.Initialize();
 		}
-
-		public RoomModelManager GetRoomModelManager() => this._roomModelManager;
 
 		public int TradeToInt(RoomTradeState tradeState)
 		{
@@ -124,7 +126,7 @@ namespace Alias.Emulator.Hotel.Rooms
 					Id = roomId,
 					RoomData = RoomData(roomId)
 				};
-				result.Model = GetRoomModelManager().GetModel(result.RoomData.ModelName);
+				result.Model = this.RoomModelManager.GetModel(result.RoomData.ModelName);
 				result.Mapping = new RoomMapping(result);
 				result.ItemManager = new RoomItemManager(result);
 				result.UserManager = new RoomUserManager(result);
@@ -138,6 +140,12 @@ namespace Alias.Emulator.Hotel.Rooms
 				Logging.Info("There's no Room with Id " + roomId);
 				return new Room();
 			}
+		}
+
+		public Room CreateRoom(int ownerId, string name, string description, string modelName, int maxUsers, int tradeType, int categoryId)
+		{
+			int roomId = RoomDatabase.CreateRoom(ownerId, name, description, modelName, maxUsers, tradeType, categoryId);
+			return LoadRoom(roomId);
 		}
 
 		public Room Room(int roomId)

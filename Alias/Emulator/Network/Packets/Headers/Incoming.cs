@@ -130,6 +130,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int RequestPromotedRoomsMessageEvent = 2446;
 		public const int AddSavedSearchMessageEvent = 117;
 		public const int RemoveSavedSearchMessageEvent = 448;
+		public const int RequestCreateRoomMessageEvent = 1227;
 
 		// Catalog
 		public const int RequestCatalogIndexMessageEvent = 1191;

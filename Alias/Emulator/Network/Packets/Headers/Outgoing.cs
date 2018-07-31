@@ -145,6 +145,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int NavigatorCollapsedCategoriesMessageComposer = 2141;
 		public const int NavigatorSavedSearchesMessageComposer = 1818;
 		public const int NavigatorSettingsMessageComposer = 607;
+		public const int RoomCreatedMessageComposer = 462;
 
 		// Catalog
 		public const int CatalogModeMessageComposer = 1103;

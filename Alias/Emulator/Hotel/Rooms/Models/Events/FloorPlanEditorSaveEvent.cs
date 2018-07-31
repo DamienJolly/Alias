@@ -93,10 +93,10 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Events
 						},
 						IsCustom = true
 					};
-					Alias.Server.RoomManager.GetRoomModelManager().AddModel(layout);
+					Alias.Server.RoomManager.RoomModelManager.AddModel(layout);
 				}
 				room.Model = layout;
-				Alias.Server.RoomManager.GetRoomModelManager().SaveModel(layout);
+				Alias.Server.RoomManager.RoomModelManager.SaveModel(layout);
 				room.RoomData.ModelName = room.Model.Name;
 				room.RoomData.Settings.FloorSize = floorSize;
 				room.RoomData.Settings.WallHeight = wallSize;
