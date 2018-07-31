@@ -62,12 +62,12 @@ namespace Alias.Emulator.Hotel.Items
 		public int Modes
 		{
 			get; set;
-		} = 5;
+		}
 
 		public bool CanStack
 		{
 			get; set;
-		} = true;
+		}
 		
 		public WiredInteraction WiredInteraction
 		{

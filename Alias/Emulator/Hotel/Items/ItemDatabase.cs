@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Data;
 using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Rooms.Items;
 using MySql.Data.MySqlClient;
@@ -28,8 +27,10 @@ namespace Alias.Emulator.Hotel.Items
 							CanLay      = Reader.GetBoolean("can_lay"),
 							ExtraData   = Reader.GetString("extra_data"),
 							Type        = Reader.GetString("type"),
+							Modes       = Reader.GetInt32("modes"),
 							Interaction = ItemInteractions.GetInteractionFromString(Reader.GetString("interaction_type")),
-							CanWalk     = Reader.GetBoolean("can_walk")
+							CanWalk     = Reader.GetBoolean("can_walk"),
+							CanStack    = Reader.GetBoolean("can_stack")
 						};
 
 						//todo: recode
