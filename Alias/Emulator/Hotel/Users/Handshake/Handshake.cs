@@ -52,13 +52,6 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 						session.Send(new ModerationToolComposer(session.Habbo, Alias.Server.ModerationManager.GetTickets));
 					}
 
-					session.Send(new NavigatorMetaDataComposer());
-					session.Send(new NavigatorLiftedRoomsComposer());
-					session.Send(new NavigatorCollapsedCategoriesComposer());
-					session.Send(new NavigatorSavedSearchesComposer(session.Habbo.NavigatorPreference.NavigatorSearches));
-					session.Send(new NavigatorEventCategoriesComposer(session.Habbo.Rank));
-					session.Send(new NavigatorSettingsComposer(session.Habbo.NavigatorPreference));
-
 					session.Send(new InventoryRefreshComposer());
 					//session.Send(new ForumsTestComposer());
 					//session.Send(new InventoryAchievementsComposer());
