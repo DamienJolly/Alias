@@ -96,6 +96,9 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int FloorPlanEditorRequestBlockedTilesMessageEvent = 24;
 			public const int FloorPlanEditorSaveMessageEvent = 40;
 
+			// Promotions
+			public const int RequestPromotionRoomsMessageEvent = 3802;
+
 		// Moderation
 		public const int ModerationAlertMessageEvent = 1932;
 		public const int ModerationRequestUserInfoMessageEvent = 3939;

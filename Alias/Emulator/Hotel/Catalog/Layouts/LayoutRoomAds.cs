@@ -1,4 +1,4 @@
-﻿using Alias.Emulator.Network.Protocol;
+using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Catalog.Layouts
 {
