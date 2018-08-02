@@ -141,6 +141,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int RequestCatalogPageMessageEvent = 3547;
 		public const int RequestDiscountMessageEvent = 703;
 		public const int CatalogBuyItemMessageEvent = 2687;
+		public const int CatalogSearchedItemMessageEvent = 1846;
 
 		// Achievements
 		public const int RequestAchievementsMessageEvent = 3280;

@@ -113,6 +113,11 @@ namespace Alias.Emulator.Hotel.Catalog
 			return this.Items.Where(item => item.Id == itemId).FirstOrDefault();
 		}
 
+		public CatalogItem GetCatalogItemByOffer(int offerId)
+		{
+			return this.Items.Where(item => item.OfferId == offerId).FirstOrDefault();
+		}
+
 		public ICatalogLayout GetLayout()
 		{
 			switch (this.Layout)

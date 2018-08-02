@@ -103,7 +103,7 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 				}
 				else if (this.TopItem.ItemData.CanLay && final)
 				{
-					if (this.TopItem.Position.X == user.TargetPosition.X && this.TopItem.Position.Y == user.TargetPosition.Y)
+					if (this.TopItem.Position.X == this.Position.X && this.TopItem.Position.Y == this.Position.Y)
 					{
 						// todo: finish
 						return true;
@@ -119,6 +119,8 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 			return true;
 		}
 
+		public double Height => this.TopItem != null ? this.TopItem.ItemData.Height + this.TopItem.Position.Z + this.Position.Z : this.Position.Z;
+
 		public bool CanStack(RoomItem item)
 		{
 			if (this.Entities.Count > 0)
@@ -131,7 +133,7 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 
 			if (this.Items.Count > 0)
 			{
-				return this.TopItem == item;
+				return this.TopItem == item || this.TopItem.ItemData.CanStack;
 			}
 
 			return true;

@@ -12,6 +12,7 @@ namespace Alias.Emulator.Hotel.Catalog
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestCatalogPageMessageEvent, new RequestCatalogPageEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestDiscountMessageEvent, new RequestDiscountEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.CatalogBuyItemMessageEvent, new CatalogBuyItemEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.CatalogSearchedItemMessageEvent, new CatalogSearchedItemEvent());
 		}
 	}
 }

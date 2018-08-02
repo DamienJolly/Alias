@@ -70,7 +70,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 					{
 						X = x,
 						Y = y,
-						Z = room.Mapping.Tiles[x, y].Position.Z,
+						Z = room.Mapping.Tiles[x, y].Height,
 						Rotation = rotation
 					}
 				};

@@ -160,6 +160,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int AlertLimitedSoldOutMessageComposer = 2802;
 		public const int PurchaseOKMessageComposer = 3661;
 		public const int CatalogUpdatedMessageComposer = 1592;
+		public const int CatalogSearchResultMessageComposer = 2090;
 
 		// Achievements
 		public const int AchievementListMessageComposer = 2034;

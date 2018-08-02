@@ -209,5 +209,10 @@ namespace Alias.Emulator.Hotel.Catalog
 		{
 			return this._bots.Where(bot => bot.ItemId == itemId).FirstOrDefault();
 		}
+
+		public CatalogPage GetCatalogPageByOffer(int offerId)
+		{
+			return this._pages.Where(page => page.OfferIds.Contains(offerId)).FirstOrDefault();
+		}
 	}
 }

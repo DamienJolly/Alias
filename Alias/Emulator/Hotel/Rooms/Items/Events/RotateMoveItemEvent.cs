@@ -35,7 +35,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 			if (room.Mapping.CanStackAt(x, y, item))
 			{
 				room.Mapping.RemoveItem(item);
-				item.Position.Z = room.Mapping.Tiles[x, y].Position.Z;
+				item.Position.Z = room.Mapping.Tiles[x, y].Height;
 				item.Position.X = x;
 				item.Position.Y = y;
 				item.Position.Rotation = message.PopInt();
