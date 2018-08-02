@@ -79,6 +79,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			RoomTask.Start(this);
 			if (this.UserManager != null)
 			{
+				this.UserManager.Users.ForEach(user => user.OnCycle());
 				WalkTask.Start(this.UserManager.Users);
 			}
 			if (this.ItemManager != null)

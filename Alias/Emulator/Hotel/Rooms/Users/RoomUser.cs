@@ -21,6 +21,34 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 
 		}
 
+		public void OnCycle()
+		{
+			if (this.HandItem > 0)
+			{
+				this.HandItemTick--;
+				if (this.HandItemTick <= 0)
+				{
+					SetHandItem(0);
+				}
+			}
+		}
+
+		public void SetHandItem(int itemId)
+		{
+			this.HandItem = itemId;
+
+			if (itemId > 0)
+			{
+				this.HandItemTick = 240;
+			}
+			else
+			{
+				this.HandItemTick = 0;
+			}
+
+			Room.UserManager.Send(new RoomUserHandItemComposer(this));
+		}
+
 		public void MakeSit()
 		{
 			if (this.Actions.Has("mv"))

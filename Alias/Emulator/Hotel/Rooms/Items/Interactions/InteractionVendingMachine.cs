@@ -67,8 +67,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 			{
 				if (count >= 1)
 				{
-					item.InteractingUser.HandItem = GetRandomVendingMachineId(item);
-					item.Room.UserManager.Send(new RoomUserHandItemComposer(item.InteractingUser));
+					item.InteractingUser.SetHandItem(GetRandomVendingMachineId(item));
 					item.Mode = 0;
 					item.Room.UserManager.Send(new FloorItemUpdateComposer(item));
 				}
