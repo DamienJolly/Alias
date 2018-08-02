@@ -31,6 +31,11 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			get; set;
 		}
 
+		public int HandItem
+		{
+			get; set;
+		} = 0;
+
 		public int OwnerId
 		{
 			get; set;

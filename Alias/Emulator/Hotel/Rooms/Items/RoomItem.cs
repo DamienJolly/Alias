@@ -1,6 +1,7 @@
 using Alias.Emulator.Hotel.Items;
 using Alias.Emulator.Hotel.Rooms.Items.Interactions;
 using Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired;
+using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Items
@@ -50,6 +51,11 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			}
 		}
 
+		public RoomUser InteractingUser
+		{
+			get; set;
+		}
+
 		public ItemData ItemData
 		{
 			get; set;
@@ -87,6 +93,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 				{
 					case ItemInteraction.WIRED_TRIGGER: case ItemInteraction.WIRED_EFFECT: case ItemInteraction.WIRED_CONDITION: _interaction = new InteractionWired(); break;
 					case ItemInteraction.DICE: _interaction = new InteractionDice(); break;
+					case ItemInteraction.VENDING_MACHINE: _interaction = new InteractionVendingMachine(); break;
 					case ItemInteraction.DEFAULT: default: _interaction = new InteractionDefault(); break;
 				}
 			}
