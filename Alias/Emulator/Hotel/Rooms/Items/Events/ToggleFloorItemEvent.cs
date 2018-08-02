@@ -1,3 +1,4 @@
+using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -23,7 +24,13 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			item.GetInteractor().OnUserInteract(session, room, item, state);
+			RoomUser user = room.UserManager.UserBySession(session);
+			if (user == null)
+			{
+				return;
+			}
+
+			item.GetInteractor().OnUserInteract(user, room, item, state);
 		}
 	}
 }

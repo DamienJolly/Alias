@@ -1,7 +1,6 @@
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Network.Protocol;
-using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 {
@@ -23,19 +22,19 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 
 		}
 
-		public void OnUserWalkOn(Session session, Room room, RoomItem item)
+		public void OnUserWalkOn(RoomUser user, Room room, RoomItem item)
 		{
 			System.Console.WriteLine("walk on");
 		}
 
-		public void OnUserWalkOff(Session session, Room room, RoomItem item)
+		public void OnUserWalkOff(RoomUser user, Room room, RoomItem item)
 		{
 			System.Console.WriteLine("walk off");
 		}
 
-		public void OnUserInteract(Session session, Room room, RoomItem item, int state)
+		public void OnUserInteract(RoomUser user, Room room, RoomItem item, int state)
 		{
-			if (item.ItemData.Modes <= 1 || !room.RoomRights.HasRights(session.Habbo.Id))
+			if (item.ItemData.Modes <= 1 || !room.RoomRights.HasRights(user.Habbo.Id))
 			{
 				return;
 			}

@@ -1,7 +1,6 @@
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Network.Protocol;
-using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
@@ -26,24 +25,18 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 
 		}
 
-		public void OnUserWalkOn(Session session, Room room, RoomItem item)
+		public void OnUserWalkOn(RoomUser user, Room room, RoomItem item)
 		{
 			
 		}
 
-		public void OnUserWalkOff(Session session, Room room, RoomItem item)
+		public void OnUserWalkOff(RoomUser user, Room room, RoomItem item)
 		{
 			
 		}
 
-		public void OnUserInteract(Session session, Room room, RoomItem item, int state)
+		public void OnUserInteract(RoomUser user, Room room, RoomItem item, int state)
 		{
-			RoomUser user = room.UserManager.UserBySession(session);
-			if (user == null)
-			{
-				return;
-			}
-
 			if (room.Mapping.Tiles[item.Position.X, item.Position.Y].TilesAdjecent(room.Mapping.Tiles[user.Position.X, user.Position.Y]))
 			{
 				if (item.Mode != -1)

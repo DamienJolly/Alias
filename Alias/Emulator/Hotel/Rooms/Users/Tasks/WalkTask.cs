@@ -44,7 +44,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 							// walk off
 							if (tile.TopItem == null || tile.TopItem != oldTile.TopItem)
 							{
-								oldTile.TopItem.GetInteractor().OnUserWalkOff(usr.Habbo.Session, usr.Room, oldTile.TopItem);
+								oldTile.TopItem.GetInteractor().OnUserWalkOff(usr, usr.Room, oldTile.TopItem);
 							}
 						}
 						
@@ -53,7 +53,7 @@ namespace Alias.Emulator.Hotel.Rooms.Users.Tasks
 							// walk on
 							if (oldTile.TopItem == null || oldTile.TopItem != tile.TopItem)
 							{
-								tile.TopItem.GetInteractor().OnUserWalkOn(usr.Habbo.Session, usr.Room, tile.TopItem);
+								tile.TopItem.GetInteractor().OnUserWalkOn(usr, usr.Room, tile.TopItem);
 							}
 
 							height += tile.TopItem.Position.Z;
