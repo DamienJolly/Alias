@@ -81,7 +81,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 			List<int> items = item.ItemData.ExtraData.Split(',').Select(Int32.Parse).ToList();
 			if (items.Count != 0)
 			{
-				id = items[Randomness.RandomNumber(items.Count)];
+				id = items[Randomness.RandomNumber(items.Count) - 1];
 			}
 			return id;
 		}
