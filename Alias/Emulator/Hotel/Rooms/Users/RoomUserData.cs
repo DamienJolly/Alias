@@ -41,6 +41,11 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			get; set;
 		} = 0;
 
+		public int EffectId
+		{
+			get; set;
+		} = 0;
+
 		public int OwnerId
 		{
 			get; set;

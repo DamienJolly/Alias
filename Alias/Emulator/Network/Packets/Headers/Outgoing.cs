@@ -98,6 +98,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RoomUserActionMessageComposer = 205;
 			public const int RoomUserDanceMessageComposer = 586;
 			public const int RoomUserHandItemMessageComposer = 190;
+			public const int RoomUserEffectMessageComposer = 3221;
 
 			// Trading
 			public const int TradeStartFailMessageComposer = 1608;

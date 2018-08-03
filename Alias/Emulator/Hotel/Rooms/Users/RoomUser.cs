@@ -49,6 +49,12 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 			Room.UserManager.Send(new RoomUserHandItemComposer(this));
 		}
 
+		public void SetEffectId(int effectId)
+		{
+			this.EffectId = effectId;
+			Room.UserManager.Send(new RoomUserEffectComposer(this));
+		}
+
 		public void MakeSit()
 		{
 			if (this.Actions.Has("mv"))
