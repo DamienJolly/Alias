@@ -31,7 +31,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		public int Mode
 		{
 			get; set;
-		} = 0;
+		}
 
 		public int LimitedStack
 		{
@@ -52,6 +52,11 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		}
 
 		public RoomUser InteractingUser
+		{
+			get; set;
+		}
+
+		public string ExtraData
 		{
 			get; set;
 		}
@@ -95,6 +100,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 					case ItemInteraction.DICE: _interaction = new InteractionDice(); break;
 					case ItemInteraction.VENDING_MACHINE: _interaction = new InteractionVendingMachine(); break;
 					case ItemInteraction.TILE_EFFECT: _interaction = new InteractionTileEffect(); break;
+					case ItemInteraction.TROPHY: _interaction = new InteractionTrophy(); break;
 					case ItemInteraction.DEFAULT: default: _interaction = new InteractionDefault(); break;
 				}
 			}

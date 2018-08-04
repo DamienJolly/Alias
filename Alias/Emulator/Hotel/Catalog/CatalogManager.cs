@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Catalog.Composers;
@@ -107,7 +108,7 @@ namespace Alias.Emulator.Hotel.Catalog
 					limitedNumber = item.GetNumber;
 					limitedStack = item.LimitedStack;
 				}
-
+				
 				for (int i = 0; i < amount; i++)
 				{
 					if (item.Credits <= habbo.Credits - totalCredits)
@@ -143,13 +144,20 @@ namespace Alias.Emulator.Hotel.Catalog
 									}
 									else
 									{
+										if (baseItem.Interaction == ItemInteraction.TROPHY)
+										{
+											extradata = habbo.Username + (char)9 + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + (char)9 + extradata;
+										}
 										InventoryItem habboItem = new InventoryItem
 										{
 											Id = 0,
 											LimitedNumber = limitedNumber,
 											LimitedStack = limitedStack,
-											ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id)
+											ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id),
+											Mode = 0,
+											ExtraData = extradata
 										};
+										habbo.Inventory.AddItem(habboItem);
 										itemsList.Add(habboItem);
 									}
 								}
@@ -178,7 +186,6 @@ namespace Alias.Emulator.Hotel.Catalog
 				if (itemsList != null)
 				{
 					habbo.Session.Send(new AddHabboItemsComposer(itemsList));
-					habbo.Inventory.AddItems(itemsList);
 				}
 
 				habbo.Session.Send(new PurchaseOKComposer(item));

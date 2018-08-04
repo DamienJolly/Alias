@@ -42,5 +42,15 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 		{
 			get; set;
 		}
+
+		public string ExtraData
+		{
+			get; set;
+		}
+
+		public int Mode
+		{
+			get; set;
+		}
 	}
 }

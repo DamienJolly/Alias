@@ -10,6 +10,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		BOT,
 		VENDING_MACHINE,
 		TILE_EFFECT,
+		TROPHY,
 
 		WIRED_TRIGGER,
 		WIRED_EFFECT,
@@ -32,6 +33,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 				case "dice": return ItemInteraction.DICE;
 				case "vending": return ItemInteraction.VENDING_MACHINE;
 				case "effect": return ItemInteraction.TILE_EFFECT;
+				case "trophy": return ItemInteraction.TROPHY;
 				case "default": default: return ItemInteraction.DEFAULT;
 			}
 		}

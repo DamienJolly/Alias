@@ -20,9 +20,10 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			this.habbo = h;
 		}
 
-		public void AddItems(List<InventoryItem> items)
+		public void AddItem(InventoryItem item)
 		{
-			InventoryDatabase.AddFurni(items, habbo.Inventory);
+			InventoryDatabase.AddFurni(item);
+			FloorItems.Add(item);
 		}
 
 		public void AddBot(InventoryBots bot)

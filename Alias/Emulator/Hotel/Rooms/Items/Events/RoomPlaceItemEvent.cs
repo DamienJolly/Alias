@@ -72,7 +72,9 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 						Y = y,
 						Z = room.Mapping.Tiles[x, y].Height,
 						Rotation = rotation
-					}
+					},
+					ExtraData = iItem.ExtraData,
+					Mode = iItem.Mode
 				};
 				if (room.Mapping.CanStackAt(x, y, rItem))
 				{

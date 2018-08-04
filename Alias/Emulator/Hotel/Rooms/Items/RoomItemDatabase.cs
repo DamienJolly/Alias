@@ -30,7 +30,9 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 							Owner         = Reader.GetInt32("user_id"),
 							LimitedNumber = Reader.GetInt32("limited_number"),
 							LimitedStack  = Reader.GetInt32("limited_stack"),
-							ItemData      = Alias.Server.ItemManager.GetItemData(Reader.GetInt32("base_id"))
+							ItemData      = Alias.Server.ItemManager.GetItemData(Reader.GetInt32("base_id")),
+							Mode          = Reader.GetInt32("mode"),
+							ExtraData     = Reader.GetString("extradata")
 						};
 						items.Add(item);
 					}
@@ -73,6 +75,13 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 					dbClient.AddParameter("rot", item.Position.Rotation);
 					dbClient.AddParameter("id", item.Id);
 					dbClient.Query("UPDATE `items_room_data` SET `x` = @x, `y` = @y, `z` = @z, `rot` = @rot WHERE `id` = @id");
+
+					if (item.ItemData.Interaction == ItemInteraction.DEFAULT)
+					{
+						dbClient.AddParameter("id", item.Id);
+						dbClient.AddParameter("mode", item.Mode);
+						dbClient.Query("UPDATE `items` SET `mode` = @mode WHERE `id` = @id");
+					}
 				}
 			}
 		}

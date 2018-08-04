@@ -22,7 +22,9 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 							LimitedNumber = Reader.GetInt32("limited_number"),
 							LimitedStack  = Reader.GetInt32("limited_stack"),
 							ItemData      = Alias.Server.ItemManager.GetItemData(Reader.GetInt32("base_id")),
-							UserId        = Reader.GetInt32("user_id")
+							UserId        = Reader.GetInt32("user_id"),
+							ExtraData     = Reader.GetString("extradata"),
+							Mode          = Reader.GetInt32("mode")
 						};
 						items.Add(item);
 					}
@@ -98,18 +100,17 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			return botId;
 		}
 
-		public static void AddFurni(List<InventoryItem> items, InventoryComponent inventory)
+		public static void AddFurni(InventoryItem item)
 		{
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
-				foreach (InventoryItem item in items)
-				{
-					dbClient.AddParameter("baseId", item.ItemData.Id);
-					dbClient.AddParameter("userId", inventory.Habbo().Id);
-					dbClient.Query("INSERT INTO `items` (`base_id`, `user_id`) VALUES (@baseId, @userId)");
-					item.Id = dbClient.LastInsertedId();
-					inventory.FloorItems.Add(item);
-				}
+				dbClient.AddParameter("baseId", item.ItemData.Id);
+				dbClient.AddParameter("userId", item.UserId);
+				dbClient.AddParameter("limitedStack", item.LimitedStack);
+				dbClient.AddParameter("limitedNum", item.LimitedNumber);
+				dbClient.AddParameter("extradata", item.ExtraData);
+				dbClient.Query("INSERT INTO `items` (`base_id`, `user_id`, `limited_stack`, `limited_number`, `extradata`) VALUES (@baseId, @userId, @limitedStack, @limitedNum, @extradata)");
+				item.Id = dbClient.LastInsertedId();
 			}
 		}
 
