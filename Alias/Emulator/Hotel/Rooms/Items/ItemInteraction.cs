@@ -11,6 +11,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		VENDING_MACHINE,
 		TILE_EFFECT,
 		TROPHY,
+		TELEPORT,
 
 		WIRED_TRIGGER,
 		WIRED_EFFECT,
@@ -34,6 +35,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 				case "vending": return ItemInteraction.VENDING_MACHINE;
 				case "effect": return ItemInteraction.TILE_EFFECT;
 				case "trophy": return ItemInteraction.TROPHY;
+				case "teleport": return ItemInteraction.TELEPORT;
 				case "default": default: return ItemInteraction.DEFAULT;
 			}
 		}

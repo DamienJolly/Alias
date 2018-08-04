@@ -120,9 +120,10 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			{
 				dbClient.AddParameter("baseId", item.ItemData.Id);
 				dbClient.AddParameter("userId", item.UserId);
+				dbClient.AddParameter("extradata", item.ExtraData);
 				dbClient.AddParameter("roomId", item.RoomId);
 				dbClient.AddParameter("itemId", item.Id);
-				dbClient.Query("UPDATE `items` SET `base_id` = @baseId, `user_id` = @userId, `room_id` = @roomId WHERE `id` = @itemId");
+				dbClient.Query("UPDATE `items` SET `base_id` = @baseId, `extradata` = @extradata, `user_id` = @userId, `room_id` = @roomId WHERE `id` = @itemId");
 			}
 		}
 

@@ -101,6 +101,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 					case ItemInteraction.VENDING_MACHINE: _interaction = new InteractionVendingMachine(); break;
 					case ItemInteraction.TILE_EFFECT: _interaction = new InteractionTileEffect(); break;
 					case ItemInteraction.TROPHY: _interaction = new InteractionTrophy(); break;
+					case ItemInteraction.TELEPORT: _interaction = new InteractionTeleport(); break;
 					case ItemInteraction.DEFAULT: default: _interaction = new InteractionDefault(); break;
 				}
 			}

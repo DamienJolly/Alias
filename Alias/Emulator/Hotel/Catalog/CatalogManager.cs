@@ -148,17 +148,48 @@ namespace Alias.Emulator.Hotel.Catalog
 										{
 											extradata = habbo.Username + (char)9 + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + (char)9 + extradata;
 										}
-										InventoryItem habboItem = new InventoryItem
+
+										if (baseItem.Interaction == ItemInteraction.TELEPORT)
 										{
-											Id = 0,
-											LimitedNumber = limitedNumber,
-											LimitedStack = limitedStack,
-											ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id),
-											Mode = 0,
-											ExtraData = extradata
-										};
-										habbo.Inventory.AddItem(habboItem);
-										itemsList.Add(habboItem);
+											InventoryItem teleportOne = new InventoryItem
+											{
+												Id = 0,
+												LimitedNumber = limitedNumber,
+												LimitedStack = limitedStack,
+												ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id),
+												Mode = 0,
+												ExtraData = extradata
+											};
+											habbo.Inventory.AddItem(teleportOne);
+											InventoryItem teleportTwo = new InventoryItem
+											{
+												Id = 0,
+												LimitedNumber = limitedNumber,
+												LimitedStack = limitedStack,
+												ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id),
+												Mode = 0,
+												ExtraData = teleportOne.Id.ToString()
+											};
+											habbo.Inventory.AddItem(teleportTwo);
+											teleportOne.ExtraData = teleportTwo.Id.ToString();
+											habbo.Inventory.UpdateItem(teleportOne);
+											itemsList.Add(teleportOne);
+											itemsList.Add(teleportTwo);
+										}
+										else
+										{
+											InventoryItem habboItem = new InventoryItem
+											{
+												Id = 0,
+												LimitedNumber = limitedNumber,
+												LimitedStack = limitedStack,
+												ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id),
+												Mode = 0,
+												ExtraData = extradata
+											};
+											habbo.Inventory.AddItem(habboItem);
+											itemsList.Add(habboItem);
+										}
 									}
 								}
 							}
