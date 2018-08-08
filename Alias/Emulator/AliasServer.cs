@@ -13,6 +13,7 @@ using Alias.Emulator.Hotel.Moderation;
 using Alias.Emulator.Tasks;
 using MySql.Data.MySqlClient;
 using Alias.Emulator.Hotel.Groups;
+using Camera;
 
 namespace Alias.Emulator
 {
@@ -29,6 +30,11 @@ namespace Alias.Emulator
 		/// Task manager factory for handling our tasks.
 		/// </summary>
 		public TaskManager TaskManager { get; set; }
+
+		/// <summary>
+		/// CameraAPI for image creation.
+		/// </summary>
+		public CameraAPI CameraAPI { get; set; }
 
 		public RoomManager RoomManager { get; set; }
 		public ItemManager ItemManager { get; set; }
@@ -81,6 +87,9 @@ namespace Alias.Emulator
 			this.SocketServer = new SocketServer(Configuration.Value("tcp.host"), int.Parse(Configuration.Value("tcp.port")));
 			this.SocketServer.Initialize();
 
+			this.CameraAPI = new CameraAPI();
+			this.CameraAPI.AttemptLogin("Damien", "password123");
+
 			this.RoomManager = new RoomManager();
 			this.RoomManager.Initialize();
 
@@ -129,6 +138,8 @@ namespace Alias.Emulator
 
 			//todo:
 			this.SocketServer.Stop();
+
+			this.CameraAPI.Dispose();
 
 			Console.WriteLine("All done... Press any key to exit.");
 			Console.ReadKey();

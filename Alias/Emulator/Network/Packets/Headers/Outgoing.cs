@@ -167,6 +167,9 @@ namespace Alias.Emulator.Network.Packets.Headers
 		// Achievements
 		public const int AchievementListMessageComposer = 2034;
 
+		// Camera
+		public const int CameraURLMessageComposer = 2252;
+
 		// Groups
 		public const int GroupInfoMessageComposer = 102;
 		public const int GroupBuyRoomsMessageComposer = 2601;

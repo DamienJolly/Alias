@@ -1,5 +1,7 @@
 using System.IO;
 using System.IO.Compression;
+using Alias.Emulator.Hotel.Camera.Composers;
+using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -10,12 +12,26 @@ namespace Alias.Emulator.Hotel.Camera.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
+			Room room = session.Habbo.CurrentRoom;
+			if (room == null)
+			{
+				return;
+			}
+
 			message.GetBuffer().ReadFloat();
 
 			byte[] data = message.GetBuffer().ReadBytes(message.BytesAvailable()).Array;
 			string content = Deflate(data);
 
-			System.Console.WriteLine(content);
+			if (Alias.Server.CameraAPI.SendData(content, out string path))
+			{
+				//session.LastPhoto = path;
+				session.Send(new CameraURLComposer(path + ".png"));
+			}
+			else
+			{
+				session.Habbo.Notification("There was an error rendering your image.", true);
+			}
 		}
 
 		private static string Deflate(byte[] bytes)

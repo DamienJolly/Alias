@@ -10,7 +10,7 @@ namespace Alias.Emulator.Network.Sessions
 		public string UniqueId
 		{
 			get; set;
-		} = "";
+		} = string.Empty;
 
 		public Habbo Habbo
 		{
@@ -39,7 +39,9 @@ namespace Alias.Emulator.Network.Sessions
 			if (this.Habbo != null)
 			{
 				this.Habbo.OnDisconnect();
+				this.Habbo = null;
 			}
+			this.UniqueId = string.Empty;
 			if (closeSocket)
 			{
 				this.Context.CloseAsync();

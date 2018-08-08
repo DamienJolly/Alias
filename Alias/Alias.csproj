@@ -22,4 +22,10 @@
     <Folder Include="Emulator\Hotel\Rooms\Bots\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Camera">
+      <HintPath>libs\Camera.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
