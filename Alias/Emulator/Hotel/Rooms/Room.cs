@@ -12,6 +12,7 @@ using Alias.Emulator.Hotel.Rooms.Tasks;
 using Alias.Emulator.Hotel.Rooms.Trading;
 using Alias.Emulator.Hotel.Rooms.Users;
 using Alias.Emulator.Hotel.Rooms.Users.Tasks;
+using Alias.Emulator.Network.Packets;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
@@ -62,7 +63,13 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		}
 
+		public List<IPacketComposer> RollerMessages
+		{
+			get; set;
+		} = new List<IPacketComposer>();
+
 		public int IdleTime = 0;
+		public int RollerTick = -1;
 
 		public bool Disposing
 		{
@@ -88,7 +95,19 @@ namespace Alias.Emulator.Hotel.Rooms
 				WiredTask.Start(this.ItemManager.Items.Where(item => item.ItemData.Interaction == ItemInteraction.WIRED_EFFECT).ToList());
 				WiredTask.Start(this.ItemManager.Items.Where(item => item.ItemData.Interaction == ItemInteraction.WIRED_TRIGGER).ToList());
 
+				this.RollerTick--;
+
 				ItemTask.Start(this.ItemManager.Items);
+
+				if (this.RollerTick <= 0)
+				{
+					if (this.RollerMessages.Count > 0)
+					{
+						this.UserManager.Send(this.RollerMessages);
+						this.RollerMessages.Clear();
+					}
+					this.RollerTick = this.RoomData.RollerSpeed * 2;
+				}
 			}
 		}
 

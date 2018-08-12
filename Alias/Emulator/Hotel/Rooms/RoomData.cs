@@ -148,6 +148,11 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		} = "0.0";
 
+		public int RollerSpeed
+		{
+			get; set;
+		} = 1;
+
 		public RoomSettings Settings
 		{
 			get; set;

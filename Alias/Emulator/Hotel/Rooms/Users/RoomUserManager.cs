@@ -187,5 +187,23 @@ namespace Alias.Emulator.Hotel.Rooms.Users
 				}
 			});
 		}
+
+		public void Send(List<IPacketComposer> composers)
+		{
+			this.Users.ForEach(user =>
+			{
+				if (user.Habbo.Session != null)
+				{
+					try
+					{
+						user.Habbo.Session.Send(composers, false);
+					}
+					catch (Exception ex)
+					{
+						Logging.Error("Couldn't send message to user", ex);
+					}
+				}
+			});
+		}
 	}
 }

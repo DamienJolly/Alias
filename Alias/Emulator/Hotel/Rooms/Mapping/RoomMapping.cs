@@ -98,6 +98,35 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 			return tiles;
 		}
 
+		public RoomTile GetTileInFront(RoomTile tile, int rotation, int offset = 0)
+		{
+			int offsetX = 0;
+			int offsetY = 0;
+
+			switch (rotation)
+			{
+				case 0: offsetY--; break;
+				case 1: offsetX++; offsetY--; break;
+				case 2: offsetX++; break;
+				case 3: offsetX++; offsetY++; break;
+				case 4: offsetY++; break;
+				case 5: offsetX--; offsetY++; break;
+				case 6: offsetX--; break;
+				case 7: offsetX--; offsetY--; break;
+			}
+
+			int x = tile.Position.X;
+			int y = tile.Position.Y;
+
+			for (int i = 0; i <= offset; i++)
+			{
+				x += offsetX;
+				y += offsetY;
+			}
+
+			return this.Tiles[x, y];
+		}
+
 		public bool CanStackAt(int targertX, int targetY, RoomItem item)
 		{
 			bool canStack = true;

@@ -102,6 +102,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 					case ItemInteraction.TILE_EFFECT: _interaction = new InteractionTileEffect(); break;
 					case ItemInteraction.TROPHY: _interaction = new InteractionTrophy(); break;
 					case ItemInteraction.TELEPORT: _interaction = new InteractionTeleport(); break;
+					case ItemInteraction.ROLLER: _interaction = new InteractionRoller(); break;
 					case ItemInteraction.DEFAULT: default: _interaction = new InteractionDefault(); break;
 				}
 			}

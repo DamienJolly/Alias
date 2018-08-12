@@ -2,6 +2,7 @@ using DotNetty.Transport.Channels;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Hotel.Users;
+using System.Collections.Generic;
 
 namespace Alias.Emulator.Network.Sessions
 {
@@ -32,6 +33,14 @@ namespace Alias.Emulator.Network.Sessions
 		public void Send(IPacketComposer composer, bool dispose = true)
 		{
 			this.Send(composer.Compose(), dispose);
+		}
+
+		public void Send(List<IPacketComposer> composer, bool dispose = true)
+		{
+			composer.ForEach(message =>
+			{
+				this.Send(message.Compose(), dispose);
+			});
 		}
 
 		public void Disconnect(bool closeSocket = true)
