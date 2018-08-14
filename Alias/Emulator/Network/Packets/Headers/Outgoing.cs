@@ -165,6 +165,9 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int CatalogUpdatedMessageComposer = 1592;
 		public const int CatalogSearchResultMessageComposer = 2090;
 
+			// Recycler
+			public const int ReloadRecyclerMessageComposer = 2523;
+
 		// Achievements
 		public const int AchievementListMessageComposer = 2034;
 

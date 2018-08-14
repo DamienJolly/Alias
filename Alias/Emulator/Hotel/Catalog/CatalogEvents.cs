@@ -1,4 +1,5 @@
 using Alias.Emulator.Hotel.Catalog.Events;
+using Alias.Emulator.Hotel.Catalog.Recycler;
 using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Catalog
@@ -13,6 +14,8 @@ namespace Alias.Emulator.Hotel.Catalog
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestDiscountMessageEvent, new RequestDiscountEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.CatalogBuyItemMessageEvent, new CatalogBuyItemEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.CatalogSearchedItemMessageEvent, new CatalogSearchedItemEvent());
+
+			RecyclerEvents.Register();
 		}
 	}
 }

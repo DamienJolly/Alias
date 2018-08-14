@@ -70,7 +70,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RoomUserDanceMessageEvent = 3911;
 			public const int RoomUserGiveRightsMessageEvent = 3880;
 			public const int RoomUserRemoveRightsMessageEvent = 404;
-			public const int RoomUserPlaceBotMessageEvent = 3798;
+			public const int RoomUserPlaceBotMessageEvent = 3978;
 
 			// Trading
 			public const int TradeStartMessageEvent = 3586;
@@ -142,6 +142,9 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int RequestDiscountMessageEvent = 703;
 		public const int CatalogBuyItemMessageEvent = 2687;
 		public const int CatalogSearchedItemMessageEvent = 1846;
+
+			// Recycler
+			public const int ReloadRecyclerMessageEvent = 3447;
 
 		// Achievements
 		public const int RequestAchievementsMessageEvent = 3280;
