@@ -10,7 +10,7 @@ namespace Alias.Emulator.Hotel.Landing.Events
 		{
 			if (session.Habbo.CurrentRoom != null)
 			{
-				session.Habbo.CurrentRoom.UserManager.OnUserLeave(session);
+				session.Habbo.CurrentRoom.EntityManager.OnUserLeave(session.Habbo.Entity);
 			}
 		}
 	}

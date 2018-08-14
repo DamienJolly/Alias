@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Rooms.Composers;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -101,9 +101,10 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Events
 				room.RoomData.Settings.FloorSize = floorSize;
 				room.RoomData.Settings.WallHeight = wallSize;
 				room.Unload();
-				List<RoomUser> habbos = room.UserManager.Users;
+				//todo: fix
+				List<RoomEntity> habbos = room.EntityManager.Entities;
 				room = Alias.Server.RoomManager.LoadRoom(room.Id);
-				foreach (RoomUser habbo in habbos)
+				foreach (RoomEntity habbo in habbos)
 				{
 					habbo.Habbo.Session.Send(new ForwardToRoomComposer(room.Id));
 				}

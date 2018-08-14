@@ -10,8 +10,7 @@ using Alias.Emulator.Hotel.Rooms.Pathfinding;
 using Alias.Emulator.Hotel.Rooms.Rights;
 using Alias.Emulator.Hotel.Rooms.Tasks;
 using Alias.Emulator.Hotel.Rooms.Trading;
-using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Hotel.Rooms.Users.Tasks;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Packets;
 
 namespace Alias.Emulator.Hotel.Rooms
@@ -28,7 +27,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		}
 
-		public RoomUserManager UserManager
+		public RoomEntityManager EntityManager
 		{
 			get; set;
 		}
@@ -76,18 +75,12 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		} = false;
 
-		public Room()
-		{
-
-		}
-
 		public void Cycle()
 		{
 			RoomTask.Start(this);
-			if (this.UserManager != null)
+			if (this.EntityManager != null)
 			{
-				this.UserManager.Users.ForEach(user => user.OnCycle());
-				WalkTask.Start(this.UserManager.Users);
+				this.EntityManager.Entities.ForEach(entity => entity.OnCycle());
 			}
 			if (this.ItemManager != null)
 			{
@@ -96,14 +89,13 @@ namespace Alias.Emulator.Hotel.Rooms
 				WiredTask.Start(this.ItemManager.Items.Where(item => item.ItemData.Interaction == ItemInteraction.WIRED_TRIGGER).ToList());
 
 				this.RollerTick--;
-
-				ItemTask.Start(this.ItemManager.Items);
+				this.ItemManager.Items.ForEach(item => item.GetInteractor().OnCycle(item));
 
 				if (this.RollerTick <= 0)
 				{
 					if (this.RollerMessages.Count > 0)
 					{
-						this.UserManager.Send(this.RollerMessages);
+						this.EntityManager.Send(this.RollerMessages);
 						this.RollerMessages.Clear();
 					}
 					this.RollerTick = this.RoomData.RollerSpeed * 2;
@@ -122,8 +114,8 @@ namespace Alias.Emulator.Hotel.Rooms
 		{
 			if (this.RoomData != null)
 			{
-				List<RoomUser> users = this.UserManager.Users;
-				foreach (RoomUser user in users)
+				List<RoomEntity> users = this.EntityManager.Entities;
+				foreach (RoomEntity user in users)
 				{
 					if (user.Habbo != null)
 					{
@@ -136,8 +128,8 @@ namespace Alias.Emulator.Hotel.Rooms
 		public void Unload()
 		{
 			this.Disposing = true;
-			List<RoomUser> users = this.UserManager.Users;
-			foreach (RoomUser user in users)
+			List<RoomEntity> users = this.EntityManager.Entities;
+			foreach (RoomEntity user in users)
 			{
 				if (user.Habbo != null && user.Habbo.Session != null)
 				{

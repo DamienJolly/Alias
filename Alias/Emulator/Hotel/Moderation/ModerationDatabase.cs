@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Data;
 using Alias.Emulator.Database;
-using Alias.Emulator.Hotel.Rooms.Users.Chat;
+using Alias.Emulator.Hotel.Rooms.Entities.Chat;
 using Alias.Emulator.Hotel.Users;
 using MySql.Data.MySqlClient;
 

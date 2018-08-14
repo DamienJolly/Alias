@@ -1,5 +1,5 @@
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			RoomUser user = room.UserManager.UserBySession(session);
+			RoomEntity user = room.EntityManager.UserBySession(session);
 			if (user == null)
 			{
 				return;
@@ -37,7 +37,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				}
 
 				item.Mode = 0;
-				room.UserManager.Send(new FloorItemUpdateComposer(item));
+				room.EntityManager.Send(new FloorItemUpdateComposer(item));
 			}
 		}
 	}

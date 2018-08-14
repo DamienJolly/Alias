@@ -35,7 +35,7 @@ namespace Alias.Emulator.Hotel.Users.Events
 
 			if (session.Habbo.CurrentRoom != null)
 			{
-				session.Habbo.CurrentRoom.UserManager.Send(new UserBadgesComposer(badges, session.Habbo.Id));
+				session.Habbo.CurrentRoom.EntityManager.Send(new UserBadgesComposer(badges, session.Habbo.Id));
 			}
 			else
 			{

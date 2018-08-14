@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms;
-using Alias.Emulator.Hotel.Rooms.Users.Chat;
+using Alias.Emulator.Hotel.Rooms.Entities.Chat;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;

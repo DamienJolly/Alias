@@ -1,4 +1,4 @@
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
@@ -15,7 +15,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 
 		}
 
-		public void OnTrigger(RoomUser target)
+		public void OnTrigger(RoomEntity target)
 		{
 
 		}

@@ -1,4 +1,4 @@
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Users.Inventory.Composers;
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
@@ -27,7 +27,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			RoomUser user = room.UserManager.UserBySession(session);
+			RoomEntity user = room.EntityManager.UserBySession(session);
 			if (user == null)
 			{
 				return;
@@ -35,7 +35,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 
 			room.Mapping.RemoveItem(rItem);
 			room.ItemManager.RemoveItem(rItem);
-			room.UserManager.Send(new RemoveFloorItemComposer(rItem));
+			room.EntityManager.Send(new RemoveFloorItemComposer(rItem));
 
 			InventoryItem iItem = new InventoryItem()
 			{

@@ -1,4 +1,4 @@
-using Alias.Emulator.Hotel.Rooms.Users.Chat;
+using Alias.Emulator.Hotel.Rooms.Entities.Chat;
 
 namespace Alias.Emulator.Hotel.Moderation
 {

@@ -1,7 +1,7 @@
 using System;
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
-using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Hotel.Rooms.Users.Composers;
+using Alias.Emulator.Hotel.Rooms.Entities;
+using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
@@ -16,27 +16,27 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 			message.WriteString(item.Mode.ToString());
 		}
 
-		public void OnUserEnter(RoomUser user, RoomItem item)
+		public void OnUserEnter(RoomEntity user, RoomItem item)
 		{
 
 		}
 
-		public void OnUserLeave(RoomUser user, RoomItem item)
+		public void OnUserLeave(RoomEntity user, RoomItem item)
 		{
 
 		}
 
-		public void OnUserWalkOn(RoomUser user, Room room, RoomItem item)
+		public void OnUserWalkOn(RoomEntity user, Room room, RoomItem item)
 		{
 
 		}
 
-		public void OnUserWalkOff(RoomUser user, Room room, RoomItem item)
+		public void OnUserWalkOff(RoomEntity user, Room room, RoomItem item)
 		{
 
 		}
 
-		public void OnUserInteract(RoomUser user, Room room, RoomItem item, int state)
+		public void OnUserInteract(RoomEntity user, Room room, RoomItem item, int state)
 		{
 			//todo: code me
 		}

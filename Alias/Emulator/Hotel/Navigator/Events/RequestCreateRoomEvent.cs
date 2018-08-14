@@ -41,7 +41,7 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 			{
 				if (session.Habbo.CurrentRoom != null)
 				{
-					session.Habbo.CurrentRoom.UserManager.OnUserLeave(session);
+					session.Habbo.CurrentRoom.EntityManager.OnUserLeave(session.Habbo.Entity);
 				}
 
 				session.Send(new RoomCreatedComposer(room));

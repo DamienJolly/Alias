@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Trading.Composers;
-using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Hotel.Rooms.Users.Composers;
+using Alias.Emulator.Hotel.Rooms.Entities;
+using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading
 {
@@ -21,12 +21,12 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			this.Room = room;
 		}
 
-		public RoomTrade GetActiveTrade(RoomUser user)
+		public RoomTrade GetActiveTrade(RoomEntity user)
 		{
 			return this.Trades.Where(trade => trade.Users.Where(usr => usr.User == user).Count() == 1).FirstOrDefault();
 		}
 
-		public void StartTrade(RoomUser userOne, RoomUser userTwo)
+		public void StartTrade(RoomEntity userOne, RoomEntity userTwo)
 		{
 			List<TradeUser> users = new List<TradeUser>();
 			users.Add(new TradeUser() { User = userOne });
@@ -44,7 +44,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 				if (!user.User.Actions.Has("trd"))
 				{
 					user.User.Actions.Add("trd", "");
-					this.Room.UserManager.Send(new RoomUserStatusComposer(user.User));
+					this.Room.EntityManager.Send(new RoomUserStatusComposer(user.User));
 				}
 			});
 			

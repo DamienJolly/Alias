@@ -1,4 +1,4 @@
-using Alias.Emulator.Hotel.Rooms.Users.Composers;
+using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 using Alias.Emulator.Hotel.Users.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
@@ -39,7 +39,7 @@ namespace Alias.Emulator.Hotel.Users.Wardrobe.Events
 
 			if (session.Habbo.CurrentRoom != null)
 			{
-				session.Habbo.CurrentRoom.UserManager.Send(new RoomUserDataComposer(session.Habbo));
+				session.Habbo.CurrentRoom.EntityManager.Send(new RoomUserDataComposer(session.Habbo));
 			}
 
 			session.Habbo.Wardrobe.SetFigureUpdated();

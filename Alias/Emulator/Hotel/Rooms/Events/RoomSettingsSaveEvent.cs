@@ -145,9 +145,9 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 				room.RoomData.Settings.ChatFlood = 0;
 			}
 
-			room.UserManager.Send(new RoomThicknessComposer(room));
-			room.UserManager.Send(new RoomChatSettingsComposer(room.RoomData));
-			room.UserManager.Send(new RoomSettingsUpdatedComposer(room.Id));
+			room.EntityManager.Send(new RoomThicknessComposer(room));
+			room.EntityManager.Send(new RoomChatSettingsComposer(room.RoomData));
+			room.EntityManager.Send(new RoomSettingsUpdatedComposer(room.Id));
 			session.Send(new RoomSettingsSavedComposer(room.Id));
 		}
 	}

@@ -1,4 +1,4 @@
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
@@ -25,7 +25,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 			get; set;
 		} = false;
 
-		private RoomUser _target
+		private RoomEntity _target
 		{
 			get; set;
 		} = null;
@@ -52,7 +52,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 			_tick = item.WiredData.Tick;
 		}
 
-		public void OnTrigger(RoomUser target)
+		public void OnTrigger(RoomEntity target)
 		{
 			if (!_active)
 			{

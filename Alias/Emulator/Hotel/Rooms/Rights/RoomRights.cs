@@ -82,7 +82,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 			}
 
 			habbo.Session.Send(new RoomRightsComposer((int)flatCtrl));
-			Room.UserManager.UserBySession(habbo.Session).Actions.Add("flatctrl", (int)flatCtrl + "");
+			Room.EntityManager.UserBySession(habbo.Session).Actions.Add("flatctrl", (int)flatCtrl + "");
 		}
 
 		public bool HasRights(int userId)

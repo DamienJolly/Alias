@@ -2,8 +2,8 @@ using System;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
-using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Hotel.Rooms.Users.Chat;
+using Alias.Emulator.Hotel.Rooms.Entities;
+using Alias.Emulator.Hotel.Rooms.Entities.Chat;
 using Alias.Emulator.Hotel.Users.Achievements;
 using Alias.Emulator.Hotel.Users.Badges;
 using Alias.Emulator.Hotel.Users.Currency;
@@ -22,6 +22,7 @@ namespace Alias.Emulator.Hotel.Users
 		private Boolean _disconnecting = false;
 		
 		public Room CurrentRoom { get; set; } = null;
+		public RoomEntity Entity { get; set; } = null;
 		public NavigatorPreference NavigatorPreference { get; set; }
 		public UserSettings Settings { get; set; }
 		public MessengerComponent Messenger { get; set; }
@@ -75,7 +76,7 @@ namespace Alias.Emulator.Hotel.Users
 			this._disconnecting = true;
 			if (this.CurrentRoom != null)
 			{
-				this.CurrentRoom.UserManager.OnUserLeave(this.Session);
+				this.CurrentRoom.EntityManager.OnUserLeave(this.Session.Habbo.Entity);
 			}
 			if (this.Settings != null)
 			{
@@ -95,7 +96,7 @@ namespace Alias.Emulator.Hotel.Users
 		{
 			if (this.CurrentRoom != null && !forced)
 			{
-				RoomUser target = this.CurrentRoom.UserManager.UserByUserid(this.Id);
+				RoomEntity target = this.CurrentRoom.EntityManager.UserByUserid(this.Id);
 				target.OnChat(text, 0, ChatType.WHISPER, target);
 			}
 			else

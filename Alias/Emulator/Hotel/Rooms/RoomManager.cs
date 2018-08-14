@@ -4,7 +4,7 @@ using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Mapping;
 using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.States;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Rooms
@@ -129,7 +129,7 @@ namespace Alias.Emulator.Hotel.Rooms
 				result.Model = this.RoomModelManager.GetModel(result.RoomData.ModelName);
 				result.Mapping = new RoomMapping(result);
 				result.ItemManager = new RoomItemManager(result);
-				result.UserManager = new RoomUserManager(result);
+				result.EntityManager = new RoomEntityManager(result);
 				result.Initialize();
 				result.Mapping.RegenerateCollisionMap();
 				this._loadedRooms.Add(result);

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
 using Alias.Emulator.Hotel.Rooms.Mapping;
-using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Hotel.Rooms.Users.Composers;
+using Alias.Emulator.Hotel.Rooms.Entities;
+using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
@@ -17,27 +17,27 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 			message.WriteString(item.Mode.ToString());
 		}
 
-		public void OnUserEnter(RoomUser user, RoomItem item)
+		public void OnUserEnter(RoomEntity user, RoomItem item)
 		{
 
 		}
 
-		public void OnUserLeave(RoomUser user, RoomItem item)
+		public void OnUserLeave(RoomEntity user, RoomItem item)
 		{
 
 		}
 
-		public void OnUserWalkOn(RoomUser user, Room room, RoomItem item)
+		public void OnUserWalkOn(RoomEntity user, Room room, RoomItem item)
 		{
 
 		}
 
-		public void OnUserWalkOff(RoomUser user, Room room, RoomItem item)
+		public void OnUserWalkOff(RoomEntity user, Room room, RoomItem item)
 		{
 
 		}
 
-		public void OnUserInteract(RoomUser user, Room room, RoomItem item, int state)
+		public void OnUserInteract(RoomEntity user, Room room, RoomItem item, int state)
 		{
 
 		}
@@ -55,7 +55,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 					return;
 				}
 				
-				List<RoomUser> habbosOnRoller = oldTile.Entities;
+				List<RoomEntity> habbosOnRoller = oldTile.Entities;
 				List<RoomItem> itemsOnRoller = oldTile.Items;
 				List<RoomItem> itemsNewTile = newTile.Items;
 				RoomItem newRoller = null;
@@ -109,7 +109,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 
 				if (allowUsers)
 				{
-					foreach (RoomUser user in habbosOnRoller)
+					foreach (RoomEntity user in habbosOnRoller)
 					{
 						if (stackContainsRoller && !allowFurniture && !(topItem != null && topItem.ItemData.CanWalk))
 						{

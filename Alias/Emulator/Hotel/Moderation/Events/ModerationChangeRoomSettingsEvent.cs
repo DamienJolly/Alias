@@ -1,6 +1,6 @@
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Rooms.States;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -41,13 +41,14 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 
 				if (kickUsers)
 				{
-					foreach (RoomUser user in room.UserManager.Users)
+					//todo: fix
+					foreach (RoomEntity entity in room.EntityManager.Entities)
 					{
-						if (user.Habbo.HasPermission("acc_unkickable") || user.Habbo.HasPermission("acc_modtool") || user.Habbo.Id == room.RoomData.OwnerId)
+						if (entity.Habbo.HasPermission("acc_unkickable") || entity.Habbo.HasPermission("acc_modtool") || entity.Habbo.Id == room.RoomData.OwnerId)
 						{
 							continue;
 						}
-						room.UserManager.OnUserLeave(user.Habbo.Session);
+						room.EntityManager.OnUserLeave(entity);
 					}
 				}
 			}

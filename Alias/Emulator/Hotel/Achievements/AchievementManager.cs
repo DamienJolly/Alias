@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Hotel.Users.Achievements;
-using Alias.Emulator.Hotel.Rooms.Users.Composers;
+using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Hotel.Achievements.Composers;
 using Alias.Emulator.Hotel.Users.Badges;
@@ -118,7 +118,7 @@ namespace Alias.Emulator.Hotel.Achievements
 				{
 					if (habbo.CurrentRoom != null)
 					{
-						habbo.CurrentRoom.UserManager.Send(new UserBadgesComposer(habbo.Badges.GetWearingBadges(), habbo.Id));
+						habbo.CurrentRoom.EntityManager.Send(new UserBadgesComposer(habbo.Badges.GetWearingBadges(), habbo.Id));
 					}
 					else
 					{
@@ -130,7 +130,7 @@ namespace Alias.Emulator.Hotel.Achievements
 
 				if (habbo.CurrentRoom != null)
 				{
-					habbo.CurrentRoom.UserManager.Send(new RoomUserDataComposer(habbo));
+					habbo.CurrentRoom.EntityManager.Send(new RoomUserDataComposer(habbo));
 				}
 
 				//todo: talent track shit

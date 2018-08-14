@@ -25,7 +25,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 			//todo: recode
 
 			room.ItemManager.RemoveItem(rItem);
-			room.UserManager.Send(new RemoveFloorItemComposer(rItem));
+			room.EntityManager.Send(new RemoveFloorItemComposer(rItem));
 		}
 	}
 }

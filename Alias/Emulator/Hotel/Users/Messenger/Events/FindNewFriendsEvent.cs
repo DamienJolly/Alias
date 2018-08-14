@@ -19,7 +19,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 
 			foreach (Room room in rooms)
 			{
-				if (room.UserManager.UserCount > 0 && !room.Disposing)
+				if (room.EntityManager.UserCount > 0 && !room.Disposing)
 				{
 					session.Send(new ForwardToRoomComposer(room.Id));
 					return;

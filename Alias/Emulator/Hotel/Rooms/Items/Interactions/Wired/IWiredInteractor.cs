@@ -1,4 +1,4 @@
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 	{
 		void Serialize(ServerPacket message);
 		void LoadBox(RoomItem item);
-		void OnTrigger(RoomUser target = null);
+		void OnTrigger(RoomEntity target = null);
 		void OnCycle();
 	}
 }

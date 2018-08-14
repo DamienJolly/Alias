@@ -1,5 +1,5 @@
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Utilities;
 
@@ -15,27 +15,27 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 			message.WriteString(item.Mode.ToString());
 		}
 
-		public void OnUserEnter(RoomUser user, RoomItem item)
+		public void OnUserEnter(RoomEntity user, RoomItem item)
 		{
 
 		}
 
-		public void OnUserLeave(RoomUser user, RoomItem item)
+		public void OnUserLeave(RoomEntity user, RoomItem item)
 		{
 
 		}
 
-		public void OnUserWalkOn(RoomUser user, Room room, RoomItem item)
-		{
-			
-		}
-
-		public void OnUserWalkOff(RoomUser user, Room room, RoomItem item)
+		public void OnUserWalkOn(RoomEntity user, Room room, RoomItem item)
 		{
 			
 		}
 
-		public void OnUserInteract(RoomUser user, Room room, RoomItem item, int state)
+		public void OnUserWalkOff(RoomEntity user, Room room, RoomItem item)
+		{
+			
+		}
+
+		public void OnUserInteract(RoomEntity user, Room room, RoomItem item, int state)
 		{
 			if (room.Mapping.Tiles[item.Position.X, item.Position.Y].TilesAdjecent(room.Mapping.Tiles[user.Position.X, user.Position.Y]))
 			{
@@ -43,7 +43,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 				{
 					item.Mode = -1;
 					count = 0;
-					item.Room.UserManager.Send(new FloorItemUpdateComposer(item));
+					item.Room.EntityManager.Send(new FloorItemUpdateComposer(item));
 				}
 			}
 		}
@@ -55,7 +55,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 				if (count >= 2)
 				{
 					item.Mode = Randomness.RandomNumber(item.ItemData.Modes);
-					item.Room.UserManager.Send(new FloorItemUpdateComposer(item));
+					item.Room.EntityManager.Send(new FloorItemUpdateComposer(item));
 				}
 				count++;
 			}

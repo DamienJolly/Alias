@@ -13,12 +13,10 @@ namespace Alias
 		/// </summary>
 		/// <param name="args"></param>
 		static void Main(string[] args)
-        {
-			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
-
+		{
 			Logging.Alias("Alias Emulator is starting up...", Emulator.Alias.Version);
 			Logging.CreateExceptionFile();
-			
+
 			if (!GCSettings.IsServerGC)
 			{
 				Logging.Warn("GC is not configured to server mode.");
@@ -55,35 +53,6 @@ namespace Alias
 					//todo: redo console commands
 				}
 			}
-		}
-
-		private static Object _exceptionLock = new Object();
-		private static Boolean _handlingException = false;
-
-		static void UnhandledException(object sender, UnhandledExceptionEventArgs args)
-		{
-			lock (_exceptionLock)
-			{
-				if (_handlingException)
-				{
-					return;
-				}
-
-				_handlingException = true;
-			}
-
-			Exception ex = (Exception)args.ExceptionObject;
-
-			if (Debugger.IsAttached)
-			{
-				throw ex;
-			}
-			
-			Logging.Error("Unhandled Error: " + ex.Message + " - " + ex.StackTrace, ex);
-			Logging.Info("Fatal error has occured, the server has been halted. Press any key to exit..");
-			Environment.Exit(0);
-
-			// to-do: proper shutdown handling
 		}
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Mapping;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 
 namespace Alias.Emulator.Hotel.Rooms.Pathfinding
 {
@@ -39,7 +39,7 @@ namespace Alias.Emulator.Hotel.Rooms.Pathfinding
 			this.Room = r;
 		}
 
-		public LinkedList<Point> Path(RoomUser user)
+		public LinkedList<Point> Path(RoomEntity user)
 		{
 			LinkedList<Node> openNodes = new LinkedList<Node>();
 			for (int x = 0; x < this.Room.Mapping.SizeX; x++)

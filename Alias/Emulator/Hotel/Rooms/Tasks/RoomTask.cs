@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Rooms.Tasks
 		{
 			try
 			{
-				if (room.UserManager.UserCount == 0)
+				if (room.EntityManager.UserCount == 0)
 				{
 					room.IdleTime++;
 				}

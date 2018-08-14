@@ -4,7 +4,7 @@ using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.Promotions;
 using Alias.Emulator.Hotel.Rooms.Rights;
 using Alias.Emulator.Hotel.Rooms.Trading;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Rooms
@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			RoomModelEvents.Register();
 			RoomTradingEvents.Register();
 			RoomRightsEvents.Register();
-			RoomUserEvents.Register();
+			RoomEntityEvents.Register();
 			RoomItemEvents.Register();
 			RoomPromotionEvents.Register();
 		}

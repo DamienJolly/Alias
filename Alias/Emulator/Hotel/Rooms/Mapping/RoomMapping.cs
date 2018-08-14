@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.Items;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 
 namespace Alias.Emulator.Hotel.Rooms.Mapping
 {
@@ -59,16 +59,16 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 				tile.Entities.Clear();
 			}
 
-			foreach (RoomUser user in this.room.UserManager.Users)
+			foreach (RoomEntity entity in this.room.EntityManager.Entities)
 			{
-				RoomTile tile = Tiles[user.Position.X, user.Position.Y];
+				RoomTile tile = Tiles[entity.Position.X, entity.Position.Y];
 
 				if (tile == null)
 				{
 					continue;
 				}
 
-				tile.AddEntity(user);
+				tile.AddEntity(entity);
 			}
 		}
 

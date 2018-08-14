@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Items;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 
 namespace Alias.Emulator.Hotel.Rooms.Mapping
 {
@@ -13,7 +13,7 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 			get; set;
 		}
 
-		public List<RoomUser> Entities
+		public List<RoomEntity> Entities
 		{
 			get; set;
 		}
@@ -32,7 +32,7 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 		{
 			this.room = room;
 			this.Position = position;
-			this.Entities = new List<RoomUser>();
+			this.Entities = new List<RoomEntity>();
 			this.Items = new List<RoomItem>();
 			this.State = RoomTileState.OPEN;
 		}
@@ -68,7 +68,7 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 			}
 		}
 
-		public void AddEntity(RoomUser entity)
+		public void AddEntity(RoomEntity entity)
 		{
 			if (this.Position.X == this.room.Model.Door.X && this.Position.Y == this.room.Model.Door.Y)
 			{
@@ -78,17 +78,17 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 			this.Entities.Add(entity);
 		}
 
-		public bool HasEntity(RoomUser entity)
+		public bool HasEntity(RoomEntity entity)
 		{
 			return this.Entities.Contains(entity);
 		}
 		
-		public void RemoveEntity(RoomUser entity)
+		public void RemoveEntity(RoomEntity entity)
 		{
 			this.Entities.Remove(entity);
 		}
 
-		public bool IsValidTile(RoomUser user, bool final)
+		public bool IsValidTile(RoomEntity user, bool final)
 		{
 			if (this.Entities.Count > 0)
 			{

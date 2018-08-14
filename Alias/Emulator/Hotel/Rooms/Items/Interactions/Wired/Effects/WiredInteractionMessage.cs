@@ -1,6 +1,4 @@
-using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Hotel.Rooms.Users.Chat;
-using Alias.Emulator.Hotel.Rooms.Users.Composers;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
@@ -27,7 +25,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 			get; set;
 		} = false;
 
-		private RoomUser _target
+		private RoomEntity _target
 		{
 			get; set;
 		} = null;
@@ -54,7 +52,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 			_tick = item.WiredData.Tick;
 		}
 
-		public void OnTrigger(RoomUser target)
+		public void OnTrigger(RoomEntity target)
 		{
 			if (!_active)
 			{
@@ -66,25 +64,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired
 
 		public void OnCycle()
 		{
-			if (_active)
-			{
-				if (_tick == 0)
-				{
-					if (_item.WiredData.Text != "")
-					{
-						if (_target != null)
-						{
-							_target.Habbo.Session.Send(new RoomUserChatComposer(_target.VirtualId, _item.WiredData.Text, 0, 34, ChatType.WHISPER));
-						}
-						else
-						{
-							_room.UserManager.Send(new RoomUserChatComposer(0, _item.WiredData.Text, 0, 34, ChatType.WHISPER));
-						}
-					}
-					_active = false;
-				}
-				_tick--;
-			}
+
 		}
 	}
 }

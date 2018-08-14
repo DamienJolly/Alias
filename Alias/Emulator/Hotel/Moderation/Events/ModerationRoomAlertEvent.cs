@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			room.UserManager.Send(new ModerationIssueHandledComposer(message.PopString()));
+			room.EntityManager.Send(new ModerationIssueHandledComposer(message.PopString()));
 		}
 	}
 }

@@ -1,6 +1,6 @@
 using Alias.Emulator.Hotel.Rooms.States;
 using Alias.Emulator.Hotel.Rooms.Trading.Composers;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -19,7 +19,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				return;
 			}
 
-			if (userId <= 0 || userId == room.UserManager.UserBySession(session).VirtualId)
+			if (userId <= 0 || userId == room.EntityManager.UserBySession(session).VirtualId)
 			{
 				return;
 			}
@@ -31,13 +31,13 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				return;
 			}
 
-			RoomUser userOne = room.UserManager.UserBySession(session);
+			RoomEntity userOne = room.EntityManager.UserBySession(session);
 			if (userOne == null)
 			{
 				return;
 			}
 
-			RoomUser userTwo = room.UserManager.UserByVirtualid(userId);
+			RoomEntity userTwo = room.EntityManager.UserByVirtualid(userId);
 			if (userTwo == null)
 			{
 				return;

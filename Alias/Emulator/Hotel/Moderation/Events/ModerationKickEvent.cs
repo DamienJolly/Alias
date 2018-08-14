@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 			Session target = Alias.Server.SocketServer.SessionManager.SessionById(message.PopInt());
 			if (target != null)
 			{
-				session.Habbo.CurrentRoom.UserManager.OnUserLeave(target);
+				session.Habbo.CurrentRoom.EntityManager.OnUserLeave(target.Habbo.Entity);
 				target.Send(new ModerationIssueHandledComposer(message.PopString()));
 			}
 		}

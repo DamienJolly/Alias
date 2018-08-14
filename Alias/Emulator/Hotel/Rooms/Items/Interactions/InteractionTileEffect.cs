@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
-using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Hotel.Rooms.Users.Composers;
+using Alias.Emulator.Hotel.Rooms.Entities;
+using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Utilities;
 
@@ -19,27 +19,27 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 			message.WriteString(item.Mode.ToString());
 		}
 
-		public void OnUserEnter(RoomUser user, RoomItem item)
+		public void OnUserEnter(RoomEntity user, RoomItem item)
 		{
 
 		}
 
-		public void OnUserLeave(RoomUser user, RoomItem item)
+		public void OnUserLeave(RoomEntity user, RoomItem item)
 		{
 			
 		}
 
-		public void OnUserWalkOn(RoomUser user, Room room, RoomItem item)
+		public void OnUserWalkOn(RoomEntity user, Room room, RoomItem item)
 		{
 			user.SetEffectId(GetRandomEffectId(item));
 		}
 
-		public void OnUserWalkOff(RoomUser user, Room room, RoomItem item)
+		public void OnUserWalkOff(RoomEntity user, Room room, RoomItem item)
 		{
 			user.SetEffectId(0);
 		}
 
-		public void OnUserInteract(RoomUser user, Room room, RoomItem item, int state)
+		public void OnUserInteract(RoomEntity user, Room room, RoomItem item, int state)
 		{
 
 		}
@@ -51,7 +51,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 				if (item.Mode != 1)
 				{
 					item.Mode = 1;
-					item.Room.UserManager.Send(new FloorItemUpdateComposer(item));
+					item.Room.EntityManager.Send(new FloorItemUpdateComposer(item));
 				}
 				count = 0;
 			}
@@ -60,7 +60,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 				if (item.Mode != 0 && count >= 2)
 				{
 					item.Mode = 0;
-					item.Room.UserManager.Send(new FloorItemUpdateComposer(item));
+					item.Room.EntityManager.Send(new FloorItemUpdateComposer(item));
 				}
 				count++;
 			}

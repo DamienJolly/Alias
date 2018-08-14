@@ -50,7 +50,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				session.Send(new BubbleAlertComposer("furni_placement_error", data));
 			}
 
-			room.UserManager.Send(new FloorItemUpdateComposer(item));
+			room.EntityManager.Send(new FloorItemUpdateComposer(item));
 		}
 	}
 }

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Trading.Composers;
-using Alias.Emulator.Hotel.Rooms.Users;
-using Alias.Emulator.Hotel.Rooms.Users.Composers;
+using Alias.Emulator.Hotel.Rooms.Entities;
+using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Users.Inventory.Composers;
 using Alias.Emulator.Network.Packets;
@@ -16,7 +16,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			get; set;
 		}
 
-		public void OfferItems(RoomUser user, List<InventoryItem> items)
+		public void OfferItems(RoomEntity user, List<InventoryItem> items)
 		{
 			TradeUser usr = this.GetTradeUser(user);
 			items.ForEach(item =>
@@ -33,7 +33,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			this.Send(new TradeUpdateComposer(this));
 		}
 
-		public void RemoveItem(RoomUser user, InventoryItem item)
+		public void RemoveItem(RoomEntity user, InventoryItem item)
 		{
 			TradeUser usr = this.GetTradeUser(user);
 			if (!usr.OfferedItems.Contains(item))
@@ -86,7 +86,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			this.Send(new InventoryRefreshComposer());
 		}
 
-		public void Confirm(RoomUser user)
+		public void Confirm(RoomEntity user)
 		{
 			TradeUser usr = this.GetTradeUser(user);
 			usr.Confirmed = true;
@@ -100,7 +100,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			}
 		}
 
-		public void StopTrade(RoomUser user)
+		public void StopTrade(RoomEntity user)
 		{
 			this.Users.ForEach(tradeUser =>
 			{
@@ -117,16 +117,16 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 		{
 			this.Users.ForEach(tradeUser =>
 			{
-				RoomUser user = tradeUser.User;
+				RoomEntity user = tradeUser.User;
 				if (user != null)
 				{
 					user.Actions.Remove("trd");
-					user.Room.UserManager.Send(new RoomUserStatusComposer(user));
+					user.Room.EntityManager.Send(new RoomUserStatusComposer(user));
 				}
 			});
 		}
 
-		public void Accept(RoomUser user, bool value)
+		public void Accept(RoomEntity user, bool value)
 		{
 			TradeUser usr = this.GetTradeUser(user);
 			usr.Accepted = value;
@@ -145,7 +145,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			});
 		}
 
-		public TradeUser GetTradeUser(RoomUser user)
+		public TradeUser GetTradeUser(RoomEntity user)
 		{
 			return this.Users.Where(usr => usr.User == user).FirstOrDefault();
 		}

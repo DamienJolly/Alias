@@ -24,7 +24,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			if (Alias.Server.RoomManager.IsRoomLoaded(group.RoomId))
 			{
 				Room room = Alias.Server.RoomManager.Room(group.RoomId);
-				room.UserManager.Send(new RemoveGroupFromRoomComposer(group.Id));
+				room.EntityManager.Send(new RemoveGroupFromRoomComposer(group.Id));
 				room.RoomData.Group = null;
 			}
 		}

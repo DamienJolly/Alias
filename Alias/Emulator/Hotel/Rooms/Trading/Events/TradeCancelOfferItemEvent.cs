@@ -1,4 +1,4 @@
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
@@ -16,7 +16,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				return;
 			}
 
-			RoomUser user = room.UserManager.UserBySession(session);
+			RoomEntity user = room.EntityManager.UserBySession(session);
 			if (user == null)
 			{
 				return;

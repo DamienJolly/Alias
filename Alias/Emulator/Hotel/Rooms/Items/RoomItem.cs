@@ -1,7 +1,7 @@
 using Alias.Emulator.Hotel.Items;
 using Alias.Emulator.Hotel.Rooms.Items.Interactions;
 using Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired;
-using Alias.Emulator.Hotel.Rooms.Users;
+using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Items
@@ -51,7 +51,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			}
 		}
 
-		public RoomUser InteractingUser
+		public RoomEntity InteractingUser
 		{
 			get; set;
 		}
