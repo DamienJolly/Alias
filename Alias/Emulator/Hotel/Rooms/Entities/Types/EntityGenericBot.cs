@@ -12,7 +12,6 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 
 		public void Serialize(ServerPacket message, RoomEntity player)
 		{
-			message.WriteInteger(0);
 			message.WriteInteger(4);
 			message.WriteString(player.Gender.ToLower()); // ?
 			message.WriteInteger(player.OwnerId);

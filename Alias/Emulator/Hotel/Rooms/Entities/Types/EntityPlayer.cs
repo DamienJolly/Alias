@@ -8,7 +8,6 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
     {
 		public void Serialize(ServerPacket message, RoomEntity player)
 		{
-			message.WriteInteger(2);
 			message.WriteInteger(1);
 			message.WriteString(player.Gender.ToLower());
 
