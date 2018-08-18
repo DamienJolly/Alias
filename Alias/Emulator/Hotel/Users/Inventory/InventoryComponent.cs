@@ -32,6 +32,22 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			bots.Add(bot);
 		}
 
+		public void UpdateBot(InventoryBots bot)
+		{
+			InventoryDatabase.UpdateBot(bot);
+			if (bot.RoomId != 0)
+			{
+				bots.Remove(bot);
+			}
+			else
+			{
+				if (!bots.Contains(bot))
+				{
+					bots.Add(bot);
+				}
+			}
+		}
+
 		public void UpdateItem(InventoryItem item)
 		{
 			InventoryDatabase.UpdateFurni(item);

@@ -71,6 +71,8 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RoomUserGiveRightsMessageEvent = 3880;
 			public const int RoomUserRemoveRightsMessageEvent = 404;
 			public const int RoomUserPlaceBotMessageEvent = 3978;
+			public const int RoomBotSettingsMessageEvent = 2714;
+			public const int RoomBotSaveSettingsMessageEvent = 1676;
 
 			// Trading
 			public const int TradeStartMessageEvent = 3586;

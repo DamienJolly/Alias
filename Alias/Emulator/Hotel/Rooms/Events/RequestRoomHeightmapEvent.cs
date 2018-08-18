@@ -44,7 +44,8 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 			session.Send(new RoomHeightMapComposer(session.Habbo.CurrentRoom));
 			session.Send(new RoomEntryInfoComposer(session.Habbo.CurrentRoom, session.Habbo));
 			session.Send(new RoomThicknessComposer(session.Habbo.CurrentRoom));
-			session.Send(new RoomUsersComposer(session.Habbo.CurrentRoom.EntityManager.Entities));
+			session.Send(new RoomUsersComposer(session.Habbo.CurrentRoom.EntityManager.Users));
+			session.Send(new RoomUsersComposer(session.Habbo.CurrentRoom.EntityManager.Bots));
 			session.Send(new RoomUserStatusComposer(session.Habbo.CurrentRoom.EntityManager.Entities));
 			session.Send(new RoomFloorItemsComposer(session.Habbo.CurrentRoom.ItemManager.Items));
 			//session.Send(new ItemsComposer()); //todo: wall items

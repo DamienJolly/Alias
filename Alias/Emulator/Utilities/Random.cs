@@ -23,7 +23,12 @@ namespace Alias.Emulator.Utilities
 
 		public static int RandomNumber(int max)
 		{
-			return rng.Next(max) + 1;
+			return RandomNumber(1, max);
+		}
+
+		public static int RandomNumber(int min, int max)
+		{
+			return rng.Next(min, max);
 		}
 	}
 }

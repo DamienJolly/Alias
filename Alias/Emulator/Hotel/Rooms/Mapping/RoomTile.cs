@@ -90,6 +90,11 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 
 		public bool IsValidTile(RoomEntity user, bool final)
 		{
+			if (this.State == RoomTileState.CLOSED)
+			{
+				return false;
+			}
+
 			if (this.Entities.Count > 0)
 			{
 				return user != null && this.HasEntity(user);

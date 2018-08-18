@@ -1,3 +1,4 @@
+using Alias.Emulator.Hotel.Groups;
 using Alias.Emulator.Hotel.Rooms.Trading;
 using Alias.Emulator.Network.Protocol;
 
@@ -7,7 +8,18 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
     {
 		public void Serialize(ServerPacket message, RoomEntity player)
 		{
+			message.WriteInteger(2);
+			message.WriteInteger(1);
+			message.WriteString(player.Gender.ToLower());
 
+			Group group = Alias.Server.GroupManager.GetGroup(player.Habbo.GroupId);
+			message.WriteInteger(group != null ? group.Id : -1);
+			message.WriteInteger(0); //??
+			message.WriteString(group != null ? group.Name : "");
+
+			message.WriteString("");
+			message.WriteInteger(player.Habbo.AchievementScore);
+			message.WriteBoolean(false); //idk
 		}
 
 		public void OnEntityJoin(RoomEntity player)

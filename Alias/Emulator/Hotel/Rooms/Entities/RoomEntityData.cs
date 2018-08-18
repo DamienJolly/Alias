@@ -47,10 +47,20 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			get; set;
 		} = 0;
 
+		public int DanceId
+		{
+			get; set;
+		} = 0;
+
 		public int OwnerId
 		{
 			get; set;
 		} = 0;
+
+		public bool CanWalk
+		{
+			get; set;
+		} = true;
 
 		public Habbo Habbo
 		{
@@ -90,7 +100,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 		private IEntityType _entityType
 		{
 			get; set;
-		}
+		} = null;
 
 		public IEntityType EntityType
 		{
@@ -101,6 +111,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 					switch (this.Type)
 					{
 						case RoomEntityType.Player: default: _entityType = new EntityPlayer(); break;
+						case RoomEntityType.Bot: _entityType = new EntityGenericBot(); break;
 					}
 				}
 

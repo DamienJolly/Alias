@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Entities;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Rooms.Mapping
 {
@@ -125,6 +126,23 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 			}
 
 			return this.Tiles[x, y];
+		}
+
+		public RoomTile RandomWalkableTile
+		{
+			get
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					RoomTile tile = this.Tiles[Randomness.RandomNumber(this.SizeX), Randomness.RandomNumber(this.SizeY)];
+					if (tile.IsValidTile(null, true))
+					{
+						return tile;
+					}
+				}
+
+				return null;
+			}
 		}
 
 		public bool CanStackAt(int targertX, int targetY, RoomItem item)

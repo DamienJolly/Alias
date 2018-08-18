@@ -39,7 +39,7 @@ namespace Alias.Emulator.Hotel.Users.Wardrobe.Events
 
 			if (session.Habbo.CurrentRoom != null)
 			{
-				session.Habbo.CurrentRoom.EntityManager.Send(new RoomUserDataComposer(session.Habbo));
+				session.Habbo.CurrentRoom.EntityManager.Send(new RoomUserDataComposer(session.Habbo.Entity));
 			}
 
 			session.Habbo.Wardrobe.SetFigureUpdated();

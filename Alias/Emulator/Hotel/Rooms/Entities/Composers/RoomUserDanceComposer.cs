@@ -7,19 +7,17 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Composers
 	class RoomUserDanceComposer : IPacketComposer
 	{
 		private RoomEntity user;
-		private int danceId;
 
-		public RoomUserDanceComposer(RoomEntity user, int danceId)
+		public RoomUserDanceComposer(RoomEntity user)
 		{
 			this.user = user;
-			this.danceId = danceId;
 		}
 
 		public ServerPacket Compose()
 		{
 			ServerPacket message = new ServerPacket(Outgoing.RoomUserDanceMessageComposer);
 			message.WriteInteger(this.user.VirtualId);
-			message.WriteInteger(this.danceId);
+			message.WriteInteger(this.user.DanceId);
 			return message;
 		}
 	}

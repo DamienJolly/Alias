@@ -5,7 +5,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 {
-	class RoomUserDanceEvent : IPacketEvent
+	class RoomBotSettingsEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
@@ -15,20 +15,20 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 				return;
 			}
 
-			int danceId = message.PopInt();
-			if (danceId < 0 || danceId > 5)
+			if (room.RoomData.OwnerId != session.Habbo.Id)
 			{
 				return;
 			}
 
-			RoomEntity user = room.EntityManager.UserBySession(session);
-			if (user == null)
+			int botId = message.PopInt();
+			RoomEntity bot = room.EntityManager.BotById(botId);
+			if (bot == null)
 			{
 				return;
 			}
 
-			user.DanceId = danceId;
-			room.EntityManager.Send(new RoomUserDanceComposer(user));
+			int settingId = message.PopInt();
+			session.Send(new RoomBotSettingsComposer(bot, settingId));
 		}
 	}
 }

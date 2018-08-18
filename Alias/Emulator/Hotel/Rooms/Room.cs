@@ -80,7 +80,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			RoomTask.Start(this);
 			if (this.EntityManager != null)
 			{
-				this.EntityManager.Entities.ForEach(entity => entity.OnCycle());
+				this.EntityManager.Entities.Where(entity => !entity.Disposing).ToList().ForEach(entity => entity.OnCycle());
 			}
 			if (this.ItemManager != null)
 			{

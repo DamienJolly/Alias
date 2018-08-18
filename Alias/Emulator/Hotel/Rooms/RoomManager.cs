@@ -132,6 +132,7 @@ namespace Alias.Emulator.Hotel.Rooms
 				result.EntityManager = new RoomEntityManager(result);
 				result.Initialize();
 				result.Mapping.RegenerateCollisionMap();
+				result.EntityManager.LoadAIEntities();
 				this._loadedRooms.Add(result);
 				return result;
 			}

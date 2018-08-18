@@ -27,19 +27,16 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 
 		public void OnCycle()
 		{
-			if (!Disposing)
+			if (this.HandItem > 0)
 			{
-				if (this.HandItem > 0)
+				this.HandItemTick--;
+				if (this.HandItemTick <= 0)
 				{
-					this.HandItemTick--;
-					if (this.HandItemTick <= 0)
-					{
-						SetHandItem(0);
-					}
+					SetHandItem(0);
 				}
-				this.EntityType.OnCycle(this);
-				this.WalkCycle();
 			}
+			this.EntityType.OnCycle(this);
+			this.WalkCycle();
 		}
 
 		public void WalkCycle()
@@ -115,63 +112,60 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 				}
 				else
 				{
-					if (this.TargetPosition.X == this.Position.X && this.TargetPosition.Y == this.Position.Y)
+
+					bool update = false;
+					if (this.Actions.Has("mv"))
 					{
-						bool update = false;
-						if (this.Actions.Has("mv"))
+						this.Actions.Remove("mv");
+						update = true;
+					}
+					RoomTile tile = this.Room.Mapping.Tiles[this.TargetPosition.X, this.TargetPosition.Y];
+
+					if (tile.TopItem != null && tile.TopItem.ItemData.CanSit)
+					{
+						this.Actions.Add("sit", tile.TopItem.ItemData.Height.ToString());
+						this.Position.Rotation = tile.TopItem.Position.Rotation;
+						this.Position.HeadRotation = this.Position.Rotation;
+						this.Position.Z = tile.TopItem.ItemData.Height + tile.TopItem.Position.Z;
+						this.isSitting = false;
+						update = true;
+					}
+					else if (tile.TopItem != null && tile.TopItem.ItemData.CanLay)
+					{
+						this.Actions.Add("lay", tile.TopItem.ItemData.Height.ToString());
+						this.Position.Rotation = tile.TopItem.Position.Rotation;
+						this.Position.HeadRotation = this.Position.Rotation;
+						this.Position.Z = tile.TopItem.ItemData.Height + tile.TopItem.Position.Z;
+						this.isSitting = false;
+						update = true;
+					}
+					else
+					{
+						if (!this.isSitting && this.Actions.Has("sit"))
 						{
-							this.Actions.Remove("mv");
+							this.Actions.Remove("sit");
+							this.Position.Z = tile.Position.Z;
 							update = true;
 						}
 
-						RoomTile tile = this.Room.Mapping.Tiles[this.TargetPosition.X, this.TargetPosition.Y];
-
-						if (tile.TopItem != null && tile.TopItem.ItemData.CanSit)
+						if (this.Actions.Has("lay"))
 						{
-							this.Actions.Add("sit", tile.TopItem.ItemData.Height.ToString());
-							this.Position.Rotation = tile.TopItem.Position.Rotation;
-							this.Position.HeadRotation = this.Position.Rotation;
-							this.Position.Z = tile.TopItem.ItemData.Height + tile.TopItem.Position.Z;
-							this.isSitting = false;
+							this.Actions.Remove("lay");
+							this.Position.Z = tile.Position.Z;
 							update = true;
 						}
-						else if (tile.TopItem != null && tile.TopItem.ItemData.CanLay)
-						{
-							this.Actions.Add("lay", tile.TopItem.ItemData.Height.ToString());
-							this.Position.Rotation = tile.TopItem.Position.Rotation;
-							this.Position.HeadRotation = this.Position.Rotation;
-							this.Position.Z = tile.TopItem.ItemData.Height + tile.TopItem.Position.Z;
-							this.isSitting = false;
-							update = true;
-						}
-						else
-						{
-							if (!this.isSitting && this.Actions.Has("sit"))
-							{
-								this.Actions.Remove("sit");
-								this.Position.Z = tile.Position.Z;
-								update = true;
-							}
+					}
 
-							if (this.Actions.Has("lay"))
-							{
-								this.Actions.Remove("lay");
-								this.Position.Z = tile.Position.Z;
-								update = true;
-							}
-						}
+					if (update)
+					{
+						this.Room.EntityManager.Send(new RoomUserStatusComposer(this));
+					}
 
-						if (update)
-						{
-							this.Room.EntityManager.Send(new RoomUserStatusComposer(this));
-						}
-
-						if ((this.Room.Model.Door.X == this.Position.X && this.Room.Model.Door.Y == this.Position.Y) &&
-							this.Type == RoomEntityType.Player)
-						{
-							this.Habbo.Session.Send(new HotelViewComposer());
-							this.Room.EntityManager.OnUserLeave(this);
-						}
+					if ((this.Room.Model.Door.X == this.Position.X && this.Room.Model.Door.Y == this.Position.Y) &&
+						this.Type == RoomEntityType.Player)
+					{
+						//this.Habbo.Session.Send(new HotelViewComposer());
+						//this.Room.EntityManager.OnUserLeave(this);
 					}
 				}
 			}
@@ -257,13 +251,16 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			
 			if (Alias.Server.ChatManager.GetFilter().CheckBanned(text))
 			{
-				Alias.Server.ModerationManager.QuickTicket(this.Habbo, "User said a banned word");
+				if (this.Type == RoomEntityType.Player)
+				{
+					Alias.Server.ModerationManager.QuickTicket(this.Habbo, "User said a banned word");
+				}
 				return;
 			}
 
 			text = Alias.Server.ChatManager.GetFilter().Filter(text);
 
-			if (text.StartsWith(":") && Alias.Server.ChatManager.GetCommands().Parse(this.Habbo.Session, text))
+			if (this.Type == RoomEntityType.Player && (text.StartsWith(":") && Alias.Server.ChatManager.GetCommands().Parse(this.Habbo.Session, text)))
 			{
 				return;
 			}
@@ -282,7 +279,11 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			{
 				this.Room.EntityManager.Send(packet);
 			}
-			WordFilterDatabase.StoreMessage(this.Habbo.Id, this.Room.Id, text, ChatTypeToInt(chatType), target != null ? target.Habbo.Id : 0);
+
+			if (this.Type == RoomEntityType.Player)
+			{
+				WordFilterDatabase.StoreMessage(this.Habbo.Id, this.Room.Id, text, ChatTypeToInt(chatType), target != null ? target.Habbo.Id : 0);
+			}
 		}
 
 		private int ChatTypeToInt(ChatType type)

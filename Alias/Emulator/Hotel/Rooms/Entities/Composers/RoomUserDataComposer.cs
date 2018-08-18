@@ -7,21 +7,21 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Composers
 {
 	class RoomUserDataComposer : IPacketComposer
 	{
-		private Habbo habbo;
+		private RoomEntity entity;
 
-		public RoomUserDataComposer(Habbo habbo)
+		public RoomUserDataComposer(RoomEntity entity)
 		{
-			this.habbo = habbo;
+			this.entity = entity;
 		}
 
 		public ServerPacket Compose()
 		{
 			ServerPacket message = new ServerPacket(Outgoing.RoomUserDataMessageComposer);
-			message.WriteInteger(this.habbo.CurrentRoom.EntityManager == null ? -1 : this.habbo.CurrentRoom.EntityManager.UserByUserid(habbo.Id).VirtualId);
-			message.WriteString(this.habbo.Look);
-			message.WriteString(this.habbo.Gender);
-			message.WriteString(this.habbo.Motto);
-			message.WriteInteger(this.habbo.AchievementScore);
+			message.WriteInteger(this.entity.VirtualId);
+			message.WriteString(this.entity.Look);
+			message.WriteString(this.entity.Gender);
+			message.WriteString(this.entity.Motto);
+			message.WriteInteger(this.entity.Type == RoomEntityType.Player ? this.entity.Habbo.AchievementScore : 0);
 			return message;
 		}
 	}

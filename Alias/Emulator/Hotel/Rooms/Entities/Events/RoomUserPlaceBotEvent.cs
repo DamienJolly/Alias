@@ -23,8 +23,39 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 
 			int x = message.PopInt();
 			int y = message.PopInt();
+			
+			if (!room.Mapping.Tiles[x, y].IsValidTile(null, true))
+			{
+				return;
+			}
 
+			RoomEntity entity = new RoomEntity()
+			{
+				Id = bot.Id,
+				Name = bot.Name,
+				Motto = bot.Motto,
+				Look = bot.Look,
+				Gender = bot.Gender,
+				OwnerId = session.Habbo.Id,
+				Type = RoomEntityType.Bot,
+				Room = session.Habbo.CurrentRoom,
+				Position = new UserPosition()
+				{
+					X = x,
+					Y = y,
+					//todo: v
+					Rotation = session.Habbo.CurrentRoom.Model.Door.Rotation,
+					HeadRotation = session.Habbo.CurrentRoom.Model.Door.Rotation
+				}
+			};
 
+			session.Habbo.CurrentRoom.EntityManager.CreateEntity(entity);
+
+			bot.RoomId = room.Id;
+			session.Habbo.Inventory.UpdateBot(bot);
+			session.Habbo.CurrentRoom.EntityManager.AddBot(entity);
+
+			// remove bot
 		}
 	}
 }

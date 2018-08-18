@@ -100,6 +100,16 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			return botId;
 		}
 
+		public static void UpdateBot(InventoryBots bot)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("botId", bot.Id);
+				dbClient.AddParameter("roomId", bot.RoomId);
+				dbClient.Query("UPDATE `bots` SET `room_id` = @roomId WHERE `id` = @botId");
+			}
+		}
+
 		public static void AddFurni(InventoryItem item)
 		{
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())

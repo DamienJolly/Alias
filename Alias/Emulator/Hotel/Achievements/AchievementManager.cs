@@ -130,7 +130,7 @@ namespace Alias.Emulator.Hotel.Achievements
 
 				if (habbo.CurrentRoom != null)
 				{
-					habbo.CurrentRoom.EntityManager.Send(new RoomUserDataComposer(habbo));
+					habbo.CurrentRoom.EntityManager.Send(new RoomUserDataComposer(habbo.Entity));
 				}
 
 				//todo: talent track shit
