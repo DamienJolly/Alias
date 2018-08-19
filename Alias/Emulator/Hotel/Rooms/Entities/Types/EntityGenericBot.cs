@@ -32,13 +32,15 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 		{
 			SpeechTimer = 20;
 			ActionTimer = Randomness.RandomNumber(5, 20);
+
+			RoomEntityDatabase.AddBot(bot);
 			bot.Room.EntityManager.Send(new RoomUserDanceComposer(bot));
 			bot.Room.EntityManager.Send(new RoomUserEffectComposer(bot));
 		}
 
 		public void OnEntityLeave(RoomEntity bot)
 		{
-
+			RoomEntityDatabase.RemoveBot(bot);
 		}
 
 		public void OnCycle(RoomEntity bot)

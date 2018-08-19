@@ -32,16 +32,6 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			RoomEntityDatabase.ReadBots(this.Room).ForEach(bot => CreateEntity(bot));
 		}
 
-		public void AddBot(RoomEntity entity)
-		{
-			RoomEntityDatabase.AddBot(entity);
-		}
-
-		public void RemoveBot(RoomEntity entity)
-		{
-			RoomEntityDatabase.RemoveBot(entity);
-		}
-
 		public void CreateEntity(RoomEntity entity)
 		{
 			entity.VirtualId = NextVirtualId;

@@ -36,7 +36,6 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 			};
 
 			session.Habbo.Inventory.UpdateBot(iBot);
-			session.Habbo.CurrentRoom.EntityManager.RemoveBot(bot);
 			session.Habbo.CurrentRoom.EntityManager.OnUserLeave(bot);
 			session.Send(new AddBotComposer(iBot));
 		}
