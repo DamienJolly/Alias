@@ -45,7 +45,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 					break;
 
 				case 3:
-					bot.CanWalk = false;
+					bot.CanWalk = !bot.CanWalk;
 					break;
 
 				case 4:

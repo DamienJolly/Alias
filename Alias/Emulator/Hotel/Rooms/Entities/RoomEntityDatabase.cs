@@ -55,7 +55,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 				dbClient.AddParameter("name", bot.Name);
 				dbClient.AddParameter("danceId", bot.DanceId);
 				dbClient.AddParameter("effectId", bot.EffectId);
-				dbClient.AddParameter("canWalk", bot.CanWalk.ToString());
+				dbClient.AddParameter("canWalk", Alias.BoolToString(bot.CanWalk));
 				dbClient.Query("UPDATE `bots` SET `name` = @name, `look` = @look, `gender` = @gender, `dance_id` = @danceId, `effect_id` = @effectId, `can_walk` = @canWalk WHERE `id` = @botId");
 			}
 		}

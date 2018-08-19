@@ -51,23 +51,26 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 				SpeechTimer--;
 			}
 
-			if (ActionTimer <= 0)
+			if (bot.CanWalk)
 			{
-				RoomTile tile = bot.Room.Mapping.RandomWalkableTile;
-				if (tile != null)
+				if (ActionTimer <= 0)
 				{
-					bot.TargetPosition = new UserPosition()
+					RoomTile tile = bot.Room.Mapping.RandomWalkableTile;
+					if (tile != null)
 					{
-						X = tile.Position.X,
-						Y = tile.Position.Y
-					};
-					bot.Path = bot.Room.PathFinder.Path(bot);
+						bot.TargetPosition = new UserPosition()
+						{
+							X = tile.Position.X,
+							Y = tile.Position.Y
+						};
+						bot.Path = bot.Room.PathFinder.Path(bot);
+					}
+					ActionTimer = Randomness.RandomNumber(5, 20);
 				}
-				ActionTimer = Randomness.RandomNumber(5, 20);
-			}
-			else
-			{
-				ActionTimer--;
+				else
+				{
+					ActionTimer--;
+				}
 			}
 		}
 	}
