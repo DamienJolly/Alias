@@ -30,6 +30,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 		public void LoadAIEntities()
 		{
 			RoomEntityDatabase.ReadBots(this.Room).ForEach(bot => CreateEntity(bot));
+			RoomEntityDatabase.ReadPets(this.Room).ForEach(pet => CreateEntity(pet));
 		}
 
 		public void CreateEntity(RoomEntity entity)
@@ -58,6 +59,11 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 		public RoomEntity BotById(int botId)
 		{
 			return this.Bots.Where(bot => bot.Id == botId).First();
+		}
+
+		public RoomEntity PetById(int petId)
+		{
+			return this.Pets.Where(pet => pet.Id == petId).First();
 		}
 
 		public RoomEntity UserBySession(Session session)
@@ -111,6 +117,8 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 		public void Send(IPacketComposer composer, RoomEntity except) => this.Send(new List<IPacketComposer>() { composer }, new List<RoomEntity>() { except });
 
 		public int UserCount => this.Users.Count;
+
+		public List<RoomEntity> Pets => this.Entities.Where(entity => entity.Type == RoomEntityType.Pet).ToList();
 
 		public List<RoomEntity> Bots => this.Entities.Where(entity => entity.Type == RoomEntityType.Bot).ToList();
 

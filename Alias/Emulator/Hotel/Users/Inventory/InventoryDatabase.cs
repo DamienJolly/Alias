@@ -61,6 +61,33 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			return bots;
 		}
 
+		public static int AddBot(InventoryBots bot, int userId)
+		{
+			int botId = 0;
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("userId", userId);
+				dbClient.AddParameter("name", bot.Name);
+				dbClient.AddParameter("motto", bot.Motto);
+				dbClient.AddParameter("look", bot.Look);
+				dbClient.AddParameter("gender", bot.Gender);
+				dbClient.Query("INSERT INTO `bots` (`name`, `motto`, `look`, `gender`, `user_id`) VALUES (@name, @motto, @look, @gender, @userId)");
+				botId = dbClient.LastInsertedId();
+			}
+
+			return botId;
+		}
+
+		public static void UpdateBot(InventoryBots bot)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("botId", bot.Id);
+				dbClient.AddParameter("roomId", bot.RoomId);
+				dbClient.Query("UPDATE `bots` SET `room_id` = @roomId WHERE `id` = @botId");
+			}
+		}
+
 		public static List<InventoryPets> ReadPets(int userId)
 		{
 			List<InventoryPets> pets = new List<InventoryPets>();
@@ -86,30 +113,30 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			return pets;
 		}
 
-		public static int AddBot(InventoryBots bot, int userId)
+		public static int AddPet(InventoryPets pet, int userId)
 		{
-			int botId = 0;
+			int petId = 0;
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("userId", userId);
-				dbClient.AddParameter("name", bot.Name);
-				dbClient.AddParameter("motto", bot.Motto);
-				dbClient.AddParameter("look", bot.Look);
-				dbClient.AddParameter("gender", bot.Gender);
-				dbClient.Query("INSERT INTO `bots` (`name`, `motto`, `look`, `gender`, `user_id`) VALUES (@name, @motto, @look, @gender, @userId)");
-				botId = dbClient.LastInsertedId();
+				dbClient.AddParameter("name", pet.Name);
+				dbClient.AddParameter("type", pet.Type);
+				dbClient.AddParameter("race", pet.Race);
+				dbClient.AddParameter("colour", pet.Colour);
+				dbClient.Query("INSERT INTO `pets` (`name`, `type`, `race`, `colour`, `user_id`) VALUES (@name, @type, @race, @colour, @userId)");
+				petId = dbClient.LastInsertedId();
 			}
 
-			return botId;
+			return petId;
 		}
 
-		public static void UpdateBot(InventoryBots bot)
+		public static void UpdatePet(InventoryPets pet)
 		{
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
-				dbClient.AddParameter("botId", bot.Id);
-				dbClient.AddParameter("roomId", bot.RoomId);
-				dbClient.Query("UPDATE `bots` SET `room_id` = @roomId WHERE `id` = @botId");
+				dbClient.AddParameter("petId", pet.Id);
+				dbClient.AddParameter("roomId", pet.RoomId);
+				dbClient.Query("UPDATE `pets` SET `room_id` = @roomId WHERE `id` = @petId");
 			}
 		}
 

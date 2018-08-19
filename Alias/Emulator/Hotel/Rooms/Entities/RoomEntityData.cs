@@ -112,6 +112,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 					{
 						case RoomEntityType.Player: default: _entityType = new EntityPlayer(); break;
 						case RoomEntityType.Bot: _entityType = new EntityGenericBot(); break;
+						case RoomEntityType.Pet: _entityType = new EntityPet(); break;
 					}
 				}
 

@@ -26,5 +26,10 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 		{
 			get; set;
 		}
+
+		public int RoomId
+		{
+			get; set;
+		} = 0;
 	}
 }

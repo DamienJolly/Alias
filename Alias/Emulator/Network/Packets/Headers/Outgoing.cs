@@ -57,6 +57,8 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int InventoryBadgesMessageComposer = 2782;
 			public const int AddBotMessageComposer = 1996;
 			public const int RemoveBotMessageComposer = 3908;
+			public const int AddPetMessageComposer = 2970;
+			public const int RemovePetMessageComposer = 1202;
 			public const int InventoryBotsMessageComposer = 953;
 			public const int InventoryPetsMessageComposer = 77;
 
@@ -102,6 +104,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RoomUserEffectMessageComposer = 3221;
 			public const int RoomUserUpdateUsernameMessageComposer = 1843;
 			public const int RoomBotSettingsMessageComposer = 1171;
+			public const int PetInformationMessageComposer = 1009;
 
 			// Trading
 			public const int TradeStartFailMessageComposer = 1608;

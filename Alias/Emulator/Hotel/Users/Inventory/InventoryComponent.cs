@@ -19,13 +19,7 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 
 			this.habbo = h;
 		}
-
-		public void AddItem(InventoryItem item)
-		{
-			InventoryDatabase.AddFurni(item);
-			FloorItems.Add(item);
-		}
-
+		
 		public void AddBot(InventoryBots bot)
 		{
 			bot.Id = InventoryDatabase.AddBot(bot, habbo.Id);
@@ -46,6 +40,34 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 					bots.Add(bot);
 				}
 			}
+		}
+
+		public void AddPet(InventoryPets pet)
+		{
+			pet.Id = InventoryDatabase.AddPet(pet, habbo.Id);
+			this.Pets.Add(pet);
+		}
+
+		public void UpdatePet(InventoryPets pet)
+		{
+			InventoryDatabase.UpdatePet(pet);
+			if (pet.RoomId != 0)
+			{
+				this.Pets.Remove(pet);
+			}
+			else
+			{
+				if (!this.Pets.Contains(pet))
+				{
+					this.Pets.Add(pet);
+				}
+			}
+		}
+
+		public void AddItem(InventoryItem item)
+		{
+			InventoryDatabase.AddFurni(item);
+			FloorItems.Add(item);
 		}
 
 		public void UpdateItem(InventoryItem item)
@@ -83,6 +105,11 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 		public InventoryBots GetBot(int botId)
 		{
 			return this.bots.Where(bot => bot.Id == botId).FirstOrDefault();
+		}
+
+		public InventoryPets GetPet(int petId)
+		{
+			return this.Pets.Where(pet => pet.Id == petId).FirstOrDefault();
 		}
 
 		public List<InventoryItem> FloorItems
