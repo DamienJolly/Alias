@@ -1,5 +1,4 @@
 using Alias.Emulator.Hotel.Rooms.Entities.Events;
-using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Rooms.Entities
@@ -22,6 +21,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomUserPlaceBotMessageEvent, new RoomUserPlaceBotEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomBotSettingsMessageEvent, new RoomBotSettingsEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomBotSaveSettingsMessageEvent, new RoomBotSaveSettingsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomUserPickupBotMessageEvent, new RoomUserPickupBotEvent());
 		}
 	}
 }

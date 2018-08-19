@@ -56,6 +56,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RemoveHabboItemMessageComposer = 1518;
 			public const int InventoryBadgesMessageComposer = 2782;
 			public const int AddBotMessageComposer = 1996;
+			public const int RemoveBotMessageComposer = 3908;
 			public const int InventoryBotsMessageComposer = 953;
 			public const int InventoryPetsMessageComposer = 77;
 

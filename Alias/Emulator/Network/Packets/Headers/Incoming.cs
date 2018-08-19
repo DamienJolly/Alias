@@ -73,6 +73,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RoomUserPlaceBotMessageEvent = 3978;
 			public const int RoomBotSettingsMessageEvent = 2714;
 			public const int RoomBotSaveSettingsMessageEvent = 1676;
+			public const int RoomUserPickupBotMessageEvent = 389;
 
 			// Trading
 			public const int TradeStartMessageEvent = 3586;

@@ -30,6 +30,8 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 
 		public void OnEntityJoin(RoomEntity bot)
 		{
+			SpeechTimer = 20;
+			ActionTimer = Randomness.RandomNumber(5, 20);
 			bot.Room.EntityManager.Send(new RoomUserDanceComposer(bot));
 			bot.Room.EntityManager.Send(new RoomUserEffectComposer(bot));
 		}

@@ -72,5 +72,14 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 				dbClient.Query("INSERT INTO `bots_room_data` (`id`, `x`, `y`, `z`, `rot`) VALUES (@botId, @xPos, @yPos, @zPos, @rot)");
 			}
 		}
+
+		public static void RemoveBot(RoomEntity bot)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("botId", bot.Id);
+				dbClient.Query("DELETE FROM `bots_room_data` WHERE `id` = @botId");
+			}
+		}
 	}
 }

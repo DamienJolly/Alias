@@ -1,4 +1,5 @@
 using Alias.Emulator.Hotel.Users.Inventory;
+using Alias.Emulator.Hotel.Users.Inventory.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -54,8 +55,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 			bot.RoomId = room.Id;
 			session.Habbo.Inventory.UpdateBot(bot);
 			session.Habbo.CurrentRoom.EntityManager.AddBot(entity);
-
-			// remove bot
+			session.Send(new RemoveBotComposer(bot));
 		}
 	}
 }
