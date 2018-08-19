@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;

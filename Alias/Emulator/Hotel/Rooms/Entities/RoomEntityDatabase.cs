@@ -24,6 +24,9 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 							Look = Reader.GetString("look"),
 							Gender = Reader.GetString("gender"),
 							OwnerId = Reader.GetInt32("user_id"),
+							DanceId = Reader.GetInt32("dance_id"),
+							EffectId = Reader.GetInt32("effect_id"),
+							CanWalk = Reader.GetBoolean("can_walk"),
 							Type = RoomEntityType.Bot,
 							Room = room,
 							Position = new UserPosition()
@@ -50,7 +53,10 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 				dbClient.AddParameter("look", bot.Look);
 				dbClient.AddParameter("gender", bot.Gender);
 				dbClient.AddParameter("name", bot.Name);
-				dbClient.Query("UPDATE `bots` SET `name` = @name, `look` = @look, `gender` = @gender WHERE `id` = @botId");
+				dbClient.AddParameter("danceId", bot.DanceId);
+				dbClient.AddParameter("effectId", bot.EffectId);
+				dbClient.AddParameter("canWalk", bot.CanWalk.ToString());
+				dbClient.Query("UPDATE `bots` SET `name` = @name, `look` = @look, `gender` = @gender, `dance_id` = @danceId, `effect_id` = @effectId, `can_walk` = @canWalk WHERE `id` = @botId");
 			}
 		}
 

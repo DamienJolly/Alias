@@ -45,11 +45,14 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 					{
 						InventoryBots bot = new InventoryBots
 						{
-							Id     = Reader.GetInt32("id"),
-							Name   = Reader.GetString("name"),
-							Motto  = Reader.GetString("motto"),
-							Look   = Reader.GetString("look"),
-							Gender = Reader.GetString("gender")
+							Id       = Reader.GetInt32("id"),
+							Name     = Reader.GetString("name"),
+							Motto    = Reader.GetString("motto"),
+							Look     = Reader.GetString("look"),
+							Gender   = Reader.GetString("gender"),
+							DanceId  = Reader.GetInt32("dance_id"),
+							EffectId = Reader.GetInt32("effect_id"),
+							CanWalk  = Reader.GetBoolean("can_walk")
 						};
 						bots.Add(bot);
 					}

@@ -22,7 +22,6 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Composers
 			message.WriteInteger(this.settingId);
 			switch (this.settingId)
 			{
-				case 1: case 3: case 4: break;
 				case 2:
 					//to-do
 					break;

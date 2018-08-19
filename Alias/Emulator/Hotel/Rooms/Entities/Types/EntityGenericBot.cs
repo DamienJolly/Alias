@@ -1,4 +1,5 @@
 using Alias.Emulator.Hotel.Rooms.Entities.Chat;
+using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 using Alias.Emulator.Hotel.Rooms.Mapping;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Utilities;
@@ -10,11 +11,11 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 		private int ActionTimer = 0;
 		private int SpeechTimer = 0;
 
-		public void Serialize(ServerPacket message, RoomEntity player)
+		public void Serialize(ServerPacket message, RoomEntity bot)
 		{
 			message.WriteInteger(4);
-			message.WriteString(player.Gender.ToLower()); // ?
-			message.WriteInteger(player.OwnerId);
+			message.WriteString(bot.Gender.ToLower()); // ?
+			message.WriteInteger(bot.OwnerId);
 			message.WriteString("Damien"); // Owner name
 			message.WriteInteger(5);
 			{
@@ -27,21 +28,22 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 			}
 		}
 
-		public void OnEntityJoin(RoomEntity player)
+		public void OnEntityJoin(RoomEntity bot)
+		{
+			bot.Room.EntityManager.Send(new RoomUserDanceComposer(bot));
+			bot.Room.EntityManager.Send(new RoomUserEffectComposer(bot));
+		}
+
+		public void OnEntityLeave(RoomEntity bot)
 		{
 
 		}
 
-		public void OnEntityLeave(RoomEntity player)
-		{
-
-		}
-
-		public void OnCycle(RoomEntity player)
+		public void OnCycle(RoomEntity bot)
 		{
 			if (SpeechTimer <= 0)
 			{
-				player.OnChat("testing", 1, ChatType.CHAT);
+				bot.OnChat("testing", 1, ChatType.CHAT);
 				SpeechTimer = 20;
 			}
 			else
@@ -51,15 +53,15 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 
 			if (ActionTimer <= 0)
 			{
-				RoomTile tile = player.Room.Mapping.RandomWalkableTile;
+				RoomTile tile = bot.Room.Mapping.RandomWalkableTile;
 				if (tile != null)
 				{
-					player.TargetPosition = new UserPosition()
+					bot.TargetPosition = new UserPosition()
 					{
 						X = tile.Position.X,
 						Y = tile.Position.Y
 					};
-					player.Path = player.Room.PathFinder.Path(player);
+					bot.Path = bot.Room.PathFinder.Path(bot);
 				}
 				ActionTimer = Randomness.RandomNumber(5, 20);
 			}

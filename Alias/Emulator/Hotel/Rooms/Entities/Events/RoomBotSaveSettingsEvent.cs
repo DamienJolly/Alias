@@ -35,7 +35,6 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 				case 1:
 					bot.Look = session.Habbo.Look;
 					bot.Gender = session.Habbo.Gender;
-					//to-do in db
 					bot.EffectId = session.Habbo.Entity.EffectId;
 					room.EntityManager.Send(new RoomUserDataComposer(bot));
 					room.EntityManager.Send(new RoomUserEffectComposer(bot));
@@ -46,7 +45,6 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 					break;
 
 				case 3:
-					//to-do in db
 					bot.CanWalk = false;
 					break;
 

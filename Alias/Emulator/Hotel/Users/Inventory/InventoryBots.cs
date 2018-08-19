@@ -27,6 +27,21 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			get; set;
 		}
 
+		public int DanceId
+		{
+			get; set;
+		} = 0;
+
+		public int EffectId
+		{
+			get; set;
+		} = 0;
+
+		public bool CanWalk
+		{
+			get; set;
+		} = true;
+
 		public int RoomId
 		{
 			get; set;
