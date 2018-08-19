@@ -132,10 +132,10 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 					}
 					else if (tile.TopItem != null && tile.TopItem.ItemData.CanLay)
 					{
-						this.Actions.Add("lay", tile.TopItem.ItemData.Height.ToString());
+						this.Actions.Add("lay", tile.TopItem.ItemData.Height + 0.1 + "");
 						this.Position.Rotation = tile.TopItem.Position.Rotation;
 						this.Position.HeadRotation = this.Position.Rotation;
-						this.Position.Z = tile.TopItem.ItemData.Height + tile.TopItem.Position.Z;
+						this.Position.Z = tile.TopItem.Position.Z;
 						this.isSitting = false;
 						update = true;
 					}
