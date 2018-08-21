@@ -44,7 +44,7 @@ namespace Alias.Emulator.Hotel.Catalog
 		public List<CatalogItem> Items
 		{
 			get; set;
-		}
+		} = new List<CatalogItem>();
 
 		public string HeaderImage
 		{

@@ -6,7 +6,7 @@ using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Catalog
 {
-	public class CatalogDatabase
+	class CatalogDatabase
 	{
 		public static List<CatalogPage> ReadPages()
 		{
@@ -37,7 +37,6 @@ namespace Alias.Emulator.Hotel.Catalog
 							Enabled      = Reader.GetBoolean("enabled"),
 							Visible      = Reader.GetBoolean("visible")
 						};
-						item.Items = ReadItems(item);
 						pages.Add(item);
 					}
 				}
@@ -69,16 +68,20 @@ namespace Alias.Emulator.Hotel.Catalog
 			return bots;
 		}
 
-		public static List<CatalogItem> ReadItems(CatalogPage page)
+		public static void ReadItems(CatalogManager catalog)
 		{
-			List<CatalogItem> items = new List<CatalogItem>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
-				dbClient.AddParameter("pageId", page.Id);
-				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_items` WHERE `page_id` = @pageId"))
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `catalog_items`"))
 				{
 					while (Reader.Read())
 					{
+						CatalogPage page = catalog.GetCatalogPage(Reader.GetInt32("page_Id"));
+						if (page == null)
+						{
+							continue;
+						}
+
 						CatalogItem item = new CatalogItem
 						{
 							Id           = Reader.GetInt32("id"),
@@ -95,17 +98,22 @@ namespace Alias.Emulator.Hotel.Catalog
 							HasOffer     = Reader.GetBoolean("have_offer"),
 							OfferId      = Reader.GetInt32("offer_id")
 						};
-						item.LimitedNumbers = ReadLimited(item.Id, item.LimitedStack);
-						item.LimitedNumbers.Shuffle();
+
+						if (item.LimitedStack > 0)
+						{
+							item.LimitedNumbers = ReadLimited(item.Id, item.LimitedStack);
+							item.LimitedNumbers.Shuffle();
+						}
 
 						if (item.OfferId != -1)
+						{
 							page.AddOfferId(item.OfferId);
+						}
 
-						items.Add(item);
+						page.Items.Add(item);
 					}
 				}
 			}
-			return items;
 		}
 
 		public static List<int> ReadLimited(int itemId, int size)

@@ -42,6 +42,7 @@ namespace Alias.Emulator.Hotel.Catalog
 			}
 
 			this._pages = CatalogDatabase.ReadPages();
+			CatalogDatabase.ReadItems(this);
 			this._featured = CatalogDatabase.ReadFeatured();
 			this._bots = CatalogDatabase.ReadBots();
 		}

@@ -89,7 +89,7 @@ namespace Alias.Emulator.Hotel.Catalog
 		public List<int> LimitedNumbers
 		{
 			get; set;
-		}
+		} = new List<int>();
 
 		public int GetNumber
 		{
