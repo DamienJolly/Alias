@@ -14,7 +14,6 @@ namespace Alias.Emulator.Network
 
 			if (input.ReadableBytes < 6)
 			{
-				input.ResetReaderIndex();
 				return;
 			}
 
