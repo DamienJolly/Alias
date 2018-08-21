@@ -23,12 +23,12 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 
 		public void OnEntityJoin(RoomEntity pet)
 		{
-			RoomEntityDatabase.AddPet(pet);
+
 		}
 
 		public void OnEntityLeave(RoomEntity pet)
 		{
-			RoomEntityDatabase.RemovePet(pet);
+
 		}
 
 		public void OnCycle(RoomEntity pet)

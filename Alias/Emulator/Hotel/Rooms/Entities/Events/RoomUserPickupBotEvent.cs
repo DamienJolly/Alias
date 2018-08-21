@@ -35,6 +35,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 				RoomId = 0
 			};
 
+			RoomEntityDatabase.RemoveBot(bot);
 			session.Habbo.Inventory.UpdateBot(iBot);
 			session.Habbo.CurrentRoom.EntityManager.OnUserLeave(bot);
 			session.Send(new AddBotComposer(iBot));

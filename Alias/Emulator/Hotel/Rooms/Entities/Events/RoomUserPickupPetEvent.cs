@@ -32,6 +32,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 				RoomId = 0
 			};
 
+			RoomEntityDatabase.RemovePet(pet);
 			session.Habbo.Inventory.UpdatePet(iPet);
 			session.Habbo.CurrentRoom.EntityManager.OnUserLeave(pet);
 			session.Send(new AddPetComposer(iPet));

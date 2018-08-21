@@ -50,6 +50,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 			};
 			
 			session.Habbo.CurrentRoom.EntityManager.CreateEntity(entity);
+			RoomEntityDatabase.AddPet(entity);
 
 			pet.RoomId = room.Id;
 			session.Habbo.Inventory.UpdatePet(pet);

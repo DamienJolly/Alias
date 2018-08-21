@@ -42,7 +42,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			this.Room.Mapping.Tiles[entity.Position.X, entity.Position.Y].AddEntity(entity);
 			this.Entities.Add(entity);
 		}
-
+		
 		public void OnUserLeave(RoomEntity entity)
 		{
 			if (!entity.Disposing)
