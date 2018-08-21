@@ -79,11 +79,8 @@ namespace Alias.Emulator.Hotel.Items
 			get; set;
 		}
 
-		public bool IsWired()
-		{
-			return Interaction == ItemInteraction.WIRED_CONDITION ||
+		public bool IsWired => Interaction == ItemInteraction.WIRED_CONDITION ||
 				Interaction == ItemInteraction.WIRED_TRIGGER ||
 				Interaction == ItemInteraction.WIRED_EFFECT;
-		}
 	}
 }

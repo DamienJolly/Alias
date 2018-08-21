@@ -33,11 +33,9 @@ namespace Alias.Emulator.Hotel.Items
 							CanStack    = Reader.GetBoolean("can_stack")
 						};
 
-						//todo: recode
-						if (item.IsWired())
+						if (item.IsWired && int.TryParse(item.ExtraData, out int wiredId))
 						{
-							item.WiredInteraction = WiredInteraction.DEFAULT;
-							//item.WiredInteraction = (WiredInteraction)item.BehaviourData;
+							item.WiredInteraction = (WiredInteraction)wiredId;
 						}
 
 						items.Add(item);
