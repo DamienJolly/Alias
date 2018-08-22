@@ -24,13 +24,15 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			RoomEntity user = room.EntityManager.UserBySession(session);
-			if (user == null)
+			if (item.ItemData.Interaction == ItemInteraction.EXCHANGE ||
+				item.ItemData.Interaction == ItemInteraction.DIAMOND_EXCHANGE ||
+				item.ItemData.Interaction == ItemInteraction.POINTS_EXCHANGE ||
+				item.ItemData.Interaction == ItemInteraction.DICE)
 			{
 				return;
 			}
 
-			item.GetInteractor().OnUserInteract(user, room, item, state);
+			item.GetInteractor().OnUserInteract(session.Habbo.Entity, room, item, state);
 		}
 	}
 }

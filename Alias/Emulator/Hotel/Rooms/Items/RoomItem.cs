@@ -98,6 +98,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 				{
 					case ItemInteraction.WIRED_TRIGGER: case ItemInteraction.WIRED_EFFECT: case ItemInteraction.WIRED_CONDITION: _interaction = new InteractionWired(); break;
 					case ItemInteraction.DICE: _interaction = new InteractionDice(); break;
+					case ItemInteraction.EXCHANGE: _interaction = new InteractionExchange(); break;
 					case ItemInteraction.VENDING_MACHINE: _interaction = new InteractionVendingMachine(); break;
 					case ItemInteraction.TILE_EFFECT: _interaction = new InteractionTileEffect(); break;
 					case ItemInteraction.TROPHY: _interaction = new InteractionTrophy(); break;

@@ -16,16 +16,14 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 			}
 			
 			int itemId = message.PopInt();
-			RoomItem rItem = room.ItemManager.GetItem(itemId);
-			if (rItem == null || rItem.Owner != session.Habbo.Id)
+
+			RoomItem item = room.ItemManager.GetItem(itemId);
+			if (item == null)
 			{
 				return;
 			}
 
-			//todo: recode
-
-			room.ItemManager.RemoveItem(rItem);
-			room.EntityManager.Send(new RemoveFloorItemComposer(rItem));
+			item.GetInteractor().OnUserInteract(session.Habbo.Entity, room, item, 0);
 		}
 	}
 }

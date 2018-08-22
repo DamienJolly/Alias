@@ -86,7 +86,7 @@ namespace Alias.Emulator
 
 			this.SocketServer = new SocketServer(Configuration.Value("tcp.host"), int.Parse(Configuration.Value("tcp.port")));
 			this.SocketServer.Initialize();
-
+			
 			this.CameraAPI = new CameraAPI();
 			this.CameraAPI.AttemptLogin("Damien", "password123");
 
