@@ -8,15 +8,15 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			int signId = message.PopInt();
-
 			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			room.EntityManager.UserBySession(session).Actions.Add("sign", signId + "");
+			int signId = message.PopInt();
+
+			session.Habbo.Entity.Actions.Add("sign", signId + "");
 		}
 	}
 }

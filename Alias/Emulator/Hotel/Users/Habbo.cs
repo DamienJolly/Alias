@@ -96,8 +96,7 @@ namespace Alias.Emulator.Hotel.Users
 		{
 			if (this.CurrentRoom != null && !forced)
 			{
-				RoomEntity target = this.CurrentRoom.EntityManager.UserByUserid(this.Id);
-				target.OnChat(text, 0, ChatType.WHISPER, target);
+				this.Entity.OnChat(text, 0, ChatType.WHISPER, this.Entity);
 			}
 			else
 			{

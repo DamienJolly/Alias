@@ -11,15 +11,14 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			int userId = message.PopInt();
-
 			Room room = session.Habbo.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			if (userId <= 0 || userId == room.EntityManager.UserBySession(session).VirtualId)
+			int userId = message.PopInt();
+			if (userId <= 0 || userId == session.Habbo.Entity.VirtualId)
 			{
 				return;
 			}
@@ -31,37 +30,31 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				return;
 			}
 
-			RoomEntity userOne = room.EntityManager.UserBySession(session);
-			if (userOne == null)
+			RoomEntity target = room.EntityManager.EntityByVirtualid(userId);
+			if (target == null)
 			{
 				return;
 			}
 
-			RoomEntity userTwo = room.EntityManager.UserByVirtualid(userId);
-			if (userTwo == null)
-			{
-				return;
-			}
-
-			if (userOne.Actions.Has("trd"))
+			if (session.Habbo.Entity.Actions.Has("trd"))
 			{
 				session.Send(new TradeStartFailComposer(TradeStartFailComposer.YOU_ALREADY_TRADING));
 			}
-			else if (!userOne.Habbo.AllowTrading)
+			else if (!session.Habbo.Entity.Habbo.AllowTrading)
 			{
 				session.Send(new TradeStartFailComposer(TradeStartFailComposer.YOU_TRADING_OFF));
 			}
-			else if (userTwo.Actions.Has("trd"))
+			else if (target.Actions.Has("trd"))
 			{
-				session.Send(new TradeStartFailComposer(TradeStartFailComposer.TARGET_ALREADY_TRADING, userTwo.Habbo.Username));
+				session.Send(new TradeStartFailComposer(TradeStartFailComposer.TARGET_ALREADY_TRADING, target.Habbo.Username));
 			}
-			else if (!userTwo.Habbo.AllowTrading)
+			else if (!target.Habbo.AllowTrading)
 			{
-				session.Send(new TradeStartFailComposer(TradeStartFailComposer.TARGET_TRADING_OFF, userTwo.Habbo.Username));
+				session.Send(new TradeStartFailComposer(TradeStartFailComposer.TARGET_TRADING_OFF, target.Habbo.Username));
 			}
 			else
 			{
-				room.RoomTrading.StartTrade(userOne, userTwo);
+				room.RoomTrading.StartTrade(session.Habbo.Entity, target);
 			}
 		}
 	}

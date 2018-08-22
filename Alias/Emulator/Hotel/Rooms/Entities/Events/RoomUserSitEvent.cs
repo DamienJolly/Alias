@@ -14,7 +14,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 				return;
 			}
 
-			room.EntityManager.UserBySession(session).MakeSit();
+			session.Habbo.Entity.MakeSit();
 		}
 	}
 }

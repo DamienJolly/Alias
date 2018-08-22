@@ -15,19 +15,13 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				return;
 			}
 
-			RoomEntity user = room.EntityManager.UserBySession(session);
-			if (user == null)
-			{
-				return;
-			}
-
-			RoomTrade trade = room.RoomTrading.GetActiveTrade(user);
+			RoomTrade trade = room.RoomTrading.GetActiveTrade(session.Habbo.Entity);
 			if (trade == null)
 			{
 				return;
 			}
 
-			trade.StopTrade(user);
+			trade.StopTrade(session.Habbo.Entity);
 		}
 	}
 }

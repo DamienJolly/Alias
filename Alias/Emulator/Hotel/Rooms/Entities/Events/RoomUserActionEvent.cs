@@ -25,7 +25,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 			{
 			}
 
-			room.EntityManager.Send(new RoomUserActionComposer(room.EntityManager.UserBySession(session), action));
+			room.EntityManager.Send(new RoomUserActionComposer(session.Habbo.Entity, action));
 		}
 	}
 }

@@ -18,13 +18,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				return;
 			}
 
-			RoomEntity user = room.EntityManager.UserBySession(session);
-			if (user == null)
-			{
-				return;
-			}
-
-			RoomTrade trade = room.RoomTrading.GetActiveTrade(user);
+			RoomTrade trade = room.RoomTrading.GetActiveTrade(session.Habbo.Entity);
 			if (trade == null)
 			{
 				return;
@@ -43,7 +37,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 			List<InventoryItem> items = new List<InventoryItem>();
 			foreach (InventoryItem i in session.Habbo.Inventory.FloorItems.Where(x => x.ItemData.Id == item.ItemData.Id))
 			{
-				if (!trade.GetTradeUser(user).OfferedItems.Contains(i))
+				if (!trade.GetTradeUser(session.Habbo.Entity).OfferedItems.Contains(i))
 				{
 					items.Add(i);
 					count++;
@@ -54,7 +48,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				}
 			}
 
-			trade.OfferItems(user, items);
+			trade.OfferItems(session.Habbo.Entity, items);
 		}
 	}
 }

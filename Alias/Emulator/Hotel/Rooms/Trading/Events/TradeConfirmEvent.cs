@@ -15,24 +15,18 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				return;
 			}
 
-			RoomEntity user = room.EntityManager.UserBySession(session);
-			if (user == null)
-			{
-				return;
-			}
-
-			RoomTrade trade = room.RoomTrading.GetActiveTrade(user);
+			RoomTrade trade = room.RoomTrading.GetActiveTrade(session.Habbo.Entity);
 			if (trade == null)
 			{
 				return;
 			}
 
-			if (!trade.GetTradeUser(user).Accepted)
+			if (!trade.GetTradeUser(session.Habbo.Entity).Accepted)
 			{
 				return;
 			}
 
-			trade.Confirm(user);
+			trade.Confirm(session.Habbo.Entity);
 		}
 	}
 }

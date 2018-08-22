@@ -23,13 +23,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			RoomEntity user = room.EntityManager.UserBySession(session);
-			if (user == null)
-			{
-				return;
-			}
-
-			if (room.Mapping.Tiles[item.Position.X, item.Position.Y].TilesAdjecent(room.Mapping.Tiles[user.Position.X, user.Position.Y]))
+			if (room.Mapping.Tiles[item.Position.X, item.Position.Y].TilesAdjecent(room.Mapping.Tiles[session.Habbo.Entity.Position.X, session.Habbo.Entity.Position.Y]))
 			{
 				if (item.ItemData.Interaction != ItemInteraction.DICE || item.Mode == -1)
 				{

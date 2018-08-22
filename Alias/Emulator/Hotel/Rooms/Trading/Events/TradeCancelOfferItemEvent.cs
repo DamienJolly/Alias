@@ -16,25 +16,21 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				return;
 			}
 
-			RoomEntity user = room.EntityManager.UserBySession(session);
-			if (user == null)
-			{
-				return;
-			}
-
-			RoomTrade trade = room.RoomTrading.GetActiveTrade(user);
+			RoomTrade trade = room.RoomTrading.GetActiveTrade(session.Habbo.Entity);
 			if (trade == null)
 			{
 				return;
 			}
 
-			InventoryItem item = session.Habbo.Inventory.GetFloorItem(message.PopInt());
+			int itemId = message.PopInt();
+
+			InventoryItem item = session.Habbo.Inventory.GetFloorItem(itemId);
 			if (item == null)
 			{
 				return;
 			}
 
-			trade.RemoveItem(user, item);
+			trade.RemoveItem(session.Habbo.Entity, item);
 		}
 	}
 }

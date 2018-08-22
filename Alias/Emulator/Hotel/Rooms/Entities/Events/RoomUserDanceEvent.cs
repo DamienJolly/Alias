@@ -21,14 +21,8 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 				return;
 			}
 
-			RoomEntity user = room.EntityManager.UserBySession(session);
-			if (user == null)
-			{
-				return;
-			}
-
-			user.DanceId = danceId;
-			room.EntityManager.Send(new RoomUserDanceComposer(user));
+			session.Habbo.Entity.DanceId = danceId;
+			room.EntityManager.Send(new RoomUserDanceComposer(session.Habbo.Entity));
 		}
 	}
 }

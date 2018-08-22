@@ -21,29 +21,23 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 			int unknown = message.PopInt();
 			int itemId = message.PopInt();
 
-			RoomItem rItem = room.ItemManager.GetItem(itemId);
-			if (rItem == null)
+			RoomItem item = room.ItemManager.GetItem(itemId);
+			if (item == null)
 			{
 				return;
 			}
 
-			RoomEntity user = room.EntityManager.UserBySession(session);
-			if (user == null)
-			{
-				return;
-			}
-
-			room.Mapping.RemoveItem(rItem);
-			room.ItemManager.RemoveItem(rItem);
-			room.EntityManager.Send(new RemoveFloorItemComposer(rItem));
+			room.Mapping.RemoveItem(item);
+			room.ItemManager.RemoveItem(item);
+			room.EntityManager.Send(new RemoveFloorItemComposer(item));
 
 			InventoryItem iItem = new InventoryItem()
 			{
-				Id = rItem.Id,
-				LimitedNumber = rItem.LimitedNumber,
-				LimitedStack = rItem.LimitedStack,
-				ItemData = rItem.ItemData,
-				UserId = rItem.Owner
+				Id = item.Id,
+				LimitedNumber = item.LimitedNumber,
+				LimitedStack = item.LimitedStack,
+				ItemData = item.ItemData,
+				UserId = item.Owner
 			};
 
 			session.Habbo.Inventory.UpdateItem(iItem);

@@ -25,8 +25,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 					text = text.Substring(text.Split(' ')[0].Length + 1);
 				}
 
-				RoomEntity usr = session.Habbo.CurrentRoom.EntityManager.UserBySession(session);
-				usr.OnChat(text, message.PopInt(), GetChatType(message.Header), target);
+				session.Habbo.Entity.OnChat(text, message.PopInt(), GetChatType(message.Header), target);
 			}
 		}
 

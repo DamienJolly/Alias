@@ -14,12 +14,10 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 				return;
 			}
 
-			RoomEntity user = room.EntityManager.UserBySession(session);
-
 			int x = message.PopInt();
 			int y = message.PopInt();
 
-			user.LookAtPoint(x, y);
+			session.Habbo.Entity.LookAtPoint(x, y);
 		}
 	}
 }

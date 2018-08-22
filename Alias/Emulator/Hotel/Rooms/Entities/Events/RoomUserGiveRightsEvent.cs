@@ -10,26 +10,22 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			int userId = message.PopInt();
-
 			Room room = session.Habbo.CurrentRoom;
-			if (room == null)
+			if (room == null || room.RoomData.OwnerId != session.Habbo.Id)
 			{
 				return;
 			}
 
-			if (room.RoomData.OwnerId == session.Habbo.Id)
+			int userId = message.PopInt();
+			room.RoomRights.GiveRights(userId);
+
+			Habbo target = room.EntityManager.UserByUserid(userId).Habbo;
+			if (target != null)
 			{
-				room.RoomRights.GiveRights(userId);
-
-				Habbo target = room.EntityManager.UserByUserid(userId).Habbo;
-				if (target != null)
-				{
-					room.RoomRights.RefreshRights(target);
-				}
-
-				room.EntityManager.Send(new RoomAddRightsListComposer(room.Id, userId, ""));
+				room.RoomRights.RefreshRights(target);
 			}
+
+			room.EntityManager.Send(new RoomAddRightsListComposer(room.Id, userId, ""));
 		}
 	}
 }

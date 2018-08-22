@@ -56,45 +56,6 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			}
 		}
 
-		public RoomEntity BotById(int botId)
-		{
-			return this.Bots.Where(bot => bot.Id == botId).First();
-		}
-
-		public RoomEntity PetById(int petId)
-		{
-			return this.Pets.Where(pet => pet.Id == petId).First();
-		}
-
-		public RoomEntity UserBySession(Session session)
-		{
-			return this.Users.Where(user => user.Habbo.Id == session.Habbo.Id).First();
-		}
-
-		public RoomEntity UserByVirtualid(int virtualId)
-		{
-			return this.Entities.Where(user => user.VirtualId == virtualId).First();
-		}
-
-		public RoomEntity UserByUserid(int userId)
-		{
-			return this.Users.Where(user => user.Habbo.Id == userId).First();
-		}
-
-		internal RoomEntity UserByName(string targetname)
-		{
-			if (this.Entities.Where(user => user.Name == targetname).Count() > 0)
-			{
-				return this.Entities.Where(user => user.Name == targetname).First();
-			}
-			return null;
-		}
-
-		public bool UserExists(int virtualId)
-		{
-			return this.Entities.Where(user => user.VirtualId == virtualId).Count() > 0;
-		}
-
 		public void Send(List<IPacketComposer> composers, List<RoomEntity> except)
 		{
 			this.Entities.ForEach(user =>
@@ -123,6 +84,18 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 		public List<RoomEntity> Bots => this.Entities.Where(entity => entity.Type == RoomEntityType.Bot).ToList();
 
 		public List<RoomEntity> Users => this.Entities.Where(entity => entity.Type == RoomEntityType.Player).ToList();
+
+		public RoomEntity BotById(int botId) => this.Bots.Where(bot => bot.Id == botId).First();
+
+		public RoomEntity PetById(int petId) => this.Pets.Where(pet => pet.Id == petId).First();
+
+		public RoomEntity EntityByVirtualid(int virtualId) => this.Entities.Where(user => user.VirtualId == virtualId).First();
+
+		public RoomEntity UserByUserid(int userId) => this.Users.Where(user => user.Habbo.Id == userId).First();
+
+		public RoomEntity UserByName(string targetname) => this.Entities.Where(user => user.Name == targetname).First();
+
+		public bool UserExists(int virtualId) => this.Entities.Where(user => user.VirtualId == virtualId).Count() > 0;
 
 		public int NextVirtualId => this.VirtualId++;
 	}
