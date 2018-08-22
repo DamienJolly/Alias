@@ -33,9 +33,10 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			Items.Remove(item);
 		}
 
-		public RoomItem GetItem(int itemId)
-		{
-			return this.Items.Where(item => item.Id == itemId).FirstOrDefault();
-		}
+		public RoomItem GetItem(int itemId) => this.Items.Where(item => item.Id == itemId).FirstOrDefault();
+
+		public List<RoomItem> FloorItems => this.Items.Where(item => item.ItemData.Type == "s").ToList();
+
+		public List<RoomItem> WallItems => this.Items.Where(item => item.ItemData.Type == "i").ToList();
 	}
 }

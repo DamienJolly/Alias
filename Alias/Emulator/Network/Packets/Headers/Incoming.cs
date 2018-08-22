@@ -96,6 +96,8 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RedeemItemMessageEvent = 1018;
 			public const int TriggerDiceMessageEvent = 237;
 			public const int CloseDiceMessageEvent = 1285;
+			public const int MoveWallItemMessageEvent = 1132;
+			public const int ToggleWallItemMessageEvent = 2100;
 
 			// Models
 			public const int FloorPlanEditorRequestDoorSettingsMessageEvent = 2314;

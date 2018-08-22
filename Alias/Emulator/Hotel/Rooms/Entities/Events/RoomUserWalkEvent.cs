@@ -21,7 +21,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 			{
 				return;
 			}
-
+			
 			session.Habbo.Entity.TargetPosition = new UserPosition
 			{
 				X = x,

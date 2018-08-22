@@ -122,6 +122,10 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int FurnitureAliasesMessageComposer = 2958;
 			public const int RoomFloorItemsMessageComposer = 2585;
 			public const int ObjectOnRollerMessageComposer = 3339;
+			public const int RoomWallItemsMessageComposer = 459;
+			public const int AddWallItemMessageComposer = 790;
+			public const int RemoveWallItemMessageComposer = 3320;
+			public const int WallItemUpdateMessageComposer = 2091;
 
 			// Promotions
 			public const int PromoteOwnRoomsListMessageComposer = 3955;

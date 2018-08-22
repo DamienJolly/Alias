@@ -14,6 +14,8 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RedeemItemMessageEvent, new RedeemItemEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.TriggerDiceMessageEvent, new TriggerDiceEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.CloseDiceMessageEvent, new CloseDiceEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.MoveWallItemMessageEvent, new MoveWallItemEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ToggleWallItemMessageEvent, new ToggleWallItemEvent());
 		}
 	}
 }

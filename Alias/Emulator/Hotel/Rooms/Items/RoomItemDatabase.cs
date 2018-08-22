@@ -22,10 +22,11 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 							Room          = room,
 							Position      = new ItemPosition
 							{
-								X         = Reader.GetInt32("x"),
-								Y         = Reader.GetInt32("y"),
-								Z         = Reader.GetDouble("z"),
-								Rotation  = Reader.GetInt32("rot")
+								X            = Reader.GetInt32("x"),
+								Y            = Reader.GetInt32("y"),
+								Z            = Reader.GetDouble("z"),
+								Rotation     = Reader.GetInt32("rot"),
+								WallPosition = Reader.GetString("wall_position")
 							},
 							Owner         = Reader.GetInt32("user_id"),
 							LimitedNumber = Reader.GetInt32("limited_number"),
@@ -50,7 +51,8 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 				dbClient.AddParameter("yPos", item.Position.Y);
 				dbClient.AddParameter("ZPos", item.Position.Z);
 				dbClient.AddParameter("Rot", item.Position.Rotation);
-				dbClient.Query("INSERT INTO `items_room_data` (`id`, `x`, `y`, `z`, `rot`) VALUES (@itemId, @xPos, @yPos, @zPos, @rot)");
+				dbClient.AddParameter("WallPos", item.Position.WallPosition);
+				dbClient.Query("INSERT INTO `items_room_data` (`id`, `x`, `y`, `z`, `rot`, `wall_position`) VALUES (@itemId, @xPos, @yPos, @zPos, @rot, @wallPos)");
 			}
 		}
 
@@ -73,8 +75,9 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 					dbClient.AddParameter("y", item.Position.Y);
 					dbClient.AddParameter("z", item.Position.Z);
 					dbClient.AddParameter("rot", item.Position.Rotation);
+					dbClient.AddParameter("wallPos", item.Position.WallPosition);
 					dbClient.AddParameter("id", item.Id);
-					dbClient.Query("UPDATE `items_room_data` SET `x` = @x, `y` = @y, `z` = @z, `rot` = @rot WHERE `id` = @id");
+					dbClient.Query("UPDATE `items_room_data` SET `x` = @x, `y` = @y, `z` = @z, `rot` = @rot, `wall_position` = @wallPos WHERE `id` = @id");
 
 					if (item.ItemData.Interaction == ItemInteraction.DEFAULT)
 					{

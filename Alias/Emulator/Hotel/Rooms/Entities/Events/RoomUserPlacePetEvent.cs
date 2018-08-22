@@ -43,7 +43,6 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 				{
 					X = x,
 					Y = y,
-					//todo: v
 					Rotation = session.Habbo.CurrentRoom.Model.Door.Rotation,
 					HeadRotation = session.Habbo.CurrentRoom.Model.Door.Rotation
 				}

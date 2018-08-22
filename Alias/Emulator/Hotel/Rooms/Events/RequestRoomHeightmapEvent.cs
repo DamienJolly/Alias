@@ -14,7 +14,8 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (session.Habbo.CurrentRoom == null)
+			Room room = session.Habbo.CurrentRoom;
+			if (room == null)
 			{
 				return;
 			}
@@ -27,33 +28,33 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 				Look = session.Habbo.Look,
 				Gender = session.Habbo.Gender,
 				Type = RoomEntityType.Player,
-				Room = session.Habbo.CurrentRoom,
+				Room = room,
 				Position = new UserPosition()
 				{
-					X = session.Habbo.CurrentRoom.Model.Door.X,
-					Y = session.Habbo.CurrentRoom.Model.Door.Y,
-					Rotation = session.Habbo.CurrentRoom.Model.Door.Rotation,
-					HeadRotation = session.Habbo.CurrentRoom.Model.Door.Rotation
+					X = room.Model.Door.X,
+					Y = room.Model.Door.Y,
+					Rotation = room.Model.Door.Rotation,
+					HeadRotation = room.Model.Door.Rotation
 				},
 				Habbo = session.Habbo
 			};
 
 			session.Habbo.CurrentRoom.EntityManager.CreateEntity(user);
 
-			session.Send(new RoomRelativeMapComposer(session.Habbo.CurrentRoom));
-			session.Send(new RoomHeightMapComposer(session.Habbo.CurrentRoom));
-			session.Send(new RoomEntryInfoComposer(session.Habbo.CurrentRoom, session.Habbo));
-			session.Send(new RoomThicknessComposer(session.Habbo.CurrentRoom));
+			session.Send(new RoomRelativeMapComposer(room));
+			session.Send(new RoomHeightMapComposer(room));
+			session.Send(new RoomEntryInfoComposer(room, session.Habbo));
+			session.Send(new RoomThicknessComposer(room));
 
-			session.Send(new RoomUsersComposer(session.Habbo.CurrentRoom.EntityManager.Users));
-			session.Send(new RoomUsersComposer(session.Habbo.CurrentRoom.EntityManager.Bots));
-			session.Send(new RoomUsersComposer(session.Habbo.CurrentRoom.EntityManager.Pets));
-			session.Send(new RoomUserStatusComposer(session.Habbo.CurrentRoom.EntityManager.Entities));
+			session.Send(new RoomUsersComposer(room.EntityManager.Users));
+			session.Send(new RoomUsersComposer(room.EntityManager.Bots));
+			session.Send(new RoomUsersComposer(room.EntityManager.Pets));
+			session.Send(new RoomUserStatusComposer(room.EntityManager.Entities));
 
-			session.Send(new RoomFloorItemsComposer(session.Habbo.CurrentRoom.ItemManager.Items));
-			//session.Send(new ItemsComposer()); //todo: wall items
+			session.Send(new RoomFloorItemsComposer(room.ItemManager.FloorItems));
+			session.Send(new RoomWallItemsComposer(room.ItemManager.WallItems));
 
-			session.Habbo.CurrentRoom.RoomRights.RefreshRights(session.Habbo);
+			room.RoomRights.RefreshRights(session.Habbo);
 		}
 	}
 }

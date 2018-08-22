@@ -21,5 +21,10 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		{
 			get; set;
 		} = 0.0;
+
+		public string WallPosition
+		{
+			get; set;
+		} = "";
 	}
 }

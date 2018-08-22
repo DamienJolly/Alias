@@ -49,7 +49,7 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 				message.WriteBoolean(true); //??
 				message.WriteInteger(-1); // roomId?? for rentables??
 
-				//if (item.IsWallItem)
+				if (item.ItemData.Type == "s")
 				{
 					message.WriteString(string.Empty); //??
 					message.WriteInteger(0); //??

@@ -29,7 +29,15 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 
 			room.Mapping.RemoveItem(item);
 			room.ItemManager.RemoveItem(item);
-			room.EntityManager.Send(new RemoveFloorItemComposer(item));
+			if (item.ItemData.Type == "s")
+			{
+				room.EntityManager.Send(new RemoveFloorItemComposer(item));
+			}
+			else
+			{
+				room.EntityManager.Send(new RemoveWallItemComposer(item));
+			}
+			session.Send(new InventoryRefreshComposer());
 
 			InventoryItem iItem = new InventoryItem()
 			{
@@ -37,11 +45,11 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				LimitedNumber = item.LimitedNumber,
 				LimitedStack = item.LimitedStack,
 				ItemData = item.ItemData,
-				UserId = item.Owner
+				UserId = item.Owner,
+				ExtraData = item.ExtraData
 			};
 
 			session.Habbo.Inventory.UpdateItem(iItem);
-			session.Send(new InventoryRefreshComposer());
 		}
 	}
 }
