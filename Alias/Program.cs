@@ -52,13 +52,9 @@ namespace Alias
 				{
 					Logging.Command();
 					string input = Console.ReadLine().ToLower();
-					if (ConsoleCommandManager.Handle(input))
+					if (!ConsoleCommandManager.Handle(input))
 					{
-						Logging.Info("Command was succesfully executed.");
-					}
-					else
-					{
-						Logging.Info("There was an error executing that command.");
+						Logging.Warn("There was an error executing that command.");
 					}
 				}
 			}

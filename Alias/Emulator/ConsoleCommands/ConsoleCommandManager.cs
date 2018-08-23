@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.ConsoleCommands.Commands;
-using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.ConsoleCommands
 {
@@ -25,13 +23,13 @@ namespace Alias.Emulator.ConsoleCommands
 			}
 
 			string[] parameters;
-			if (text.Length <= 2 + command.Name.Length)
+			if (text.Length <= 1 + command.Name.Length)
 			{
 				parameters = new string[0];
 			}
 			else
 			{
-				parameters = text.Substring(2 + command.Name.Length).Split(' ');
+				parameters = text.Substring(1 + command.Name.Length).Split(' ');
 			}
 
 			return command.Handle(parameters);
@@ -40,6 +38,7 @@ namespace Alias.Emulator.ConsoleCommands
 		public static void RegisterCommands()
 		{
 			_commands.Add(new TestCommand());
+			_commands.Add(new UpdateCommand());
 		}
 	}
 }
