@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Items
 {
-	public class ItemDatabase
+	class ItemDatabase
 	{
 		public static List<ItemData> ReadItemData()
 		{
@@ -43,6 +43,28 @@ namespace Alias.Emulator.Hotel.Items
 				}
 			}
 			return items;
+		}
+
+		public static List<CrackableData> ReadCrackableData()
+		{
+			List<CrackableData> data = new List<CrackableData>();
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `item_crackable_data`"))
+				{
+					while (Reader.Read())
+					{
+						CrackableData item = new CrackableData
+						{
+							ItemId = Reader.GetInt32("item_id"),
+							Tick = Reader.GetInt32("tick")
+						};
+						item.LoadPrizes(Reader.GetString("prizes"));
+						data.Add(item);
+					}
+				}
+			}
+			return data;
 		}
 	}
 }

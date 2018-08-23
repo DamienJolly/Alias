@@ -75,7 +75,10 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 			InventoryDatabase.UpdateFurni(item);
 			if (item.RoomId != 0)
 			{
-				floorItems.Remove(item);
+				if (floorItems.Contains(item))
+				{
+					floorItems.Remove(item);
+				}
 			}
 			else
 			{

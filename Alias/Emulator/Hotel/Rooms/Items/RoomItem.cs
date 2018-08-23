@@ -98,6 +98,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 				{
 					case ItemInteraction.WIRED_TRIGGER: case ItemInteraction.WIRED_EFFECT: case ItemInteraction.WIRED_CONDITION: _interaction = new InteractionWired(); break;
 					case ItemInteraction.DICE: _interaction = new InteractionDice(); break;
+					case ItemInteraction.CRACKABLE: _interaction = new InteractionCrackable(); break;
 					case ItemInteraction.EXCHANGE: _interaction = new InteractionExchange(); break;
 					case ItemInteraction.VENDING_MACHINE: _interaction = new InteractionVendingMachine(); break;
 					case ItemInteraction.TILE_EFFECT: _interaction = new InteractionTileEffect(); break;
@@ -125,6 +126,18 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			}
 
 			return _wiredInteraction;
+		}
+
+		public void ResetItem(bool inDatabase = true)
+		{
+			_interaction = null;
+			_wiredInteraction = null;
+			LimitedNumber = 0;
+			LimitedStack = 0;
+			if (inDatabase)
+			{
+				RoomItemDatabase.UpdateItem(this);
+			}
 		}
 	}
 }

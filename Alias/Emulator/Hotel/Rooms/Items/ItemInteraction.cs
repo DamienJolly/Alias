@@ -13,6 +13,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		TROPHY,
 		TELEPORT,
 		ROLLER,
+		CRACKABLE,
 
 		WIRED_TRIGGER,
 		WIRED_EFFECT,
@@ -25,6 +26,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		{
 			switch (interaction)
 			{
+				case "crackable_egg": return ItemInteraction.CRACKABLE;
 				case "bot": return ItemInteraction.BOT;
 				case "wired_trigger": return ItemInteraction.WIRED_TRIGGER;
 				case "wired_effect": return ItemInteraction.WIRED_EFFECT;

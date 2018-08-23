@@ -65,6 +65,16 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			}
 		}
 
+		public static void UpdateItem(RoomItem item)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("baseId", item.ItemData.Id);
+				dbClient.AddParameter("id", item.Id);
+				dbClient.Query("UPDATE `items` SET `base_id` = @baseId WHERE `id` = @id");
+			}
+		}
+
 		public static void SaveFurniture(List<RoomItem> items)
 		{
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
