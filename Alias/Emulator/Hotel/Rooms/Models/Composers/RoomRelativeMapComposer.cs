@@ -31,7 +31,7 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Composers
 					}
 					else
 					{
-						message.WriteShort((int)Alias.ParseChar(position) * 256);
+						message.WriteShort((int)room.Mapping.ParseChar(position) * 256);
 					}
 				}
 			}

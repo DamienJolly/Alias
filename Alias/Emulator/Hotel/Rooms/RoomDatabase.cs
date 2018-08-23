@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Database;
+using Alias.Emulator.Utilities;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Rooms
@@ -152,10 +153,10 @@ namespace Alias.Emulator.Hotel.Rooms
 				dbClient.AddParameter("chatspeed", data.Settings.ChatSpeed);
 				dbClient.AddParameter("chatflood", data.Settings.ChatFlood);
 				dbClient.AddParameter("chatdistance", data.Settings.ChatDistance);
-				dbClient.AddParameter("allowpets", Alias.BoolToString(data.Settings.AllowPets));
-				dbClient.AddParameter("allowpetseat", Alias.BoolToString(data.Settings.AllowPetsEat));
-				dbClient.AddParameter("roomblocking", Alias.BoolToString(data.Settings.RoomBlocking));
-				dbClient.AddParameter("hidewalls", Alias.BoolToString(data.Settings.HideWalls));
+				dbClient.AddParameter("allowpets", DatabaseBoolean.GetBoolFromString(data.Settings.AllowPets));
+				dbClient.AddParameter("allowpetseat", DatabaseBoolean.GetBoolFromString(data.Settings.AllowPetsEat));
+				dbClient.AddParameter("roomblocking", DatabaseBoolean.GetBoolFromString(data.Settings.RoomBlocking));
+				dbClient.AddParameter("hidewalls", DatabaseBoolean.GetBoolFromString(data.Settings.HideWalls));
 				dbClient.AddParameter("wallheight", data.Settings.WallHeight);
 				dbClient.AddParameter("floorsize", data.Settings.FloorSize);
 				dbClient.Query("UPDATE `room_settings` SET `who_can_mute` = @mute, `who_can_kick` = @kick, `who_can_ban` = @ban, `chat_mode` = @chatmode, " +

@@ -1,7 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.IO;
-using System.Runtime;
 using Alias.Emulator.Utilities;
 
 namespace Alias
@@ -15,20 +13,21 @@ namespace Alias
 		static void Main(string[] args)
 		{
 			Logging.Alias("Alias Emulator is starting up...", Emulator.Alias.Version);
-			Logging.CreateExceptionFile();
 
-			if (!GCSettings.IsServerGC)
+			Logging.LoadFiles();
+			Logging.Info("Alias Server is starting");
+
+			if (Logging.IsDebugEnabled)
 			{
-				Logging.Warn("GC is not configured to server mode.");
+				Logging.Warn("Debugging - Log files will become large very quickly.");
+				Logging.Warn("Press any key to continue...");
+				Console.ReadKey();
 			}
-
-			Logging.Debug("GC latency mode is set to " + GCSettings.LatencyMode + " with GC Server set to " + (GCSettings.IsServerGC ? "Enabled" : "Disabled"));
 
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 
 			bool Running64Bit = (IntPtr.Size == 8);
-
 			if (!Running64Bit)
 			{
 				Logging.Warn("This application is not running in 64-bit, we recommend you run it in 64-bit. Press any key to continue..");
@@ -40,8 +39,7 @@ namespace Alias
 
 			Logging.Info("Starting to initialize Server.");
 
-			Emulator.Alias BaseMango = new Emulator.Alias(args);
-			GC.KeepAlive(BaseMango);
+			Emulator.Alias BaseMango = new Emulator.Alias();
 
 			sw.Stop();
 			Logging.Debug("Time taken to start: " + sw.Elapsed.TotalSeconds.ToString().Split('.')[0] + " seconds.");

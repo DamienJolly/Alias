@@ -3,6 +3,7 @@ using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Moderation.Composers
 {
@@ -29,7 +30,7 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 					message.WriteInteger(ModerationTicketStates.GetIntFromState(ticket.State));
 					message.WriteInteger(ModerationTicketTypes.GetIntFromType(ticket.Type));
 					message.WriteInteger(ticket.Category);
-					message.WriteInteger((int)Alias.GetUnixTimestamp() - ticket.Id);
+					message.WriteInteger((int)UnixTimestamp.Now - ticket.Id);
 					message.WriteInteger(ticket.Priority);
 					message.WriteInteger(1); // ??
 					message.WriteInteger(ticket.SenderId);

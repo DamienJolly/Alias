@@ -1,4 +1,5 @@
 using Alias.Emulator.Database;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading
 {
@@ -10,7 +11,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			{
 				dbClient.AddParameter("userOneId", userOne.User.Habbo.Id);
 				dbClient.AddParameter("userTwoId", userTwo.User.Habbo.Id);
-				dbClient.AddParameter("timestamp", Alias.GetUnixTimestamp());
+				dbClient.AddParameter("timestamp", (int)UnixTimestamp.Now);
 				dbClient.Query("INSERT INTO `room_trade_log` (`user_one_id`, `user_two_id`, `timestamp`) VALUES (@userOneId, @userTwoId, @timestamp)");
 				return dbClient.LastInsertedId();
 			}

@@ -1,6 +1,7 @@
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Moderation.Composers
 {
@@ -20,7 +21,7 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			message.WriteInteger(ModerationTicketStates.GetIntFromState(this.issue.State));
 			message.WriteInteger(ModerationTicketTypes.GetIntFromType(this.issue.Type));
 			message.WriteInteger(this.issue.Category);
-			message.WriteInteger((int)Alias.GetUnixTimestamp() - this.issue.Id);
+			message.WriteInteger((int)UnixTimestamp.Now - this.issue.Id);
 			message.WriteInteger(this.issue.Priority);
 			message.WriteInteger(1); // ??
 			message.WriteInteger(this.issue.SenderId);

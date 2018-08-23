@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Database;
+using Alias.Emulator.Utilities;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Handshake
@@ -94,7 +95,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
-				dbClient.AddParameter("now", Alias.GetUnixTimestamp());
+				dbClient.AddParameter("now", UnixTimestamp.Now);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT null FROM `bans` WHERE `user_id` = @id AND `expires` > @now"))
 				{
 					return Reader.Read();

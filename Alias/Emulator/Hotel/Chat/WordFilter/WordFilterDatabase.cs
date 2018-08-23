@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Database;
+using Alias.Emulator.Utilities;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Chat.WordFilter
@@ -36,7 +37,7 @@ namespace Alias.Emulator.Hotel.Chat.WordFilter
 				dbClient.AddParameter("message", (message.Trim(' ').Length > 0) ? message : "*user sent blank message*");
 				dbClient.AddParameter("type", type);
 				dbClient.AddParameter("toId", toId);
-				dbClient.AddParameter("tstamp", (int)Alias.GetUnixTimestamp());
+				dbClient.AddParameter("tstamp", (int)UnixTimestamp.Now);
 				dbClient.Query("INSERT INTO `chatlogs` (`room_id`, `user_id`, `message`, `type`, `target_id`, `timestamp`) VALUES (@roomId, @userId, @message, @type, @toId, @tstamp)");
 			}
 		}

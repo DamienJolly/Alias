@@ -7,6 +7,17 @@ namespace Alias.Emulator.Utilities
 {
 	public class Logging
 	{
+		/// <summary>
+		/// Is a debugger currently attached to the server.
+		/// </summary>
+		public static bool IsDebugEnabled
+		{
+			get
+			{
+				return Debugger.IsAttached;
+			}
+		}
+
 		public static void Alias(string text, string version)
 		{
 			Console.Title = text;
@@ -26,6 +37,19 @@ namespace Alias.Emulator.Utilities
 			Console.WriteLine("");
 			Console.WriteLine("");
 			Console.ForegroundColor = ConsoleColor.Gray;
+		}
+
+		public static void LoadFiles()
+		{
+			File.Delete(@"log.alias");
+			CreateFile(@"exceptions.alias");
+			CreateFile(@"log.alias");
+		}
+
+		public static void CreateFile(string fileName)
+		{
+			var myFile = File.Create(fileName);
+			myFile.Close();
 		}
 
 		public static void Warn(string message)
@@ -67,7 +91,7 @@ namespace Alias.Emulator.Utilities
 
 		public static void Debug(string debugtext)
 		{
-			if (Debugger.IsAttached)
+			if (IsDebugEnabled)
 			{
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.WriteLine("[Alias] [Debug] : " + debugtext);
@@ -80,13 +104,12 @@ namespace Alias.Emulator.Utilities
 			Console.ForegroundColor = ConsoleColor.Gray;
 			Console.WriteLine("[Alias] [Information] : " + information);
 			Console.ForegroundColor = ConsoleColor.Gray;
-		}
-
-		public static void CreateExceptionFile()
-		{
-			if (!File.Exists(Constant.ExceptionFile))
+			if (IsDebugEnabled)
 			{
-				File.Create(Constant.ExceptionFile);
+				string currentText = File.ReadAllText("log.alias");
+				currentText += "\n";
+				currentText += information;
+				File.WriteAllText("log.alias", currentText);
 			}
 		}
 	}

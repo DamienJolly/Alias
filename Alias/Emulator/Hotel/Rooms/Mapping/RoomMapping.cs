@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Utilities;
+using System;
 
 namespace Alias.Emulator.Hotel.Rooms.Mapping
 {
@@ -40,7 +41,7 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 				for (int x = 0; x < this.SizeX; x++)
 				{
 					char position = split[y][x];
-					RoomTile tile = new RoomTile(room, new TilePosition(x, y, Alias.ParseChar(position)));
+					RoomTile tile = new RoomTile(room, new TilePosition(x, y, this.ParseChar(position)));
 					if (position == 'x')
 					{
 						tile.State = RoomTileState.CLOSED;
@@ -166,6 +167,18 @@ namespace Alias.Emulator.Hotel.Rooms.Mapping
 		public void RemoveItem(RoomItem item)
 		{
 			GetTilesFromItem(item.Position.X, item.Position.Y, item).ForEach(tile => tile.RemoveItem(item));
+		}
+
+		public double ParseChar(char c)
+		{
+			if (int.TryParse(c.ToString(), out int xyz))
+			{
+				return xyz;
+			}
+			else
+			{
+				return Convert.ToInt32(c) - 87;
+			}
 		}
 	}
 }

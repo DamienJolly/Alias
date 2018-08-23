@@ -26,10 +26,10 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			message.WriteInteger(this.room.RoomData.Tags.Count);
 			this.room.RoomData.Tags.ForEach(t => message.WriteString(t));
 			message.WriteInteger(Alias.Server.RoomManager.TradeToInt(this.room.RoomData.TradeState));
-			message.WriteInteger(int.Parse(Alias.BoolToString(this.room.RoomData.Settings.AllowPets)));
-			message.WriteInteger(int.Parse(Alias.BoolToString(this.room.RoomData.Settings.AllowPetsEat)));
-			message.WriteInteger(int.Parse(Alias.BoolToString(this.room.RoomData.Settings.RoomBlocking)));
-			message.WriteInteger(int.Parse(Alias.BoolToString(this.room.RoomData.Settings.HideWalls)));
+			message.WriteInteger(this.room.RoomData.Settings.AllowPets ? 1 : 0);
+			message.WriteInteger(this.room.RoomData.Settings.AllowPetsEat ? 1 : 0);
+			message.WriteInteger(this.room.RoomData.Settings.RoomBlocking ? 1 : 0);
+			message.WriteInteger(this.room.RoomData.Settings.HideWalls ? 1 : 0);
 			message.WriteInteger(this.room.RoomData.Settings.WallHeight);
 			message.WriteInteger(this.room.RoomData.Settings.FloorSize);
 			message.WriteInteger(this.room.RoomData.Settings.ChatMode);

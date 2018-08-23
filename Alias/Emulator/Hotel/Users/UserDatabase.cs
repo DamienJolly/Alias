@@ -1,5 +1,6 @@
 using System.Data;
 using Alias.Emulator.Database;
+using Alias.Emulator.Utilities;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users
@@ -63,9 +64,9 @@ namespace Alias.Emulator.Hotel.Users
 				dbClient.AddParameter("volumeSystem", settings.VolumeSystem);
 				dbClient.AddParameter("volumeFurni", settings.VolumeFurni);
 				dbClient.AddParameter("volumeTrax", settings.VolumeTrax);
-				dbClient.AddParameter("oldChat", Alias.BoolToString(settings.OldChat));
-				dbClient.AddParameter("ignoreInvited", Alias.BoolToString(settings.IgnoreInvites));
-				dbClient.AddParameter("cameraFollow", Alias.BoolToString(settings.CameraFollow));
+				dbClient.AddParameter("oldChat", DatabaseBoolean.GetBoolFromString(settings.OldChat));
+				dbClient.AddParameter("ignoreInvited", DatabaseBoolean.GetBoolFromString(settings.IgnoreInvites));
+				dbClient.AddParameter("cameraFollow", DatabaseBoolean.GetBoolFromString(settings.CameraFollow));
 				dbClient.Query("INSERT INTO `habbo_settings` (`id`, `volume_system`, `volume_furni`, `volume_trax`, `old_chat`, `ignore_invited`, `camera_follow`) VALUES (@id, @volumeSystem, @volumeFurni, @volumeTrax, @oldChat, @ignoreInvited, @cameraFollow)");
 			}
 			return settings;
@@ -79,9 +80,9 @@ namespace Alias.Emulator.Hotel.Users
 				dbClient.AddParameter("volumeSystem", settings.VolumeSystem);
 				dbClient.AddParameter("volumeFurni", settings.VolumeFurni);
 				dbClient.AddParameter("volumeTrax", settings.VolumeTrax);
-				dbClient.AddParameter("oldChat", Alias.BoolToString(settings.OldChat));
-				dbClient.AddParameter("ignoreInvited", Alias.BoolToString(settings.IgnoreInvites));
-				dbClient.AddParameter("cameraFollow", Alias.BoolToString(settings.CameraFollow));
+				dbClient.AddParameter("oldChat", DatabaseBoolean.GetBoolFromString(settings.OldChat));
+				dbClient.AddParameter("ignoreInvited", DatabaseBoolean.GetBoolFromString(settings.IgnoreInvites));
+				dbClient.AddParameter("cameraFollow", DatabaseBoolean.GetBoolFromString(settings.CameraFollow));
 				dbClient.Query("UPDATE `habbo_settings` SET `volume_system` = @volumeSystem, `volume_furni` = @volumeFurni, `volume_trax` = @volumeTrax, `old_chat` = @oldChat, `ignore_invited` = @ignoreInvited, `camera_follow` = @cameraFollow WHERE `id` = @id");
 			}
 		}

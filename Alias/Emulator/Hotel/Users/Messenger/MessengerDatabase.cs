@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Database;
+using Alias.Emulator.Utilities;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Users.Messenger
@@ -170,7 +171,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 					dbClient.AddParameter("from", from);
 					dbClient.AddParameter("to", to);
 					dbClient.AddParameter("message", message);
-					dbClient.AddParameter("timestamp", (int)Alias.GetUnixTimestamp());
+					dbClient.AddParameter("timestamp", (int)UnixTimestamp.Now);
 					dbClient.Query("INSERT INTO `messenger_chatlogs` (`sender`, `reciever`, `message`, `time`) VALUES (@from, @to, @message, @timestamp)");
 				}
 			}
@@ -184,7 +185,7 @@ namespace Alias.Emulator.Hotel.Users.Messenger
 				{
 					dbClient.AddParameter("from", from);
 					dbClient.AddParameter("message", message);
-					dbClient.AddParameter("timestamp", (int)Alias.GetUnixTimestamp());
+					dbClient.AddParameter("timestamp", (int)UnixTimestamp.Now);
 					dbClient.Query("INSERT INTO `messenger_roominvitations` (`sender`, `message`, `time`) VALUES (@from, @message, @timestamp)");
 				}
 			}

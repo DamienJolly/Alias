@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Users.Wardrobe
 {
@@ -50,7 +51,7 @@ namespace Alias.Emulator.Hotel.Users.Wardrobe
 		{
 			get
 			{
-				return (this.figureLastUpdated - Alias.GetUnixTimestamp()) > 0 ? false : true;
+				return (this.figureLastUpdated - UnixTimestamp.Now) > 0 ? false : true;
 			}
 		}
 
@@ -59,7 +60,7 @@ namespace Alias.Emulator.Hotel.Users.Wardrobe
 		/// </summary>
 		public void SetFigureUpdated()
 		{
-			this.figureLastUpdated = Alias.GetUnixTimestamp() + figureWaitTimeInSec;
+			this.figureLastUpdated = UnixTimestamp.Now + figureWaitTimeInSec;
 		}
 
 		/// <summary>

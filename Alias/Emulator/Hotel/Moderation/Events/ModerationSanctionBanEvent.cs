@@ -2,6 +2,7 @@ using Alias.Emulator.Hotel.Moderation.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Moderation.Events
 {
@@ -47,7 +48,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 					break;
 				case BAN_100_YEARS:
 				case BAN_AVATAR_ONLY_100_YEARS:
-					duration = (int)Alias.GetUnixTimestamp();
+					duration = (int)UnixTimestamp.Now;
 					break;
 			}
 
