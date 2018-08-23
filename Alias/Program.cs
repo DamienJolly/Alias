@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using Alias.Emulator.ConsoleCommands;
 using Alias.Emulator.Utilities;
 
 namespace Alias
@@ -39,16 +40,26 @@ namespace Alias
 
 			Logging.Info("Starting to initialize Server.");
 
-			Emulator.Alias BaseMango = new Emulator.Alias();
+			new Emulator.Alias();
 
 			sw.Stop();
 			Logging.Debug("Time taken to start: " + sw.Elapsed.TotalSeconds.ToString().Split('.')[0] + " seconds.");
 
+			ConsoleCommandManager.Initialize();
 			while (true)
 			{
 				if (Console.ReadKey(true).Key == ConsoleKey.Enter)
 				{
-					//todo: redo console commands
+					Logging.Command();
+					string input = Console.ReadLine().ToLower();
+					if (ConsoleCommandManager.Handle(input))
+					{
+						Logging.Info("Command was succesfully executed.");
+					}
+					else
+					{
+						Logging.Info("There was an error executing that command.");
+					}
 				}
 			}
 		}

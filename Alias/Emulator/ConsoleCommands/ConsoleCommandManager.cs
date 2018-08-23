@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Alias.Emulator.Utilities.ConsoleCommands;
+using Alias.Emulator.ConsoleCommands.Commands;
+using Alias.Emulator.Utilities;
 
-namespace Alias.Emulator.Utilities
+namespace Alias.Emulator.ConsoleCommands
 {
-	public class ConsoleCommand
+    class ConsoleCommandManager
     {
 		private static List<IConsoleCommand> _commands;
 
@@ -13,23 +14,6 @@ namespace Alias.Emulator.Utilities
 		{
 			_commands = new List<IConsoleCommand>();
 			RegisterCommands();
-
-			while (true)
-			{
-				if (Console.ReadKey(true).Key == ConsoleKey.Enter)
-				{
-					Logging.Command();
-					string text = Console.ReadLine().ToLower();
-					if (Handle(text))
-					{
-						Logging.Info("Command was succesfully executed.");
-					}
-					else
-					{
-						Logging.Info("There was an error executing that command.");
-					}
-				}
-			}
 		}
 
 		public static bool Handle(string text)

@@ -1,6 +1,8 @@
-namespace Alias.Emulator.Utilities.ConsoleCommands
+using Alias.Emulator.Utilities;
+
+namespace Alias.Emulator.ConsoleCommands.Commands
 {
-	public class TestCommand : IConsoleCommand
+	class TestCommand : IConsoleCommand
 	{
 		public string Name
 		{

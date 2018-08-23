@@ -1,7 +1,7 @@
-namespace Alias.Emulator.Utilities.ConsoleCommands
+namespace Alias.Emulator.ConsoleCommands.Commands
 {
-    public interface IConsoleCommand
-    {
+	public interface IConsoleCommand
+	{
 		string Name { get; }
 		string Description { get; }
 		string Arguments { get; }
