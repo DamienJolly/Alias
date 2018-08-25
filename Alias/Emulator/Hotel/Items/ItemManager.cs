@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Alias.Emulator.Hotel.Items.Crafting;
 
 namespace Alias.Emulator.Hotel.Items
 {
@@ -8,10 +9,16 @@ namespace Alias.Emulator.Hotel.Items
 		private List<ItemData> _items;
 		private List<CrackableData> _crackableData;
 
+		public CraftingComponent Crafting
+		{
+			get; set;
+		}
+
 		public ItemManager()
 		{
-			_items = new List<ItemData>();
-			_crackableData = new List<CrackableData>();
+			this._items = new List<ItemData>();
+			this._crackableData = new List<CrackableData>();
+			Crafting = new CraftingComponent();
 		}
 
 		public void Initialize()
@@ -27,6 +34,7 @@ namespace Alias.Emulator.Hotel.Items
 
 			this._items = ItemDatabase.ReadItemData();
 			this._crackableData = ItemDatabase.ReadCrackableData();
+			this.Crafting.Initialize();
 		}
 
 		public ItemData GetItemData(int baseId) => this._items.Where(item => item.Id == baseId).FirstOrDefault();
