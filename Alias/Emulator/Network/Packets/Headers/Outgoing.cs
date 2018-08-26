@@ -183,6 +183,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 
 		// Camera
 		public const int CameraURLMessageComposer = 2252;
+		public const int CameraPriceMessageComposer = 3844;
 
 		// Groups
 		public const int GroupInfoMessageComposer = 102;

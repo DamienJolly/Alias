@@ -8,6 +8,7 @@ namespace Alias.Emulator.Hotel.Camera
 		public static void Register()
 		{
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.CameraRoomPictureMessageEvent, new CameraRoomPictureEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestCameraConfigurationMessageEvent, new RequestCameraConfigurationEvent());
 		}
 	}
 }

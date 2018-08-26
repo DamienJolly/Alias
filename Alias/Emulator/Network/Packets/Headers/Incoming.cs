@@ -159,6 +159,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 
 		// Camera
 		public const int CameraRoomPictureMessageEvent = 2210;
+		public const int RequestCameraConfigurationMessageEvent = 2121;
 
 		// Groups
 		public const int RequestGroupInfoMessageEvent = 2873;
