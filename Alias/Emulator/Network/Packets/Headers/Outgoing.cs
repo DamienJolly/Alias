@@ -204,6 +204,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 			// Unknown
 			public const int UnknownComposer4 = 1111;
 			public const int UnknownComposer5 = 2589;
+			public const int UnknownComposer6 = 2317;
 
 		// Crafting
 		public const int CraftableProductsMessageComposer = 1636;

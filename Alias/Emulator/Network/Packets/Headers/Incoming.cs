@@ -178,7 +178,11 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int GroupChangeSettingsMessageEvent = 332;
 		public const int GroupAcceptMembershipMessageEvent = 1624;
 		public const int GroupDeclineMembershipMessageEvent = 670;
-		
+
+		// Misc
+			// Unknown
+			public const int UnknownMessageEvent1 = 3563;
+
 		// Crafting
 		public const int RequestCraftingRecipesMessageEvent = 3756;
 		public const int CraftingAddRecipeMessageEvent = 1344;
