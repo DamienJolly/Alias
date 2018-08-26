@@ -79,7 +79,7 @@ namespace Alias.Emulator.Hotel.Navigator
 				dbClient.AddParameter("y", preference.Y);
 				dbClient.AddParameter("width", preference.Width);
 				dbClient.AddParameter("height", preference.Height);
-				dbClient.AddParameter("showsearches", DatabaseBoolean.GetBoolFromString(preference.ShowSearches));
+				dbClient.AddParameter("showsearches", DatabaseBoolean.GetStringFromBool(preference.ShowSearches));
 				dbClient.AddParameter("unknownInt", preference.UnknownInt);
 				dbClient.AddParameter("id", UserId);
 				dbClient.Query("REPLACE INTO `navigator_preferences` (`Id`, `x`, `y`, `width`, `height`, `show_searches`, `unknown_int`) VALUES (@id, @x, @y, @width, @height, @showsearches, @unknownInt)");

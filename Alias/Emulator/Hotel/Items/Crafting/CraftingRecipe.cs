@@ -9,12 +9,7 @@ namespace Alias.Emulator.Hotel.Items.Crafting
 			get; set;
 		}
 
-		public string Name
-		{
-			get; set;
-		}
-
-		public int Reward
+		public ItemData Reward
 		{
 			get; set;
 		}
@@ -24,7 +19,7 @@ namespace Alias.Emulator.Hotel.Items.Crafting
 			get; set;
 		}
 
-		public Dictionary<int, int> Ingredients
+		public Dictionary<string, int> Ingredients
 		{
 			get; set;
 		}

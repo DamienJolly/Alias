@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Alias.Emulator.Hotel.Items;
 
 namespace Alias.Emulator.Hotel.Users.Inventory
 {
@@ -103,6 +104,11 @@ namespace Alias.Emulator.Hotel.Users.Inventory
 		public InventoryItem GetFloorItem(int itemId)
 		{
 			return this.floorItems.Where(item => item.Id == itemId).FirstOrDefault();
+		}
+
+		public InventoryItem GetFloorItem(string name)
+		{
+			return this.floorItems.Where(item => item.ItemData.Name == name).FirstOrDefault();
 		}
 
 		public InventoryBots GetBot(int botId)

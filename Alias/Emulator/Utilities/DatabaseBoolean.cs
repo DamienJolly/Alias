@@ -8,9 +8,14 @@ namespace Alias.Emulator.Utilities
 		/// Converts a boolean into a string.
 		/// </summary>
 		/// <param name="x">Value to be converted into string.</param>
-		public static string GetBoolFromString(bool x)
+		public static string GetStringFromBool(bool x)
 		{
 			return x ? "1" : "0";
+		}
+
+		public static bool GetBoolFromString(string x)
+		{
+			return x == "1" ? true : false;
 		}
 	}
 }

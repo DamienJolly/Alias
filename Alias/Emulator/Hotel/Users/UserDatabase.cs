@@ -64,9 +64,9 @@ namespace Alias.Emulator.Hotel.Users
 				dbClient.AddParameter("volumeSystem", settings.VolumeSystem);
 				dbClient.AddParameter("volumeFurni", settings.VolumeFurni);
 				dbClient.AddParameter("volumeTrax", settings.VolumeTrax);
-				dbClient.AddParameter("oldChat", DatabaseBoolean.GetBoolFromString(settings.OldChat));
-				dbClient.AddParameter("ignoreInvited", DatabaseBoolean.GetBoolFromString(settings.IgnoreInvites));
-				dbClient.AddParameter("cameraFollow", DatabaseBoolean.GetBoolFromString(settings.CameraFollow));
+				dbClient.AddParameter("oldChat", DatabaseBoolean.GetStringFromBool(settings.OldChat));
+				dbClient.AddParameter("ignoreInvited", DatabaseBoolean.GetStringFromBool(settings.IgnoreInvites));
+				dbClient.AddParameter("cameraFollow", DatabaseBoolean.GetStringFromBool(settings.CameraFollow));
 				dbClient.Query("INSERT INTO `habbo_settings` (`id`, `volume_system`, `volume_furni`, `volume_trax`, `old_chat`, `ignore_invited`, `camera_follow`) VALUES (@id, @volumeSystem, @volumeFurni, @volumeTrax, @oldChat, @ignoreInvited, @cameraFollow)");
 			}
 			return settings;
@@ -80,9 +80,9 @@ namespace Alias.Emulator.Hotel.Users
 				dbClient.AddParameter("volumeSystem", settings.VolumeSystem);
 				dbClient.AddParameter("volumeFurni", settings.VolumeFurni);
 				dbClient.AddParameter("volumeTrax", settings.VolumeTrax);
-				dbClient.AddParameter("oldChat", DatabaseBoolean.GetBoolFromString(settings.OldChat));
-				dbClient.AddParameter("ignoreInvited", DatabaseBoolean.GetBoolFromString(settings.IgnoreInvites));
-				dbClient.AddParameter("cameraFollow", DatabaseBoolean.GetBoolFromString(settings.CameraFollow));
+				dbClient.AddParameter("oldChat", DatabaseBoolean.GetStringFromBool(settings.OldChat));
+				dbClient.AddParameter("ignoreInvited", DatabaseBoolean.GetStringFromBool(settings.IgnoreInvites));
+				dbClient.AddParameter("cameraFollow", DatabaseBoolean.GetStringFromBool(settings.CameraFollow));
 				dbClient.Query("UPDATE `habbo_settings` SET `volume_system` = @volumeSystem, `volume_furni` = @volumeFurni, `volume_trax` = @volumeTrax, `old_chat` = @oldChat, `ignore_invited` = @ignoreInvited, `camera_follow` = @cameraFollow WHERE `id` = @id");
 			}
 		}

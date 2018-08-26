@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using Alias.Emulator.Database;
+using Alias.Emulator.Utilities;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Items.Crafting
@@ -41,29 +41,31 @@ namespace Alias.Emulator.Hotel.Items.Crafting
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", table.Id);
-				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `crafting_recipes` WHERE `table_id` = @id AND `enabled` = 1"))
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `crafting_recipes` WHERE `table_id` = @id AND `enabled` = '1'"))
 				{
 					while (Reader.Read())
 					{
-						CraftingRecipe recipe = new CraftingRecipe
+						ItemData item = Alias.Server.ItemManager.GetItemData(Reader.GetInt32("reward"));
+						if (item != null)
 						{
-							Id = Reader.GetInt32("id"),
-							Name = Reader.GetString("prouct_name"),
-							Reward = Reader.GetInt32("reward"),
-							Secret = Reader.GetBoolean("secret"),
-							Ingredients = ReadRecipeIngredients(Reader.GetInt32("id"))
-						};
-						table.AddIngredients(recipe.Ingredients.Keys.ToList());
-						recipes.Add(recipe.Name, recipe);
+							CraftingRecipe recipe = new CraftingRecipe
+							{
+								Id = Reader.GetInt32("id"),
+								Reward = item,
+								Secret = DatabaseBoolean.GetBoolFromString(Reader.GetString("secret"))
+							};
+							recipe.Ingredients = ReadRecipeIngredients(recipe.Id, table);
+							recipes.Add(recipe.Reward.Name, recipe);
+						}
 					}
 				}
 			}
 			return recipes;
 		}
 
-		public static Dictionary<int, int> ReadRecipeIngredients(int recipeId)
+		public static Dictionary<string, int> ReadRecipeIngredients(int recipeId, CraftingTable table)
 		{
-			Dictionary<int, int> ingredients = new Dictionary<int, int>();
+			Dictionary<string, int> ingredients = new Dictionary<string, int>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", recipeId);
@@ -71,7 +73,12 @@ namespace Alias.Emulator.Hotel.Items.Crafting
 				{
 					while (Reader.Read())
 					{
-						ingredients.Add(Reader.GetInt32("item_id"), Reader.GetInt32("amount"));
+						ItemData item = Alias.Server.ItemManager.GetItemData(Reader.GetInt32("item_id"));
+						if (item != null)
+						{
+							ingredients.Add(item.Name, Reader.GetInt32("amount"));
+							table.AddIngredient(item.Name);
+						}
 					}
 				}
 			}

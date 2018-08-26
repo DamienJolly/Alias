@@ -42,8 +42,8 @@ namespace Alias.Emulator.Hotel.Rooms.Models
 				dbClient.AddParameter("users", model.MaxUsers);
 				dbClient.AddParameter("rank", model.MinRank);
 				dbClient.AddParameter("map", model.Map);
-				dbClient.AddParameter("club", DatabaseBoolean.GetBoolFromString(model.ClubOnly));
-				dbClient.AddParameter("custom", DatabaseBoolean.GetBoolFromString(model.IsCustom));
+				dbClient.AddParameter("club", DatabaseBoolean.GetStringFromBool(model.ClubOnly));
+				dbClient.AddParameter("custom", DatabaseBoolean.GetStringFromBool(model.IsCustom));
 				dbClient.AddParameter("door", model.Door.X + "," + model.Door.Y + "," + model.Door.Rotation);
 				dbClient.Query("REPLACE INTO `room_models` (`name`, `max_user`, `min_rank`, `map`, `club_only`, `is_custom`, `door`) VALUES (@name, @users, @rank, @map, @club, @custom, @door)");
 			}

@@ -20,6 +20,7 @@ namespace Alias.Emulator.Hotel.Items
 						{
 							Id          = Reader.GetInt32("id"),
 							SpriteId    = Reader.GetInt32("sprite_id"),
+							Name        = Reader.GetString("item_name"),
 							Length      = Reader.GetInt32("length"),
 							Width       = Reader.GetInt32("width"),
 							Height      = Reader.GetDouble("height"),

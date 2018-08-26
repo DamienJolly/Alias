@@ -153,10 +153,10 @@ namespace Alias.Emulator.Hotel.Rooms
 				dbClient.AddParameter("chatspeed", data.Settings.ChatSpeed);
 				dbClient.AddParameter("chatflood", data.Settings.ChatFlood);
 				dbClient.AddParameter("chatdistance", data.Settings.ChatDistance);
-				dbClient.AddParameter("allowpets", DatabaseBoolean.GetBoolFromString(data.Settings.AllowPets));
-				dbClient.AddParameter("allowpetseat", DatabaseBoolean.GetBoolFromString(data.Settings.AllowPetsEat));
-				dbClient.AddParameter("roomblocking", DatabaseBoolean.GetBoolFromString(data.Settings.RoomBlocking));
-				dbClient.AddParameter("hidewalls", DatabaseBoolean.GetBoolFromString(data.Settings.HideWalls));
+				dbClient.AddParameter("allowpets", DatabaseBoolean.GetStringFromBool(data.Settings.AllowPets));
+				dbClient.AddParameter("allowpetseat", DatabaseBoolean.GetStringFromBool(data.Settings.AllowPetsEat));
+				dbClient.AddParameter("roomblocking", DatabaseBoolean.GetStringFromBool(data.Settings.RoomBlocking));
+				dbClient.AddParameter("hidewalls", DatabaseBoolean.GetStringFromBool(data.Settings.HideWalls));
 				dbClient.AddParameter("wallheight", data.Settings.WallHeight);
 				dbClient.AddParameter("floorsize", data.Settings.FloorSize);
 				dbClient.Query("UPDATE `room_settings` SET `who_can_mute` = @mute, `who_can_kick` = @kick, `who_can_ban` = @ban, `chat_mode` = @chatmode, " +
