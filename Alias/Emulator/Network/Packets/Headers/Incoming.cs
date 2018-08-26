@@ -150,9 +150,14 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int RequestDiscountMessageEvent = 703;
 		public const int CatalogBuyItemMessageEvent = 2687;
 		public const int CatalogSearchedItemMessageEvent = 1846;
+		public const int RequestGiftConfigurationMessageEvent = 3493;
 
 			// Recycler
-			public const int ReloadRecyclerMessageEvent = 3447;
+		public const int ReloadRecyclerMessageEvent = 3447;
+			public const int RequestRecyclerLogicMessageEvent = 862;
+
+			// Marketplace
+			public const int RequestMarketplaceConfigMessageEvent = 1728;
 
 		// Achievements
 		public const int RequestAchievementsMessageEvent = 3280;

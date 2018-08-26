@@ -8,6 +8,7 @@ namespace Alias.Emulator.Hotel.Catalog.Recycler
 		public static void Register()
 		{
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.ReloadRecyclerMessageEvent, new ReloadRecyclerEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestRecyclerLogicMessageEvent, new RequestRecyclerLogicEvent());
 		}
 	}
 }
