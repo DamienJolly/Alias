@@ -68,6 +68,7 @@ namespace Alias.Emulator.Hotel.Items.Crafting.Events
 			};
 
 			session.Send(new CraftingResultComposer(recipe));
+			session.Habbo.Crafting.AddRecipe(recipe.Id);
 			session.Habbo.Inventory.AddItem(habboItem);
 			session.Send(new AddHabboItemsComposer(habboItem));
 			toRemove.ForEach(item =>

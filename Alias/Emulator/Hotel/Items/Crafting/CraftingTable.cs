@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Items.Crafting
 {
@@ -53,6 +54,20 @@ namespace Alias.Emulator.Hotel.Items.Crafting
 				}
 			}
 			return false;
+		}
+
+		public List<CraftingRecipe> GetRecipes(Habbo habbo)
+		{
+			List<CraftingRecipe> recipeList = new List<CraftingRecipe>();
+			foreach (CraftingRecipe recipe in this.Recipes.Values)
+			{
+				if (!recipe.Secret || habbo.Crafting.HasRecipe(recipe.Id))
+				{
+					recipeList.Add(recipe);
+				}
+			}
+
+			return recipeList;
 		}
 
 		public Dictionary<CraftingRecipe, bool> GetRecipes(Dictionary<string, int> items)

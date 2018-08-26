@@ -58,7 +58,11 @@ namespace Alias.Emulator.Hotel.Items.Crafting.Events
 			int c = recipes.Count();
 			foreach (KeyValuePair<CraftingRecipe, bool> recipe in recipes)
 			{
-				//todo: user has recipie found --
+				if (session.Habbo.Crafting.HasRecipe(recipe.Key.Id))
+				{
+					c--;
+					continue;
+				}
 
 				if (recipe.Value)
 				{

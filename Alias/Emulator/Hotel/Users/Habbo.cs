@@ -10,6 +10,7 @@ using Alias.Emulator.Hotel.Users.Currency;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Users.Messenger;
 using Alias.Emulator.Hotel.Users.Wardrobe;
+using Alias.Emulator.Hotel.Users.Crafting;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Users
@@ -31,14 +32,7 @@ namespace Alias.Emulator.Hotel.Users
 		public AchievementComponent Achievements { get; set; }
 		public BadgeComponent Badges { get; set; }
 		public WardrobeComponent Wardrobe { get; set; }
-
-		/// <summary>
-		/// Initializes a new Habbo instance.
-		/// </summary>
-		public Habbo()
-		{
-
-		}
+		public CraftingComponent Crafting { get; set; }
 		
 		/// <summary>
 		/// The session used for this active user.
@@ -64,6 +58,7 @@ namespace Alias.Emulator.Hotel.Users
 			this.Messenger = new MessengerComponent(this);
 			this.Achievements = new AchievementComponent(this);
 			this.Wardrobe = new WardrobeComponent(this);
+			this.Crafting = new CraftingComponent(this);
 
 			this.Messenger.UpdateStatus(true);
 			this.NavigatorPreference = NavigatorDatabase.Preference(this.Id);
