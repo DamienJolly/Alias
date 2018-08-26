@@ -210,5 +210,8 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int CraftingRecipeMessageComposer = 3536;
 		public const int CraftingRecipesAvailableMessageComposer = 13;
 		public const int CraftingResultMessageComposer = 2115;
+
+		// Game Center
+		public const int GameCenterAchievementsConfigurationMessageComposer = 1044;
 	}
 }

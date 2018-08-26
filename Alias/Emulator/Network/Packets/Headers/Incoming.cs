@@ -185,5 +185,8 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int RequestCraftingRecipesAvailableMessageEvent = 1749;
 		public const int CraftingCraftItemMessageEvent = 2761;
 		public const int CraftingCraftSecretMessageEvent = 2997;
+
+		// Game Center
+		public const int GameCenterRequestGamesMessageEvent = 280;
 	}
 }
