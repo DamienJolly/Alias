@@ -159,6 +159,7 @@ namespace Alias.Emulator.Hotel.Catalog
 												LimitedStack = limitedStack,
 												ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id),
 												Mode = 0,
+												UserId = habbo.Id,
 												ExtraData = extradata
 											};
 											habbo.Inventory.AddItem(teleportOne);
@@ -169,6 +170,7 @@ namespace Alias.Emulator.Hotel.Catalog
 												LimitedStack = limitedStack,
 												ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id),
 												Mode = 0,
+												UserId = habbo.Id,
 												ExtraData = teleportOne.Id.ToString()
 											};
 											habbo.Inventory.AddItem(teleportTwo);
@@ -186,6 +188,7 @@ namespace Alias.Emulator.Hotel.Catalog
 												LimitedStack = limitedStack,
 												ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id),
 												Mode = 0,
+												UserId = habbo.Id,
 												ExtraData = extradata
 											};
 											habbo.Inventory.AddItem(habboItem);
