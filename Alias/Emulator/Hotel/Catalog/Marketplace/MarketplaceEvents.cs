@@ -1,3 +1,4 @@
+using Alias.Emulator.Hotel.Catalog.Marketplace.Events;
 using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Catalog.Marketplace

@@ -1,3 +1,4 @@
+using Alias.Emulator.Hotel.Misc.Events;
 using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Misc
