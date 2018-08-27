@@ -41,7 +41,7 @@ namespace Alias.Emulator.Hotel.Achievements
 
 		public void ProgressAchievement(int habboId, Achievement achievement, int amount = 1)
 		{
-			if (achievement != null)
+			/*if (achievement != null)
 			{
 				Habbo habbo = Alias.Server.SocketServer.SessionManager.SessionById(habboId).Habbo;
 				if (habbo != null)
@@ -50,14 +50,14 @@ namespace Alias.Emulator.Hotel.Achievements
 				}
 				else
 				{
-					AchievementDatabase.AddUserAchievement(habbo, achievement, amount);
+					//AchievementDatabase.AddUserAchievement(habbo, achievement, amount);
 				}
-			}
+			}*/
 		}
 
 		public void ProgressAchievement(Habbo habbo, Achievement achievement, int amount = 1)
 		{
-			if (achievement == null)
+			/*if (achievement == null)
 			{
 				return;
 			}
@@ -68,16 +68,10 @@ namespace Alias.Emulator.Hotel.Achievements
 			}
 			
 			int progress = 0;
-			AchievementProgress currentProgress = habbo.Achievements.GetAchievementProgress(achievement);
-			if (currentProgress == null)
+			if (!habbo.Achievements.GetAchievementProgress(achievement.Name, out int tmp))
 			{
 				AchievementDatabase.AddUserAchievement(habbo, achievement, amount);
-				AchievementProgress newAchievement = new AchievementProgress()
-				{
-					Achievement = achievement,
-					Progress = amount
-				};
-				habbo.Achievements.RequestAchievementProgress().Add(newAchievement);
+				habbo.Achievements.AddAchievement(achievement.Name, amount);
 			}
 
 			AchievementLevel oldLevel = achievement.GetLevelForProgress(progress);
@@ -91,7 +85,7 @@ namespace Alias.Emulator.Hotel.Achievements
 				return;
 			}
 			
-			habbo.Achievements.GetAchievementProgress(achievement).Progress += amount;
+			tmp += amount;
 
 			AchievementLevel newLevel = achievement.GetLevelForProgress(progress + amount);
 			if (oldLevel.Level == newLevel.Level && newLevel.Level < achievement.Levels.Count)
@@ -134,28 +128,27 @@ namespace Alias.Emulator.Hotel.Achievements
 				}
 
 				//todo: talent track shit
-			}
+			}*/
 		}
 
 		public bool HasAchieved(Habbo habbo, Achievement achievement)
 		{
-			AchievementProgress achievementProgress = habbo.Achievements.GetAchievementProgress(achievement);
-			if (achievementProgress == null)
+			/*if (!habbo.Achievements.GetAchievementProgress(achievement.Name, out int progress))
 			{
 				return false;
 			}
 
-			AchievementLevel level = achievement.GetLevelForProgress(achievementProgress.Progress);
+			AchievementLevel level = achievement.GetLevelForProgress(progress);
 			if (level == null)
 			{
 				return false;
 			}
 
 			AchievementLevel nextLevel = achievement.GetNextLevel(level.Level);
-			if (nextLevel == null && achievementProgress.Progress >= level.Progress)
+			if (nextLevel == null && progress >= level.Progress)
 			{
 				return true;
-			}
+			}*/
 
 			return false;
 		}

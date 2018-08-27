@@ -77,10 +77,6 @@ namespace Alias.Emulator.Hotel.Users
 			{
 				UserDatabase.UpdateSettings(this.Settings, this.Id);
 			}
-			if (this.Achievements != null)
-			{
-				AchievementDatabase.SaveAchievements(this.Achievements);
-			}
 			if (this.Currency != null)
 			{
 				CurrencyDatabase.SaveCurrencies(this.Currency);

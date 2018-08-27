@@ -2,7 +2,7 @@ namespace Alias.Emulator.Hotel.Users.Achievements
 {
     public class AchievementProgress
     {
-		public Hotel.Achievements.Achievement Achievement
+		public string Name
 		{
 			get; set;
 		}

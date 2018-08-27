@@ -22,11 +22,9 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 
 			Alias.Server.AchievementManager.GetAchievements().ForEach(achievement =>
 			{
-				int amount = 0;
-				AchievementProgress achievementProgress = habbo.Achievements.GetAchievementProgress(achievement);
-				if (achievementProgress != null)
+				if (!habbo.Achievements.GetAchievementProgress(achievement.Name, out int amount))
 				{
-					amount = achievementProgress.Progress;
+					amount = 0;
 				}
 
 				AchievementLevel currentLevel = achievement.GetLevelForProgress(amount);

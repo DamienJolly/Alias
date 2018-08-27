@@ -1,16 +1,19 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Alias.Emulator.Hotel.Users.Achievements
 {
     sealed class AchievementComponent
     {
-		private List<AchievementProgress> achievementProgress;
+		public Dictionary<string, int> Achievements
+		{
+			get; set;
+		}
+
 		private Habbo habbo;
 
 		public AchievementComponent(Habbo h)
 		{
-			this.achievementProgress = AchievementDatabase.ReadAchievements(h.Id);
+			this.Achievements = AchievementDatabase.ReadAchievements(h.Id);
 			this.habbo = h;
 		}
 
@@ -19,20 +22,22 @@ namespace Alias.Emulator.Hotel.Users.Achievements
 			return this.habbo;
 		}
 
-		public List<AchievementProgress> RequestAchievementProgress()
+		public Dictionary<string, int> RequestAchievements()
 		{
-			return this.achievementProgress;
+			return this.Achievements;
 		}
 
-		public AchievementProgress GetAchievementProgress(Hotel.Achievements.Achievement achievement)
+		public bool GetAchievementProgress(string name, out int progress)
 		{
-			return this.achievementProgress.Where(prog => prog.Achievement == achievement).FirstOrDefault();
+			return this.Achievements.TryGetValue(name, out progress);
 		}
 
 		public void Dispose()
 		{
-			this.achievementProgress.Clear();
+			this.Achievements.Clear();
 			this.habbo = null;
 		}
+
+		public void AddAchievement(string name, int progress) => Achievements.Add(name, progress);
 	}
 }

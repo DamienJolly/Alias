@@ -20,12 +20,10 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 		public ServerPacket Compose()
 		{
 			ServerPacket message = new ServerPacket(Outgoing.AchievementProgressMessageComposer);
-
-			int amount = 0;
-			AchievementProgress achievementProgress = habbo.Achievements.GetAchievementProgress(this.achievement);
-			if (achievementProgress != null)
+			
+			if (!habbo.Achievements.GetAchievementProgress(this.achievement.Name, out int amount))
 			{
-				amount = achievementProgress.Progress;
+				amount = 0;
 			}
 
 			AchievementLevel currentLevel = achievement.GetLevelForProgress(amount);

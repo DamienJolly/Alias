@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Users.Achievements
 {
     class AchievementDatabase
     {
-		public static List<AchievementProgress> ReadAchievements(int userId)
+		public static Dictionary<string, int> ReadAchievements(int userId)
 		{
-			List<AchievementProgress> achievements = new List<AchievementProgress>();
+			Dictionary<string, int> achievements = new Dictionary<string, int>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
@@ -16,12 +16,10 @@ namespace Alias.Emulator.Hotel.Users.Achievements
 				{
 					while (Reader.Read())
 					{
-						AchievementProgress achievement = new AchievementProgress()
+						if (!achievements.ContainsKey(Reader.GetString("name")))
 						{
-							Achievement = Alias.Server.AchievementManager.GetAchievement(Reader.GetString("name")),
-							Progress    = Reader.GetInt32("progress")
-						};
-						achievements.Add(achievement);
+							achievements.Add(Reader.GetString("name"), Reader.GetInt32("progress"));
+						}
 					}
 				}
 			}
@@ -32,11 +30,11 @@ namespace Alias.Emulator.Hotel.Users.Achievements
 		{
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
-				foreach (AchievementProgress ach in achievement.RequestAchievementProgress())
+				foreach (var ach in achievement.Achievements)
 				{
 					dbClient.AddParameter("userId", achievement.Habbo().Id);
-					dbClient.AddParameter("name", ach.Achievement.Name);
-					dbClient.AddParameter("progress", ach.Progress);
+					dbClient.AddParameter("name", ach.Key);
+					dbClient.AddParameter("progress", ach.Value);
 					dbClient.Query("INSERT INTO `habbo_achievements` (`user_id`, `name`, `progress`) VALUES (@userId, @name, @progress) ON DUPLICATE KEY UPDATE `progress` = @progress");
 				}
 			}
