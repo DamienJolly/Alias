@@ -31,7 +31,6 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RequestFriendsMessageEvent = 1368;
 			public const int FindNewFriendsMessageEvent = 1100;
 			public const int ChangeRelationMessageEvent = 2356;
-			public const int PingMessageEvent = 3047;
 
 			// Currency
 			public const int RequestUserCreditsMessageEvent = 2109;
@@ -42,6 +41,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int MachineIDMessageEvent = 3465;
 			public const int RequestUserDataMessageEvent = 3092;
 			public const int VersionCheckMessageEvent = 410;
+			public const int PongMessageEvent = 3644;
 
 			// Inventory
 			public const int RequestInventoryItemsMessageEvent = 2835;
@@ -188,6 +188,8 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int GroupDeclineMembershipMessageEvent = 670;
 
 		// Misc
+		public const int LatencyTestMessageEvent = 3047;
+
 			// Unknown
 			public const int UnknownMessageEvent1 = 3563;
 

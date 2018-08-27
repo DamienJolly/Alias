@@ -12,7 +12,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.MachineIDMessageEvent, new MachineIDEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestUserDataMessageEvent, new RequestUserDataEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.VersionCheckMessageEvent, new VersionCheckEvent());
-			Alias.Server.SocketServer.PacketManager.Register(Incoming.PingMessageEvent, new PingEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.PongMessageEvent, new PongEvent());
 		}
 	}
 }

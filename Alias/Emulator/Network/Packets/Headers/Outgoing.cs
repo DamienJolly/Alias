@@ -47,7 +47,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int SessionRightsMessageComposer = 770;
 			public const int NewUserIdentityMessageComposer = 3274;
 			public const int SomeConnectionMessageComposer = 2914;
-			public const int PongMessageComposer = 3346;
+			public const int PingMessageComposer = 3346;
 
 			// Inventory
 			public const int InventoryItemsMessageComposer = 826;

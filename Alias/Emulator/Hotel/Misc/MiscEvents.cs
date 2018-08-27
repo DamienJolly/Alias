@@ -8,6 +8,7 @@ namespace Alias.Emulator.Hotel.Misc
 		public static void Register()
 		{
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.UnknownMessageEvent1, new UnknownEvent1());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.LatencyTestMessageEvent, new LatencyTestEvent());
 		}
 	}
 }
