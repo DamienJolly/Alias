@@ -6,16 +6,29 @@ namespace Alias.Emulator.Hotel.Landing.Composers
 {
 	public class HallOfFameComposer : IPacketComposer
 	{
+		private LandingCompetition competition;
+
+		public HallOfFameComposer(LandingCompetition competition)
+		{
+			this.competition = competition;
+		}
+
 		public ServerPacket Compose()
 		{
 			ServerPacket message = new ServerPacket(Outgoing.HallOfFameMessageComposer);
-			message.WriteString("testing");
-			message.WriteInteger(1);
-			message.WriteInteger(1);
-			message.WriteString("Damien");
-			message.WriteString("ha-1006-64.lg-275-64.hd-209-1370.ch-3030-82");
-			message.WriteInteger(1);
-			message.WriteInteger(69);
+			message.WriteString(this.competition.Name);
+			message.WriteInteger(this.competition.Users.Count);
+
+			int count = 1;
+			this.competition.Users.ForEach(user =>
+			{
+				message.WriteInteger(user.Id);
+				message.WriteString(user.Username);
+				message.WriteString(user.Figure);
+				message.WriteInteger(count);
+				message.WriteInteger(user.Points);
+				count++;
+			});
 			return message;
 		}
 	}

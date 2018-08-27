@@ -14,6 +14,7 @@ using Alias.Emulator.Tasks;
 using MySql.Data.MySqlClient;
 using Alias.Emulator.Hotel.Groups;
 using Camera;
+using Alias.Emulator.Hotel.Landing;
 
 namespace Alias.Emulator
 {
@@ -45,6 +46,7 @@ namespace Alias.Emulator
 		public PermissionManager PermissionManager { get; set; }
 		public ChatManager ChatManager { get; set; }
 		public ModerationManager ModerationManager { get; set; }
+		public LandingManager LandingManager { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the AliasServer.
@@ -104,6 +106,9 @@ namespace Alias.Emulator
 
 			this.AchievementManager = new AchievementManager();
 			this.AchievementManager.Initialize();
+
+			this.LandingManager = new LandingManager();
+			this.LandingManager.Initialize();
 
 			this.GroupManager = new GroupManager();
 			this.GroupManager.Initialize();
