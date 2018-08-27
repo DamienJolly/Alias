@@ -25,7 +25,7 @@ namespace Alias.Emulator.Hotel.Permissions
 		{
 			if (this._rank.TryGetValue(rank, out RankPermission permission))
 			{
-				permission.HasPermission(param);
+				return permission.HasPermission(param);
 			}
 			return false;
 		}
