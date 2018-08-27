@@ -6,6 +6,7 @@ using Alias.Emulator.Hotel.Games;
 using Alias.Emulator.Hotel.Groups;
 using Alias.Emulator.Hotel.Items.Crafting;
 using Alias.Emulator.Hotel.Landing;
+using Alias.Emulator.Hotel.Misc;
 using Alias.Emulator.Hotel.Moderation;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
@@ -35,6 +36,7 @@ namespace Alias.Emulator.Network.Packets
 			NavigatorEvents.Register();
 			CraftingEvents.Register();
 			GameCenterEvents.Register();
+			MiscEvents.Register();
 		}
 
 		public void Register(int Id, IPacketEvent evnt)
