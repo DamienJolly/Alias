@@ -7,46 +7,40 @@ using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Permissions
 {
-    public class PermissionDatabase
+    class PermissionDatabase
     {
-		public static List<Permission> ReadPermissions()
+		public static Dictionary<int, RankPermission> ReadRankPermissions()
 		{
-			List<Permission> permissions = new List<Permission>();
+			Dictionary<int, RankPermission> permissions = new Dictionary<int, RankPermission>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
-				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `permission`, `ranks` FROM `permissions`"))
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `permission_ranks`"))
 				{
 					while (Reader.Read())
 					{
-						string ranks = Reader.GetString("ranks");
-						Permission permission = new Permission()
+						RankPermission permission = new RankPermission()
 						{
-							Param = Reader.GetString("permission"),
-							Ranks = ranks.Split(';').Select(Int32.Parse).ToList()
+							Rank = Reader.GetInt32("id"),
+							Permissions = ReadPermissions(Reader.GetInt32("id"))
 						};
-						permissions.Add(permission);
+						permissions.Add(permission.Rank, permission);
 					}
 				}
 			}
 			return permissions;
 		}
 
-		public static List<Permission> ReadCommandPermissions()
+		public static List<string> ReadPermissions(int rankId)
 		{
-			List<Permission> permissions = new List<Permission>();
+			List<string> permissions = new List<string>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
-				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `command`, `ranks` FROM `permissions_commands`"))
+				dbClient.AddParameter("rankId", rankId);
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `permissions` WHERE `rank_id` = @rankId"))
 				{
 					while (Reader.Read())
 					{
-						string ranks = Reader.GetString("ranks");
-						Permission permission = new Permission()
-						{
-							Param = Reader.GetString("command"),
-							Ranks = ranks.Split(';').Select(Int32.Parse).ToList()
-						};
-						permissions.Add(permission);
+						permissions.Add(Reader.GetString("permission"));
 					}
 				}
 				

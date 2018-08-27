@@ -1,43 +1,33 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Alias.Emulator.Hotel.Permissions
 {
     sealed class PermissionManager
     {
-		private List<Permission> _permissions;
-		private List<Permission> _commandPermissions;
+		private Dictionary<int, RankPermission> _rank;
 
 		public PermissionManager()
 		{
-			this._permissions = new List<Permission>();
-			this._commandPermissions = new List<Permission>();
+			this._rank = new Dictionary<int, RankPermission>();
 		}
 
 		public void Initialize()
 		{
-			if (this._permissions.Count > 0)
+			if (this._rank.Count > 0)
 			{
-				this._permissions.Clear();
+				this._rank.Clear();
 			}
 
-			if (this._commandPermissions.Count > 0)
-			{
-				this._commandPermissions.Clear();
-			}
-
-			this._permissions = PermissionDatabase.ReadPermissions();
-			this._commandPermissions = PermissionDatabase.ReadCommandPermissions();
+			this._rank = PermissionDatabase.ReadRankPermissions();
 		}
 
 		public bool HasPermission(int rank, string param)
 		{
-			return this._permissions.Count(perm => perm.Param == param && perm.Ranks.Contains(rank)) > 0;
-		}
-
-		public bool HasCommandPermission(int rank, string param)
-		{
-			return this._commandPermissions.Count(perm => perm.Param == param && perm.Ranks.Contains(rank)) > 0;
+			if (this._rank.TryGetValue(rank, out RankPermission permission))
+			{
+				permission.HasPermission(param);
+			}
+			return false;
 		}
 	}
 }

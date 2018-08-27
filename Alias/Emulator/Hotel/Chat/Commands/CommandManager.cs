@@ -57,7 +57,7 @@ namespace Alias.Emulator.Hotel.Chat.Commands
 				return false;
 			}
 
-			if (!Alias.Server.PermissionManager.HasCommandPermission(session.Habbo.Rank, command.Name))
+			if (!session.Habbo.HasPermission("cmd_" + command.Name))
 			{
 				return false;
 			}
