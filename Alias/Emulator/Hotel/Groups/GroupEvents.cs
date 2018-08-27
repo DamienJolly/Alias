@@ -24,6 +24,7 @@ namespace Alias.Emulator.Hotel.Groups
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestGroupJoinMessageEvent, new RequestGroupJoinEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.GroupAcceptMembershipMessageEvent, new GroupAcceptMembershipEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.GroupDeclineMembershipMessageEvent, new GroupDeclineMembershipEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.GetHabboGroupBadgesMessageEvent, new GetHabboGroupBadgesEvent());
 		}
 	}
 }

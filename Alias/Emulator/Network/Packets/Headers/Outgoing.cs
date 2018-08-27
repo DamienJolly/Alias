@@ -203,6 +203,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int RemoveGroupFromRoomMessageComposer = 2310;
 		public const int GroupJoinErrorMessageComposer = 2973;
 		public const int GroupAcceptMemberErrorMessageComposer = 1694;
+		public const int RoomUsersGroupBadgesMessageComposer = 3056;
 
 		// Misc
 		public const int GenericAlertMessageComposer = 524;
