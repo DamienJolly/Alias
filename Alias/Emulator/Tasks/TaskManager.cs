@@ -24,6 +24,7 @@ namespace Alias.Emulator.Tasks
 				Console.Title = "Alias Emulator - " + Alias.Server.SocketServer.SessionManager.OnlineUsers() + " users online - " + Alias.Server.RoomManager.ReadLoadedRooms().Count + " rooms loaded - " + uptime + " uptime";
 				this._tick = 0;
 			}
+			Alias.Server.LandingManager.DoLandingCycle();
 			Alias.Server.RoomManager.DoRoomCycle();
 			Alias.Server.GroupManager.DoGroupCycle();
 		}

@@ -4,6 +4,8 @@ namespace Alias.Emulator.Hotel.Landing
 {
     class LandingManager
     {
+		private int _tick = 0;
+
 		public Dictionary<string, LandingCompetition> Competitions
 		{
 			get; set;
@@ -17,6 +19,15 @@ namespace Alias.Emulator.Hotel.Landing
 		public void Initialize()
 		{
 			this.Competitions = LandingDatabase.ReadCompetitions();
+		}
+
+		public void DoLandingCycle()
+		{
+			this._tick++;
+			if (this._tick >= 1200)
+			{
+				Initialize();
+			}
 		}
 
 		public bool TryGetCompetition(string name, out LandingCompetition data)
