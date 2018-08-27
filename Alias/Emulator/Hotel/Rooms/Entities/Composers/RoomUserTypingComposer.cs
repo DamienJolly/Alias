@@ -18,7 +18,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Composers
 		public ServerPacket Compose()
 		{
 			ServerPacket message = new ServerPacket(Outgoing.RoomUserTypingMessageComposer);
-			message.WriteInteger(this.entity.Id);
+			message.WriteInteger(this.entity.VirtualId);
 			message.WriteInteger(this.typing ? 1 : 0);
 			return message;
 		}
