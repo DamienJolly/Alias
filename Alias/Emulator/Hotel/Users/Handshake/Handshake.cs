@@ -45,7 +45,6 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					//session.Send(new FavoriteRoomsCountComposer()); //todo:
 					//session.Send(new GameCenterGameListComposer()); //todo:
 					//session.Send(new GameCenterAccountInfoComposer()); //todo:
-					session.Send(new UserClubComposer()); //todo:
 
 					if (session.Habbo.HasPermission("acc_modtool"))
 					{

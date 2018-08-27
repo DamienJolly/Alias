@@ -3,6 +3,7 @@ using Alias.Emulator.Hotel.Users.Events;
 using Alias.Emulator.Hotel.Users.Handshake;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Users.Messenger;
+using Alias.Emulator.Hotel.Users.Subscription;
 using Alias.Emulator.Hotel.Users.Wardrobe;
 using Alias.Emulator.Network.Packets.Headers;
 
@@ -29,6 +30,7 @@ namespace Alias.Emulator.Hotel.Users
 			CurrencyEvents.Register();
 			InventoryEvents.Register();
 			HandshakeEvents.Register();
+			SubscriptionEvents.Register();
 		}
 	}
 }

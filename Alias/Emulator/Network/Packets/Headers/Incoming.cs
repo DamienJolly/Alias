@@ -18,6 +18,9 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int RequestProfileFriendsMessageEvent = 3763;
 		public const int UserActivityMessageEvent = 1187;
 
+			// Subscription
+			public const int RequestUserClubMessageEvent = 3796;
+
 			// Messenger
 			public const int RequestInitFriendsMessageEvent = 1405;
 			public const int SearchUserMessageEvent = 3483;

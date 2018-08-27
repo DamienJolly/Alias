@@ -2,9 +2,9 @@ using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
-namespace Alias.Emulator.Hotel.Users.Composers
+namespace Alias.Emulator.Hotel.Users.Subscription.Composers
 {
-	public class UserClubComposer : IPacketComposer
+    class UserClubComposer : IPacketComposer
 	{
 		public ServerPacket Compose()
 		{
