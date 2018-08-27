@@ -198,6 +198,10 @@ namespace Alias.Emulator.Network.Packets.Headers
 			// Unknown
 			public const int UnknownMessageEvent1 = 3563;
 			public const int UnknownMessageEvent2 = 1212;
+			public const int UnknownMessageEvent3 = 210;
+			public const int UnknownMessageEvent4 = 3525;
+			public const int UnknownMessageEvent5 = 506;
+			public const int UnknownMessageEvent6 = 2887;
 
 		// Crafting
 		public const int RequestCraftingRecipesMessageEvent = 3756;

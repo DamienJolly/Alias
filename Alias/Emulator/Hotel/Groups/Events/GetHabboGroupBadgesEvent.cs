@@ -8,7 +8,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Groups.Events
 {
-    class GetHabboGuildBadgesEvent : IPacketEvent
+    class GetHabboGroupBadgesEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{

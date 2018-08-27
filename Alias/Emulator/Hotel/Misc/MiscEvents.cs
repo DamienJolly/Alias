@@ -13,6 +13,10 @@ namespace Alias.Emulator.Hotel.Misc
 			// Unknown
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.UnknownMessageEvent1, new UnknownEvent1());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.UnknownMessageEvent2, new UnknownEvent2());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.UnknownMessageEvent3, new UnknownEvent3());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.UnknownMessageEvent4, new UnknownEvent4());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.UnknownMessageEvent5, new UnknownEvent5());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.UnknownMessageEvent6, new UnknownEvent6());
 		}
 	}
 }

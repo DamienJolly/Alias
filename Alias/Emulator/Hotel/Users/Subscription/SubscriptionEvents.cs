@@ -1,3 +1,4 @@
+using Alias.Emulator.Hotel.Users.Subscription.Events;
 using Alias.Emulator.Network.Packets.Headers;
 
 namespace Alias.Emulator.Hotel.Users.Subscription
