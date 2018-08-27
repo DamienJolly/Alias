@@ -8,6 +8,7 @@ namespace Alias.Emulator.Hotel.Games
 		public static void Register()
 		{
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.GameCenterRequestGamesMessageEvent, new GameCenterRequestGamesEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.GameCenterInitializeMessageEvent, new GameCenterInitializeEvent());
 		}
 	}
 }

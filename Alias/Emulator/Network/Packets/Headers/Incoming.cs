@@ -202,5 +202,6 @@ namespace Alias.Emulator.Network.Packets.Headers
 
 		// Game Center
 		public const int GameCenterRequestGamesMessageEvent = 280;
+		public const int GameCenterInitializeMessageEvent = 3668;
 	}
 }
