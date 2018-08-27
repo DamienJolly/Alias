@@ -33,8 +33,8 @@ namespace Alias.Emulator.Hotel.Users.Wardrobe.Events
 				return;
 			}
 
-			session.Habbo.Look = look;
-			session.Habbo.Gender = gender;
+			session.Habbo.Look = session.Habbo.Entity.Look = look;
+			session.Habbo.Gender = session.Habbo.Entity.Gender = gender;
 			session.Send(new UpdateUserLookComposer(session.Habbo));
 
 			if (session.Habbo.CurrentRoom != null)
@@ -45,7 +45,7 @@ namespace Alias.Emulator.Hotel.Users.Wardrobe.Events
 			session.Habbo.Wardrobe.SetFigureUpdated();
 			session.Habbo.Messenger.UpdateStatus(true);
 
-			Alias.Server.AchievementManager.ProgressAchievement(session.Habbo, Alias.Server.AchievementManager.GetAchievement("AvatarLooks"));
+			session.Habbo.Achievements.ProgressAchievement("AvatarLooks");
 		}
 	}
 }

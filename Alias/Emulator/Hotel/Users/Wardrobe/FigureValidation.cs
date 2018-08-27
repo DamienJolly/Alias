@@ -4,7 +4,6 @@ namespace Alias.Emulator.Hotel.Users.Wardrobe
     {
 		public static bool Validate(string figure, string gender)
 		{
-			System.Console.WriteLine(figure);
 			if (figure.Length < 18 || figure.Length > 150)
 			{
 				return false;
@@ -52,9 +51,7 @@ namespace Alias.Emulator.Hotel.Users.Wardrobe
 			{
 				return false;
 			}
-
-			System.Console.WriteLine(tag);
-
+			
 			switch (tag)
 			{
 				case "hd":
@@ -81,7 +78,6 @@ namespace Alias.Emulator.Hotel.Users.Wardrobe
 
 		private static bool CheckType(string part)
 		{
-			System.Console.WriteLine(part);
 			if (int.TryParse(part, out int type))
 			{
 				if (type < 1)
@@ -101,7 +97,6 @@ namespace Alias.Emulator.Hotel.Users.Wardrobe
 
 		private static bool CheckColour(string part)
 		{
-			System.Console.WriteLine(part);
 			if (int.TryParse(part, out int colour))
 			{
 				if (colour < 1)
