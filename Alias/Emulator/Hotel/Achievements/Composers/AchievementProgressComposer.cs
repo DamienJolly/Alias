@@ -21,7 +21,7 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 		{
 			ServerPacket message = new ServerPacket(Outgoing.AchievementProgressMessageComposer);
 			
-			if (!habbo.Achievements.GetAchievementProgress(this.achievement.Name, out int amount))
+			if (!habbo.Achievements.GetAchievementProgress(this.achievement.Id, out int amount))
 			{
 				amount = 0;
 			}
@@ -54,7 +54,7 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 			message.WriteInteger(nextLevel != null ? nextLevel.RewardAmount : 0);
 			message.WriteInteger(nextLevel != null ? nextLevel.RewardType : 0);
 			message.WriteInteger(amount);
-			message.WriteBoolean(Alias.Server.AchievementManager.HasAchieved(habbo, this.achievement));
+			message.WriteBoolean(this.habbo.Achievements.HasAchieved(this.achievement));
 			message.WriteString(this.achievement.Category.ToString().ToLower());
 			message.WriteString(string.Empty);
 			message.WriteInteger(this.achievement.Levels.Count);

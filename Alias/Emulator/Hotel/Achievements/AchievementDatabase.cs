@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using Alias.Emulator.Database;
-using Alias.Emulator.Hotel.Users;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Achievements
 {
     class AchievementDatabase
 	{
-		public static List<Achievement> ReadAchievements()
+		public static Dictionary<string, Achievement> ReadAchievements()
 		{
-			List<Achievement> achievements = new List<Achievement>();
+			Dictionary<string, Achievement> achievements = new Dictionary<string, Achievement>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `achievements`"))
@@ -21,9 +20,12 @@ namespace Alias.Emulator.Hotel.Achievements
 							Id       = Reader.GetInt32("id"),
 							Name     = Reader.GetString("name"),
 							Category = AchievementCategories.GetCategoryFromString(Reader.GetString("category")),
-							Levels   = AchievementDatabase.ReadLevels(Reader.GetInt32("id"))
+							Levels   = ReadLevels(Reader.GetInt32("id"))
 						};
-						achievements.Add(achievement);
+						if (!achievements.ContainsKey(achievement.Name))
+						{
+							achievements.Add(achievement.Name, achievement);
+						}
 					}
 				}
 			}
@@ -53,17 +55,6 @@ namespace Alias.Emulator.Hotel.Achievements
 				}
 			}
 			return levels;
-		}
-
-		public static void AddUserAchievement(Habbo habbo, Achievement achievement, int amount)
-		{
-			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
-			{
-				dbClient.AddParameter("userId", habbo.Id);
-				dbClient.AddParameter("name", achievement.Name);
-				dbClient.AddParameter("progress", amount);
-				dbClient.Query("INSERT INTO `habbo_achievements` (`user_id`, `name`, `progress`) VALUES (@userId, @name, @progress) ON DUPLICATE KEY UPDATE `progress` = `progress` + @progress");
-			}
 		}
 	}
 }

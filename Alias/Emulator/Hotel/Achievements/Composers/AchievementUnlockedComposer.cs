@@ -1,5 +1,4 @@
 using Alias.Emulator.Hotel.Users;
-using Alias.Emulator.Hotel.Users.Achievements;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
@@ -21,7 +20,7 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 		{
 			ServerPacket message = new ServerPacket(Outgoing.AchievementUnlockedMessageComposer);
 
-			if (!habbo.Achievements.GetAchievementProgress(this.achievement.Name, out int progress))
+			if (!habbo.Achievements.GetAchievementProgress(this.achievement.Id, out int progress))
 			{
 				progress = 0;
 			}

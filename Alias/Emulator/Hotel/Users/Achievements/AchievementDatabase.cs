@@ -6,19 +6,19 @@ namespace Alias.Emulator.Hotel.Users.Achievements
 {
     class AchievementDatabase
     {
-		public static Dictionary<string, int> ReadAchievements(int userId)
+		public static Dictionary<int, int> ReadAchievements(int userId)
 		{
-			Dictionary<string, int> achievements = new Dictionary<string, int>();
+			Dictionary<int, int> achievements = new Dictionary<int, int>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
-				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `progress`, `name` FROM `habbo_achievements` WHERE `user_id` = @id"))
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `achievement_id`, `progress` FROM `habbo_achievements` WHERE `user_id` = @id"))
 				{
 					while (Reader.Read())
 					{
-						if (!achievements.ContainsKey(Reader.GetString("name")))
+						if (!achievements.ContainsKey(Reader.GetInt32("achievement_id")))
 						{
-							achievements.Add(Reader.GetString("name"), Reader.GetInt32("progress"));
+							achievements.Add(Reader.GetInt32("achievement_id"), Reader.GetInt32("progress"));
 						}
 					}
 				}
@@ -26,17 +26,25 @@ namespace Alias.Emulator.Hotel.Users.Achievements
 			return achievements;
 		}
 
-		public static void SaveAchievements(AchievementComponent achievement)
+		public static void AddAchievement(int id, int amount, int userId)
 		{
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
-				foreach (var ach in achievement.Achievements)
-				{
-					dbClient.AddParameter("userId", achievement.Habbo().Id);
-					dbClient.AddParameter("name", ach.Key);
-					dbClient.AddParameter("progress", ach.Value);
-					dbClient.Query("INSERT INTO `habbo_achievements` (`user_id`, `name`, `progress`) VALUES (@userId, @name, @progress) ON DUPLICATE KEY UPDATE `progress` = @progress");
-				}
+				dbClient.AddParameter("id", id);
+				dbClient.AddParameter("amount", amount);
+				dbClient.AddParameter("userId", userId);
+				dbClient.Query("INSERT INTO `habbo_achievements` (`achievement_id`, `progress`, `user_id`) VALUES (@id, @amount, @userId)");
+			}
+		}
+
+		public static void UpdateAchievement(int id, int amount, int userId)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("id", id);
+				dbClient.AddParameter("amount", amount);
+				dbClient.AddParameter("userId", userId);
+				dbClient.Query("UPDATE `habbo_achievements` SET `progress` = @amount WHERE `achievement_id` = @id AND `user_id` = @userId");
 			}
 		}
 	}

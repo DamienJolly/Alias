@@ -18,11 +18,10 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 		public ServerPacket Compose()
 		{
 			ServerPacket message = new ServerPacket(Outgoing.AchievementListMessageComposer);
-			message.WriteInteger(Alias.Server.AchievementManager.GetAchievements().Count);
-
-			Alias.Server.AchievementManager.GetAchievements().ForEach(achievement =>
+			message.WriteInteger(Alias.Server.AchievementManager.Achievements.Count);
+			foreach (Achievement achievement in Alias.Server.AchievementManager.Achievements.Values)
 			{
-				if (!habbo.Achievements.GetAchievementProgress(achievement.Name, out int amount))
+				if (!habbo.Achievements.GetAchievementProgress(achievement.Id, out int amount))
 				{
 					amount = 0;
 				}
@@ -55,12 +54,12 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 				message.WriteInteger(nextLevel != null ? nextLevel.RewardAmount : 0);
 				message.WriteInteger(nextLevel != null ? nextLevel.RewardType : 0);
 				message.WriteInteger(amount);
-				message.WriteBoolean(Alias.Server.AchievementManager.HasAchieved(habbo, achievement));
+				message.WriteBoolean(this.habbo.Achievements.HasAchieved(achievement));
 				message.WriteString(achievement.Category.ToString().ToLower());
 				message.WriteString(string.Empty);
 				message.WriteInteger(achievement.Levels.Count);
 				message.WriteInteger(0); //1 = Progressbar visible if the achievement is completed
-			});
+			}
 			message.WriteString(string.Empty);
 			return message;
 		}
