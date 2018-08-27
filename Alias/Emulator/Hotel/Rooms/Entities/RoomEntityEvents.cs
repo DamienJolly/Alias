@@ -25,6 +25,8 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomUserPlacePetMessageEvent, new RoomUserPlacePetEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomUserPickupPetMessageEvent, new RoomUserPickupPetEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestPetInformationMessageEvent, new RequestPetInformationEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomUserStartTypingMessageEvent, new RoomUserStartTypingEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RoomUserStopTypingMessageEvent, new RoomUserStopTypingEvent());
 		}
 	}
 }

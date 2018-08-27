@@ -105,6 +105,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RoomUserUpdateUsernameMessageComposer = 1843;
 			public const int RoomBotSettingsMessageComposer = 1171;
 			public const int PetInformationMessageComposer = 1009;
+			public const int RoomUserTypingMessageComposer = 1736;
 
 			// Trading
 			public const int TradeStartFailMessageComposer = 1608;

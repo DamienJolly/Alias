@@ -77,6 +77,8 @@ namespace Alias.Emulator.Network.Packets.Headers
 			public const int RoomUserPickupPetMessageEvent = 1946;
 			public const int RoomUserPlacePetMessageEvent = 1061;
 			public const int RequestPetInformationMessageEvent = 3352;
+			public const int RoomUserStartTypingMessageEvent = 3697;
+			public const int RoomUserStopTypingMessageEvent = 2462;
 
 			// Trading
 			public const int TradeStartMessageEvent = 3586;

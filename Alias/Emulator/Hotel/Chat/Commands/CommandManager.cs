@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Chat.Commands.Staff;
 using Alias.Emulator.Hotel.Chat.Commands.Users;
+using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Chat.Commands
@@ -63,6 +64,7 @@ namespace Alias.Emulator.Hotel.Chat.Commands
 			}
 
 			command.Handle(session, MsgSplit.Skip(1).ToArray());
+			session.Habbo.CurrentRoom.EntityManager.Send(new RoomUserTypingComposer(session.Habbo.Entity, false));
 			return true;
 		}
 
