@@ -192,9 +192,11 @@ namespace Alias.Emulator.Network.Packets.Headers
 
 		// Misc
 		public const int LatencyTestMessageEvent = 3047;
+		public const int RequestTargetOfferMessageEvent = 2638;
 
 			// Unknown
 			public const int UnknownMessageEvent1 = 3563;
+			public const int UnknownMessageEvent2 = 1212;
 
 		// Crafting
 		public const int RequestCraftingRecipesMessageEvent = 3756;

@@ -43,8 +43,6 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					//session.Send(new BuildersClubExpiredComposer()); //todo:
 					session.Send(new ModerationTopicsComposer());
 					//session.Send(new FavoriteRoomsCountComposer()); //todo:
-					//session.Send(new GameCenterGameListComposer()); //todo:
-					//session.Send(new GameCenterAccountInfoComposer()); //todo:
 
 					if (session.Habbo.HasPermission("acc_modtool"))
 					{
@@ -52,8 +50,6 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					}
 
 					session.Send(new InventoryRefreshComposer());
-					//session.Send(new ForumsTestComposer());
-					//session.Send(new InventoryAchievementsComposer());
 					session.Send(new AchievementListComposer(session.Habbo));
 
 					if(File.Exists(@".\welcome.alias"))
