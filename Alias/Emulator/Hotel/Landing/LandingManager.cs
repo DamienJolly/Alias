@@ -11,14 +11,21 @@ namespace Alias.Emulator.Hotel.Landing
 			get; set;
 		}
 
+		public List<LandingArticle> Articles
+		{
+			get; set;
+		}
+
 		public LandingManager()
 		{
 			this.Competitions = new Dictionary<string, LandingCompetition>();
+			this.Articles = new List<LandingArticle>();
 		}
 
 		public void Initialize()
 		{
 			this.Competitions = LandingDatabase.ReadCompetitions();
+			this.Articles = LandingDatabase.ReadArticles();
 		}
 
 		public void DoLandingCycle()

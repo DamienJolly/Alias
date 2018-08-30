@@ -7,6 +7,32 @@ namespace Alias.Emulator.Hotel.Landing
 {
 	class LandingDatabase
 	{
+		public static List<LandingArticle> ReadArticles()
+		{
+			List<LandingArticle> articles = new List<LandingArticle>();
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `landing_articles`"))
+				{
+					while (Reader.Read())
+					{
+						LandingArticle article = new LandingArticle()
+						{
+							Id = Reader.GetInt32("id"),
+							Title = Reader.GetString("title"),
+							Message = Reader.GetString("text"),
+							Caption = Reader.GetString("caption"),
+							Type = Reader.GetInt32("type"),
+							Link = Reader.GetString("link"),
+							Image = Reader.GetString("image")
+						};
+						articles.Add(article);
+					}
+				}
+			}
+			return articles;
+		}
+
 		public static Dictionary<string, LandingCompetition> ReadCompetitions()
 		{
 			Dictionary<string, LandingCompetition> competitions = new Dictionary<string, LandingCompetition>();

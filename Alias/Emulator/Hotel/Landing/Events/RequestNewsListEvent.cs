@@ -16,7 +16,7 @@ namespace Alias.Emulator.Hotel.Landing.Events
 				session.Send(new HallOfFameComposer(competition));
 			}
 
-			session.Send(new NewsListComposer()); //todo:
+			session.Send(new NewsListComposer(Alias.Server.LandingManager.Articles));
 		}
 	}
 }
