@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Database;
+using Alias.Emulator.Hotel.Items;
 using Alias.Emulator.Hotel.Landing.Competition;
 using MySql.Data.MySqlClient;
 
@@ -31,6 +32,36 @@ namespace Alias.Emulator.Hotel.Landing
 				}
 			}
 			return articles;
+		}
+
+		public static Dictionary<string, LandingBonusRare> ReadBonusRares()
+		{
+			Dictionary<string, LandingBonusRare> bonusRares = new Dictionary<string, LandingBonusRare>();
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `landing_bonus_rares`"))
+				{
+					while (Reader.Read())
+					{
+						ItemData prize = Alias.Server.ItemManager.GetItemData(Reader.GetInt32("item_id"));
+						if (prize == null)
+						{
+							continue;
+						}
+						LandingBonusRare bonusRare = new LandingBonusRare()
+						{
+							Name = Reader.GetString("name"),
+							Prize = prize,
+							Goal = Reader.GetInt32("goal")
+						};
+						if (!bonusRares.ContainsKey(Reader.GetString("name")))
+						{
+							bonusRares.Add(Reader.GetString("name"), bonusRare);
+						}
+					}
+				}
+			}
+			return bonusRares;
 		}
 
 		public static Dictionary<string, LandingCompetition> ReadCompetitions()

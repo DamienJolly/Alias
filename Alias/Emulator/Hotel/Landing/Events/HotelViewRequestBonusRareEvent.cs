@@ -9,7 +9,10 @@ namespace Alias.Emulator.Hotel.Landing.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			session.Send(new BonusRareComposer());
+			if (Alias.Server.LandingManager.TryGetBonusRare(Constant.BonusRare, out LandingBonusRare bonusRare))
+			{
+				session.Send(new BonusRareComposer(bonusRare));
+			}
 		}
 	}
 }

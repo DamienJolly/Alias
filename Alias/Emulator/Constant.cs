@@ -7,6 +7,7 @@ namespace Alias.Emulator
 	/// </summary>
 	public class Constant
 	{
+		public static readonly string BonusRare = "prizetrophy_breed_gold";
 		public static readonly string CompetitionName = "credits";
 		public static readonly string Version = "0.2";
 		public static readonly string ExceptionFile = "exceptions.alias";

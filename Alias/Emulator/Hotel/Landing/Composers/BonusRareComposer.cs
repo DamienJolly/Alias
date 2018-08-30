@@ -4,15 +4,22 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Landing.Composers
 {
-	public class BonusRareComposer : IPacketComposer
+	class BonusRareComposer : IPacketComposer
 	{
+		private LandingBonusRare bonusRare;
+
+		public BonusRareComposer(LandingBonusRare bonusRare)
+		{
+			this.bonusRare = bonusRare;
+		}
+
 		public ServerPacket Compose()
 		{
 			ServerPacket message = new ServerPacket(Outgoing.BonusRareMessageComposer);
-			message.WriteString("prizetrophy_breed_gold");
-			message.WriteInteger(230);
-			message.WriteInteger(120);
-			message.WriteInteger(120);
+			message.WriteString(this.bonusRare.Name);
+			message.WriteInteger(this.bonusRare.Prize.Id);
+			message.WriteInteger(this.bonusRare.Goal);
+			message.WriteInteger(0);
 			return message;
 		}
 	}
