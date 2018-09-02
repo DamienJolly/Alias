@@ -1,4 +1,3 @@
-using Alias.Emulator.Utilities;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Database

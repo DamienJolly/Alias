@@ -12,6 +12,7 @@ using Alias.Emulator.Hotel.Users.Messenger;
 using Alias.Emulator.Hotel.Users.Wardrobe;
 using Alias.Emulator.Hotel.Users.Crafting;
 using Alias.Emulator.Network.Sessions;
+using Alias.Emulator.Hotel.Users.BonusRares;
 
 namespace Alias.Emulator.Hotel.Users
 {
@@ -33,6 +34,7 @@ namespace Alias.Emulator.Hotel.Users
 		public BadgeComponent Badges { get; set; }
 		public WardrobeComponent Wardrobe { get; set; }
 		public CraftingComponent Crafting { get; set; }
+		public BonusRareComponent BonusRare { get; set; }
 		
 		/// <summary>
 		/// The session used for this active user.
@@ -59,6 +61,7 @@ namespace Alias.Emulator.Hotel.Users
 			this.Achievements = new AchievementComponent(this);
 			this.Wardrobe = new WardrobeComponent(this);
 			this.Crafting = new CraftingComponent(this);
+			this.BonusRare = new BonusRareComponent(this);
 
 			this.Messenger.UpdateStatus(true);
 			this.NavigatorPreference = NavigatorDatabase.Preference(this.Id);

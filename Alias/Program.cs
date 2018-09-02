@@ -17,7 +17,7 @@ namespace Alias
 
 			Logging.LoadFiles();
 			Logging.Info("Alias Server is starting");
-
+			
 			if (Logging.IsDebugEnabled)
 			{
 				Logging.Warn("Debugging - Log files will become large very quickly.");
@@ -34,9 +34,6 @@ namespace Alias
 				Logging.Warn("This application is not running in 64-bit, we recommend you run it in 64-bit. Press any key to continue..");
 				Console.ReadKey();
 			}
-
-			Logging.Info("Loading configuration file.");
-			Configuration.Initialize();
 
 			Logging.Info("Starting to initialize Server.");
 

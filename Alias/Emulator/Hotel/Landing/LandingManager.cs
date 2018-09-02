@@ -6,12 +6,12 @@ namespace Alias.Emulator.Hotel.Landing
     {
 		private int _tick = 0;
 
-		public Dictionary<string, LandingCompetition> Competitions
+		public Dictionary<int, LandingCompetition> Competitions
 		{
 			get; set;
 		}
 
-		public Dictionary<string, LandingBonusRare> BonusRares
+		public Dictionary<int, LandingBonusRare> BonusRares
 		{
 			get; set;
 		}
@@ -23,8 +23,8 @@ namespace Alias.Emulator.Hotel.Landing
 
 		public LandingManager()
 		{
-			this.Competitions = new Dictionary<string, LandingCompetition>();
-			this.BonusRares = new Dictionary<string, LandingBonusRare>();
+			this.Competitions = new Dictionary<int, LandingCompetition>();
+			this.BonusRares = new Dictionary<int, LandingBonusRare>();
 			this.Articles = new List<LandingArticle>();
 		}
 
@@ -44,14 +44,14 @@ namespace Alias.Emulator.Hotel.Landing
 			}
 		}
 
-		public bool TryGetCompetition(string name, out LandingCompetition data)
+		public bool TryGetCompetition(int id, out LandingCompetition data)
 		{
-			return this.Competitions.TryGetValue(name, out data);
+			return this.Competitions.TryGetValue(id, out data);
 		}
 
-		public bool TryGetBonusRare(string name, out LandingBonusRare data)
+		public bool TryGetBonusRare(int id, out LandingBonusRare data)
 		{
-			return this.BonusRares.TryGetValue(name, out data);
+			return this.BonusRares.TryGetValue(id, out data);
 		}
 	}
 }

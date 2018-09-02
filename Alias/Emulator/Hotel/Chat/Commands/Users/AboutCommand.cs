@@ -24,7 +24,7 @@ namespace Alias.Emulator.Hotel.Chat.Commands.Users
 					+ "<b>Server Statistics</b> \r"
 					+ "- Uptime: " + Uptime.Days + " day(s), " + Uptime.Hours + " hour(s) and " + Uptime.Minutes + " minute(s)" + "\r"
 					+ "- RAM Usage: " + Process.GetCurrentProcess().WorkingSet64 / (1024 * 1024) + "MBs \r"
-					+ "- Build:  " + Constant.ProductionVersion + " \r"
+					+ "- Build:  " + Alias.ProductionVersion + " \r"
 					+ "\n"
 					+ "Thank you for choosing <b> Alias</b> \r"
 					+ "\n"

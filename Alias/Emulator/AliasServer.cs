@@ -15,6 +15,7 @@ using MySql.Data.MySqlClient;
 using Alias.Emulator.Hotel.Groups;
 using Camera;
 using Alias.Emulator.Hotel.Landing;
+using Alias.Emulator.Settings;
 
 namespace Alias.Emulator
 {
@@ -26,6 +27,8 @@ namespace Alias.Emulator
 		public DatabaseManager DatabaseManager { get; set; }
 
 		public SocketServer SocketServer { get; set; }
+
+		public SettingsManager Settings { get; set; }
 
 		/// <summary>
 		/// Task manager factory for handling our tasks.
@@ -58,21 +61,23 @@ namespace Alias.Emulator
 
 		public void Initialize()
 		{
+			this.Settings = new SettingsManager();
+
 			MySqlConnectionStringBuilder cs = new MySqlConnectionStringBuilder
 			{
 				ConnectionLifeTime    = (60 * 5),
 				ConnectionTimeout     = 30,
-				Database              = Configuration.Value("mysql.database"),
+				Database              = this.Settings.ConfigData.MySQLDatabase,
 				DefaultCommandTimeout = 120,
 				Logging               = false,
-				MaximumPoolSize       = uint.Parse(Configuration.Value("mysql.maxsize")),
-				MinimumPoolSize       = uint.Parse(Configuration.Value("mysql.minsize")),
-				Password              = Configuration.Value("mysql.password"),
+				MaximumPoolSize       = this.Settings.ConfigData.MySQLMaximumPoolSize,
+				MinimumPoolSize       = this.Settings.ConfigData.MySQLMinimumPoolSize,
+				Password              = this.Settings.ConfigData.MySQLPassword,
 				Pooling               = true,
-				Port                  = uint.Parse(Configuration.Value("mysql.port")),
-				Server                = Configuration.Value("mysql.hostname"),
+				Port                  = this.Settings.ConfigData.MySQLPort,
+				Server                = this.Settings.ConfigData.MySQLHostName,
 				UseCompression        = false,
-				UserID                = Configuration.Value("mysql.username"),
+				UserID                = this.Settings.ConfigData.MySQLUsername,
 				SslMode               = MySqlSslMode.None
 			};
 
@@ -80,13 +85,12 @@ namespace Alias.Emulator
 
 			if (!this.DatabaseManager.TestConnection())
 			{
-				Logging.Error("Unable to connect to database, check settings and restart Alias. Press any key to quit.");
-				Console.ReadKey();
-
-				Environment.Exit(0);
+				Logging.Exit("Unable to connect to database, check settings and restart Alias.");
 			}
 
-			this.SocketServer = new SocketServer(Configuration.Value("tcp.host"), int.Parse(Configuration.Value("tcp.port")));
+			this.Settings.Initialize();
+
+			this.SocketServer = new SocketServer(this.Settings.ConfigData.ServerIPAddress, this.Settings.ConfigData.ServerPort);
 			this.SocketServer.Initialize();
 			
 			//this.CameraAPI = new CameraAPI();
@@ -146,9 +150,7 @@ namespace Alias.Emulator
 
 			this.CameraAPI.Dispose();
 
-			Console.WriteLine("All done... Press any key to exit.");
-			Console.ReadKey();
-			Environment.Exit(0);
+			Logging.Exit("All done...");
 		}
 	}
 }

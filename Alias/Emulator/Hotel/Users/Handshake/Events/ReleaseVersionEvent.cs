@@ -11,9 +11,9 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Events
 		{
 			string version = message.PopString();
 
-			if (version != Constant.ProductionVersion)
+			if (version != Alias.ProductionVersion)
 			{
-				Logging.Info("User connected with " + version + " instead of " + Constant.ProductionVersion);
+				Logging.Info("User connected with " + version + " instead of " + Alias.ProductionVersion);
 				session.Disconnect();
 			}
 		}

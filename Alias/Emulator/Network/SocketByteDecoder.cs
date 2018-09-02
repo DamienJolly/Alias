@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using Alias.Emulator.Network.Protocol;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
@@ -22,7 +23,7 @@ namespace Alias.Emulator.Network
 
             if (delimeter == 60)
             {
-                context.WriteAndFlushAsync(Unpooled.CopiedBuffer(Constant.PolicyFile));
+                context.WriteAndFlushAsync(Unpooled.CopiedBuffer(PolicyRequest));
             }
             else
             {
@@ -43,5 +44,7 @@ namespace Alias.Emulator.Network
                 output.Add(clientMessage);
             }
         }
-    }
+
+		private byte[] PolicyRequest => Encoding.UTF8.GetBytes("<?xml version=\"1.0\"?>\r\n<!DOCTYPE cross-domain-policy SYSTEM \"/xml/dtds/cross-domain-policy.dtd\">\r\n<cross-domain-policy>\r\n<allow-access-from domain=\"*\" to-ports=\"1-31111\" />\r\n</cross-domain-policy>\0");
+	}
 }

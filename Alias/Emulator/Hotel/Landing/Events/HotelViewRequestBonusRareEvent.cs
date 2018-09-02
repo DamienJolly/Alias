@@ -9,9 +9,21 @@ namespace Alias.Emulator.Hotel.Landing.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (Alias.Server.LandingManager.TryGetBonusRare(Constant.BonusRare, out LandingBonusRare bonusRare))
+			if (!int.TryParse(Alias.Server.Settings.GetSetting("bonus_rare.id"), out int bonusRareId))
 			{
-				session.Send(new BonusRareComposer(bonusRare));
+				return;
+			}
+
+			if (Alias.Server.LandingManager.TryGetBonusRare(bonusRareId, out LandingBonusRare bonusRare))
+			{
+				int progress = session.Habbo.BonusRare.GetProgress(bonusRareId);
+				if (progress >= bonusRare.Goal && progress != 0)
+				{
+					//todo:
+					//session.Habbo.BonusRare.GivePrize(bonusRare.Prize);
+				}
+
+				session.Send(new BonusRareComposer(bonusRare, progress));
 			}
 		}
 	}

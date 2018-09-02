@@ -66,12 +66,12 @@ namespace Alias.Emulator.Utilities
 			Console.ForegroundColor = ConsoleColor.Gray;
 			if (exception != null)
 			{
-				string currentText = File.ReadAllText(Constant.ExceptionFile);
+				string currentText = File.ReadAllText(Emulator.Alias.GetFileFromDictionary(@"exceptions.alias"));
 				currentText += "\n\n";
 				currentText += "Date: " + DateTime.Now.Day + "." + DateTime.Now.Month + "." + DateTime.Now.Year + " " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second;
 				currentText += "\nEmulator Information: \"" + information;
 				currentText += "\nInformation for developer: " + exception.ToString();
-				File.WriteAllText(Constant.ExceptionFile, currentText);
+				File.WriteAllText(Emulator.Alias.GetFileFromDictionary(@"exceptions.alias"), currentText);
 			}
 		}
 
@@ -106,11 +106,19 @@ namespace Alias.Emulator.Utilities
 			Console.ForegroundColor = ConsoleColor.Gray;
 			if (IsDebugEnabled)
 			{
-				string currentText = File.ReadAllText("log.alias");
+				string currentText = File.ReadAllText(Emulator.Alias.GetFileFromDictionary(@"log.alias"));
 				currentText += "\n";
 				currentText += information;
-				File.WriteAllText("log.alias", currentText);
+				File.WriteAllText(Emulator.Alias.GetFileFromDictionary(@"log.alias"), currentText);
 			}
+		}
+
+		public static void Exit(string error)
+		{
+			Logging.Error(error);
+			Logging.Info("Press any key to exit.");
+			Console.ReadKey();
+			Environment.Exit(0);
 		}
 	}
 }

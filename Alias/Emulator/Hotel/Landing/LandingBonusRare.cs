@@ -18,10 +18,5 @@ namespace Alias.Emulator.Hotel.Landing
 		{
 			get; set;
 		}
-
-		public void GivePrize()
-		{
-			//todo:
-		}
 	}
 }

@@ -9,7 +9,12 @@ namespace Alias.Emulator.Hotel.Users.Messenger.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			session.Send(new MessengerInitComposer());
+			if (!int.TryParse(Alias.Server.Settings.GetSetting("maximum.friends"), out int maxFriends))
+			{
+				maxFriends = 1000;
+			}
+
+			session.Send(new MessengerInitComposer(maxFriends));
 			session.Send(new FriendsComposer(session.Habbo.Messenger.FriendList()));
 
 			//todo: Offline messages

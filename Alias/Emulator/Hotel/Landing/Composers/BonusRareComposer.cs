@@ -7,10 +7,12 @@ namespace Alias.Emulator.Hotel.Landing.Composers
 	class BonusRareComposer : IPacketComposer
 	{
 		private LandingBonusRare bonusRare;
+		private int progress;
 
-		public BonusRareComposer(LandingBonusRare bonusRare)
+		public BonusRareComposer(LandingBonusRare bonusRare, int progress)
 		{
 			this.bonusRare = bonusRare;
+			this.progress = progress;
 		}
 
 		public ServerPacket Compose()
@@ -19,7 +21,7 @@ namespace Alias.Emulator.Hotel.Landing.Composers
 			message.WriteString(this.bonusRare.Name);
 			message.WriteInteger(this.bonusRare.Prize.Id);
 			message.WriteInteger(this.bonusRare.Goal);
-			message.WriteInteger(0);
+			message.WriteInteger(this.bonusRare.Goal - this.progress);
 			return message;
 		}
 	}

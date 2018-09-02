@@ -27,7 +27,7 @@ namespace Alias.Emulator.Hotel.Chat.WordFilter
 		{
 			this._swearWords.ForEach(data =>
 			{
-				message = Regex.Replace(message, data.Phrase, Constant.FilterWord, RegexOptions.IgnoreCase);
+				message = Regex.Replace(message, data.Phrase, Alias.Server.Settings.GetSetting("filter.word"), RegexOptions.IgnoreCase);
 			});
 			return message;
 		}

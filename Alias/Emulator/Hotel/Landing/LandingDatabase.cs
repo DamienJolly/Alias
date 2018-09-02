@@ -34,9 +34,9 @@ namespace Alias.Emulator.Hotel.Landing
 			return articles;
 		}
 
-		public static Dictionary<string, LandingBonusRare> ReadBonusRares()
+		public static Dictionary<int, LandingBonusRare> ReadBonusRares()
 		{
-			Dictionary<string, LandingBonusRare> bonusRares = new Dictionary<string, LandingBonusRare>();
+			Dictionary<int, LandingBonusRare> bonusRares = new Dictionary<int, LandingBonusRare>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `landing_bonus_rares`"))
@@ -54,9 +54,9 @@ namespace Alias.Emulator.Hotel.Landing
 							Prize = prize,
 							Goal = Reader.GetInt32("goal")
 						};
-						if (!bonusRares.ContainsKey(Reader.GetString("name")))
+						if (!bonusRares.ContainsKey(Reader.GetInt32("id")))
 						{
-							bonusRares.Add(Reader.GetString("name"), bonusRare);
+							bonusRares.Add(Reader.GetInt32("id"), bonusRare);
 						}
 					}
 				}
@@ -64,9 +64,9 @@ namespace Alias.Emulator.Hotel.Landing
 			return bonusRares;
 		}
 
-		public static Dictionary<string, LandingCompetition> ReadCompetitions()
+		public static Dictionary<int, LandingCompetition> ReadCompetitions()
 		{
-			Dictionary<string, LandingCompetition> competitions = new Dictionary<string, LandingCompetition>();
+			Dictionary<int, LandingCompetition> competitions = new Dictionary<int, LandingCompetition>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `landing_competitions`"))
@@ -78,9 +78,9 @@ namespace Alias.Emulator.Hotel.Landing
 							Name = Reader.GetString("name"),
 							Users = ReadCompetitionUsers(Reader.GetString("query"))
 						};
-						if (!competitions.ContainsKey(competiton.Name))
+						if (!competitions.ContainsKey(Reader.GetInt32("id")))
 						{
-							competitions.Add(competiton.Name, competiton);
+							competitions.Add(Reader.GetInt32("id"), competiton);
 						}
 					}
 				}
