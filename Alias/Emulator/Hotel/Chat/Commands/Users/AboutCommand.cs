@@ -18,7 +18,7 @@ namespace Alias.Emulator.Hotel.Chat.Commands.Users
 			string message = "";
 			message += "<b>Hotel Statistics</b> \r"
 					+ "- Online Users: " + Alias.Server.SocketServer.SessionManager.OnlineUsers() + "\r"
-					+ "- Active Rooms: " + Alias.Server.RoomManager.ReadLoadedRooms().Count + "\r"
+					+ "- Active Rooms: " + Alias.Server.RoomManager.LoadedRooms.Count + "\r"
 					+ "- Furni: " + 0 + "\r"
 					+ "\n"
 					+ "<b>Server Statistics</b> \r"

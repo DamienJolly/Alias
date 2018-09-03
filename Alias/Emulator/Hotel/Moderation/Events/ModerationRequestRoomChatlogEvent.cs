@@ -15,18 +15,14 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			message.PopInt();
+			message.PopInt(); // Dunno?
 			int roomId = message.PopInt();
-			if (roomId <= 0)
+			if (!Alias.Server.RoomManager.TryGetRoomData(roomId, out RoomData roomData))
 			{
 				return;
 			}
 
-			Room room = Alias.Server.RoomManager.Room(roomId);
-			if (room != null)
-			{
-				session.Send(new ModerationRoomChatlogComposer(room, Alias.Server.ModerationManager.GetRoomChatlog(room.RoomData.Id)));
-			}
+			session.Send(new ModerationRoomChatlogComposer(roomData, Alias.Server.ModerationManager.GetRoomChatlog(roomData.Id)));
 		}
 	}
 }

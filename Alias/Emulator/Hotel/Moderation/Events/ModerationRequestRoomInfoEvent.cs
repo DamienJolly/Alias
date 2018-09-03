@@ -16,16 +16,12 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 			}
 
 			int roomId = message.PopInt();
-			if (roomId <= 0)
+			if (!Alias.Server.RoomManager.TryGetRoomData(roomId, out RoomData roomData))
 			{
 				return;
 			}
 
-			RoomData roomData = Alias.Server.RoomManager.RoomData(roomId);
-			if (roomData != null)
-			{
-				session.Send(new ModerationRoomInfoComposer(roomData));
-			}
+			session.Send(new ModerationRoomInfoComposer(roomData));
 		}
 	}
 }

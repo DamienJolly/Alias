@@ -18,10 +18,11 @@ namespace Alias.Emulator.Hotel.Navigator.Views
 			{
 				case "my":
 					{
-						RoomDatabase.UserRooms(session.Habbo.Id).ForEach(Id =>
+						//todo:
+						/*RoomDatabase.UserRooms(session.Habbo.Id).ForEach(Id =>
 						{
 							result.Add(Alias.Server.RoomManager.RoomData(Id));
-						});
+						});*/
 						return result.Where(room => room.Name.ToLower().Contains(query)).ToList();
 					}
 				default:

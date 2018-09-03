@@ -17,40 +17,28 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 			}
 
 			int roomId = message.PopInt();
-			if (roomId <= 0)
+			if (!Alias.Server.RoomManager.TryGetRoomData(roomId, out RoomData roomData))
 			{
 				return;
 			}
 
-			Room room = Alias.Server.RoomManager.Room(roomId);
-			if (room != null)
+			bool lockDoor = message.PopInt() == 1;
+			bool changeTitle = message.PopInt() == 1;
+			bool kickUsers = message.PopInt() == 1;
+
+			if (changeTitle)
 			{
-				bool lockDoor = message.PopInt() == 1;
-				bool changeTitle = message.PopInt() == 1;
-				bool kickUsers = message.PopInt() == 1;
+				roomData.Name = "Inappropriate to hotel management!";
+			}
 
-				if (changeTitle)
-				{
-					room.RoomData.Name = "Inappropriate to hotel management!";
-				}
+			if (lockDoor)
+			{
+				roomData.DoorState = RoomDoorState.CLOSED;
+			}
 
-				if (lockDoor)
-				{
-					room.RoomData.DoorState = RoomDoorState.CLOSED;
-				}
-
-				if (kickUsers)
-				{
-					//todo: fix
-					foreach (RoomEntity entity in room.EntityManager.Entities)
-					{
-						if (entity.Habbo.HasPermission("acc_unkickable") || entity.Habbo.HasPermission("acc_modtool") || entity.Habbo.Id == room.RoomData.OwnerId)
-						{
-							continue;
-						}
-						room.EntityManager.OnUserLeave(entity);
-					}
-				}
+			if (kickUsers)
+			{
+				//todo:
 			}
 		}
 	}

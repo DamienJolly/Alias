@@ -1,11 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Mapping;
 using Alias.Emulator.Hotel.Rooms.Models;
-using Alias.Emulator.Hotel.Rooms.States;
 using Alias.Emulator.Hotel.Rooms.Entities;
-using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
@@ -16,14 +13,21 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		}
 
-		private List<RoomData> _cachedRooms;
-		private List<Room> _loadedRooms;
+		private Dictionary<int, RoomData> CachedRooms
+		{
+			get; set;
+		}
+
+		public Dictionary<int, Room> LoadedRooms
+		{
+			get; set;
+		}
 
 		public RoomManager()
 		{
 			this.RoomModelManager = new RoomModelManager();
-			this._cachedRooms = new List<RoomData>();
-			this._loadedRooms = new List<Room>();
+			this.CachedRooms = new Dictionary<int, RoomData>();
+			this.LoadedRooms = new Dictionary<int, Room>();
 		}
 
 		public void Initialize()
@@ -31,56 +35,66 @@ namespace Alias.Emulator.Hotel.Rooms
 			this.RoomModelManager.Initialize();
 		}
 
-		public RoomData RoomData(int RoomId)
-		{
-			if (this._cachedRooms.Where(room => room.Id == RoomId).ToList().Count > 0)
-			{
-				return this._cachedRooms.Where(room => room.Id == RoomId).First();
-			}
-			return AddToCache(RoomId);
-		}
-
-		public RoomData AddToCache(int RoomId)
-		{
-			RoomData roomData = RoomDatabase.RoomData(RoomId);
-			this._cachedRooms.Add(roomData);
-			return roomData;
-		}
-
 		public void DoRoomCycle()
 		{
-			this._loadedRooms.Where(room => !room.Disposing).ToList().ForEach(room => room.Cycle());
+			foreach (Room room in this.LoadedRooms.Values)
+			{
+				if (room.Disposing)
+				{
+					continue;
+				}
+
+				room.Cycle();
+			}
 		}
 
-		public List<Room> ReadLoadedRooms()
+		public bool TryGetRoomData(int roomId, out RoomData roomData)
 		{
-			return this._loadedRooms;
+			roomData = null;
+			if (this.CachedRooms.ContainsKey(roomId))
+			{
+				roomData = this.CachedRooms[roomId];
+				return true;
+			}
+			return TryAddToCache(roomId, out roomData);
+		}
+
+		private bool TryAddToCache(int RoomId, out RoomData roomData)
+		{
+			roomData = RoomDatabase.RoomData(RoomId);
+			if (roomData != null)
+			{
+				this.CachedRooms.Add(RoomId, roomData);
+				return true;
+			}
+			return false;
+		}
+
+		public bool TryGetRoom(int roomId, out Room room)
+		{
+			return this.LoadedRooms.TryGetValue(roomId, out room);
 		}
 
 		public Room LoadRoom(int roomId)
 		{
-			if (RoomDatabase.RoomExists(roomId))
+			Room room = null;
+			if (TryGetRoomData(roomId, out RoomData roomdata))
 			{
-				Room result = new Room()
+				room = new Room
 				{
 					Id = roomId,
-					RoomData = RoomData(roomId)
+					RoomData = roomdata
 				};
-				result.Model = this.RoomModelManager.GetModel(result.RoomData.ModelName);
-				result.Mapping = new RoomMapping(result);
-				result.ItemManager = new RoomItemManager(result);
-				result.EntityManager = new RoomEntityManager(result);
-				result.Initialize();
-				result.Mapping.RegenerateCollisionMap();
-				result.EntityManager.LoadAIEntities();
-				this._loadedRooms.Add(result);
-				return result;
+				room.Model = this.RoomModelManager.GetModel(roomdata.ModelName);
+				room.Mapping = new RoomMapping(room);
+				room.ItemManager = new RoomItemManager(room);
+				room.EntityManager = new RoomEntityManager(room);
+				room.Initialize();
+				room.Mapping.RegenerateCollisionMap();
+				room.EntityManager.LoadAIEntities();
+				this.LoadedRooms.Add(roomId, room);
 			}
-			else
-			{
-				Logging.Info("There's no Room with Id " + roomId);
-				return new Room();
-			}
+			return room;
 		}
 
 		public Room CreateRoom(int ownerId, string name, string description, string modelName, int maxUsers, int tradeType, int categoryId)
@@ -89,28 +103,11 @@ namespace Alias.Emulator.Hotel.Rooms
 			return LoadRoom(roomId);
 		}
 
-		public Room Room(int roomId)
+		public void RemoveLoadedRoom(int roomId)
 		{
-			if (IsRoomLoaded(roomId))
+			if (this.LoadedRooms.ContainsKey(roomId))
 			{
-				return this._loadedRooms.Where(r => r.Id == roomId).First();
-			}
-			else
-			{
-				return LoadRoom(roomId);
-			}
-		}
-
-		public bool IsRoomLoaded(int roomId)
-		{
-			return this._loadedRooms.Where(r => r.Id == roomId).Count() > 0;
-		}
-
-		public void RemoveLoadedRoom(Room room)
-		{
-			if (IsRoomLoaded(room.Id))
-			{
-				this._loadedRooms.Remove(room);
+				this.LoadedRooms.Remove(roomId);
 			}
 		}
 	}

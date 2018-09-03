@@ -23,30 +23,34 @@ namespace Alias.Emulator.Hotel.Navigator.Views
 						{
 							RoomDatabase.AllRooms().ForEach(Id =>
 							{
-								result.Add(Alias.Server.RoomManager.RoomData(Id));
+								//todo:
+								//result.Add(Alias.Server.RoomManager.GetRoomData(Id));
 							});
 						}
 						else
 						{
-							Alias.Server.RoomManager.ReadLoadedRooms().ForEach(room =>
+							//todo:
+							/*Alias.Server.RoomManager.ReadLoadedRooms().ForEach(room =>
 							{
 								if (room.RoomData.UsersNow > 0)
 								{
 									result.Add(room.RoomData);
 								}
-							});
+							});*/
 						}
 						return result.Where(room => room.Name.ToLower().Contains(query)).ToList();
 					}
 				default:
 					{
+						//todo:
+						/*
 						Alias.Server.RoomManager.ReadLoadedRooms().ForEach(room =>
 						{
 							if (room.RoomData.UsersNow > 0 && room.RoomData.Category == base.ExtraId)
 							{
 								result.Add(room.RoomData);
 							}
-						});
+						});*/
 						return result.Where(room => room.Name.ToLower().Contains(query)).ToList();
 					}
 			}

@@ -20,16 +20,13 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			}
 
 			int roomId = message.PopInt();
-
-			RoomData room = Alias.Server.RoomManager.RoomData(roomId);
-			if (room == null || room.Group != null)
+			if (!Alias.Server.RoomManager.TryGetRoomData(roomId, out RoomData roomData))
 			{
 				return;
 			}
 
-			if (room.OwnerId != session.Habbo.Id)
+			if (roomData.Group != null || roomData.OwnerId != session.Habbo.Id)
 			{
-				// scripter
 				return;
 			}
 
@@ -56,8 +53,8 @@ namespace Alias.Emulator.Hotel.Groups.Events
 				badge += (id < 100 ? "0" : "") + (id < 10 ? "0" : "") + id + (colour < 10 ? "0" : "") + colour + "" + pos;
 			}
 
-			Group group = Alias.Server.GroupManager.CreateGroup(session.Habbo, roomId, room.Name, name, description, badge, colorOne, colorTwo);
-			room.Group = group;
+			Group group = Alias.Server.GroupManager.CreateGroup(session.Habbo, roomId, roomData.Name, name, description, badge, colorOne, colorTwo);
+			roomData.Group = group;
 
 			// gen badge
 
@@ -78,10 +75,11 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			session.Send(new PurchaseOKComposer());
 			session.Send(new GroupBoughtComposer(group));
 
-			if (Alias.Server.RoomManager.IsRoomLoaded(group.RoomId))
+			//todo: group fix
+			/*if (Alias.Server.RoomManager.IsRoomLoaded(group.RoomId))
 			{
 				Alias.Server.RoomManager.Room(group.RoomId).RefreshGroup();
-			}
+			}*/
 		}
 	}
 }

@@ -12,13 +12,19 @@ namespace Alias.Emulator.Hotel.Groups.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			List<RoomData> result = new List<RoomData>();
+			List<RoomData> rooms = new List<RoomData>();
 			RoomDatabase.UserRooms(session.Habbo.Id).ForEach(Id =>
 			{
-				result.Add(Alias.Server.RoomManager.RoomData(Id));
+				if (!Alias.Server.RoomManager.TryGetRoomData(Id, out RoomData roomData))
+				{
+					if (roomData.Group == null)
+					{
+						rooms.Add(roomData);
+					}
+				}
 			});
 			
-			session.Send(new GroupBuyRoomsComposer(result.Where(room => room.Group == null).ToList()));
+			session.Send(new GroupBuyRoomsComposer(rooms.ToList()));
 		}
 	}
 }

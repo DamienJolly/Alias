@@ -32,10 +32,9 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 			List<ModerationChatlog> chatlogs = new List<ModerationChatlog>();
 			if (issue.RoomId > 0)
 			{
-				Room room = Alias.Server.RoomManager.Room(issue.RoomId);
-				if (room != null)
+				if (Alias.Server.RoomManager.TryGetRoomData(issue.RoomId, out RoomData roomData))
 				{
-					roomName = room.RoomData.Name;
+					roomName = roomData.Name;
 				}
 				chatlogs = Alias.Server.ModerationManager.GetRoomChatlog(issue.RoomId);
 			}

@@ -33,16 +33,23 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			group.State = (GroupState)state;
 			group.Rights = rights;
 
-			RoomData room = Alias.Server.RoomManager.RoomData(group.RoomId);
-			if (room != null && room.Group != null)
+			if (!Alias.Server.RoomManager.TryGetRoomData(group.RoomId, out RoomData roomData))
 			{
-				room.Group = group;
+				return;
 			}
 
-			if (Alias.Server.RoomManager.IsRoomLoaded(group.RoomId))
+			if (roomData.Group == null)
+			{
+				return;
+			}
+
+			roomData.Group = group;
+
+			//todo: group fixs
+			/*if (Alias.Server.RoomManager.IsRoomLoaded(group.RoomId))
 			{
 				Alias.Server.RoomManager.Room(group.RoomId).RefreshGroup();
-			}
+			}*/
 		}
 	}
 }

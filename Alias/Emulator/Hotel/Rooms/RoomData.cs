@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Groups;
 using Alias.Emulator.Hotel.Rooms.States;
-using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
@@ -10,78 +9,72 @@ namespace Alias.Emulator.Hotel.Rooms
 		public int Id
 		{
 			get; set;
-		} = 0;
+		}
 
 		public string Name
 		{
 			get; set;
-		} = "Room";
+		}
 
 		public int OwnerId
 		{
 			get; set;
-		} = 0;
+		}
 
 		public string OwnerName
 		{
-			get
-			{
-				return (string)UserDatabase.Variable(this.OwnerId, "Username");
-			}
+			get; set;
 		}
 
 		public Group Group
 		{
 			get; set;
-		} = null;
+		}
 
 		public RoomDoorState DoorState
 		{
 			get; set;
-		} = RoomDoorState.OPEN;
+		}
 
 		public int UsersNow
 		{
-			get
-			{
-				return (int)Alias.Server.RoomManager.Room(this.Id).EntityManager.UserCount;
-			}
-		}
+			get; set;
+		} = 0;
 
 		public int MaxUsers
 		{
 			get; set;
-		} = 70;
+		}
 
 		public string Description
 		{
 			get; set;
-		} = "Description";
+		}
 
 		public RoomTradeState TradeState
 		{
 			get; set;
-		} = RoomTradeState.ALLOWED;
+		}
 
 		public List<int> Likes
 		{
 			get; set;
-		} = new List<int>();
+		}
 
 		public int Rankings
 		{
 			get; set;
-		} = 0;
+		}
 
 		public int Category
 		{
 			get; set;
-		} = 0;
+		}
 
 		public List<string> Tags
 		{
 			get; set;
-		} = new List<string>();
+		}
 
 		public int EnumType
 		{
@@ -115,18 +108,18 @@ namespace Alias.Emulator.Hotel.Rooms
 		public string Image
 		{
 			get; set;
-		} = "";
+		}
 
 		public string Password
 		{
 			get; set;
-		} = "";
+		}
 
 		public string ModelName
 		{
 			get; set;
 
-		} = "model_a";
+		}
 
 		public bool WalkDiagonal
 		{
@@ -156,11 +149,6 @@ namespace Alias.Emulator.Hotel.Rooms
 		public RoomSettings Settings
 		{
 			get; set;
-		} = new RoomSettings();
-
-		public RoomData()
-		{
-
 		}
 	}
 }

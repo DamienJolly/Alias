@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Rooms.States;
+using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Utilities;
 using MySql.Data.MySqlClient;
 
@@ -10,7 +11,7 @@ namespace Alias.Emulator.Hotel.Rooms
 	{
 		public static RoomData RoomData(int Id)
 		{
-			RoomData result = new RoomData();
+			RoomData result = null;
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
@@ -18,22 +19,26 @@ namespace Alias.Emulator.Hotel.Rooms
 				{
 					while (Reader.Read())
 					{
-						result.Id          = Id;
-						result.Name        = Reader.GetString("name");
-						result.Group       = Alias.Server.GroupManager.GetGroup(Reader.GetInt32("group_id"));
-						result.OwnerId     = Reader.GetInt32("owner");
-						result.DoorState   = (RoomDoorState)Reader.GetInt32("door");
-						result.MaxUsers    = Reader.GetInt32("max_users");
-						result.Description = Reader.GetString("description");
-						result.TradeState  = (RoomTradeState)Reader.GetInt32("trade");
-						result.Likes       = RoomDatabase.ReadLikes(Id);
-						result.Rankings    = Reader.GetInt32("ranking");
-						result.Category    = Reader.GetInt32("category");
-						result.Tags        = RoomDatabase.ReadTags(Id);
-						result.Image       = Reader.GetString("image");
-						result.Password    = Reader.GetString("password");
-						result.ModelName   = Reader.GetString("model");
-						result.Settings    = RoomDatabase.ReadSettings(Id);
+						result = new RoomData
+						{
+							Id          = Id,
+							Name        = Reader.GetString("name"),
+							Group       = Alias.Server.GroupManager.GetGroup(Reader.GetInt32("group_id")),
+							OwnerId     = Reader.GetInt32("owner"),
+							OwnerName   = (string)UserDatabase.Variable(Reader.GetInt32("owner"), "Username"),
+							DoorState   = (RoomDoorState)Reader.GetInt32("door"),
+							MaxUsers    = Reader.GetInt32("max_users"),
+							Description = Reader.GetString("description"),
+							TradeState  = (RoomTradeState)Reader.GetInt32("trade"),
+							Likes       = RoomDatabase.ReadLikes(Id),
+							Rankings    = Reader.GetInt32("ranking"),
+							Category    = Reader.GetInt32("category"),
+							Tags        = RoomDatabase.ReadTags(Id),
+							Image       = Reader.GetString("image"),
+							Password    = Reader.GetString("password"),
+							ModelName   = Reader.GetString("model"),
+							Settings    = RoomDatabase.ReadSettings(Id)
+						};
 					}
 				}
 			}
@@ -42,7 +47,7 @@ namespace Alias.Emulator.Hotel.Rooms
 
 		private static RoomSettings ReadSettings(int Id)
 		{
-			RoomSettings result = new RoomSettings();
+			RoomSettings result = null;
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", Id);
@@ -50,20 +55,23 @@ namespace Alias.Emulator.Hotel.Rooms
 				{
 					while (Reader.Read())
 					{
-						result.WhoMutes     = Reader.GetInt32("who_can_mute");
-						result.WhoBans      = Reader.GetInt32("who_can_ban");
-						result.WhoKicks     = Reader.GetInt32("who_can_kick");
-						result.ChatDistance = Reader.GetInt32("chat_distance");
-						result.ChatFlood    = Reader.GetInt32("chat_flood");
-						result.ChatMode     = Reader.GetInt32("chat_mode");
-						result.ChatSize     = Reader.GetInt32("chat_size");
-						result.ChatSpeed    = Reader.GetInt32("chat_speed");
-						result.AllowPets    = Reader.GetBoolean("allow_pets");
-						result.AllowPetsEat = Reader.GetBoolean("allow_pets_eat");
-						result.RoomBlocking = Reader.GetBoolean("room_blocking");
-						result.HideWalls    = Reader.GetBoolean("hide_walls");
-						result.WallHeight   = Reader.GetInt32("wall_height");
-						result.FloorSize    = Reader.GetInt32("floor_size");
+						result = new RoomSettings
+						{
+							WhoMutes     = Reader.GetInt32("who_can_mute"),
+							WhoBans      = Reader.GetInt32("who_can_ban"),
+							WhoKicks     = Reader.GetInt32("who_can_kick"),
+							ChatDistance = Reader.GetInt32("chat_distance"),
+							ChatFlood    = Reader.GetInt32("chat_flood"),
+							ChatMode     = Reader.GetInt32("chat_mode"),
+							ChatSize     = Reader.GetInt32("chat_size"),
+							ChatSpeed    = Reader.GetInt32("chat_speed"),
+							AllowPets    = Reader.GetBoolean("allow_pets"),
+							AllowPetsEat = Reader.GetBoolean("allow_pets_eat"),
+							RoomBlocking = Reader.GetBoolean("room_blocking"),
+							HideWalls    = Reader.GetBoolean("hide_walls"),
+							WallHeight   = Reader.GetInt32("wall_height"),
+							FloorSize    = Reader.GetInt32("floor_size")
+						};
 					}
 				}
 			}
@@ -198,23 +206,6 @@ namespace Alias.Emulator.Hotel.Rooms
 				}
 			}
 			return result;
-		}
-
-		public static bool RoomExists(int roomId)
-		{
-			bool exists = false;
-			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
-			{
-				dbClient.AddParameter("id", roomId);
-				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `room_data` WHERE `id` = @id"))
-				{
-					while (Reader.Read())
-					{
-						exists = true;
-					}
-				}
-			}
-			return exists;
 		}
 	}
 }

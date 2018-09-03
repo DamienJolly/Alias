@@ -12,9 +12,12 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 		public void Handle(Session session, ClientPacket message)
 		{
 			int roomId = message.PopInt();
+			if (!Alias.Server.RoomManager.TryGetRoomData(roomId, out RoomData roomData))
+			{
+				return;
+			}
 
-			Room room = Alias.Server.RoomManager.Room(roomId);
-			if (room == null || room.RoomData.OwnerId != session.Habbo.Id)
+			if (roomData.OwnerId != session.Habbo.Id)
 			{
 				return;
 			}
@@ -22,7 +25,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 			string name = message.PopString();
 			if (name.Length <= 0)
 			{
-				session.Send(new RoomEditSettingsErrorComposer(room.Id, RoomEditSettingsErrorComposer.ROOM_NAME_MISSING));
+				session.Send(new RoomEditSettingsErrorComposer(roomData.Id, RoomEditSettingsErrorComposer.ROOM_NAME_MISSING));
 			}
 			else
 			{
@@ -30,35 +33,35 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 				{
 					name = name.Substring(0, 60);
 				}
-				room.RoomData.Name = name;
+				roomData.Name = name;
 			}
 
-			room.RoomData.Description = message.PopString();
+			roomData.Description = message.PopString();
 			
 			RoomDoorState state = (RoomDoorState)message.PopInt();
 
 			string password = message.PopString();
-			if (room.RoomData.DoorState == RoomDoorState.PASSWORD && password.Length <= 0)
+			if (roomData.DoorState == RoomDoorState.PASSWORD && password.Length <= 0)
 			{
-				session.Send(new RoomEditSettingsErrorComposer(room.Id, RoomEditSettingsErrorComposer.PASSWORD_REQUIRED));
+				session.Send(new RoomEditSettingsErrorComposer(roomData.Id, RoomEditSettingsErrorComposer.PASSWORD_REQUIRED));
 			}
 			else
 			{
-				room.RoomData.DoorState = state;
-				room.RoomData.Password = password;
+				roomData.DoorState = state;
+				roomData.Password = password;
 			}
 
-			room.RoomData.MaxUsers = message.PopInt();
-			if (room.RoomData.MaxUsers < 0)
+			roomData.MaxUsers = message.PopInt();
+			if (roomData.MaxUsers < 0)
 			{
-				room.RoomData.MaxUsers = 10;
+				roomData.MaxUsers = 10;
 			}
-			else if (room.RoomData.MaxUsers > 50)
+			else if (roomData.MaxUsers > 50)
 			{
-				room.RoomData.MaxUsers = 50;
+				roomData.MaxUsers = 50;
 			}
 
-			room.RoomData.Category = message.PopInt();
+			roomData.Category = message.PopInt();
 
 			List<string> tags = new List<string>();
 			for (int i = 0; i < message.PopInt() && i < 2; i++)
@@ -67,88 +70,92 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 
 				if (tag.Length > 15)
 				{
-					session.Send(new RoomEditSettingsErrorComposer(room.Id, RoomEditSettingsErrorComposer.TAGS_TOO_LONG));
+					session.Send(new RoomEditSettingsErrorComposer(roomData.Id, RoomEditSettingsErrorComposer.TAGS_TOO_LONG));
 					continue;
 				}
 
 				tags.Add(tag);
 			}
+
+			roomData.Tags = tags;
+			roomData.TradeState = (RoomTradeState)message.PopInt();
+			roomData.Settings.AllowPets = message.PopBoolean();
+			roomData.Settings.AllowPetsEat = message.PopBoolean();
+			roomData.Settings.RoomBlocking = message.PopBoolean();
+			roomData.Settings.HideWalls = message.PopBoolean();
+
+			roomData.Settings.WallHeight = message.PopInt();
+			if (roomData.Settings.WallHeight < -2 || roomData.Settings.WallHeight > 1)
+			{
+				roomData.Settings.WallHeight = 0;
+			}
+
+			roomData.Settings.FloorSize = message.PopInt();
+			if (roomData.Settings.FloorSize < -2 || roomData.Settings.FloorSize > 1)
+			{
+				roomData.Settings.FloorSize = 0;
+			}
+
+			roomData.Settings.WhoMutes = message.PopInt();
+			if (roomData.Settings.WhoMutes < 0 || roomData.Settings.WhoMutes > 1)
+			{
+				roomData.Settings.WhoMutes = 0;
+			}
+
+			roomData.Settings.WhoKicks = message.PopInt();
+			if (roomData.Settings.WhoKicks < 0 || roomData.Settings.WhoKicks > 1)
+			{
+				roomData.Settings.WhoKicks = 0;
+			}
+
+			roomData.Settings.WhoBans = message.PopInt();
+			if (roomData.Settings.WhoBans < 0 || roomData.Settings.WhoBans > 1)
+			{
+				roomData.Settings.WhoBans = 0;
+			}
+
+			roomData.Settings.ChatMode = message.PopInt();
+			if (roomData.Settings.ChatMode < 0 || roomData.Settings.ChatMode > 1)
+			{
+				roomData.Settings.ChatMode = 0;
+			}
+
+			roomData.Settings.ChatSize = message.PopInt();
+			if (roomData.Settings.ChatSize < 0 || roomData.Settings.ChatSize > 2)
+			{
+				roomData.Settings.ChatSize = 0;
+			}
+
+			roomData.Settings.ChatSpeed = message.PopInt();
+			if (roomData.Settings.ChatSpeed < 0 || roomData.Settings.ChatSpeed > 2)
+			{
+				roomData.Settings.ChatSpeed = 0;
+			}
+
+			roomData.Settings.ChatDistance = message.PopInt();
+			if (roomData.Settings.ChatDistance < 0)
+			{
+				roomData.Settings.ChatDistance = 1;
+			}
+			else if (roomData.Settings.ChatDistance > 99)
+			{
+				roomData.Settings.ChatDistance = 100;
+			}
+
+			roomData.Settings.ChatFlood = message.PopInt();
+			if (roomData.Settings.ChatFlood < 0 || roomData.Settings.ChatFlood > 2)
+			{
+				roomData.Settings.ChatFlood = 0;
+			}
 			
-			room.RoomData.Tags = tags;
-			room.RoomData.TradeState = (RoomTradeState)message.PopInt();
-			room.RoomData.Settings.AllowPets = message.PopBoolean();
-			room.RoomData.Settings.AllowPetsEat = message.PopBoolean();
-			room.RoomData.Settings.RoomBlocking = message.PopBoolean();
-			room.RoomData.Settings.HideWalls = message.PopBoolean();
-
-			room.RoomData.Settings.WallHeight = message.PopInt();
-			if (room.RoomData.Settings.WallHeight < -2 || room.RoomData.Settings.WallHeight > 1)
+			if (Alias.Server.RoomManager.TryGetRoom(roomData.Id, out Room room))
 			{
-				room.RoomData.Settings.WallHeight = 0;
+				room.EntityManager.Send(new RoomThicknessComposer(room));
+				room.EntityManager.Send(new RoomChatSettingsComposer(roomData));
+				room.EntityManager.Send(new RoomSettingsUpdatedComposer(roomData.Id));
 			}
 
-			room.RoomData.Settings.FloorSize = message.PopInt();
-			if (room.RoomData.Settings.FloorSize < -2 || room.RoomData.Settings.FloorSize > 1)
-			{
-				room.RoomData.Settings.FloorSize = 0;
-			}
-
-			room.RoomData.Settings.WhoMutes = message.PopInt();
-			if (room.RoomData.Settings.WhoMutes < 0 || room.RoomData.Settings.WhoMutes > 1)
-			{
-				room.RoomData.Settings.WhoMutes = 0;
-			}
-
-			room.RoomData.Settings.WhoKicks = message.PopInt();
-			if (room.RoomData.Settings.WhoKicks < 0 || room.RoomData.Settings.WhoKicks > 1)
-			{
-				room.RoomData.Settings.WhoKicks = 0;
-			}
-
-			room.RoomData.Settings.WhoBans = message.PopInt();
-			if (room.RoomData.Settings.WhoBans < 0 || room.RoomData.Settings.WhoBans > 1)
-			{
-				room.RoomData.Settings.WhoBans = 0;
-			}
-
-			room.RoomData.Settings.ChatMode = message.PopInt();
-			if (room.RoomData.Settings.ChatMode < 0 || room.RoomData.Settings.ChatMode > 1)
-			{
-				room.RoomData.Settings.ChatMode = 0;
-			}
-
-			room.RoomData.Settings.ChatSize = message.PopInt();
-			if (room.RoomData.Settings.ChatSize < 0 || room.RoomData.Settings.ChatSize > 2)
-			{
-				room.RoomData.Settings.ChatSize = 0;
-			}
-
-			room.RoomData.Settings.ChatSpeed = message.PopInt();
-			if (room.RoomData.Settings.ChatSpeed < 0 || room.RoomData.Settings.ChatSpeed > 2)
-			{
-				room.RoomData.Settings.ChatSpeed = 0;
-			}
-
-			room.RoomData.Settings.ChatDistance = message.PopInt();
-			if (room.RoomData.Settings.ChatDistance < 0)
-			{
-				room.RoomData.Settings.ChatDistance = 1;
-			}
-			else if (room.RoomData.Settings.ChatDistance > 99)
-			{
-				room.RoomData.Settings.ChatDistance = 100;
-			}
-
-			room.RoomData.Settings.ChatFlood = message.PopInt();
-			if (room.RoomData.Settings.ChatFlood < 0 || room.RoomData.Settings.ChatFlood > 2)
-			{
-				room.RoomData.Settings.ChatFlood = 0;
-			}
-
-			room.EntityManager.Send(new RoomThicknessComposer(room));
-			room.EntityManager.Send(new RoomChatSettingsComposer(room.RoomData));
-			room.EntityManager.Send(new RoomSettingsUpdatedComposer(room.Id));
-			session.Send(new RoomSettingsSavedComposer(room.Id));
+			session.Send(new RoomSettingsSavedComposer(roomData.Id));
 		}
 	}
 }

@@ -56,7 +56,8 @@ namespace Alias.Emulator.Hotel.Navigator
 		public static List<RoomData> ReadPublicRooms(int extraId)
 		{
 			List<RoomData> result = new List<RoomData>();
-			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			//todo:
+			/*using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("categoryId", extraId);
 				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `room_data` WHERE `category` = @categoryId"))
@@ -67,7 +68,7 @@ namespace Alias.Emulator.Hotel.Navigator
 						result.Add(Alias.Server.RoomManager.RoomData(roomId));
 					}
 				}
-			}
+			}*/
 			return result;
 		}
 

@@ -146,7 +146,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			this.Disposing = true;
 			RoomItemDatabase.SaveFurniture(this.ItemManager.Items);
 			RoomDatabase.SaveRoom(this.RoomData);
-			Alias.Server.RoomManager.RemoveLoadedRoom(this);
+			Alias.Server.RoomManager.RemoveLoadedRoom(this.Id);
 		}
 	}
 }

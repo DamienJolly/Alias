@@ -21,12 +21,14 @@ namespace Alias.Emulator.Hotel.Groups.Events
 
 			Alias.Server.GroupManager.DeleteGroup(group);
 
-			if (Alias.Server.RoomManager.IsRoomLoaded(group.RoomId))
+			if (!Alias.Server.RoomManager.TryGetRoomData(group.RoomId, out RoomData roomData))
 			{
-				Room room = Alias.Server.RoomManager.Room(group.RoomId);
-				room.EntityManager.Send(new RemoveGroupFromRoomComposer(group.Id));
-				room.RoomData.Group = null;
+				return;
 			}
+
+			roomData.Group = null;
+			//todo: group fix
+			//room.EntityManager.Send(new RemoveGroupFromRoomComposer(group.Id));
 		}
 	}
 }

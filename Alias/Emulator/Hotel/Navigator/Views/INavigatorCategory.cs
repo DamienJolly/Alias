@@ -51,11 +51,6 @@ namespace Alias.Emulator.Hotel.Navigator.Views
 			get; set;
 		}
 
-		public INavigatorCategory()
-		{
-
-		}
-
 		public abstract void Init();
 
 		public abstract List<RoomData> Search(string query, Session session, int Limit);

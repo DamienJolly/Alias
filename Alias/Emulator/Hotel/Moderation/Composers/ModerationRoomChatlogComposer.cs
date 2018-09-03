@@ -10,12 +10,12 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 {
 	class ModerationRoomChatlogComposer : IPacketComposer
 	{
-		private Room room;
+		private RoomData roomData;
 		private List<ModerationChatlog> chatlog;
 
-		public ModerationRoomChatlogComposer(Room room, List<ModerationChatlog> chatlog)
+		public ModerationRoomChatlogComposer(RoomData roomData, List<ModerationChatlog> chatlog)
 		{
-			this.room = room;
+			this.roomData = roomData;
 			this.chatlog = chatlog;
 		}
 
@@ -26,10 +26,10 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			message.WriteShort(2);
 			message.WriteString("roomName");
 			message.WriteByte(2);
-			message.WriteString(this.room.RoomData.Name);
+			message.WriteString(this.roomData.Name);
 			message.WriteString("roomId");
 			message.WriteByte(1);
-			message.WriteInteger(this.room.RoomData.Id);
+			message.WriteInteger(this.roomData.Id);
 
 			message.WriteShort(this.chatlog.Count);
 			this.chatlog.ForEach(chatlog =>
