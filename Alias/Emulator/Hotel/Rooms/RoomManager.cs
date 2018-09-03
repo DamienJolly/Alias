@@ -31,66 +31,6 @@ namespace Alias.Emulator.Hotel.Rooms
 			this.RoomModelManager.Initialize();
 		}
 
-		public int TradeToInt(RoomTradeState tradeState)
-		{
-			switch (tradeState)
-			{
-				case RoomTradeState.ALLOWED:
-					return 2;
-				case RoomTradeState.OWNER:
-					return 1;
-				case RoomTradeState.FORBIDDEN:
-					return 0;
-				default:
-					return 0;
-			}
-		}
-
-		public RoomTradeState IntToTrade(int state)
-		{
-			switch (state)
-			{
-				case 2:
-					return RoomTradeState.ALLOWED;
-				case 1:
-					return RoomTradeState.OWNER;
-				case 0:
-					return RoomTradeState.FORBIDDEN;
-				default:
-					return RoomTradeState.FORBIDDEN;
-			}
-		}
-
-		public RoomDoorState IntToDoor(int state)
-		{
-			switch (state)
-			{
-				case 0:
-					return RoomDoorState.OPEN;
-				case 1:
-					return RoomDoorState.CLOSED;
-				case 2:
-					return RoomDoorState.PASSWORD;
-				default:
-					return RoomDoorState.OPEN;
-			}
-		}
-
-		public int DoorToInt(RoomDoorState state)
-		{
-			switch (state)
-			{
-				case RoomDoorState.OPEN:
-					return 0;
-				case RoomDoorState.CLOSED:
-					return 1;
-				case RoomDoorState.PASSWORD:
-					return 2;
-				default:
-					return 0;
-			}
-		}
-
 		public RoomData RoomData(int RoomId)
 		{
 			if (this._cachedRooms.Where(room => room.Id == RoomId).ToList().Count > 0)

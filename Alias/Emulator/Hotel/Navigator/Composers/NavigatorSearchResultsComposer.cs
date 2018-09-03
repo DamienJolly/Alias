@@ -62,11 +62,11 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 					message.WriteString(room.Name);
 					message.WriteInteger(room.OwnerId);
 					message.WriteString(room.OwnerName);
-					message.WriteInteger(Alias.Server.RoomManager.DoorToInt(room.DoorState));
+					message.WriteInteger((int)room.DoorState);
 					message.WriteInteger(room.UsersNow);
 					message.WriteInteger(room.MaxUsers);
 					message.WriteString(room.Description);
-					message.WriteInteger(Alias.Server.RoomManager.TradeToInt(room.TradeState));
+					message.WriteInteger((int)room.TradeState);
 					message.WriteInteger(room.Likes.Count);
 					message.WriteInteger(room.Rankings);
 					message.WriteInteger(room.Category);

@@ -35,7 +35,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 
 			room.RoomData.Description = message.PopString();
 			
-			RoomDoorState state = Alias.Server.RoomManager.IntToDoor(message.PopInt());
+			RoomDoorState state = (RoomDoorState)message.PopInt();
 
 			string password = message.PopString();
 			if (room.RoomData.DoorState == RoomDoorState.PASSWORD && password.Length <= 0)
@@ -75,7 +75,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 			}
 			
 			room.RoomData.Tags = tags;
-			room.RoomData.TradeState = Alias.Server.RoomManager.IntToTrade(message.PopInt());
+			room.RoomData.TradeState = (RoomTradeState)message.PopInt();
 			room.RoomData.Settings.AllowPets = message.PopBoolean();
 			room.RoomData.Settings.AllowPetsEat = message.PopBoolean();
 			room.RoomData.Settings.RoomBlocking = message.PopBoolean();

@@ -29,11 +29,11 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			message.WriteString(this.Data.Name);
 			message.WriteInteger(this.Data.OwnerId);
 			message.WriteString(this.Data.OwnerName);
-			message.WriteInteger(Alias.Server.RoomManager.DoorToInt(this.Data.DoorState));
+			message.WriteInteger((int)this.Data.DoorState);
 			message.WriteInteger(this.Data.UsersNow);
 			message.WriteInteger(this.Data.MaxUsers);
 			message.WriteString(this.Data.Description);
-			message.WriteInteger(Alias.Server.RoomManager.TradeToInt(this.Data.TradeState));
+			message.WriteInteger((int)this.Data.TradeState);
 			message.WriteInteger(this.Data.Likes.Count);
 			message.WriteInteger(0);
 			message.WriteInteger(this.Data.Category);

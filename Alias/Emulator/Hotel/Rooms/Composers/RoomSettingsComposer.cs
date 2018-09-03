@@ -19,13 +19,13 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			message.WriteInteger(this.room.Id);
 			message.WriteString(this.room.RoomData.Name);
 			message.WriteString(this.room.RoomData.Description);
-			message.WriteInteger(Alias.Server.RoomManager.DoorToInt(this.room.RoomData.DoorState));
+			message.WriteInteger((int)this.room.RoomData.DoorState);
 			message.WriteInteger(this.room.RoomData.Category);
 			message.WriteInteger(this.room.RoomData.MaxUsers);
 			message.WriteInteger(this.room.Mapping.SizeX * this.room.Mapping.SizeY > 100 ? 50 : 25);
 			message.WriteInteger(this.room.RoomData.Tags.Count);
 			this.room.RoomData.Tags.ForEach(t => message.WriteString(t));
-			message.WriteInteger(Alias.Server.RoomManager.TradeToInt(this.room.RoomData.TradeState));
+			message.WriteInteger((int)this.room.RoomData.TradeState);
 			message.WriteInteger(this.room.RoomData.Settings.AllowPets ? 1 : 0);
 			message.WriteInteger(this.room.RoomData.Settings.AllowPetsEat ? 1 : 0);
 			message.WriteInteger(this.room.RoomData.Settings.RoomBlocking ? 1 : 0);

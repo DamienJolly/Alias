@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Database;
+using Alias.Emulator.Hotel.Rooms.States;
 using Alias.Emulator.Utilities;
 using MySql.Data.MySqlClient;
 
@@ -21,10 +22,10 @@ namespace Alias.Emulator.Hotel.Rooms
 						result.Name        = Reader.GetString("name");
 						result.Group       = Alias.Server.GroupManager.GetGroup(Reader.GetInt32("group_id"));
 						result.OwnerId     = Reader.GetInt32("owner");
-						result.DoorState   = Alias.Server.RoomManager.IntToDoor(Reader.GetInt32("door"));
+						result.DoorState   = (RoomDoorState)Reader.GetInt32("door");
 						result.MaxUsers    = Reader.GetInt32("max_users");
 						result.Description = Reader.GetString("description");
-						result.TradeState  = Alias.Server.RoomManager.IntToTrade(Reader.GetInt32("trade"));
+						result.TradeState  = (RoomTradeState)Reader.GetInt32("trade");
 						result.Likes       = RoomDatabase.ReadLikes(Id);
 						result.Rankings    = Reader.GetInt32("ranking");
 						result.Category    = Reader.GetInt32("category");
@@ -131,10 +132,10 @@ namespace Alias.Emulator.Hotel.Rooms
 				dbClient.AddParameter("id", data.Id);
 				dbClient.AddParameter("name", data.Name);
 				dbClient.AddParameter("ownerId", data.OwnerId);
-				dbClient.AddParameter("door", Alias.Server.RoomManager.DoorToInt(data.DoorState) + "");
+				dbClient.AddParameter("door", (int)data.DoorState + "");
 				dbClient.AddParameter("maxusers", data.MaxUsers);
 				dbClient.AddParameter("description", data.Description);
-				dbClient.AddParameter("trade", Alias.Server.RoomManager.TradeToInt(data.TradeState) + "");
+				dbClient.AddParameter("trade", (int)data.TradeState + "");
 				dbClient.AddParameter("ranking", data.Rankings);
 				dbClient.AddParameter("category", data.Category);
 				dbClient.AddParameter("image", data.Image);
