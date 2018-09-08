@@ -175,25 +175,9 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
-		public static List<int> AllRooms()
+		public static List<RoomData> UserRooms(int userId)
 		{
-			List<int> result = new List<int>();
-			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
-			{
-				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `room_data`"))
-				{
-					while (Reader.Read())
-					{
-						result.Add(Reader.GetInt32("id"));
-					}
-				}
-			}
-			return result;
-		}
-
-		public static List<int> UserRooms(int userId)
-		{
-			List<int> result = new List<int>();
+			List<RoomData> rooms = new List<RoomData>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("id", userId);
@@ -201,11 +185,14 @@ namespace Alias.Emulator.Hotel.Rooms
 				{
 					while (Reader.Read())
 					{
-						result.Add(Reader.GetInt32("id"));
+						if (Alias.Server.RoomManager.TryGetRoomData(Reader.GetInt32("id"), out RoomData roomData))
+						{
+							rooms.Add(roomData);
+						}
 					}
 				}
 			}
-			return result;
+			return rooms;
 		}
 	}
 }

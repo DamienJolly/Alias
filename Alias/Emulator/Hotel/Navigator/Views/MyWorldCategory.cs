@@ -1,33 +1,36 @@
 using System.Collections.Generic;
-using System.Linq;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Views
 {
-	class MyWorldCategory : INavigatorCategory
+	internal class MyWorldCategory : INavigatorCategory
 	{
-		public override void Init()
-		{
-		}
-
 		public override List<RoomData> Search(string query, Session session, int Limit)
 		{
-			List<RoomData> result = new List<RoomData>();
-			switch (base.Id)
+			List<RoomData> rooms = new List<RoomData>();
+			switch (base.QueryId)
 			{
 				case "my":
 					{
-						//todo:
-						/*RoomDatabase.UserRooms(session.Habbo.Id).ForEach(Id =>
+						foreach (var room in RoomDatabase.UserRooms(session.Habbo.Id))
 						{
-							result.Add(Alias.Server.RoomManager.RoomData(Id));
-						});*/
-						return result.Where(room => room.Name.ToLower().Contains(query)).ToList();
+							if (rooms.Count >= Limit)
+							{
+								break;
+							}
+
+							if (!room.Name.ToLower().Contains(query))
+							{
+								continue;
+							}
+
+							rooms.Add(room);
+						}
+						break;
 					}
-				default:
-					return result;
 			}
+			return rooms;
 		}
 	}
 }

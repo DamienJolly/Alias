@@ -1,59 +1,54 @@
 using System.Collections.Generic;
-using System.Linq;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Views
 {
-	class NormalCategory : INavigatorCategory
+	internal class NormalCategory : INavigatorCategory
 	{
-		public override void Init()
-		{
-
-		}
-
 		public override List<RoomData> Search(string query, Session session, int Limit)
 		{
-			List<RoomData> result = new List<RoomData>();
-			switch (base.Id)
+			List<RoomData> rooms = new List<RoomData>();
+			switch (base.QueryId)
 			{
 				case "popular":
 					{
-						if (!string.IsNullOrEmpty(query))
+						foreach (var room in Alias.Server.RoomManager.LoadedRooms.Values)
 						{
-							RoomDatabase.AllRooms().ForEach(Id =>
+							if (rooms.Count >= Limit)
 							{
-								//todo:
-								//result.Add(Alias.Server.RoomManager.GetRoomData(Id));
-							});
-						}
-						else
-						{
-							//todo:
-							/*Alias.Server.RoomManager.ReadLoadedRooms().ForEach(room =>
+								break;
+							}
+
+							if (room.RoomData.UsersNow <= 0 || !room.RoomData.Name.ToLower().Contains(query))
 							{
-								if (room.RoomData.UsersNow > 0)
-								{
-									result.Add(room.RoomData);
-								}
-							});*/
+								continue;
+							}
+
+							rooms.Add(room.RoomData);
 						}
-						return result.Where(room => room.Name.ToLower().Contains(query)).ToList();
+						break;
 					}
 				default:
 					{
-						//todo:
-						/*
-						Alias.Server.RoomManager.ReadLoadedRooms().ForEach(room =>
+						foreach (var room in Alias.Server.RoomManager.LoadedRooms.Values)
 						{
-							if (room.RoomData.UsersNow > 0 && room.RoomData.Category == base.ExtraId)
+							if (rooms.Count >= Limit)
 							{
-								result.Add(room.RoomData);
+								break;
 							}
-						});*/
-						return result.Where(room => room.Name.ToLower().Contains(query)).ToList();
+
+							if (room.RoomData.UsersNow <= 0 || !room.RoomData.Name.ToLower().Contains(query) || room.RoomData.Category != base.Id)
+							{
+								continue;
+							}
+
+							rooms.Add(room.RoomData);
+						}
 					}
+					break;
 			}
+			return rooms;
 		}
 	}
 }

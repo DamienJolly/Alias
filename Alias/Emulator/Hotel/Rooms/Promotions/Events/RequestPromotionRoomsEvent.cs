@@ -11,13 +11,10 @@ namespace Alias.Emulator.Hotel.Rooms.Promotions.Events
 		public void Handle(Session session, ClientPacket message)
 		{
 			List<RoomData> rooms = new List<RoomData>();
-			RoomDatabase.UserRooms(session.Habbo.Id).ForEach(Id =>
+			RoomDatabase.UserRooms(session.Habbo.Id).ForEach(roomData =>
 			{
 				//todo: check if room is promoted
-				if (Alias.Server.RoomManager.TryGetRoomData(Id, out RoomData roomData))
-				{
-					rooms.Add(roomData);
-				}
+				rooms.Add(roomData);
 			});
 
 			session.Send(new PromoteOwnRoomsListComposer(rooms));

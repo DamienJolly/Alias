@@ -7,16 +7,16 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Navigator.Events
 {
-	class RequestRoomCategoriesEvent : IPacketEvent
+	class RequestEventCategoriesEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (!Alias.Server.NavigatorManager.TryGetCategories("hotel_view", out List<INavigatorCategory> categories))
+			if (!Alias.Server.NavigatorManager.TryGetCategories("roomads_view", out List<INavigatorCategory> categories))
 			{
 				return;
 			}
 
-			session.Send(new RoomCategoriesComposer(session.Habbo.Rank, categories));
+			session.Send(new NavigatorEventCategoriesComposer(session.Habbo.Rank, categories));
 		}
 	}
 }

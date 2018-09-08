@@ -6,17 +6,17 @@ namespace Alias.Emulator.Hotel.Navigator.Views
 {
 	abstract class INavigatorCategory
 	{
-		public string Id
+		public int Id
 		{
 			get; set;
 		}
 
+		public string QueryId
+		{
+			get; set;
+		}
+		
 		public string Title
-		{
-			get; set;
-		}
-
-		public bool ShowButtons
 		{
 			get; set;
 		}
@@ -31,17 +31,7 @@ namespace Alias.Emulator.Hotel.Navigator.Views
 			get; set;
 		}
 
-		public string Type
-		{
-			get; set;
-		}
-
 		public int OrderId
-		{
-			get; set;
-		}
-
-		public int ExtraId
 		{
 			get; set;
 		}
@@ -50,8 +40,6 @@ namespace Alias.Emulator.Hotel.Navigator.Views
 		{
 			get; set;
 		}
-
-		public abstract void Init();
 
 		public abstract List<RoomData> Search(string query, Session session, int Limit);
 	}

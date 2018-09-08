@@ -53,25 +53,6 @@ namespace Alias.Emulator.Hotel.Navigator
 			return searches;
 		}
 
-		public static List<RoomData> ReadPublicRooms(int extraId)
-		{
-			List<RoomData> result = new List<RoomData>();
-			//todo:
-			/*using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
-			{
-				dbClient.AddParameter("categoryId", extraId);
-				using (MySqlDataReader Reader = dbClient.DataReader("SELECT `id` FROM `room_data` WHERE `category` = @categoryId"))
-				{
-					while (Reader.Read())
-					{
-						int roomId = Reader.GetInt32("id");
-						result.Add(Alias.Server.RoomManager.RoomData(roomId));
-					}
-				}
-			}*/
-			return result;
-		}
-
 		public static void SavePreferences(NavigatorPreference preference, int UserId)
 		{
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
@@ -87,36 +68,51 @@ namespace Alias.Emulator.Hotel.Navigator
 			}
 		}
 
-		public static void SaveSearches()
+		public static Dictionary<string, List<INavigatorCategory>> ReadCategories()
 		{
-
-		}
-
-		public static List<INavigatorCategory> ReadCategories()
-		{
-			List<INavigatorCategory> result = new List<INavigatorCategory>();
+			Dictionary<string, List<INavigatorCategory>> result = new Dictionary<string, List<INavigatorCategory>>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
-				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `navigator_categories`"))
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT * FROM `navigator_categories` ORDER BY `order_id` DESC"))
 				{
 					while (Reader.Read())
 					{
 						INavigatorCategory category = Alias.Server.NavigatorManager.NewCategory(Reader.GetString("type"));
-						category.Id                 = Reader.GetString("id");
+						category.Id                 = Reader.GetInt32("id");
+						category.QueryId            = Reader.GetString("query_id");
 						category.Title              = Reader.GetString("title");
-						category.ShowButtons        = Reader.GetBoolean("show_buttons");
 						category.ShowCollapsed      = Reader.GetBoolean("show_collapsed");
 						category.ShowThumbnail      = Reader.GetBoolean("show_thumbnail");
-						category.Type               = Reader.GetString("type");
-						category.OrderId            = Reader.GetInt32("order_id");
-						category.ExtraId            = Reader.GetInt32("extra_id");
 						category.MinRank            = Reader.GetInt32("min_rank");
-						category.Init();
-						result.Add(category);
+
+						if (!result.ContainsKey(Reader.GetString("type")))
+						{
+							result.Add(Reader.GetString("type"), new List<INavigatorCategory>());
+						}
+						result[Reader.GetString("type")].Add(category);
 					}
 				}
 			}
 			return result;
+		}
+
+		public static List<RoomData> ReadPublicRooms()
+		{
+			List<RoomData> rooms = new List<RoomData>();
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				using (MySqlDataReader Reader = dbClient.DataReader("SELECT	`id` FROM `room_data` WHERE `category` = '0'"))
+				{
+					while (Reader.Read())
+					{
+						if (Alias.Server.RoomManager.TryGetRoomData(Reader.GetInt32("id"), out RoomData roomData))
+						{
+							rooms.Add(roomData);
+						}
+					}
+				}
+			}
+			return rooms;
 		}
 	}
 }

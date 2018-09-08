@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Navigator
 	{
 		public static void Register()
 		{
-			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestNavigatorSettingsMessageEvent, new RequestNavigatorSettingsEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestEventCategoriesMessageEvent, new RequestEventCategoriesEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.SaveWindowSettingsMessageEvent, new SaveWindowSettingsEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.SearchRoomsMessageEvent, new SearchRoomsEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestRoomCategoriesMessageEvent, new RequestRoomCategoriesEvent());

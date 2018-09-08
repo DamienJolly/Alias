@@ -1,53 +1,53 @@
 using System.Collections.Generic;
-using System.Linq;
 using Alias.Emulator.Hotel.Navigator.Views;
+using Alias.Emulator.Hotel.Rooms;
 
 namespace Alias.Emulator.Hotel.Navigator
 {
-	sealed class NavigatorManager
+	class NavigatorManager
 	{
-		private List<INavigatorCategory> _categories;
+		
+		public Dictionary<string, List<INavigatorCategory>> Categories
+		{
+			get; set;
+		}
+
+		public List<RoomData> PublicRooms
+		{
+			get; set;
+		}
 
 		public NavigatorManager()
 		{
-			this._categories = new List<INavigatorCategory>();
+			Categories = new Dictionary<string, List<INavigatorCategory>>();
+			PublicRooms = new List<RoomData>();
 		}
 
 		public void Initialize()
 		{
-			if (this._categories.Count > 0)
+			if (Categories.Count > 0)
 			{
-				this._categories.Clear();
+				Categories.Clear();
 			}
 
-			this._categories = NavigatorDatabase.ReadCategories();
+			Categories = NavigatorDatabase.ReadCategories();
+			PublicRooms = NavigatorDatabase.ReadPublicRooms();
 		}
 		
 		public INavigatorCategory NewCategory(string type)
 		{
 			switch (type)
 			{
-				case "PUBLIC": return new PublicCategory();
-				case "USER": return new MyWorldCategory();
-				default: return new NormalCategory();
+				case "official_view": return new PublicCategory();
+				case "myworld_view": return new MyWorldCategory();
+				case "roomads_view": return new EventsCategory();
+				case "hotel_view": default: return new NormalCategory();
 			}
 		}
 
-		public List<INavigatorCategory> GetCategories(string type)
+		public bool TryGetCategories(string type, out List<INavigatorCategory> categories)
 		{
-			switch (type)
-			{
-				case "official_view":
-					return this._categories.Where(cat => cat.Type == "PUBLIC").OrderBy(cat => cat.OrderId).ToList();
-				case "hotel_view":
-					return this._categories.Where(cat => cat.Type == "POPULAR").OrderBy(cat => cat.OrderId).ToList();
-				case "roomads_view":
-					return this._categories.Where(cat => cat.Type == "EVENT").OrderBy(cat => cat.OrderId).ToList();
-				case "myworld_view":
-					return this._categories.Where(cat => cat.Type == "USER").OrderBy(cat => cat.OrderId).ToList();
-				default:
-					return this._categories.Where(cat => cat.Id == type).ToList();
-			}
+			return Categories.TryGetValue(type, out categories);
 		}
 	}
 }

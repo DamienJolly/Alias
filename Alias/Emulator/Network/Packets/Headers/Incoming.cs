@@ -142,7 +142,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int SaveWindowSettingsMessageEvent = 107;
 		public const int SearchRoomsMessageEvent = 3612;
 		public const int RequestRoomCategoriesMessageEvent = 3976;
-		public const int RequestNavigatorSettingsMessageEvent = 708;
+		public const int RequestEventCategoriesMessageEvent = 708;
 		public const int RequestPromotedRoomsMessageEvent = 2446;
 		public const int AddSavedSearchMessageEvent = 117;
 		public const int RemoveSavedSearchMessageEvent = 448;

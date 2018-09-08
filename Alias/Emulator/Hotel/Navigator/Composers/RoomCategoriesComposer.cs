@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 			message.WriteInteger(this.categories.Count);
 			this.categories.ForEach(category =>
 			{
-				message.WriteInteger(category.ExtraId);
+				message.WriteInteger(category.Id);
 				message.WriteString(category.Title);
 				message.WriteBoolean(category.MinRank <= this.rank);
 				message.WriteBoolean(false);

@@ -13,7 +13,7 @@ namespace Alias.Emulator.Hotel.Rooms
 			get; set;
 		}
 
-		private Dictionary<int, RoomData> CachedRooms
+		public Dictionary<int, RoomData> CachedRooms
 		{
 			get; set;
 		}

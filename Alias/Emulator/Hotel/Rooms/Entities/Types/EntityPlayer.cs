@@ -24,12 +24,14 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 		public void OnEntityJoin(RoomEntity player)
 		{
 			player.Habbo.Entity = player;
+			player.Room.RoomData.UsersNow++;
 		}
 
 		public void OnEntityLeave(RoomEntity player)
 		{
 			player.Habbo.CurrentRoom = null;
 			player.Habbo.Entity = null;
+			player.Room.RoomData.UsersNow--;
 
 			RoomTrade trade = player.Room.RoomTrading.GetActiveTrade(player);
 			if (trade != null)

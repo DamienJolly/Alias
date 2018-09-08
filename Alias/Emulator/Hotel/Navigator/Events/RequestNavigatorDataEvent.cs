@@ -12,8 +12,8 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 			session.Send(new NavigatorMetaDataComposer());
 			session.Send(new NavigatorLiftedRoomsComposer());
 			session.Send(new NavigatorCollapsedCategoriesComposer());
+			session.Send(new NavigatorSettingsComposer(session.Habbo.NavigatorPreference));
 			session.Send(new NavigatorSavedSearchesComposer(session.Habbo.NavigatorPreference.NavigatorSearches));
-			session.Send(new NavigatorEventCategoriesComposer(session.Habbo.Rank));
 		}
 	}
 }

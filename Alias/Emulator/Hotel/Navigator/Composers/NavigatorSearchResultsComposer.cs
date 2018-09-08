@@ -15,10 +15,10 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 		private List<INavigatorCategory> Categories;
 		private Session session;
 
-		public NavigatorSearchResultsComposer(string category, string search, Session s)
+		public NavigatorSearchResultsComposer(string category, List<INavigatorCategory> categories, string search, Session s)
 		{
 			this.Category = category;
-			this.Categories = Alias.Server.NavigatorManager.GetCategories(category);
+			this.Categories = categories;
 			this.Search = search;
 			this.session = s;
 		}
@@ -45,7 +45,7 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 			Temp.ForEach(cat =>
 			{
 				List<RoomData> rooms = cat.Search(this.Search.ToLower(), this.session, !IsParent(this.Category) ? 100 : 13);
-				message.WriteString((cat.Id == "popular" && !string.IsNullOrEmpty(this.Search)) ? "query" : cat.Id);
+				message.WriteString((cat.QueryId == "popular" && !string.IsNullOrEmpty(this.Search)) ? "query" : cat.QueryId);
 				message.WriteString(cat.Title);
 				message.WriteInteger(!IsParent(this.Category) ? 2 : (rooms.Count > 12) ? 1 : 0);
 				message.WriteBoolean(cat.ShowCollapsed);
