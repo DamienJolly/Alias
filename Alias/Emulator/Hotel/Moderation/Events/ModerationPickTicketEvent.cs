@@ -25,14 +25,12 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 			ModerationTicket issue = Alias.Server.ModerationManager.GetTicket(ticketId);
 			if (issue == null)
 			{
-				session.Send(new GenericAlertComposer("Picking issue failed: \rTicket already picked or does not exist!", session));
 				return;
 			}
 
 			if (issue.State == ModerationTicketState.PICKED)
 			{
 				session.Send(new ModerationIssueInfoComposer(issue));
-				session.Send(new GenericAlertComposer("Picking issue failed: \rTicket already picked or does not exist!", session));
 				return;
 			}
 

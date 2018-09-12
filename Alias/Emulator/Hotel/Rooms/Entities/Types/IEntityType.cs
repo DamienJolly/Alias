@@ -2,11 +2,21 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 {
-    interface IEntityType
+    abstract class IEntityType
     {
-		void Serialize(ServerPacket message, RoomEntity entity);
-		void OnEntityJoin(RoomEntity entity);
-		void OnEntityLeave(RoomEntity entity);
-		void OnCycle(RoomEntity entity);
+		public RoomEntity Entity
+		{
+			get; set;
+		}
+
+		public Room CurrentRoom
+		{
+			get; set;
+		}
+
+		public abstract void Serialize(ServerPacket message);
+		public abstract void OnEntityJoin();
+		public abstract void OnEntityLeave();
+		public abstract void OnCycle();
 	}
 }

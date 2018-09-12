@@ -4,11 +4,11 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 {
     class EntityPet : IEntityType
     {
-		public void Serialize(ServerPacket message, RoomEntity pet)
+		public override void Serialize(ServerPacket message)
 		{
 			message.WriteInteger(2);
-			message.WriteInteger(int.Parse(pet.Gender));
-			message.WriteInteger(pet.OwnerId);
+			message.WriteInteger(int.Parse(Entity.Gender));
+			message.WriteInteger(Entity.OwnerId);
 			message.WriteString("Damien"); // Owner name
 			message.WriteInteger(1); // rarity
 			message.WriteBoolean(false); //sadle
@@ -21,17 +21,17 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 			message.WriteString("");
 		}
 
-		public void OnEntityJoin(RoomEntity pet)
+		public override void OnEntityJoin()
 		{
 
 		}
 
-		public void OnEntityLeave(RoomEntity pet)
+		public override void OnEntityLeave()
 		{
 
 		}
 
-		public void OnCycle(RoomEntity pet)
+		public override void OnCycle()
 		{
 			
 		}

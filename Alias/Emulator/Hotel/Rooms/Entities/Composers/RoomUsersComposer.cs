@@ -34,7 +34,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Composers
 				message.WriteInteger(user.Position.Y);
 				message.WriteString(user.Position.Z.ToString());
 				message.WriteInteger(user.Position.Rotation);
-				user.EntityType.Serialize(message, user);
+				user.EntityType.Serialize(message);
 			});
 			return message;
 		}

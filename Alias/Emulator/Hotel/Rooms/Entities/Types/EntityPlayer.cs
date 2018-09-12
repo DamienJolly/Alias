@@ -6,41 +6,41 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 {
     class EntityPlayer : IEntityType
     {
-		public void Serialize(ServerPacket message, RoomEntity player)
+		public override void Serialize(ServerPacket message)
 		{
 			message.WriteInteger(1);
-			message.WriteString(player.Gender.ToLower());
+			message.WriteString(Entity.Gender.ToLower());
 
-			Group group = Alias.Server.GroupManager.GetGroup(player.Habbo.GroupId);
+			Group group = Alias.Server.GroupManager.GetGroup(Entity.Habbo.GroupId);
 			message.WriteInteger(group != null ? group.Id : -1);
 			message.WriteInteger(0); //??
 			message.WriteString(group != null ? group.Name : "");
 
 			message.WriteString("");
-			message.WriteInteger(player.Habbo.AchievementScore);
+			message.WriteInteger(Entity.Habbo.AchievementScore);
 			message.WriteBoolean(false); //idk
 		}
 
-		public void OnEntityJoin(RoomEntity player)
+		public override void OnEntityJoin()
 		{
-			player.Habbo.Entity = player;
-			player.Room.RoomData.UsersNow++;
+			Entity.Habbo.Entity = Entity;
+			CurrentRoom.RoomData.UsersNow++;
 		}
 
-		public void OnEntityLeave(RoomEntity player)
+		public override void OnEntityLeave()
 		{
-			player.Habbo.CurrentRoom = null;
-			player.Habbo.Entity = null;
-			player.Room.RoomData.UsersNow--;
+			Entity.Habbo.CurrentRoom = null;
+			Entity.Habbo.Entity = null;
+			CurrentRoom.RoomData.UsersNow--;
 
-			RoomTrade trade = player.Room.RoomTrading.GetActiveTrade(player);
+			RoomTrade trade = CurrentRoom.RoomTrading.GetActiveTrade(Entity);
 			if (trade != null)
 			{
-				trade.StopTrade(player);
+				trade.StopTrade(Entity);
 			}
 		}
 
-		public void OnCycle(RoomEntity player)
+		public override void OnCycle()
 		{
 
 		}

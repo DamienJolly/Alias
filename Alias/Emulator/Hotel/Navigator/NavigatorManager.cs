@@ -6,7 +6,6 @@ namespace Alias.Emulator.Hotel.Navigator
 {
 	class NavigatorManager
 	{
-		
 		public Dictionary<string, List<INavigatorCategory>> Categories
 		{
 			get; set;

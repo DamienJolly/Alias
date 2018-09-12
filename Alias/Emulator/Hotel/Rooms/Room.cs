@@ -134,7 +134,6 @@ namespace Alias.Emulator.Hotel.Rooms
 				if (user.Habbo != null && user.Habbo.Session != null)
 				{
 					user.Habbo.CurrentRoom = null;
-					user.Habbo.Notification("Sorry, it appears that room has been unloaded!");
 					user.Habbo.Session.Send(new HotelViewComposer());
 				}
 			}

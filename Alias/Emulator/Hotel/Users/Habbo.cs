@@ -86,18 +86,6 @@ namespace Alias.Emulator.Hotel.Users
 			}
 		}
 
-		public void Notification(string text, bool forced = false)
-		{
-			if (this.CurrentRoom != null && !forced)
-			{
-				this.Entity.OnChat(text, 0, ChatType.WHISPER, this.Entity);
-			}
-			else
-			{
-				this.Session.Send(new GenericAlertComposer(text, Session));
-			}
-		}
-
 		public bool HasPermission(string param)
 		{
 			return Alias.Server.PermissionManager.HasPermission(this.Rank, param);

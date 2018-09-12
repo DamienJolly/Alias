@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Drawing;
-using Alias.Emulator.Hotel.Rooms.Entities.Types;
 using Alias.Emulator.Hotel.Users;
 
 namespace Alias.Emulator.Hotel.Rooms.Entities
@@ -96,28 +95,5 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 		{
 			get; set;
 		} = false;
-
-		private IEntityType _entityType
-		{
-			get; set;
-		} = null;
-
-		public IEntityType EntityType
-		{
-			get
-			{
-				if (_entityType == null)
-				{
-					switch (this.Type)
-					{
-						case RoomEntityType.Player: default: _entityType = new EntityPlayer(); break;
-						case RoomEntityType.Bot: _entityType = new EntityGenericBot(); break;
-						case RoomEntityType.Pet: _entityType = new EntityPet(); break;
-					}
-				}
-
-				return _entityType;
-			}
-		}
 	}
 }

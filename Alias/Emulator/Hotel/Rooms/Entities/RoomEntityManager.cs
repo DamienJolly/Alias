@@ -38,7 +38,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			entity.VirtualId = NextVirtualId;
 			this.Send(new RoomUsersComposer(entity));
 			this.Send(new RoomUserStatusComposer(entity));
-			entity.EntityType.OnEntityJoin(entity);
+			entity.EntityType.OnEntityJoin();
 			this.Room.Mapping.Tiles[entity.Position.X, entity.Position.Y].AddEntity(entity);
 			this.Entities.Add(entity);
 		}
@@ -49,7 +49,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			{
 				entity.Disposing = true;
 				this.Send(new RoomUserRemoveComposer(entity.VirtualId));
-				entity.EntityType.OnEntityLeave(entity);
+				entity.EntityType.OnEntityLeave();
 				entity.Dispose();
 				this.Room.Mapping.Tiles[entity.Position.X, entity.Position.Y].RemoveEntity(entity);
 				this.Entities.Remove(entity);

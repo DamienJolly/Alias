@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Chat.Commands.Users
@@ -33,7 +34,7 @@ namespace Alias.Emulator.Hotel.Chat.Commands.Users
 					+ "\n"
 					+ "- Damien Jolly";
 
-			session.Habbo.Notification(message, true);
+			session.Send(new GenericAlertComposer(message));
 		}
 	}
 }

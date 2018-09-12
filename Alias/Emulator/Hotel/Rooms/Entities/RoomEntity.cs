@@ -4,6 +4,7 @@ using Alias.Emulator.Hotel.Chat.WordFilter;
 using Alias.Emulator.Hotel.Landing.Composers;
 using Alias.Emulator.Hotel.Rooms.Entities.Chat;
 using Alias.Emulator.Hotel.Rooms.Entities.Composers;
+using Alias.Emulator.Hotel.Rooms.Entities.Types;
 using Alias.Emulator.Hotel.Rooms.Mapping;
 
 namespace Alias.Emulator.Hotel.Rooms.Entities
@@ -25,6 +26,31 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			get; set;
 		} = false;
 
+		private IEntityType _entityType
+		{
+			get; set;
+		} = null;
+
+		public IEntityType EntityType
+		{
+			get
+			{
+				if (_entityType == null)
+				{
+					switch (this.Type)
+					{
+						case RoomEntityType.Player: default: _entityType = new EntityPlayer(); break;
+						case RoomEntityType.Bot: _entityType = new EntityGenericBot(); break;
+						case RoomEntityType.Pet: _entityType = new EntityPet(); break;
+					}
+					_entityType.Entity = this;
+					_entityType.CurrentRoom = Room;
+				}
+
+				return _entityType;
+			}
+		}
+
 		public void OnCycle()
 		{
 			if (this.HandItem > 0)
@@ -35,7 +61,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 					SetHandItem(0);
 				}
 			}
-			this.EntityType.OnCycle(this);
+			this.EntityType.OnCycle();
 			this.WalkCycle();
 		}
 

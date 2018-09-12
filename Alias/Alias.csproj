@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Emulator\Hotel\Catalog\Layouts\" />
-    <Folder Include="Emulator\Hotel\Rooms\Bots\" />
+    <Folder Include="Emulator\Hotel\Chat\Commands\Staff\" />
   </ItemGroup>
 
   <ItemGroup>

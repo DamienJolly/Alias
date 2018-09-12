@@ -28,10 +28,6 @@ namespace Alias.Emulator.Hotel.Camera.Events
 				//session.LastPhoto = path;
 				session.Send(new CameraURLComposer(path + ".png"));
 			}
-			else
-			{
-				session.Habbo.Notification("There was an error rendering your image.", true);
-			}
 		}
 
 		private static string Deflate(byte[] bytes)

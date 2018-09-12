@@ -34,7 +34,6 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Events
 				string[] data = map.Split('\r');
 				if (data.Length > 64)
 				{
-					session.Send(new GenericAlertComposer("Incorrect Floorplan! Maximum size of 64 x 64", session));
 					return;
 				}
 
@@ -54,7 +53,6 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Events
 
 					if (lastLineLength != data[i].Length)
 					{
-						session.Send(new GenericAlertComposer("Incorrect Floorplan! Maximum size of 64 x 64", session));
 						return;
 					}
 				}

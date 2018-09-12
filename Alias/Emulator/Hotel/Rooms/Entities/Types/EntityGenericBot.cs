@@ -11,11 +11,11 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 		private int ActionTimer = 0;
 		private int SpeechTimer = 0;
 
-		public void Serialize(ServerPacket message, RoomEntity bot)
+		public override void Serialize(ServerPacket message)
 		{
 			message.WriteInteger(4);
-			message.WriteString(bot.Gender.ToLower()); // ?
-			message.WriteInteger(bot.OwnerId);
+			message.WriteString(Entity.Gender.ToLower()); // ?
+			message.WriteInteger(Entity.OwnerId);
 			message.WriteString("Damien"); // Owner name
 			message.WriteInteger(5);
 			{
@@ -28,25 +28,25 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 			}
 		}
 
-		public void OnEntityJoin(RoomEntity bot)
+		public override void OnEntityJoin()
 		{
 			SpeechTimer = 20;
 			ActionTimer = Randomness.RandomNumber(5, 20);
 			
-			bot.Room.EntityManager.Send(new RoomUserDanceComposer(bot));
-			bot.Room.EntityManager.Send(new RoomUserEffectComposer(bot));
+			CurrentRoom.EntityManager.Send(new RoomUserDanceComposer(Entity));
+			CurrentRoom.EntityManager.Send(new RoomUserEffectComposer(Entity));
 		}
 
-		public void OnEntityLeave(RoomEntity bot)
+		public override void OnEntityLeave()
 		{
 
 		}
 
-		public void OnCycle(RoomEntity bot)
+		public override void OnCycle()
 		{
 			if (SpeechTimer <= 0)
 			{
-				bot.OnChat("testing", 1, ChatType.CHAT);
+				Entity.OnChat("testing", 1, ChatType.CHAT);
 				SpeechTimer = 20;
 			}
 			else
@@ -54,19 +54,19 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 				SpeechTimer--;
 			}
 
-			if (bot.CanWalk)
+			if (Entity.CanWalk)
 			{
 				if (ActionTimer <= 0)
 				{
-					RoomTile tile = bot.Room.Mapping.RandomWalkableTile;
+					RoomTile tile = CurrentRoom.Mapping.RandomWalkableTile;
 					if (tile != null)
 					{
-						bot.TargetPosition = new UserPosition()
+						Entity.TargetPosition = new UserPosition()
 						{
 							X = tile.Position.X,
 							Y = tile.Position.Y
 						};
-						bot.Path = bot.Room.PathFinder.Path(bot);
+						Entity.Path = CurrentRoom.PathFinder.Path(Entity);
 					}
 					ActionTimer = Randomness.RandomNumber(5, 20);
 				}
