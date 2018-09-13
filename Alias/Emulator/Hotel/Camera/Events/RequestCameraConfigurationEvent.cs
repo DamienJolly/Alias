@@ -9,12 +9,22 @@ namespace Alias.Emulator.Hotel.Camera.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			//todo: add to db
-			int creditsCost = 0;
-			int pointsCost = 0;
-			int pointsPublishCost = 0;
+			if (!int.TryParse(Alias.Server.Settings.GetSetting("camera.credits.cost"), out int creditsCost))
+			{
+				creditsCost = 100;
+			}
 
-			session.Send(new CameraPriceComposer(creditsCost, pointsCost, pointsPublishCost));
+			if (!int.TryParse(Alias.Server.Settings.GetSetting("camera.points.cost"), out int pointsCost))
+			{
+				pointsCost = 250;
+			}
+
+			if (!int.TryParse(Alias.Server.Settings.GetSetting("camera.publish.cost"), out int publishCost))
+			{
+				publishCost = 500;
+			}
+
+			session.Send(new CameraPriceComposer(creditsCost, pointsCost, publishCost));
 		}
 	}
 }
