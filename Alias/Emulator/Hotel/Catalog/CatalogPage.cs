@@ -80,9 +80,7 @@ namespace Alias.Emulator.Hotel.Catalog
 		{
 			get; set;
 		}
-
-		//todo: vip
-
+		
 		public CatalogLayout Layout
 		{
 			get; set;

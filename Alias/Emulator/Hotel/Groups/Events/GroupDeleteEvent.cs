@@ -27,8 +27,12 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			}
 
 			roomData.Group = null;
-			//todo: group fix
-			//room.EntityManager.Send(new RemoveGroupFromRoomComposer(group.Id));
+
+			if (session.Habbo.CurrentRoom != null)
+			{
+				session.Habbo.CurrentRoom.RoomData.Group = null;
+				session.Habbo.CurrentRoom.EntityManager.Send(new RemoveGroupFromRoomComposer(group.Id));
+			}
 		}
 	}
 }

@@ -39,11 +39,10 @@ namespace Alias.Emulator.Hotel.Groups.Events
 
 			roomData.Group = group;
 
-			//todo: group fixs
-			/*if (Alias.Server.RoomManager.IsRoomLoaded(group.RoomId))
+			if (session.Habbo.CurrentRoom != null)
 			{
-				Alias.Server.RoomManager.Room(group.RoomId).RefreshGroup();
-			}*/
+				session.Habbo.CurrentRoom.UpdateGroup(group);
+			}
 		}
 	}
 }

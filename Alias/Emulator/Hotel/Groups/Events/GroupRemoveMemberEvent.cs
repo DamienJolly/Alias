@@ -32,7 +32,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 				Habbo targetHabbo = Alias.Server.SocketServer.SessionManager.HabboById(userId);
 				if (targetHabbo != null)
 				{
-					//todo: remove fav group
+					targetHabbo.GroupId = 0;
 					Room room = targetHabbo.CurrentRoom;
 					if (room != null)
 					{

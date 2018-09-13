@@ -55,9 +55,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 
 			Group group = Alias.Server.GroupManager.CreateGroup(session.Habbo, roomId, roomData.Name, name, description, badge, colorOne, colorTwo);
 			roomData.Group = group;
-
-			// gen badge
-
+			
 			if (!session.Habbo.HasPermission("acc_infinite_credits"))
 			{
 				int guildPrice = 10;
@@ -75,11 +73,10 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			session.Send(new PurchaseOKComposer());
 			session.Send(new GroupBoughtComposer(group));
 
-			//todo: group fix
-			/*if (Alias.Server.RoomManager.IsRoomLoaded(group.RoomId))
+			if (session.Habbo.CurrentRoom != null)
 			{
-				Alias.Server.RoomManager.Room(group.RoomId).RefreshGroup();
-			}*/
+				session.Habbo.CurrentRoom.UpdateGroup(group);
+			}
 		}
 	}
 }

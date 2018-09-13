@@ -12,6 +12,7 @@ using Alias.Emulator.Hotel.Rooms.Tasks;
 using Alias.Emulator.Hotel.Rooms.Trading;
 using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Hotel.Groups;
 
 namespace Alias.Emulator.Hotel.Rooms
 {
@@ -110,17 +111,15 @@ namespace Alias.Emulator.Hotel.Rooms
 			this.RoomTrading = new RoomTrading(this);
 		}
 
-		public void RefreshGroup()
+		public void UpdateGroup(Group group)
 		{
-			if (this.RoomData != null)
+			this.RoomData.Group = group;
+			List<RoomEntity> users = this.EntityManager.Entities;
+			foreach (RoomEntity user in users)
 			{
-				List<RoomEntity> users = this.EntityManager.Entities;
-				foreach (RoomEntity user in users)
+				if (user.Habbo != null)
 				{
-					if (user.Habbo != null)
-					{
-						user.Habbo.Session.Send(new GroupInfoComposer(this.RoomData.Group, user.Habbo, false, this.RoomData.Group.GetMember(user.Habbo.Id)));
-					}
+					user.Habbo.Session.Send(new GroupInfoComposer(group, user.Habbo, false, group.GetMember(user.Habbo.Id)));
 				}
 			}
 		}

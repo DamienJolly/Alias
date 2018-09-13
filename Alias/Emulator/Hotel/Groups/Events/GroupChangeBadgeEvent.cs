@@ -1,3 +1,4 @@
+using Alias.Emulator.Hotel.Groups.Composers;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
@@ -44,9 +45,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			}
 
 			group.Badge = badge;
-
-			//todo: gen badge
-
+			
 			if (!Alias.Server.RoomManager.TryGetRoomData(group.RoomId, out RoomData roomData))
 			{
 				return;
@@ -59,11 +58,10 @@ namespace Alias.Emulator.Hotel.Groups.Events
 
 			roomData.Group = group;
 
-			//todo: group fixs
-			/*if (Alias.Server.RoomManager.IsRoomLoaded(group.RoomId))
+			if (session.Habbo.CurrentRoom != null)
 			{
-				Alias.Server.RoomManager.Room(group.RoomId).RefreshGroup();
-			}*/
+				session.Habbo.CurrentRoom.UpdateGroup(group);
+			}
 		}
 	}
 }
