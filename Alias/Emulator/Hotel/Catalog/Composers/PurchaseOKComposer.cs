@@ -34,17 +34,15 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 				message.WriteInteger(item.GetItems().Count);
 				item.GetItems().ForEach(data =>
 				{
-					message.WriteString("s");
+					message.WriteString(data.Type);
 					if (data.Type.Equals("b"))
 					{
 						message.WriteString(data.Name);
 					}
 					else
 					{
-						message.WriteInteger(data.Id);
-
-					//TODO extradata
-					message.WriteString("");
+						message.WriteInteger(data.SpriteId);
+						message.WriteString(data.ExtraData);
 						message.WriteInteger(item.GetItemAmount(data.Id));
 
 						message.WriteBoolean(item.IsLimited);
