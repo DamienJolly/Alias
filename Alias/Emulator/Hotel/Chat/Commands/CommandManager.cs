@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Alias.Emulator.Hotel.Chat.Commands.Staff;
 using Alias.Emulator.Hotel.Chat.Commands.Users;
 using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 using Alias.Emulator.Network.Sessions;
@@ -82,7 +81,7 @@ namespace Alias.Emulator.Hotel.Chat.Commands
 		/// </summary>
 		private void RegisterStaff()
 		{
-			this._commands.Add(new UpdateCommand());
+
 		}
 	}
 }

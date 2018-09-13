@@ -57,7 +57,7 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 						string message = File.ReadAllText(@".\welcome.alias");
 						if (!string.IsNullOrEmpty(message))
 						{
-							session.Send(new GenericAlertComposer(message.Replace("\r\n", "\n"), session));
+							session.Send(new GenericAlertComposer(message.Replace("\r\n", "\n")));
 						}
 					}
 				}

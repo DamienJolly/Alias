@@ -11,14 +11,16 @@ namespace Alias.Emulator.Hotel.Rooms.Pathfinding
 	{
 		public Point[] DiagonalMovement = new[]
 		{
+			new Point(-1, -1),
 			new Point(0, -1),
+			new Point(1, -1),
 			new Point(1, 0),
-			new Point(0, 1),
-			new Point(-1, 0),
-			new Point(-1,-1),
 			new Point(1, 1),
+			new Point(0, 1),
+			new Point(1, -1),
+			new Point(1, 0),
 			new Point(-1, 1),
-			new Point(1, -1)
+			new Point(-1, 0)
 		};
 
 		public Point[] NoDiagonalMovement = new[]
@@ -38,7 +40,7 @@ namespace Alias.Emulator.Hotel.Rooms.Pathfinding
 		{
 			this.Room = r;
 		}
-
+		
 		public LinkedList<Point> Path(RoomEntity user)
 		{
 			LinkedList<Node> openNodes = new LinkedList<Node>();
@@ -46,7 +48,7 @@ namespace Alias.Emulator.Hotel.Rooms.Pathfinding
 			{
 				for (int y = 0; y < this.Room.Mapping.SizeY; y++)
 				{
-					if (this.Room.Mapping.Tiles[x, y].State == RoomTileState.OPEN && this.Room.Mapping.Tiles[x, y].IsValidTile(user, x == user.TargetPosition.X && y == user.TargetPosition.Y))
+					if (this.Room.Mapping.Tiles[x, y].IsValidTile(user, x == user.TargetPosition.X && y == user.TargetPosition.Y))
 					{
 						openNodes.AddLast(new Node(x, y));
 					}
