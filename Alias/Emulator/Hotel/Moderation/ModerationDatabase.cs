@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Data;
 using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Rooms.Entities.Chat;
 using Alias.Emulator.Hotel.Users;
@@ -50,6 +49,33 @@ namespace Alias.Emulator.Hotel.Moderation
 				}
 			}
 			return tickets;
+		}
+
+		public static int AddTicket(ModerationTicket ticket)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("time", ticket.Timestamp);
+				dbClient.AddParameter("senderId", ticket.SenderId);
+				dbClient.AddParameter("reporterID", ticket.ReportedId);
+				dbClient.AddParameter("issue", ticket.Message);
+				dbClient.AddParameter("type", ModerationTicketTypes.GetIntFromType(ticket.Type));
+				dbClient.AddParameter("roomId", ticket.RoomId);
+				dbClient.AddParameter("category", ticket.Category);
+				dbClient.Query("INSERT INTO `support_tickets` (`timestamp`, `sender_id`, `reported_id`, `issue`, `type`, `room_id`, `category`) VALUES (@time, @senderId, @reporterId, @issue, @type, @roomId, @category)");
+				return dbClient.LastInsertedId();
+			}
+		}
+
+		public static void UpdateTicket(ModerationTicket ticket)
+		{
+			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
+			{
+				dbClient.AddParameter("id", ticket.Id);
+				dbClient.AddParameter("modId", ticket.ModId);
+				dbClient.AddParameter("state", (int)ticket.State);
+				dbClient.Query("UPDATE `support_tickets` SET `state` = @state, `mod_id` = @modId WHERE `id` = @id");
+			}
 		}
 
 		public static List<ModerationPresets> ReadPresets()

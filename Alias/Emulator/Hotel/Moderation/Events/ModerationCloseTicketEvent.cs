@@ -30,11 +30,6 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 			}
 
 			Habbo habbo = Alias.Server.SocketServer.SessionManager.HabboById(issue.SenderId);
-			if (habbo == null)
-			{
-				return;
-			}
-
 			Alias.Server.ModerationManager.ResolveTicket(issue, habbo, state);
 		}
 	}

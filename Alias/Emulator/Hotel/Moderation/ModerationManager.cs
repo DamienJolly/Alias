@@ -6,6 +6,7 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation
 {
+	// todo: remove handled tickets after x seconds since being solved
     sealed class ModerationManager
     {
 		private List<ModerationPresets> _presets;
@@ -32,7 +33,6 @@ namespace Alias.Emulator.Hotel.Moderation
 		{
 			ModerationTicket issue = new ModerationTicket()
 			{
-				Id             = 999,
 				SenderId       = reported.Id,
 				SenderUsername = reported.Username,
 				Message        = message,
@@ -44,7 +44,7 @@ namespace Alias.Emulator.Hotel.Moderation
 
 		public void AddTicket(ModerationTicket issue)
 		{
-			//todo: add to db
+			issue.Id = ModerationDatabase.AddTicket(issue);
 			this._modTickets.Add(issue);
 			Alias.Server.SocketServer.SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
 		}
@@ -89,8 +89,8 @@ namespace Alias.Emulator.Hotel.Moderation
 			issue.ModId       = habbo.Id;
 			issue.ModUsername = habbo.Username;
 			issue.State       = ModerationTicketState.PICKED;
+			ModerationDatabase.UpdateTicket(issue);
 
-			//todo: update in db
 			Alias.Server.SocketServer.SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
 		}
 
@@ -99,16 +99,15 @@ namespace Alias.Emulator.Hotel.Moderation
 			issue.ModId       = 0;
 			issue.ModUsername = "";
 			issue.State       = ModerationTicketState.OPEN;
-
-			//todo: update in db
+			ModerationDatabase.UpdateTicket(issue);
+			
 			Alias.Server.SocketServer.SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
 		}
 
 		public void ResolveTicket(ModerationTicket issue, Habbo sender, int state)
 		{
 			issue.State = ModerationTicketState.CLOSED;
-
-			//todo: update in db
+			ModerationDatabase.UpdateTicket(issue);
 
 			if (sender.Session != null)
 			{

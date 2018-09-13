@@ -19,7 +19,7 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			ServerPacket message = new ServerPacket(Outgoing.ModerationRoomInfoMessageComposer);
 			message.WriteInteger(this.roomData.Id);
 			message.WriteInteger(this.roomData.UsersNow);
-			message.WriteBoolean(false); //todo: owner in room
+			message.WriteBoolean(Alias.Server.SocketServer.SessionManager.SessionById(this.roomData.OwnerId) != null);
 			message.WriteInteger(this.roomData.OwnerId);
 			message.WriteString(this.roomData.OwnerName);
 			message.WriteBoolean(false); //todo: public room

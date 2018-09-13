@@ -21,7 +21,7 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			message.WriteInteger(ModerationTicketStates.GetIntFromState(this.issue.State));
 			message.WriteInteger(ModerationTicketTypes.GetIntFromType(this.issue.Type));
 			message.WriteInteger(this.issue.Category);
-			message.WriteInteger((int)UnixTimestamp.Now - this.issue.Id);
+			message.WriteInteger((int)UnixTimestamp.Now);
 			message.WriteInteger(this.issue.Priority);
 			message.WriteInteger(1); // ??
 			message.WriteInteger(this.issue.SenderId);
@@ -30,7 +30,7 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 			message.WriteString(this.issue.ReportedUsername);
 			message.WriteInteger(this.issue.ModId);
 			message.WriteString(this.issue.ModUsername);
-			message.WriteString(this.issue.Message + " - AutomaticAlertWord");
+			message.WriteString(this.issue.Message);
 			message.WriteInteger(this.issue.RoomId);
 			message.WriteInteger(1);
 			message.WriteString("Banned Word");
