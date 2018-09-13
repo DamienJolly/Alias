@@ -1,5 +1,3 @@
-using Alias.Emulator.Hotel.Misc.Composers;
-using Alias.Emulator.Hotel.Moderation.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -15,26 +13,23 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			message.PopInt();
-			int ticketId = message.PopInt();
-			if (ticketId <= 0)
+			int count = message.PopInt();
+			for (int i = 0; i < count; i++)
 			{
-				return;
-			}
+				int ticketId = message.PopInt();
+				if (ticketId <= 0)
+				{
+					continue;
+				}
 
-			ModerationTicket issue = Alias.Server.ModerationManager.GetTicket(ticketId);
-			if (issue == null)
-			{
-				return;
-			}
+				ModerationTicket ticket = Alias.Server.ModerationManager.GetTicket(ticketId);
+				if (ticket == null || ticket.State != ModerationTicketState.OPEN)
+				{
+					continue;
+				}
 
-			if (issue.State == ModerationTicketState.PICKED)
-			{
-				session.Send(new ModerationIssueInfoComposer(issue));
-				return;
+				Alias.Server.ModerationManager.PickTicket(ticket, session.Habbo);
 			}
-
-			Alias.Server.ModerationManager.PickTicket(issue, session.Habbo);
 		}
 	}
 }

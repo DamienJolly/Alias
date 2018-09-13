@@ -12,8 +12,9 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 			{
 				return;
 			}
-			
-			for (int i = 0; i < message.PopInt(); i++)
+
+			int count = message.PopInt();
+			for (int i = 0; i < count; i++)
 			{
 				int ticketId = message.PopInt();
 				if (ticketId <= 0)
