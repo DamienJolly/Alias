@@ -21,7 +21,11 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 			string password = message.PopString();
 			if (roomData.OwnerId == session.Habbo.Id || (roomData.DoorState == RoomDoorState.PASSWORD && roomData.Password != password))
 			{
-				Room room = Alias.Server.RoomManager.LoadRoom(roomId);
+				if (!Alias.Server.RoomManager.TryGetRoom(roomId, out Room room))
+				{
+					room = Alias.Server.RoomManager.LoadRoom(roomId);
+				}
+
 				if (room != null)
 				{
 					session.Send(new RoomOpenComposer());
