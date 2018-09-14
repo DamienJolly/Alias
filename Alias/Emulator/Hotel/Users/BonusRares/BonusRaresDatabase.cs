@@ -31,7 +31,7 @@ namespace Alias.Emulator.Hotel.Users.BonusRares
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("bonusId", id);
-				dbClient.AddParameter("id", userId);
+				dbClient.AddParameter("userId", userId);
 				dbClient.AddParameter("progress", progress);
 				dbClient.Query("INSERT INTO `habbo_bonus_rares` (`bonus_id`, `user_id`, `progress`) VALUES (@bonusId, @userId, @progress)");
 			}
@@ -42,7 +42,7 @@ namespace Alias.Emulator.Hotel.Users.BonusRares
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("bonusId", id);
-				dbClient.AddParameter("id", userId);
+				dbClient.AddParameter("userId", userId);
 				dbClient.AddParameter("progress", progress);
 				dbClient.Query("UPDATE `habbo_bonus_rares` SET `progress` = @progress WHERE `user_id` = @userId AND `bonus_id` = @bonusId");
 			}

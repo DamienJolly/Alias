@@ -98,7 +98,7 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Events
 				room.RoomData.ModelName = room.Model.Name;
 				room.RoomData.Settings.FloorSize = floorSize;
 				room.RoomData.Settings.WallHeight = wallSize;
-				room.Unload();
+				room.Disposing = true;
 				//todo: fix
 				List<RoomEntity> habbos = room.EntityManager.Entities;
 				room = Alias.Server.RoomManager.LoadRoom(room.Id);

@@ -37,14 +37,32 @@ namespace Alias.Emulator.Hotel.Rooms
 
 		public void DoRoomCycle()
 		{
+			List<Room> roomsToDispose = new List<Room>();
 			foreach (Room room in this.LoadedRooms.Values)
 			{
-				if (room.Disposing)
+				if (room.EntityManager.UserCount == 0)
 				{
+					room.IdleTime++;
+				}
+				else if (room.IdleTime > 0)
+				{
+					room.IdleTime = 0;
+				}
+
+				if (room.IdleTime >= 60 || room.Disposing)
+				{
+					roomsToDispose.Add(room);
 					continue;
 				}
 
 				room.Cycle();
+			}
+
+			foreach (Room room in roomsToDispose)
+			{
+				System.Console.WriteLine("unloaded");
+				RemoveLoadedRoom(room.Id);
+				room.Dispose();
 			}
 		}
 

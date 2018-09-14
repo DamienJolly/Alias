@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Groups.Composers;
-using Alias.Emulator.Hotel.Landing.Composers;
 using Alias.Emulator.Hotel.Rooms.Items;
 using Alias.Emulator.Hotel.Rooms.Items.Tasks;
 using Alias.Emulator.Hotel.Rooms.Mapping;
 using Alias.Emulator.Hotel.Rooms.Models;
 using Alias.Emulator.Hotel.Rooms.Pathfinding;
 using Alias.Emulator.Hotel.Rooms.Rights;
-using Alias.Emulator.Hotel.Rooms.Tasks;
 using Alias.Emulator.Hotel.Rooms.Trading;
 using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Packets;
@@ -78,29 +76,23 @@ namespace Alias.Emulator.Hotel.Rooms
 
 		public void Cycle()
 		{
-			RoomTask.Start(this);
-			if (this.EntityManager != null)
-			{
-				this.EntityManager.Entities.Where(entity => !entity.Disposing).ToList().ForEach(entity => entity.OnCycle());
-			}
-			if (this.ItemManager != null)
-			{
-				// Wired and Effects first
-				WiredTask.Start(this.ItemManager.Items.Where(item => item.ItemData.Interaction == ItemInteraction.WIRED_EFFECT).ToList());
-				WiredTask.Start(this.ItemManager.Items.Where(item => item.ItemData.Interaction == ItemInteraction.WIRED_TRIGGER).ToList());
+			this.EntityManager.Entities.Where(entity => !entity.Disposing).ToList().ForEach(entity => entity.OnCycle());
 
-				this.RollerTick--;
-				this.ItemManager.Items.ForEach(item => item.GetInteractor().OnCycle(item));
+			// Wired and Effects first
+			WiredTask.Start(this.ItemManager.Items.Where(item => item.ItemData.Interaction == ItemInteraction.WIRED_EFFECT).ToList());
+			WiredTask.Start(this.ItemManager.Items.Where(item => item.ItemData.Interaction == ItemInteraction.WIRED_TRIGGER).ToList());
 
-				if (this.RollerTick <= 0)
+			this.RollerTick--;
+			this.ItemManager.Items.ForEach(item => item.GetInteractor().OnCycle(item));
+
+			if (this.RollerTick <= 0)
+			{
+				if (this.RollerMessages.Count > 0)
 				{
-					if (this.RollerMessages.Count > 0)
-					{
-						this.EntityManager.Send(this.RollerMessages);
-						this.RollerMessages.Clear();
-					}
-					this.RollerTick = this.RoomData.RollerSpeed * 2;
+					this.EntityManager.Send(this.RollerMessages);
+					this.RollerMessages.Clear();
 				}
+				this.RollerTick = this.RoomData.RollerSpeed * 2;
 			}
 		}
 
@@ -124,27 +116,11 @@ namespace Alias.Emulator.Hotel.Rooms
 			}
 		}
 
-		public void Unload()
-		{
-			this.Disposing = true;
-			List<RoomEntity> users = this.EntityManager.Entities;
-			foreach (RoomEntity user in users)
-			{
-				if (user.Habbo != null && user.Habbo.Session != null)
-				{
-					user.Habbo.CurrentRoom = null;
-					user.Habbo.Session.Send(new HotelViewComposer());
-				}
-			}
-			this.Dispose();
-		}
-
 		public void Dispose()
 		{
-			this.Disposing = true;
 			RoomItemDatabase.SaveFurniture(this.ItemManager.Items);
 			RoomDatabase.SaveRoom(this.RoomData);
-			Alias.Server.RoomManager.RemoveLoadedRoom(this.Id);
+			this.EntityManager.Dispose();
 		}
 	}
 }

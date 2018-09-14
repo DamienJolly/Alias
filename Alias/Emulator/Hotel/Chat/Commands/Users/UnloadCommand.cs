@@ -19,7 +19,7 @@ namespace Alias.Emulator.Hotel.Chat.Commands.Users
 
 			if (session.Habbo.CurrentRoom.RoomData.OwnerId == session.Habbo.Id)
 			{
-				session.Habbo.CurrentRoom.Unload();
+				session.Habbo.CurrentRoom.Disposing = true;
 			}
 		}
 	}

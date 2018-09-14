@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Alias.Emulator.Hotel.Landing.Composers;
 using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
-using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Rooms.Entities
 {
@@ -69,6 +69,19 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 					});
 				}
 			});
+		}
+
+		public void Dispose()
+		{
+			List<RoomEntity> users = this.Entities;
+			foreach (RoomEntity user in users)
+			{
+				if (user.Habbo != null && user.Habbo.Session != null)
+				{
+					user.Habbo.CurrentRoom = null;
+					user.Habbo.Session.Send(new HotelViewComposer());
+				}
+			}
 		}
 
 		public void Send(IPacketComposer composer) => this.Send(new List<IPacketComposer>() { composer }, new List<RoomEntity>());
