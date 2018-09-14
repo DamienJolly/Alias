@@ -27,10 +27,15 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 					message.WriteInteger(item.Id);
 					message.WriteInteger(item.ItemData.SpriteId);
 					message.WriteInteger(0);
-					message.WriteBoolean(true); //can stack
-					message.WriteInteger(0); //todo: extradata
-					message.WriteString(item.ItemData.ExtraData);
-					message.WriteInteger(0); //rent shit v
+					message.WriteBoolean(item.ItemData.CanStack && !item.IsLimited);
+					message.WriteInteger(item.IsLimited ? 256 : 0);
+					message.WriteString(item.Mode.ToString());
+					if (item.IsLimited)
+					{
+						message.WriteInteger(item.LimitedNumber);
+						message.WriteInteger(item.LimitedStack);
+					}
+					message.WriteInteger(0);
 					message.WriteInteger(0);
 					message.WriteInteger(0);
 

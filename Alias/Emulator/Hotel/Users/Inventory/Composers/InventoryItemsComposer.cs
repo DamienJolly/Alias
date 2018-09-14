@@ -42,7 +42,7 @@ namespace Alias.Emulator.Hotel.Users.Inventory.Composers
 
 				message.WriteBoolean(false); //canRecyle
 				message.WriteBoolean(true); //canTrade
-				message.WriteBoolean(true); //canStack
+				message.WriteBoolean(item.ItemData.CanStack && !item.IsLimited);
 				message.WriteBoolean(false); //canSell
 
 				message.WriteInteger(-1); // item Rent time

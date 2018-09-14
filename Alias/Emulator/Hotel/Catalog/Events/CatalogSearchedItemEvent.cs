@@ -14,12 +14,16 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 			CatalogPage page = Alias.Server.CatalogManager.GetCatalogPageByOffer(offerId);
 			if (page != null)
 			{
-				CatalogItem item = page.GetCatalogItemByOffer(offerId);
-				if (item != null)
-				{
-					session.Send(new CatalogSearchResultComposer(item));
-				}
+				return;
 			}
+
+			CatalogItem item = page.GetCatalogItemByOffer(offerId);
+			if (item != null || item.IsLimited)
+			{
+				return;
+			}
+
+			session.Send(new CatalogSearchResultComposer(item));
 		}
 	}
 }
