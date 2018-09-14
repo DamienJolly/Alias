@@ -118,7 +118,9 @@ namespace Alias.Emulator.Hotel.Catalog
 
 		public static List<int> ReadLimited(int itemId, int size)
 		{
+			List<int> availableNumbers = new List<int>();
 			List<int> takenNumbers = new List<int>();
+
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
 				dbClient.AddParameter("itemId", itemId);
@@ -130,7 +132,15 @@ namespace Alias.Emulator.Hotel.Catalog
 					}
 				}
 			}
-			return Alias.Server.CatalogManager.GetAvailableNumbers(takenNumbers, size);
+
+			for (int i = 1; i <= size; i++)
+			{
+				if (!takenNumbers.Contains(i))
+				{
+					availableNumbers.Add(i);
+				}
+			}
+			return availableNumbers;
 		}
 
 		public static void AddLimited(int itemId, int number)
