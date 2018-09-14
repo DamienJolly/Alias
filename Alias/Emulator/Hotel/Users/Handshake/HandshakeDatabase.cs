@@ -50,21 +50,22 @@ namespace Alias.Emulator.Hotel.Users.Handshake
 					{
 						habbo = new Habbo()
 						{
-							Id               = Reader.GetInt32("id"),
-							Username         = Reader.GetString("username"),
-							Mail             = Reader.GetString("mail"),
-							Look             = Reader.GetString("look"),
-							Motto            = Reader.GetString("motto"),
-							Gender           = Reader.GetString("gender"),
-							Rank             = Reader.GetInt32("rank"),
-							ClubLevel        = Reader.GetInt32("club_level"),
-							Credits          = Reader.GetInt32("credits"),
-							HomeRoom         = Reader.GetInt32("home_room"),
-							AchievementScore = Reader.GetInt32("achievement_score"),
-							Muted            = false,
-							AllowTrading     = true,
-							GroupId          = Reader.GetInt32("group_id"),
-							Groups           = ReadGroups(Reader.GetInt32("id"))
+							Id                  = Reader.GetInt32("id"),
+							Username            = Reader.GetString("username"),
+							Mail                = Reader.GetString("mail"),
+							Look                = Reader.GetString("look"),
+							Motto               = Reader.GetString("motto"),
+							Gender              = Reader.GetString("gender"),
+							Rank                = Reader.GetInt32("rank"),
+							ClubLevel           = Reader.GetInt32("club_level"),
+							Credits             = Reader.GetInt32("credits"),
+							HomeRoom            = Reader.GetInt32("home_room"),
+							AchievementScore    = Reader.GetInt32("achievement_score"),
+							ClubExpireTimestamp = Reader.GetInt32("club_expire_time"),
+							Muted               = false,
+							AllowTrading        = true,
+							GroupId             = Reader.GetInt32("group_id"),
+							Groups              = ReadGroups(Reader.GetInt32("id"))
 						};
 					}
 				}

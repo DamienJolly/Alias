@@ -4,20 +4,20 @@ using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Users.Composers
 {
-	public class UserPermissionsComposer : IPacketComposer
+	class UserPermissionsComposer : IPacketComposer
 	{
-		int Rank;
+		private Habbo habbo;
 
-		public UserPermissionsComposer(int rank)
+		public UserPermissionsComposer(Habbo habbo)
 		{
-			this.Rank = rank;
+			this.habbo = habbo;
 		}
 
 		public ServerPacket Compose()
 		{
 			ServerPacket message = new ServerPacket(Outgoing.UserPermissionsMessageComposer);
-			message.WriteInteger(2); //club level
-			message.WriteInteger(this.Rank);
+			message.WriteInteger(this.habbo.HasSubscription ? 2 : 0);
+			message.WriteInteger(this.habbo.Rank);
 			message.WriteBoolean(false); //ambassador
 			return message;
 		}

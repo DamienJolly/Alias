@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Catalog;
+using Alias.Emulator.Utilities;
 
 namespace Alias.Emulator.Hotel.Users
 {
@@ -18,6 +19,7 @@ namespace Alias.Emulator.Hotel.Users
 		public int AchievementScore { get; set; }
 		public bool Muted { get; set; }
 		public bool AllowTrading { get; set; }
+		public int ClubExpireTimestamp { get; set; }
 		public int GroupId { get; set; }
 		public List<int> Groups { get; set; }
 		public Queue<CatalogItem> RecentPurchases { get; set; } = new Queue<CatalogItem>();
@@ -34,5 +36,7 @@ namespace Alias.Emulator.Hotel.Users
 				RecentPurchases.Dequeue();
 			}
 		}
+
+		public bool HasSubscription => ClubExpireTimestamp >= (int)UnixTimestamp.Now;
 	}
 }

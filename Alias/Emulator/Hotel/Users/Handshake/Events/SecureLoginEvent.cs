@@ -1,3 +1,10 @@
+using System.IO;
+using Alias.Emulator.Hotel.Achievements.Composers;
+using Alias.Emulator.Hotel.Misc.Composers;
+using Alias.Emulator.Hotel.Moderation.Composers;
+using Alias.Emulator.Hotel.Users.Composers;
+using Alias.Emulator.Hotel.Users.Handshake.Composers;
+using Alias.Emulator.Hotel.Users.Inventory.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -8,7 +15,54 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Handshake.OnLogin(message.PopString(), session);
+			string sso = message.PopString();
+			if (!string.IsNullOrEmpty(sso) && HandshakeDatabase.SSOExists(sso))
+			{
+				session.AssignHabbo(HandshakeDatabase.BuildHabbo(sso));
+				if (session.Habbo == null || HandshakeDatabase.IsBanned(session.Habbo.Id))
+				{
+					session.Disconnect();
+					return;
+				}
+
+				session.Habbo.Init();
+				session.Send(new SecureLoginOKComposer());
+				session.Send(new UserHomeRoomComposer(session.Habbo.HomeRoom));
+				session.Send(new UserEffectsListComposer()); //todo:
+				session.Send(new UserClothesComposer()); //todo:
+				session.Send(new NewUserIdentityComposer());
+				session.Send(new UserPermissionsComposer(session.Habbo));
+				session.Send(new SessionRightsComposer());
+				session.Send(new SomeConnectionComposer());
+				session.Send(new DebugConsoleComposer());
+				session.Send(new UserAchievementScoreComposer(session.Habbo.AchievementScore));
+				session.Send(new UnknownComposer4());
+				session.Send(new UnknownComposer5());
+				//session.Send(new BuildersClubExpiredComposer()); //todo:
+				session.Send(new ModerationTopicsComposer());
+				//session.Send(new FavoriteRoomsCountComposer()); //todo:
+
+				if (session.Habbo.HasPermission("acc_modtool"))
+				{
+					session.Send(new ModerationToolComposer(session.Habbo, Alias.Server.ModerationManager.GetTickets));
+				}
+
+				session.Send(new InventoryRefreshComposer());
+				session.Send(new AchievementListComposer(session.Habbo));
+
+				if (File.Exists(@".\welcome.alias"))
+				{
+					string welcome = File.ReadAllText(@".\welcome.alias");
+					if (!string.IsNullOrEmpty(welcome))
+					{
+						session.Send(new GenericAlertComposer(welcome.Replace("\r\n", "\n")));
+					}
+				}
+			}
+			else
+			{
+				session.Disconnect();
+			}
 		}
 	}
 }

@@ -9,8 +9,12 @@ namespace Alias.Emulator.Hotel.Users.Subscription.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			//todo: subscription
-			session.Send(new UserClubComposer());
+			if (!session.Habbo.HasSubscription)
+			{
+				return;
+			}
+
+			session.Send(new UserClubComposer(session.Habbo.ClubExpireTimestamp));
 		}
 	}
 }
