@@ -19,7 +19,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 			}
 
 			string password = message.PopString();
-			if (roomData.OwnerId == session.Habbo.Id || (roomData.DoorState == RoomDoorState.PASSWORD && roomData.Password != password))
+			if (roomData.OwnerId == session.Habbo.Id || (roomData.DoorState == RoomDoorState.PASSWORD && roomData.Password != password) || roomData.DoorState == RoomDoorState.OPEN)
 			{
 				if (!Alias.Server.RoomManager.TryGetRoom(roomId, out Room room))
 				{
