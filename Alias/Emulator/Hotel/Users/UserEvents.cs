@@ -1,9 +1,7 @@
 using Alias.Emulator.Hotel.Users.Currency;
 using Alias.Emulator.Hotel.Users.Events;
-using Alias.Emulator.Hotel.Users.Handshake;
 using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Hotel.Users.Messenger;
-using Alias.Emulator.Hotel.Users.Subscription;
 using Alias.Emulator.Hotel.Users.Wardrobe;
 using Alias.Emulator.Network.Packets.Headers;
 
@@ -13,6 +11,9 @@ namespace Alias.Emulator.Hotel.Users
 	{
 		public static void Register()
 		{
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.MachineIDMessageEvent, new MachineIDEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestUserDataMessageEvent, new RequestUserDataEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.SecureLoginMessageEvent, new SecureLoginEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestUserProfileMessageEvent, new RequestUserProfileEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestMeMenuSettingsMessageEvent, new RequestMeMenuSettingsEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.UsernameMessageEvent, new UsernameEvent());
@@ -24,13 +25,12 @@ namespace Alias.Emulator.Hotel.Users
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestWearingBadgesMessageEvent, new RequestWearingBadgesEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestProfileFriendsMessageEvent, new RequestProfileFriendsEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.UserActivityMessageEvent, new UserActivityEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestUserClubMessageEvent, new RequestUserClubEvent());
 
 			WardrobeEvents.Register();
 			MessengerEvents.Register();
 			CurrencyEvents.Register();
 			InventoryEvents.Register();
-			HandshakeEvents.Register();
-			SubscriptionEvents.Register();
 		}
 	}
 }

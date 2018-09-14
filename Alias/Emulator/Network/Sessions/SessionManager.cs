@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Users;
-using Alias.Emulator.Hotel.Users.Handshake;
 using Alias.Emulator.Network.Packets;
 using DotNetty.Transport.Channels;
 
@@ -18,7 +17,15 @@ namespace Alias.Emulator.Network.Sessions
 
 		public Habbo HabboById(int UserId)
 		{
-			return this.IsOnline(UserId) ? this.SessionById(UserId).Habbo : HandshakeDatabase.BuildHabbo(UserId);
+			if (this.IsOnline(UserId))
+			{
+				return this.SessionById(UserId).Habbo;
+			}
+			else
+			{
+				UserDatabase.ReadHabboData(UserId, out Habbo habbo);
+				return habbo;
+			}
 		}
 
 		public int OnlineUsers()

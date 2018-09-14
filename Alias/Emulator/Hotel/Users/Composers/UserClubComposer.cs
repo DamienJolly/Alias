@@ -1,11 +1,11 @@
-using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
+using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Utilities;
 
-namespace Alias.Emulator.Hotel.Users.Subscription.Composers
+namespace Alias.Emulator.Hotel.Users.Composers
 {
-    class UserClubComposer : IPacketComposer
+	class UserClubComposer : IPacketComposer
 	{
 		private int totalMinites;
 		private int yearsLeft;

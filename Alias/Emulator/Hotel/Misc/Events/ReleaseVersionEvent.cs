@@ -3,7 +3,7 @@ using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 using Alias.Emulator.Utilities;
 
-namespace Alias.Emulator.Hotel.Users.Handshake.Events
+namespace Alias.Emulator.Hotel.Misc.Events
 {
 	class ReleaseVersionEvent : IPacketEvent
 	{

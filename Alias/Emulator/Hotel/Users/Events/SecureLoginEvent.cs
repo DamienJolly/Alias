@@ -3,52 +3,45 @@ using Alias.Emulator.Hotel.Achievements.Composers;
 using Alias.Emulator.Hotel.Misc.Composers;
 using Alias.Emulator.Hotel.Moderation.Composers;
 using Alias.Emulator.Hotel.Users.Composers;
-using Alias.Emulator.Hotel.Users.Handshake.Composers;
 using Alias.Emulator.Hotel.Users.Inventory.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
 
-namespace Alias.Emulator.Hotel.Users.Handshake.Events
+namespace Alias.Emulator.Hotel.Users.Events
 {
 	class SecureLoginEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
 			string sso = message.PopString();
-			if (!string.IsNullOrEmpty(sso) && HandshakeDatabase.SSOExists(sso))
+			if (TryLoadHabbo(sso, out Habbo habbo))
 			{
-				session.AssignHabbo(HandshakeDatabase.BuildHabbo(sso));
-				if (session.Habbo == null || HandshakeDatabase.IsBanned(session.Habbo.Id))
-				{
-					session.Disconnect();
-					return;
-				}
-
-				session.Habbo.Init();
+				session.AssignHabbo(habbo);
+				habbo.Init();
 				session.Send(new SecureLoginOKComposer());
-				session.Send(new UserHomeRoomComposer(session.Habbo.HomeRoom));
+				session.Send(new UserHomeRoomComposer(habbo.HomeRoom));
 				session.Send(new UserEffectsListComposer()); //todo:
 				session.Send(new UserClothesComposer()); //todo:
 				session.Send(new NewUserIdentityComposer());
-				session.Send(new UserPermissionsComposer(session.Habbo));
+				session.Send(new UserPermissionsComposer(habbo));
 				session.Send(new SessionRightsComposer());
 				session.Send(new SomeConnectionComposer());
 				session.Send(new DebugConsoleComposer());
-				session.Send(new UserAchievementScoreComposer(session.Habbo.AchievementScore));
+				session.Send(new UserAchievementScoreComposer(habbo.AchievementScore));
 				session.Send(new UnknownComposer4());
 				session.Send(new UnknownComposer5());
 				//session.Send(new BuildersClubExpiredComposer()); //todo:
 				session.Send(new ModerationTopicsComposer());
 				//session.Send(new FavoriteRoomsCountComposer()); //todo:
 
-				if (session.Habbo.HasPermission("acc_modtool"))
+				if (habbo.HasPermission("acc_modtool"))
 				{
-					session.Send(new ModerationToolComposer(session.Habbo, Alias.Server.ModerationManager.GetTickets));
+					session.Send(new ModerationToolComposer(habbo, Alias.Server.ModerationManager.GetTickets));
 				}
 
 				session.Send(new InventoryRefreshComposer());
-				session.Send(new AchievementListComposer(session.Habbo));
+				session.Send(new AchievementListComposer(habbo));
 
 				if (File.Exists(@".\welcome.alias"))
 				{
@@ -63,6 +56,29 @@ namespace Alias.Emulator.Hotel.Users.Handshake.Events
 			{
 				session.Disconnect();
 			}
+		}
+
+		private bool TryLoadHabbo(string sso, out Habbo habbo)
+		{
+			habbo = null;
+			if (!string.IsNullOrEmpty(sso))
+			{
+				if (!UserDatabase.ReadUserIdBySSO(sso, out int userId))
+				{
+					return false;
+				}
+
+				if (UserDatabase.IsBanned(userId))
+				{
+					return false;
+				}
+
+				if (UserDatabase.ReadHabboData(userId, out habbo))
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }

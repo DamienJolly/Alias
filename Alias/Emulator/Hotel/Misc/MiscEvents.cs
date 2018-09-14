@@ -7,6 +7,9 @@ namespace Alias.Emulator.Hotel.Misc
     {
 		public static void Register()
 		{
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.ReleaseVersionMessageEvent, new ReleaseVersionEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.VersionCheckMessageEvent, new VersionCheckEvent());
+			Alias.Server.SocketServer.PacketManager.Register(Incoming.PongMessageEvent, new PongEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.LatencyTestMessageEvent, new LatencyTestEvent());
 			Alias.Server.SocketServer.PacketManager.Register(Incoming.RequestTargetOfferMessageEvent, new RequestTargetOfferEvent());
 

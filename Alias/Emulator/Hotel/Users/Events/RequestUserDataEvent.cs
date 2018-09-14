@@ -1,9 +1,9 @@
+using Alias.Emulator.Hotel.Users.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
-using Alias.Emulator.Hotel.Users.Composers;
 
-namespace Alias.Emulator.Hotel.Users.Handshake.Events
+namespace Alias.Emulator.Hotel.Users.Events
 {
 	class RequestUserDataEvent : IPacketEvent
 	{
