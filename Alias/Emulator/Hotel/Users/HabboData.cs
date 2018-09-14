@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Alias.Emulator.Hotel.Catalog;
 
 namespace Alias.Emulator.Hotel.Users
 {
@@ -19,10 +20,19 @@ namespace Alias.Emulator.Hotel.Users
 		public bool AllowTrading { get; set; }
 		public int GroupId { get; set; }
 		public List<int> Groups { get; set; }
+		public Queue<CatalogItem> RecentPurchases { get; set; } = new Queue<CatalogItem>();
 
-		public HabboData()
+		public void AddPurchase(CatalogItem item)
 		{
+			if (!RecentPurchases.Contains(item))
+			{
+				RecentPurchases.Enqueue(item);
+			}
 
+			while (RecentPurchases.Count > 12)
+			{
+				RecentPurchases.Dequeue();
+			}
 		}
 	}
 }

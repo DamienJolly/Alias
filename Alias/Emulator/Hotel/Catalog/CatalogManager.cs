@@ -200,7 +200,7 @@ namespace Alias.Emulator.Hotel.Catalog
 						}
 					}
 				}
-
+				
 				if (totalCredits > 0)
 				{
 					habbo.Credits -= totalCredits;
@@ -217,11 +217,13 @@ namespace Alias.Emulator.Hotel.Catalog
 				{
 					item.AddLimited(limitedNumber);
 				}
-
+				
 				if (itemsList != null)
 				{
 					habbo.Session.Send(new AddHabboItemsComposer(itemsList));
 				}
+
+				habbo.AddPurchase(item);
 
 				habbo.Session.Send(new PurchaseOKComposer(item));
 				habbo.Session.Send(new InventoryRefreshComposer());
