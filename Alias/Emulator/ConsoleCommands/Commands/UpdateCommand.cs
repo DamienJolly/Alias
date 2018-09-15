@@ -42,7 +42,7 @@ namespace Alias.Emulator.ConsoleCommands.Commands
 				case "ach":
 				case "achievements":
 					{
-						Alias.Server.AchievementManager.Initialize();
+						Alias.Server.AchievementManager.Initialize().Wait();
 						break;
 					}
 

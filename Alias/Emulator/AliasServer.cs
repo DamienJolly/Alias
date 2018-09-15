@@ -16,6 +16,7 @@ using Alias.Emulator.Hotel.Groups;
 using Camera;
 using Alias.Emulator.Hotel.Landing;
 using Alias.Emulator.Settings;
+using System.Threading.Tasks;
 
 namespace Alias.Emulator
 {
@@ -59,7 +60,7 @@ namespace Alias.Emulator
 
 		}
 
-		public void Initialize()
+		public async Task Initialize()
 		{
 			this.Settings = new SettingsManager();
 
@@ -82,6 +83,7 @@ namespace Alias.Emulator
 			};
 
 			this.DatabaseManager = new DatabaseManager(cs.ToString());
+			AbstractDao.ConnectionString = cs.ToString();
 
 			if (!this.DatabaseManager.TestConnection())
 			{
@@ -108,8 +110,8 @@ namespace Alias.Emulator
 			this.NavigatorManager = new NavigatorManager();
 			this.NavigatorManager.Initialize();
 
-			this.AchievementManager = new AchievementManager();
-			this.AchievementManager.Initialize();
+			AchievementManager = new AchievementManager(new AchievementDao());
+			await AchievementManager.Initialize();
 
 			this.LandingManager = new LandingManager();
 			this.LandingManager.Initialize();

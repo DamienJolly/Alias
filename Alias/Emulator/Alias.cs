@@ -43,7 +43,7 @@ namespace Alias.Emulator
 		public Alias()
 		{
 			Server = new AliasServer();
-			Server.Initialize();
+			Server.Initialize().Wait();
 		}
 	}
 }

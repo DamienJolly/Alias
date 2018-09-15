@@ -61,8 +61,9 @@ namespace Alias.Emulator.Settings
 				data.MySQLMinimumPoolSize = uint.Parse(variables["mysql.minsize"]);
 				data.MySQLMaximumPoolSize = uint.Parse(variables["mysql.maxsize"]);
 			}
-			catch
+			catch (Exception ex)
 			{
+				Console.WriteLine(ex);
 				Logging.Exit("Configuration File was missing some information.");
 			}
 

@@ -1,32 +1,33 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Alias.Emulator.Hotel.Achievements
 {
     sealed class AchievementManager
     {
-		public Dictionary<string, Achievement> Achievements
+		private readonly AchievementDao _dao;
+
+		public Dictionary<string, Achievement> Achievements { get; set; }
+
+		public AchievementManager(AchievementDao achievementDao)
 		{
-			get; set;
+			_dao = achievementDao;
+			Achievements = new Dictionary<string, Achievement>();
 		}
 
-		public AchievementManager()
+		public async Task Initialize()
 		{
-			this.Achievements = new Dictionary<string, Achievement>();
-		}
-
-		public void Initialize()
-		{
-			if (this.Achievements.Count > 0)
+			if (Achievements.Count > 0)
 			{
-				this.Achievements.Clear();
+				Achievements.Clear();
 			}
 
-			this.Achievements = AchievementDatabase.ReadAchievements();
+			Achievements = await _dao.LoadAchievementsAsync();
 		}
 
 		public bool TryGetAchievement(string name, out Achievement achievement)
 		{
-			return this.Achievements.TryGetValue(name, out achievement);
+			return Achievements.TryGetValue(name, out achievement);
 		}
 	}
 }
