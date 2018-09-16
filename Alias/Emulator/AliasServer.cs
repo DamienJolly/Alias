@@ -104,8 +104,8 @@ namespace Alias.Emulator
 			this.ItemManager = new ItemManager();
 			this.ItemManager.Initialize();
 
-			this.CatalogManager = new CatalogManager();
-			this.CatalogManager.Initialize();
+			CatalogManager = new CatalogManager(new CatalogDao());
+			await CatalogManager.Initialize();
 
 			this.NavigatorManager = new NavigatorManager();
 			this.NavigatorManager.Initialize();

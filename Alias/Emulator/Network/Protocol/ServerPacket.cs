@@ -40,6 +40,9 @@ namespace Alias.Emulator.Network.Protocol
 		public void WriteInteger(int i) =>
 			Buffer.WriteInt(i);
 
+		public void WriteInteger(uint i) =>
+			Buffer.WriteInt((int)i);
+
 		public void WriteBoolean(bool b) =>
 			Buffer.WriteByte(b ? 1 : 0);
 	}

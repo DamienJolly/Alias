@@ -19,7 +19,7 @@ namespace Alias.Emulator.Hotel.Achievements
 			get; set;
 		}
 
-		public List<AchievementLevel> Levels
+		public IList<AchievementLevel> Levels
 		{
 			get; set;
 		}

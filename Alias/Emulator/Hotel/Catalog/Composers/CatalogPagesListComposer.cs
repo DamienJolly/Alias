@@ -8,14 +8,14 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 {
 	class CatalogPagesListComposer : IPacketComposer
 	{
-		Habbo Habbo;
-		List<CatalogPage> Pages;
-		string MODE;
+		private readonly Habbo _habbo;
+		private readonly IList<CatalogPage> _pages;
+		private readonly string MODE;
 
 		public CatalogPagesListComposer(Habbo habbo, string MODE)
 		{
-			Habbo = habbo;
-			this.Pages = Alias.Server.CatalogManager.GetCatalogPages(-1, habbo);
+			_habbo = habbo;
+			_pages = Alias.Server.CatalogManager.GetCatalogPages(-1, habbo);
 			this.MODE = MODE;
 		}
 
@@ -29,11 +29,11 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 			message.WriteString("");
 			message.WriteInteger(0);
 
-			message.WriteInteger(Pages.Count);
-			Pages.ForEach(page =>
+			message.WriteInteger(_pages.Count);
+			foreach (CatalogPage page in _pages)
 			{
 				Append(message, page);
-			});
+			}
 
 			message.WriteBoolean(false);
 			message.WriteString(this.MODE);
@@ -42,7 +42,7 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 
 		private void Append(ServerPacket message, CatalogPage catalogPage)
 		{
-			List<CatalogPage> Pages = Alias.Server.CatalogManager.GetCatalogPages(catalogPage.Id, Habbo);
+			IList<CatalogPage> pages = Alias.Server.CatalogManager.GetCatalogPages(catalogPage.Id, _habbo);
 
 			message.WriteBoolean(catalogPage.Visible);
 			message.WriteInteger(catalogPage.Icon);
@@ -51,16 +51,16 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 			message.WriteString(catalogPage.Caption + " (" + catalogPage.Id + ")");
 
 			message.WriteInteger(catalogPage.OfferIds.Count);
-			catalogPage.OfferIds.ForEach(id =>
+			foreach (int offerId in catalogPage.OfferIds)
 			{
-				message.WriteInteger(id);
-			});
+				message.WriteInteger(offerId);
+			}
 
-			message.WriteInteger(Pages.Count);
-			Pages.ForEach(page =>
+			message.WriteInteger(pages.Count);
+			foreach (CatalogPage page in pages)
 			{
 				Append(message, page);
-			});
+			}
 		}
 	}
 }

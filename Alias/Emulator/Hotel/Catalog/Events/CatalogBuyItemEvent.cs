@@ -14,7 +14,7 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 {
 	class CatalogBuyItemEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientPacket message)
+		public async void Handle(Session session, ClientPacket message)
 		{
 			int pageId = message.PopInt();
 			int itemId = message.PopInt();
@@ -187,6 +187,7 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 			if (item.IsLimited)
 			{
 				item.AddLimited(limitedNumber);
+				await Alias.Server.CatalogManager.AddLimitedAsync(item.Id, limitedNumber);
 			}
 
 			if (itemsList != null)

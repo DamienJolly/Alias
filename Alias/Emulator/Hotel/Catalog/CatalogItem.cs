@@ -86,7 +86,7 @@ namespace Alias.Emulator.Hotel.Catalog
 			}
 		}
 
-		public List<int> LimitedNumbers
+		public IList<int> LimitedNumbers
 		{
 			get; set;
 		} = new List<int>();
@@ -102,7 +102,6 @@ namespace Alias.Emulator.Hotel.Catalog
 		public void AddLimited(int number)
 		{
 			LimitedNumbers.Remove(number);
-			CatalogDatabase.AddLimited(Id, number);
 		}
 
 		public int GetItemAmount(int id)

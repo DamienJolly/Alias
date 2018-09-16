@@ -7,7 +7,7 @@ namespace Alias.Emulator.Hotel.Achievements
     {
 		private readonly AchievementDao _dao;
 
-		public Dictionary<string, Achievement> Achievements { get; set; }
+		public IDictionary<string, Achievement> Achievements { get; set; }
 
 		public AchievementManager(AchievementDao achievementDao)
 		{

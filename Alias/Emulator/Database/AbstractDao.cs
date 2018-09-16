@@ -55,6 +55,27 @@ namespace Alias.Emulator.Database
 			}
 		}
 
+		protected async Task InsertAsync(string query, params object[] parameters)
+		{
+			try
+			{
+				await OpenConnection(async connection =>
+				{
+					using (MySqlCommand command = connection.CreateCommand())
+					{
+						command.CommandText = query;
+						SetupParameters(command.Parameters, parameters);
+
+						await command.ExecuteNonQueryAsync();
+					}
+				});
+			}
+			catch (MySqlException ex)
+			{
+				Console.WriteLine(ex);
+			}
+		}
+
 		private static void SetupParameters(MySqlParameterCollection collection, params object[] parameters)
 		{
             for (int i = 0; i < parameters.Length; i++)
@@ -68,5 +89,8 @@ namespace Alias.Emulator.Database
 	{
 		public static T ReadData<T>(this DbDataReader reader, string columnName) =>
 			(T)reader[columnName];
+
+		public static bool ReadBool(this DbDataReader reader, string columnName) =>
+			reader[columnName].Equals("1");
 	}
 }

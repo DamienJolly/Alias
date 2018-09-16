@@ -6,9 +6,9 @@ namespace Alias.Emulator.Hotel.Achievements
 {
 	internal class AchievementDao : AbstractDao
     {
-		internal async Task<Dictionary<string, Achievement>> LoadAchievementsAsync()
+		internal async Task<IDictionary<string, Achievement>> LoadAchievementsAsync()
 		{
-			Dictionary<string, Achievement> achievements = new Dictionary<string, Achievement>();
+			IDictionary<string, Achievement> achievements = new Dictionary<string, Achievement>();
 
 			await SelectAsync(async reader =>
 			{
@@ -31,9 +31,9 @@ namespace Alias.Emulator.Hotel.Achievements
 			return achievements;
 		}
 
-		internal async Task<List<AchievementLevel>> ReadLevels(int id)
+		internal async Task<IList<AchievementLevel>> ReadLevels(int id)
 		{
-			List<AchievementLevel> levels = new List<AchievementLevel>();
+			IList<AchievementLevel> levels = new List<AchievementLevel>();
 
 			await SelectAsync(async reader =>
 			{

@@ -1,3 +1,5 @@
+/*
+ * Deprecated!
 using System.Collections.Generic;
 using System.Data;
 using Alias.Emulator.Database;
@@ -180,3 +182,4 @@ namespace Alias.Emulator.Hotel.Catalog
 		}
 	}
 }
+*/

@@ -1,3 +1,5 @@
+/*
+ * Deprecated!
 using System.Collections.Generic;
 using Alias.Emulator.Database;
 using MySql.Data.MySqlClient;
@@ -58,3 +60,4 @@ namespace Alias.Emulator.Hotel.Achievements
 		}
 	}
 }
+*/

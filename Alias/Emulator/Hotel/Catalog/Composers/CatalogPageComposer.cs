@@ -72,7 +72,8 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 			if (this.page.Layout == CatalogLayout.FRONTPAGE || this.page.Layout == CatalogLayout.FRONTPAGE_FEATURED)
 			{
 				message.WriteInteger(Alias.Server.CatalogManager.GetFeaturedPages().Count);
-				Alias.Server.CatalogManager.GetFeaturedPages().ForEach(feature =>
+				IList<CatalogFeatured> featuredPages = Alias.Server.CatalogManager.GetFeaturedPages();
+				foreach (CatalogFeatured feature in featuredPages)
 				{
 					message.WriteInteger(feature.SlotId);
 					message.WriteString(feature.Caption);
@@ -89,8 +90,7 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 							message.WriteString(feature.ProductName); break;
 					}
 					message.WriteInteger(-1);
-				});
-
+				}
 			}
 			return message;
 		}
