@@ -31,7 +31,6 @@ namespace Alias.Emulator.Hotel.Items.Crafting
 
 		public bool TryGetRecipe(string name, out CraftingRecipe recipe)
 		{
-			recipe = null;
 			foreach (CraftingTable table in this.CraftingTables.Values)
 			{
 				if (table.TryGetRecipe(name, out CraftingRecipe tmp))
@@ -40,6 +39,8 @@ namespace Alias.Emulator.Hotel.Items.Crafting
 					return true;
 				}
 			}
+
+			recipe = null;
 			return false;
 		}
 	}

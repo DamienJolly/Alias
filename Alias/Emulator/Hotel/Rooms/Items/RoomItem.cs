@@ -3,6 +3,7 @@ using Alias.Emulator.Hotel.Rooms.Items.Interactions;
 using Alias.Emulator.Hotel.Rooms.Items.Interactions.Wired;
 using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Hotel.Users;
+using System.Collections.Generic;
 
 namespace Alias.Emulator.Hotel.Rooms.Items
 {
@@ -94,18 +95,9 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		{
 			if (_interaction == null)
 			{
-				switch (this.ItemData.Interaction)
+				if (Interactions.TryGetValue(ItemData.Interaction, out IItemInteractor interactor))
 				{
-					case ItemInteraction.WIRED_TRIGGER: case ItemInteraction.WIRED_EFFECT: case ItemInteraction.WIRED_CONDITION: _interaction = new InteractionWired(); break;
-					case ItemInteraction.DICE: _interaction = new InteractionDice(); break;
-					case ItemInteraction.CRACKABLE: _interaction = new InteractionCrackable(); break;
-					case ItemInteraction.EXCHANGE: _interaction = new InteractionExchange(); break;
-					case ItemInteraction.VENDING_MACHINE: _interaction = new InteractionVendingMachine(); break;
-					case ItemInteraction.TILE_EFFECT: _interaction = new InteractionTileEffect(); break;
-					case ItemInteraction.TROPHY: _interaction = new InteractionTrophy(); break;
-					case ItemInteraction.TELEPORT: _interaction = new InteractionTeleport(); break;
-					case ItemInteraction.ROLLER: _interaction = new InteractionRoller(); break;
-					case ItemInteraction.DEFAULT: default: _interaction = new InteractionDefault(); break;
+					_interaction = interactor;
 				}
 			}
 
@@ -116,11 +108,9 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 		{
 			if (_wiredInteraction == null)
 			{
-				switch (this.ItemData.WiredInteraction)
+				if (WiredInteractions.TryGetValue(ItemData.WiredInteraction, out IWiredInteractor wiredInteractor))
 				{
-					case WiredInteraction.REPEATER: _wiredInteraction = new WiredInteractionRepeater(); break;
-					case WiredInteraction.MESSAGE: _wiredInteraction = new WiredInteractionMessage(); break;
-					case WiredInteraction.DEFAULT: default: _wiredInteraction = new WiredInteractionDefault(); break;
+					_wiredInteraction = wiredInteractor;
 				}
 				_wiredInteraction.LoadBox(this);
 			}
@@ -139,5 +129,29 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 				RoomItemDatabase.UpdateItem(this);
 			}
 		}
+
+		public static IDictionary<ItemInteraction, IItemInteractor> Interactions { get; } = new Dictionary<ItemInteraction, IItemInteractor>
+		{
+			{ ItemInteraction.WIRED_CONDITION, new InteractionWired() },
+			{ ItemInteraction.WIRED_EFFECT, new InteractionWired() },
+			{ ItemInteraction.WIRED_TRIGGER, new InteractionWired() },
+
+			{ ItemInteraction.DICE, new InteractionDice() },
+			{ ItemInteraction.CRACKABLE, new InteractionCrackable() },
+			{ ItemInteraction.EXCHANGE, new InteractionExchange() },
+			{ ItemInteraction.VENDING_MACHINE, new InteractionVendingMachine() },
+			{ ItemInteraction.TILE_EFFECT, new InteractionTileEffect() },
+			{ ItemInteraction.TROPHY, new InteractionTrophy() },
+			{ ItemInteraction.TELEPORT, new InteractionTeleport() },
+			{ ItemInteraction.ROLLER, new InteractionRoller() },
+			{ ItemInteraction.DEFAULT, new InteractionDefault() },
+		};
+
+		public static IDictionary<WiredInteraction, IWiredInteractor> WiredInteractions { get; } = new Dictionary<WiredInteraction, IWiredInteractor>
+		{
+			{ WiredInteraction.REPEATER, new WiredInteractionRepeater() },
+			{ WiredInteraction.MESSAGE, new WiredInteractionMessage() },
+			{ WiredInteraction.DEFAULT, new WiredInteractionDefault() },
+		};
 	}
 }
