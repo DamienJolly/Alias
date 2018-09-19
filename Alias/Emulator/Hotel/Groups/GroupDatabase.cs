@@ -103,7 +103,7 @@ namespace Alias.Emulator.Hotel.Groups
 			}
 		}
 
-		public static void AddMemmber(int groupId, int userId, int rank)
+		public static void AddMember(int groupId, int userId, int rank)
 		{
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
 			{
@@ -126,14 +126,14 @@ namespace Alias.Emulator.Hotel.Groups
 					if (Reader.Read())
 					{
 						group = new Group(Reader.GetInt32("id"), Reader.GetString("name"), Reader.GetString("desc"), Reader.GetInt32("owner_id"), Reader.GetInt32("created"),
-							Reader.GetInt32("room_id"), Reader.GetInt32("state"), Reader.GetBoolean("rights"), Reader.GetInt32("colour1"), Reader.GetInt32("colour2"), Reader.GetString("badge"), TryGetMemmbers(Reader.GetInt32("id")));
+							Reader.GetInt32("room_id"), Reader.GetInt32("state"), Reader.GetBoolean("rights"), Reader.GetInt32("colour1"), Reader.GetInt32("colour2"), Reader.GetString("badge"), TryGetMembers(Reader.GetInt32("id")));
 					}
 				}
 			}
 			return group;
 		}
 
-		public static List<GroupMember> TryGetMemmbers(int groupId)
+		public static List<GroupMember> TryGetMembers(int groupId)
 		{
 			List<GroupMember> members = new List<GroupMember>();
 			using (DatabaseConnection dbClient = Alias.Server.DatabaseManager.GetConnection())
