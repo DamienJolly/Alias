@@ -19,17 +19,12 @@ namespace Alias.Emulator.Hotel.Players.Currency
 
 		public async Task Initialize()
 		{
-			if (Currencies.Count > 0)
-			{
-				Currencies.Clear();
-			}
-
 			Currencies = await _dao.ReadCurrenciesAsync(_player.Id);
 		}
 
 		public void Dispose()
 		{
-			Currencies.Clear();
+			// todo: save currencies
 		}
 
 		public bool TryGetCurrency(int id, out CurrencyType currency) => Currencies.TryGetValue(id, out currency);

@@ -23,11 +23,6 @@ namespace Alias.Emulator.Hotel.Players.Achievements
 
 		public async Task Initialize()
 		{
-			if (_achievements.Count > 0)
-			{
-				_achievements.Clear();
-			}
-
 			_achievements = await _dao.ReadPlayerAchievementsByIdAsync(_player.Id);
 		}
 		
@@ -116,11 +111,6 @@ namespace Alias.Emulator.Hotel.Players.Achievements
 					//todo: talent track shit
 				}
 			}
-		}
-
-		public void Dispose()
-		{
-			_achievements.Clear();
 		}
 
 		public bool GetAchievementProgress(int id, out int progress) => _achievements.TryGetValue(id, out progress);

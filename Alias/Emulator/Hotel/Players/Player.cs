@@ -95,20 +95,27 @@ namespace Alias.Emulator.Hotel.Players
 			await Messenger.UpdateStatus();
 		}
 
-		public void OnDisconnect()
+		public async void Dispose()
 		{
 			IsDisconnecting = true;
+			Alias.Server.PlayerManager.RemovePlayer(Id);
 			if (CurrentRoom != null)
 			{
 				CurrentRoom.EntityManager.OnUserLeave(Entity);
+				CurrentRoom = null;
+				Entity = null;
 			}
 			if (Settings != null)
 			{
-				//UserDatabase.UpdateSettings(Settings, Id);
+				await Alias.Server.PlayerManager.UpdatePlayerSettingsAsync(Settings, Id);
 			}
 			if (Currency != null)
 			{
-				//CurrencyDatabase.SaveCurrencies(Currency);
+				Currency.Dispose();
+			}
+			if (Messenger != null)
+			{
+				await Messenger.UpdateStatus();
 			}
 		}
 

@@ -45,5 +45,7 @@ namespace Alias.Emulator.Hotel.Players
 		internal async Task<PlayerSettings> ReadPlayerSettingsByIdAsync(int id) => await _dao.ReadPlayerSettingsByIdAsync(id);
 
 		internal async Task AddPlayerSettingsAsync(int id) => await _dao.AddPlayerSettingsAsync(id);
+
+		internal async Task UpdatePlayerSettingsAsync(PlayerSettings settings, int id) => await _dao.UpdatePlayerSettingsAsync(settings, id);
 	}
 }

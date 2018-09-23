@@ -35,17 +35,17 @@ namespace Alias.Emulator.Network.Sessions
 			});
 		}
 
-		public void Disconnect(bool closeSocket = true)
+		public async void Disconnect(bool closeSocket = true)
 		{
 			if (Player != null)
 			{
-				Player.OnDisconnect();
+				Player.Dispose();
 				Player = null;
 			}
 			UniqueId = string.Empty;
 			if (closeSocket)
 			{
-				_context.CloseAsync();
+				await _context.CloseAsync();
 			}
 		}
 	}

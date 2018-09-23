@@ -19,11 +19,6 @@ namespace Alias.Emulator.Hotel.Players.Crafting
 
 		public async Task Initialize()
 		{
-			if (Recipes.Count > 0)
-			{
-				Recipes.Clear();
-			}
-
 			Recipes = await _dao.ReadPlayerRecipesAsync(_player.Id);
 		}
 
@@ -34,11 +29,6 @@ namespace Alias.Emulator.Hotel.Players.Crafting
 				Recipes.Add(recipeId);
 				await _dao.AddPlayerRecipesAsync(recipeId, _player.Id);
 			}
-		}
-
-		public void Dispose()
-		{
-			Recipes.Clear();
 		}
 	}
 }

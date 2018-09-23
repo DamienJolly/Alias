@@ -20,11 +20,6 @@ namespace Alias.Emulator.Hotel.Players.BonusRares
 
 		public async Task Initialize()
 		{
-			if (BonusRares.Count > 0)
-			{
-				BonusRares.Clear();
-			}
-
 			BonusRares = await _dao.ReadBonusRaresAsync(_player.Id);
 		}
 		

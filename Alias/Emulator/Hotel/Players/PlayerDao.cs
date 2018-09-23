@@ -46,7 +46,12 @@ namespace Alias.Emulator.Hotel.Players
 
 		internal async Task AddPlayerSettingsAsync(int id)
 		{
-			await InsertAsync("INSERT INTO `habbo_settings` (`id`) VALUES(@0)", id);
+			await InsertAsync("INSERT INTO `habbo_settings` (`id`) VALUES (@0)", id);
+		}
+		
+		internal async Task UpdatePlayerSettingsAsync(PlayerSettings settings, int id)
+		{
+			await InsertAsync("UPDATE `habbo_settings` SET `volume_system` = @0, `volume_furni` = @1, `volume_trax` = @2, `old_chat` = @3, `ignore_invited` = @4, `camera_follow` = @5 WHERE `id` = @6", settings.VolumeSystem, settings.VolumeFurni, settings.VolumeTrax, settings.OldChat, settings.IgnoreInvites, settings.CameraFollow, id);
 		}
 	}
 }

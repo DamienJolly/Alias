@@ -60,11 +60,6 @@ namespace Alias.Emulator.Hotel.Players.Badges
 			}
 		}
 
-		public void Dispose()
-		{
-			Badges.Clear();
-		}
-
 		public List<BadgeDefinition> GetWearingBadges => Badges.Values.Where(badge => badge.Slot > 0).OrderBy(badge => badge.Slot).ToList();
 
 		public bool TryGetBadge(string code, out BadgeDefinition badge) => Badges.TryGetValue(code, out badge);
