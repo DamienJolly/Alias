@@ -130,7 +130,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			}
 		}
 
-		public static IDictionary<ItemInteraction, IItemInteractor> Interactions { get; } = new Dictionary<ItemInteraction, IItemInteractor>
+		private static IDictionary<ItemInteraction, IItemInteractor> Interactions { get; } = new Dictionary<ItemInteraction, IItemInteractor>
 		{
 			{ ItemInteraction.WIRED_CONDITION, new InteractionWired() },
 			{ ItemInteraction.WIRED_EFFECT, new InteractionWired() },
@@ -147,7 +147,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items
 			{ ItemInteraction.DEFAULT, new InteractionDefault() },
 		};
 
-		public static IDictionary<WiredInteraction, IWiredInteractor> WiredInteractions { get; } = new Dictionary<WiredInteraction, IWiredInteractor>
+		private static IDictionary<WiredInteraction, IWiredInteractor> WiredInteractions { get; } = new Dictionary<WiredInteraction, IWiredInteractor>
 		{
 			{ WiredInteraction.REPEATER, new WiredInteractionRepeater() },
 			{ WiredInteraction.MESSAGE, new WiredInteractionMessage() },
