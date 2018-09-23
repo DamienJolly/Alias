@@ -1,7 +1,4 @@
-using System;
-using Alias.Emulator.Hotel.Rooms.Items.Composers;
 using Alias.Emulator.Hotel.Rooms.Entities;
-using Alias.Emulator.Hotel.Rooms.Entities.Composers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions

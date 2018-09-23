@@ -1,7 +1,7 @@
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
 using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Protocol;
-using Alias.Emulator.Hotel.Users.Currency.Composers;
+using Alias.Emulator.Hotel.Players.Currency.Composers;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 {
@@ -35,7 +35,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 
 		public void OnUserInteract(RoomEntity user, Room room, RoomItem item, int state)
 		{
-			if (user.Habbo.Id != room.RoomData.OwnerId)
+			if (user.Player.Id != room.RoomData.OwnerId)
 			{
 				return;
 			}
@@ -45,8 +45,8 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 				return;
 			}
 				
-			user.Habbo.Credits += amount;
-			user.Habbo.Session.Send(new UserCreditsComposer(user.Habbo));
+			user.Player.Credits += amount;
+			user.Player.Session.Send(new UserCreditsComposer(user.Player));
 
 			room.Mapping.RemoveItem(item);
 			room.ItemManager.RemoveItem(item);

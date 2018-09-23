@@ -17,7 +17,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 				return;
 			}
 
-			if (roomData.OwnerId != session.Habbo.Id)
+			if (roomData.OwnerId != session.Player.Id)
 			{
 				return;
 			}

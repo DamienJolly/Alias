@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 		{
 			int action = message.PopInt();
 
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -25,7 +25,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 			{
 			}
 
-			room.EntityManager.Send(new RoomUserActionComposer(session.Habbo.Entity, action));
+			room.EntityManager.Send(new RoomUserActionComposer(session.Player.Entity, action));
 		}
 	}
 }

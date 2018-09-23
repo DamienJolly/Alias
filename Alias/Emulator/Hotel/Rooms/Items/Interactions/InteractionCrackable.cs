@@ -3,9 +3,9 @@ using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Protocol;
 using System;
 using Alias.Emulator.Hotel.Items;
-using Alias.Emulator.Hotel.Users.Inventory;
+using Alias.Emulator.Hotel.Players.Inventory;
 using Alias.Emulator.Network.Sessions;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 {
@@ -49,7 +49,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 
 		public void OnUserInteract(RoomEntity user, Room room, RoomItem item, int state)
 		{
-			if (!room.RoomRights.HasRights(user.Habbo.Id))
+			if (!room.RoomRights.HasRights(user.Player.Id))
 			{
 				return;
 			}

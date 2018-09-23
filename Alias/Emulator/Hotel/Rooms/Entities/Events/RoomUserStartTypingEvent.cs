@@ -9,13 +9,13 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			room.EntityManager.Send(new RoomUserTypingComposer(session.Habbo.Entity, true));
+			room.EntityManager.Send(new RoomUserTypingComposer(session.Player.Entity, true));
 		}
 	}
 }

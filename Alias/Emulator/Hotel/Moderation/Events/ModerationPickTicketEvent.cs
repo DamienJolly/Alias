@@ -8,7 +8,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (!session.Habbo.HasPermission("acc_modtool_ticket_queue"))
+			if (!session.Player.HasPermission("acc_modtool_ticket_queue"))
 			{
 				return;
 			}
@@ -28,7 +28,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 					continue;
 				}
 
-				Alias.Server.ModerationManager.PickTicket(ticket, session.Habbo);
+				Alias.Server.ModerationManager.PickTicket(ticket, session.Player);
 			}
 		}
 	}

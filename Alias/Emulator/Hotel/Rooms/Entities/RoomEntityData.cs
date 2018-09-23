@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 
 namespace Alias.Emulator.Hotel.Rooms.Entities
 {
@@ -61,7 +61,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			get; set;
 		} = true;
 
-		public Habbo Habbo
+		public Player Player
 		{
 			get; set;
 		} = null;

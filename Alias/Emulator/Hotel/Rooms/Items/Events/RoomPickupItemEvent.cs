@@ -1,6 +1,6 @@
 using Alias.Emulator.Hotel.Rooms.Entities;
-using Alias.Emulator.Hotel.Users.Inventory;
-using Alias.Emulator.Hotel.Users.Inventory.Composers;
+using Alias.Emulator.Hotel.Players.Inventory;
+using Alias.Emulator.Hotel.Players.Inventory.Composers;
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
@@ -10,9 +10,9 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
 	class RoomPickupItemEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientPacket message)
+		public async void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -39,17 +39,8 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 			}
 			session.Send(new InventoryRefreshComposer());
 
-			InventoryItem iItem = new InventoryItem()
-			{
-				Id = item.Id,
-				LimitedNumber = item.LimitedNumber,
-				LimitedStack = item.LimitedStack,
-				ItemData = item.ItemData,
-				UserId = item.Owner,
-				ExtraData = item.ExtraData
-			};
-
-			session.Habbo.Inventory.UpdateItem(iItem);
+			InventoryItem iItem = new InventoryItem(item.Id, item.LimitedStack, item.LimitedStack, item.ItemData.Id, item.Owner, item.ExtraData);
+			await session.Player.Inventory.UpdateItem(iItem);
 		}
 	}
 }

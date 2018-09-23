@@ -8,7 +8,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (!session.Habbo.HasPermission("acc_modtool_user_alert"))
+			if (!session.Player.HasPermission("acc_modtool_user_alert"))
 			{
 				return;
 			}

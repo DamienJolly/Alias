@@ -10,7 +10,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			if (room.Mapping.Tiles[item.Position.X, item.Position.Y].TilesAdjecent(room.Mapping.Tiles[session.Habbo.Entity.Position.X, session.Habbo.Entity.Position.Y]))
+			if (room.Mapping.Tiles[item.Position.X, item.Position.Y].TilesAdjecent(room.Mapping.Tiles[session.Player.Entity.Position.X, session.Player.Entity.Position.Y]))
 			{
 				if (item.ItemData.Interaction != ItemInteraction.DICE || item.Mode == -1)
 				{

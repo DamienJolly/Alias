@@ -1,4 +1,4 @@
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
@@ -7,10 +7,10 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 {
     class AchievementUnlockedComposer : IPacketComposer
 	{
-		private Habbo habbo;
+		private Player habbo;
 		private Achievement achievement;
 
-		public AchievementUnlockedComposer(Habbo habbo, Achievement achievement)
+		public AchievementUnlockedComposer(Player habbo, Achievement achievement)
 		{
 			this.habbo = habbo;
 			this.achievement = achievement;

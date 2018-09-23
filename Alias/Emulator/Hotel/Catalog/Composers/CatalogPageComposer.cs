@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
@@ -10,10 +10,10 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 	class CatalogPageComposer : IPacketComposer
 	{
 		CatalogPage page;
-		Habbo habbo;
+		Player habbo;
 		string mode;
 
-		public CatalogPageComposer(CatalogPage page, Habbo habbo, string mode)
+		public CatalogPageComposer(CatalogPage page, Player habbo, string mode)
 		{
 			this.page = page;
 			this.habbo = habbo;

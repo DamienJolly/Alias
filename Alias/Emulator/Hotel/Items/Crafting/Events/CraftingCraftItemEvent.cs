@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Items.Crafting.Composers;
+using Alias.Emulator.Hotel.Players.Inventory;
+using Alias.Emulator.Hotel.Players.Inventory.Composers;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Rooms.Items;
-using Alias.Emulator.Hotel.Users.Inventory;
-using Alias.Emulator.Hotel.Users.Inventory.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -12,9 +12,9 @@ namespace Alias.Emulator.Hotel.Items.Crafting.Events
 {
     class CraftingCraftItemEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientPacket message)
+		public async void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -46,8 +46,7 @@ namespace Alias.Emulator.Hotel.Items.Crafting.Events
 			{
 				for (int i = 0; i < ingredient.Value; i++)
 				{
-					InventoryItem iItem = session.Habbo.Inventory.GetFloorItem(ingredient.Key);
-					if (iItem == null)
+					if(!session.Player.Inventory.TryGetItemByName(ingredient.Key, out InventoryItem iItem))
 					{
 						session.Send(new CraftingResultComposer(null));
 						return;
@@ -56,26 +55,20 @@ namespace Alias.Emulator.Hotel.Items.Crafting.Events
 					toRemove.Add(iItem);
 				}
 			}
-
-			InventoryItem habboItem = new InventoryItem
-			{
-				Id = 0,
-				LimitedNumber = 0,
-				LimitedStack = 0,
-				ItemData = Alias.Server.ItemManager.GetItemData(recipe.Reward.Id),
-				Mode = 0,
-				ExtraData = ""
-			};
-
+			
 			session.Send(new CraftingResultComposer(recipe));
-			session.Habbo.Crafting.AddRecipe(recipe.Id);
-			session.Habbo.Inventory.AddItem(habboItem);
-			session.Send(new AddHabboItemsComposer(habboItem));
-			toRemove.ForEach(item =>
+			await session.Player.Crafting.AddRecipe(recipe.Id);
+
+			InventoryItem habboItem = new InventoryItem(-1, 0, 0, recipe.Reward.Id, session.Player.Id, "");
+			await session.Player.Inventory.AddItem(habboItem);
+			session.Send(new AddPlayerItemsComposer(habboItem));
+
+			foreach (InventoryItem item in toRemove)
 			{
-				session.Habbo.Inventory.RemoveItem(item);
-				session.Send(new RemoveHabboItemComposer(item.Id));
-			});
+				await session.Player.Inventory.RemoveItem(item.Id);
+				session.Send(new RemovePlayerItemComposer(item.Id));
+			}
+
 			session.Send(new InventoryRefreshComposer());
 		}
 	}

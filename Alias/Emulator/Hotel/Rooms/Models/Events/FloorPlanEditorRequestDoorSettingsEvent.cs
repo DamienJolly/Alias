@@ -10,13 +10,13 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (session.Habbo.CurrentRoom == null)
+			if (session.Player.CurrentRoom == null)
 			{
 				return;
 			}
 
-			session.Send(new FloorPlanEditorDoorSettingsComposer(session.Habbo.CurrentRoom));
-			session.Send(new RoomThicknessComposer(session.Habbo.CurrentRoom));
+			session.Send(new FloorPlanEditorDoorSettingsComposer(session.Player.CurrentRoom));
+			session.Send(new RoomThicknessComposer(session.Player.CurrentRoom));
 		}
 	}
 }

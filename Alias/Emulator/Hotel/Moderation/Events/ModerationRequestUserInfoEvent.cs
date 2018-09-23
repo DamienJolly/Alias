@@ -1,5 +1,5 @@
 using Alias.Emulator.Hotel.Moderation.Composers;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -8,9 +8,9 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 {
     class ModerationRequestUserInfoEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientPacket message)
+		public async void Handle(Session session, ClientPacket message)
 		{
-			if (!session.Habbo.HasPermission("acc_modtool_user_info"))
+			if (!session.Player.HasPermission("acc_modtool_user_info"))
 			{
 				return;
 			}
@@ -21,7 +21,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 				return;
 			}
 
-			Habbo target = Alias.Server.SocketServer.SessionManager.HabboById(userId);
+			Player target = await Alias.Server.PlayerManager.ReadPlayerByIdAsync(userId);
 			if (target != null)
 			{
 				session.Send(new ModerationUserInfoComposer(target));

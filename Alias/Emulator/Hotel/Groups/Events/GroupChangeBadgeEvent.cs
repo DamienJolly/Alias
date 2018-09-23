@@ -13,7 +13,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			int groupId = message.PopInt();
 
 			Group group = Alias.Server.GroupManager.GetGroup(groupId);
-			if (group == null || group.OwnerId != session.Habbo.Id)
+			if (group == null || group.OwnerId != session.Player.Id)
 			{
 				return;
 			}
@@ -58,9 +58,9 @@ namespace Alias.Emulator.Hotel.Groups.Events
 
 			roomData.Group = group;
 
-			if (session.Habbo.CurrentRoom != null)
+			if (session.Player.CurrentRoom != null)
 			{
-				session.Habbo.CurrentRoom.UpdateGroup(group);
+				session.Player.CurrentRoom.UpdateGroup(group);
 			}
 		}
 	}

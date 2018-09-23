@@ -9,24 +9,24 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			RoomTrade trade = room.RoomTrading.GetActiveTrade(session.Habbo.Entity);
+			RoomTrade trade = room.RoomTrading.GetActiveTrade(session.Player.Entity);
 			if (trade == null)
 			{
 				return;
 			}
 
-			if (!trade.GetTradeUser(session.Habbo.Entity).Accepted)
+			if (!trade.GetTradeUser(session.Player.Entity).Accepted)
 			{
 				return;
 			}
 
-			trade.Confirm(session.Habbo.Entity);
+			trade.Confirm(session.Player.Entity);
 		}
 	}
 }

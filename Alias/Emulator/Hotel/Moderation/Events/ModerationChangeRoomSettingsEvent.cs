@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (!session.Habbo.HasPermission("acc_modtool_room_settings"))
+			if (!session.Player.HasPermission("acc_modtool_room_settings"))
 			{
 				return;
 			}

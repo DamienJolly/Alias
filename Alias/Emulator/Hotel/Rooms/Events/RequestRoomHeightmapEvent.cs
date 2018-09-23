@@ -1,7 +1,7 @@
 using Alias.Emulator.Hotel.Rooms.Composers;
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
 using Alias.Emulator.Hotel.Rooms.Models.Composers;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
@@ -14,7 +14,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -22,11 +22,11 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 
 			RoomEntity user = new RoomEntity()
 			{
-				Id = session.Habbo.Id,
-				Name = session.Habbo.Username,
-				Motto = session.Habbo.Motto,
-				Look = session.Habbo.Look,
-				Gender = session.Habbo.Gender,
+				Id = session.Player.Id,
+				Name = session.Player.Username,
+				Motto = session.Player.Motto,
+				Look = session.Player.Look,
+				Gender = session.Player.Gender,
 				Type = RoomEntityType.Player,
 				Room = room,
 				Position = new UserPosition()
@@ -36,14 +36,14 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 					Rotation = room.Model.Door.Rotation,
 					HeadRotation = room.Model.Door.Rotation
 				},
-				Habbo = session.Habbo
+				Player = session.Player
 			};
 
-			session.Habbo.CurrentRoom.EntityManager.CreateEntity(user);
+			session.Player.CurrentRoom.EntityManager.CreateEntity(user);
 
 			session.Send(new RoomRelativeMapComposer(room));
 			session.Send(new RoomHeightMapComposer(room));
-			session.Send(new RoomEntryInfoComposer(room, session.Habbo));
+			session.Send(new RoomEntryInfoComposer(room, session.Player));
 			session.Send(new RoomThicknessComposer(room));
 
 			session.Send(new RoomUsersComposer(room.EntityManager.Users));
@@ -54,7 +54,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 			session.Send(new RoomFloorItemsComposer(room.ItemManager.FloorItems));
 			session.Send(new RoomWallItemsComposer(room.ItemManager.WallItems));
 
-			room.RoomRights.RefreshRights(session.Habbo);
+			room.RoomRights.RefreshRights(session.Player);
 		}
 	}
 }

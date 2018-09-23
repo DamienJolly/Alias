@@ -190,7 +190,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 					if ((this.Room.Model.Door.X == this.Position.X && this.Room.Model.Door.Y == this.Position.Y) &&
 						this.Type == RoomEntityType.Player)
 					{
-						//this.Habbo.Session.Send(new HotelViewComposer());
+						//this.Player.Session.Send(new HotelViewComposer());
 						//this.Room.EntityManager.OnUserLeave(this);
 					}
 				}
@@ -279,14 +279,14 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			{
 				if (this.Type == RoomEntityType.Player)
 				{
-					Alias.Server.ModerationManager.QuickTicket(this.Habbo, "User said a banned word");
+					Alias.Server.ModerationManager.QuickTicket(this.Player, "User said a banned word");
 				}
 				return;
 			}
 
 			text = Alias.Server.ChatManager.GetFilter().Filter(text);
 
-			if (this.Type == RoomEntityType.Player && (text.StartsWith(":") && Alias.Server.ChatManager.GetCommands().Parse(this.Habbo.Session, text)))
+			if (this.Type == RoomEntityType.Player && (text.StartsWith(":") && Alias.Server.ChatManager.GetCommands().Parse(this.Player.Session, text)))
 			{
 				return;
 			}
@@ -297,9 +297,9 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			{
 				if (target != this)
 				{
-					target.Habbo.Session.Send(packet, false);
+					target.Player.Session.Send(packet);
 				}
-				this.Habbo.Session.Send(packet);
+				this.Player.Session.Send(packet);
 			}
 			else
 			{
@@ -308,7 +308,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 
 			if (this.Type == RoomEntityType.Player)
 			{
-				WordFilterDatabase.StoreMessage(this.Habbo.Id, this.Room.Id, text, ChatTypeToInt(chatType), target != null ? target.Habbo.Id : 0);
+				WordFilterDatabase.StoreMessage(this.Player.Id, this.Room.Id, text, ChatTypeToInt(chatType), target != null ? target.Player.Id : 0);
 			}
 		}
 
@@ -330,7 +330,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 		public void Dispose()
 		{
 			this.Room = null;
-			this.Habbo = null;
+			this.Player = null;
 			//todo:
 		}
 	}

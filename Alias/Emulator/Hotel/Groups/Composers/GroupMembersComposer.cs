@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
@@ -12,12 +12,12 @@ namespace Alias.Emulator.Hotel.Groups.Composers
 		private Group group;
 		private int membersCount;
 		private List<GroupMember> members;
-		private Habbo habbo;
+		private Player habbo;
 		private int pageId;
 		private int levelId;
 		private string query;
 
-		public GroupMembersComposer(Group group, int membersCount, List<GroupMember> members, Habbo habbo, int pageId, int levelId, string query)
+		public GroupMembersComposer(Group group, int membersCount, List<GroupMember> members, Player habbo, int pageId, int levelId, string query)
 		{
 			this.group = group;
 			this.membersCount = membersCount;

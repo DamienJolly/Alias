@@ -17,6 +17,7 @@ using Camera;
 using Alias.Emulator.Hotel.Landing;
 using Alias.Emulator.Settings;
 using System.Threading.Tasks;
+using Alias.Emulator.Hotel.Players;
 
 namespace Alias.Emulator
 {
@@ -51,6 +52,7 @@ namespace Alias.Emulator
 		public ChatManager ChatManager { get; set; }
 		public ModerationManager ModerationManager { get; set; }
 		public LandingManager LandingManager { get; set; }
+		public PlayerManager PlayerManager { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the AliasServer.
@@ -112,6 +114,8 @@ namespace Alias.Emulator
 
 			AchievementManager = new AchievementManager(new AchievementDao());
 			await AchievementManager.Initialize();
+
+			PlayerManager = new PlayerManager(new PlayerDao());
 
 			this.LandingManager = new LandingManager();
 			this.LandingManager.Initialize();

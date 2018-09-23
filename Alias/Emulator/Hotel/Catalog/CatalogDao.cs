@@ -90,8 +90,8 @@ namespace Alias.Emulator.Hotel.Catalog
 						Amount = reader.ReadData<int>("amount"),
 						LimitedStack = reader.ReadData<int>("limited_stack"),
 						ClubLevel = reader.ReadData<int>("club_level"),
-						CanGift = reader.ReadData<bool>("can_gift"),
-						HasOffer = reader.ReadData<bool>("have_offer"),
+						CanGift = reader.ReadBool("can_gift"),
+						HasOffer = reader.ReadBool("have_offer"),
 						OfferId = reader.ReadData<int>("offer_id")
 					};
 

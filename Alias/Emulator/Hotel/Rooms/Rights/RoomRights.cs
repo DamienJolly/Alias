@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Groups;
 using Alias.Emulator.Hotel.Rooms.Rights.Composers;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 
 namespace Alias.Emulator.Hotel.Rooms.Rights
 {
@@ -32,7 +32,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 			UserRight right = new UserRight()
 			{
 				Id       = userId,
-				Username = (string)UserDatabase.Variable(userId, "username")
+				Username = "" //todo:
 			};
 			this.UserRights.Add(right);
 		}
@@ -48,7 +48,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 			this.UserRights.Remove(this.UserRights.Where(right => right.Id == userId).First());
 		}
 
-		public void RefreshRights(Habbo habbo)
+		public void RefreshRights(Player habbo)
 		{
 			RoomRightLevels flatCtrl = RoomRightLevels.NONE;
 

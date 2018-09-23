@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using Alias.Emulator.Hotel.Players.Inventory;
 using Alias.Emulator.Hotel.Rooms.Entities;
-using Alias.Emulator.Hotel.Users.Inventory;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading
 {

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Items.Crafting.Composers;
+using Alias.Emulator.Hotel.Players.Inventory;
 using Alias.Emulator.Hotel.Rooms;
 using Alias.Emulator.Hotel.Rooms.Items;
-using Alias.Emulator.Hotel.Users.Inventory;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -14,7 +14,7 @@ namespace Alias.Emulator.Hotel.Items.Crafting.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -38,8 +38,8 @@ namespace Alias.Emulator.Hotel.Items.Crafting.Events
 			int count = message.PopInt();
 			for (int i = 0; i < count; i++)
 			{
-				InventoryItem iItem = session.Habbo.Inventory.GetFloorItem(message.PopInt());
-				if (iItem == null)
+				int iItemId = message.PopInt();
+				if (session.Player.Inventory.TryGetItemById(iItemId, out InventoryItem iItem))
 				{
 					continue;
 				}
@@ -58,7 +58,7 @@ namespace Alias.Emulator.Hotel.Items.Crafting.Events
 			int c = recipes.Count();
 			foreach (KeyValuePair<CraftingRecipe, bool> recipe in recipes)
 			{
-				if (session.Habbo.Crafting.HasRecipe(recipe.Key.Id))
+				if (session.Player.Crafting.Recipes.Contains(recipe.Key.Id))
 				{
 					c--;
 					continue;

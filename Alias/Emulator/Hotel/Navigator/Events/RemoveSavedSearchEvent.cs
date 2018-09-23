@@ -7,13 +7,12 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 {
 	class RemoveSavedSearchEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientPacket message)
+		public async void Handle(Session session, ClientPacket message)
 		{
 			int id = message.PopInt();
+			await session.Player.Navigator.RemoveSearch(id);
 
-			session.Habbo.NavigatorPreference.RemoveSearch(id);
-
-			session.Send(new NavigatorSavedSearchesComposer(session.Habbo.NavigatorPreference.NavigatorSearches));
+			session.Send(new NavigatorSavedSearchesComposer(session.Player.Navigator.Searches.Values));
 		}
 	}
 }

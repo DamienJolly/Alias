@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (!session.Habbo.HasPermission("acc_modtool_ticket_queue"))
+			if (!session.Player.HasPermission("acc_modtool_ticket_queue"))
 			{
 				return;
 			}
@@ -23,7 +23,7 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 			}
 
 			ModerationTicket issue = Alias.Server.ModerationManager.GetTicket(ticketId);
-			if (issue == null || issue.ModId != session.Habbo.Id)
+			if (issue == null || issue.ModId != session.Player.Id)
 			{
 				return;
 			}

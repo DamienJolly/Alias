@@ -8,7 +8,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -16,7 +16,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 
 			int signId = message.PopInt();
 
-			session.Habbo.Entity.Actions.Add("sign", signId + "");
+			session.Player.Entity.Actions.Add("sign", signId + "");
 		}
 	}
 }

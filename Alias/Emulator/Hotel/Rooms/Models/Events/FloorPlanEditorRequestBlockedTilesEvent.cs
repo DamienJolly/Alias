@@ -9,12 +9,12 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (session.Habbo.CurrentRoom == null)
+			if (session.Player.CurrentRoom == null)
 			{
 				return;
 			}
 			
-			session.Send(new FloorPlanEditorBlockedTilesComposer(session.Habbo.CurrentRoom));
+			session.Send(new FloorPlanEditorBlockedTilesComposer(session.Player.CurrentRoom));
 		}
 	}
 }

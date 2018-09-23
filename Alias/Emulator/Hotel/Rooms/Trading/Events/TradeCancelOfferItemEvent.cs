@@ -1,5 +1,5 @@
 using Alias.Emulator.Hotel.Rooms.Entities;
-using Alias.Emulator.Hotel.Users.Inventory;
+using Alias.Emulator.Hotel.Players.Inventory;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -10,13 +10,13 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			RoomTrade trade = room.RoomTrading.GetActiveTrade(session.Habbo.Entity);
+			RoomTrade trade = room.RoomTrading.GetActiveTrade(session.Player.Entity);
 			if (trade == null)
 			{
 				return;
@@ -24,13 +24,12 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 
 			int itemId = message.PopInt();
 
-			InventoryItem item = session.Habbo.Inventory.GetFloorItem(itemId);
-			if (item == null)
+			if(!session.Player.Inventory.TryGetItemById(itemId, out InventoryItem item))
 			{
 				return;
 			}
 
-			trade.RemoveItem(session.Habbo.Entity, item);
+			trade.RemoveItem(session.Player.Entity, item);
 		}
 	}
 }

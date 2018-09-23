@@ -8,13 +8,13 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			session.Habbo.Entity.MakeSit();
+			session.Player.Entity.MakeSit();
 		}
 	}
 }

@@ -1,5 +1,5 @@
-using Alias.Emulator.Hotel.Users.Inventory;
-using Alias.Emulator.Hotel.Users.Inventory.Composers;
+using Alias.Emulator.Hotel.Players.Inventory;
+using Alias.Emulator.Hotel.Players.Inventory.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -8,9 +8,9 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 {
 	class RoomUserPickupPetEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientPacket message)
+		public async void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -22,19 +22,10 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 				return;
 			}
 
-			InventoryPets iPet = new InventoryPets
-			{
-				Id = pet.Id,
-				Name = pet.Name,
-				Type = 0,
-				Race = 0,
-				Colour = "",
-				RoomId = 0
-			};
-
+			InventoryPet iPet = new InventoryPet(pet.Id, pet.Name, 0, 0, "");
 			RoomEntityDatabase.RemovePet(pet);
-			session.Habbo.Inventory.UpdatePet(iPet);
-			session.Habbo.CurrentRoom.EntityManager.OnUserLeave(pet);
+			await session.Player.Inventory.UpdatePet(iPet);
+			session.Player.CurrentRoom.EntityManager.OnUserLeave(pet);
 			session.Send(new AddPetComposer(iPet));
 		}
 	}

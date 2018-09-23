@@ -18,7 +18,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 			ServerPacket message = new ServerPacket(Outgoing.TradeStartMessageComposer);
 			roomTrade.Users.ForEach(user =>
 			{
-				message.WriteInteger(user.User.Habbo.Id);
+				message.WriteInteger(user.User.Player.Id);
 				message.WriteInteger(1);
 			});
 			return message;

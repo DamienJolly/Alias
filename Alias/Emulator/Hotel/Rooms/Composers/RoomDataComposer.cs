@@ -62,7 +62,7 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 			message.WriteInteger(this.Data.Settings.WhoMutes);
 			message.WriteInteger(this.Data.Settings.WhoKicks);
 			message.WriteInteger(this.Data.Settings.WhoBans);
-			message.WriteBoolean(session.Habbo.Id == this.Data.OwnerId);
+			message.WriteBoolean(session.Player.Id == this.Data.OwnerId);
 			message.WriteInteger(this.Data.Settings.ChatMode);
 			message.WriteInteger(this.Data.Settings.ChatSize);
 			message.WriteInteger(this.Data.Settings.ChatSpeed);

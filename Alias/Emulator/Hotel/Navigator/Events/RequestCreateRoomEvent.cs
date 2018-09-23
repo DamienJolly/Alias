@@ -36,12 +36,12 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 
 			// todo: room count check
 
-			Room room = Alias.Server.RoomManager.CreateRoom(session.Habbo.Id, name, description, modelName, maxUsers, tradeType, categoryId);
+			Room room = Alias.Server.RoomManager.CreateRoom(session.Player.Id, name, description, modelName, maxUsers, tradeType, categoryId);
 			if (room != null)
 			{
-				if (session.Habbo.CurrentRoom != null)
+				if (session.Player.CurrentRoom != null)
 				{
-					session.Habbo.CurrentRoom.EntityManager.OnUserLeave(session.Habbo.Entity);
+					session.Player.CurrentRoom.EntityManager.OnUserLeave(session.Player.Entity);
 				}
 
 				session.Send(new RoomCreatedComposer(room));

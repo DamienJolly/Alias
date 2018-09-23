@@ -13,7 +13,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 		public void Handle(Session session, ClientPacket message)
 		{
 			List<RoomData> rooms = new List<RoomData>();
-			RoomDatabase.UserRooms(session.Habbo.Id).ForEach(roomData =>
+			RoomDatabase.UserRooms(session.Player.Id).ForEach(roomData =>
 			{
 				if (roomData.Group == null)
 				{

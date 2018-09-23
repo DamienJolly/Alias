@@ -8,7 +8,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -17,17 +17,17 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 			int x = message.PopInt();
 			int y = message.PopInt();
 
-			if ((session.Habbo.Entity.Position.X == x && session.Habbo.Entity.Position.Y == y) || !room.Mapping.Tiles[x, y].IsValidTile(session.Habbo.Entity, true))
+			if ((session.Player.Entity.Position.X == x && session.Player.Entity.Position.Y == y) || !room.Mapping.Tiles[x, y].IsValidTile(session.Player.Entity, true))
 			{
 				return;
 			}
 			
-			session.Habbo.Entity.TargetPosition = new UserPosition
+			session.Player.Entity.TargetPosition = new UserPosition
 			{
 				X = x,
 				Y = y
 			};
-			session.Habbo.Entity.Path = room.PathFinder.Path(session.Habbo.Entity);
+			session.Player.Entity.Path = room.PathFinder.Path(session.Player.Entity);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 using Alias.Emulator.Hotel.Rooms.Composers;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -10,8 +10,8 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
-			if (room == null || room.RoomData.OwnerId != session.Habbo.Id)
+			Room room = session.Player.CurrentRoom;
+			if (room == null || room.RoomData.OwnerId != session.Player.Id)
 			{
 				return;
 			}
@@ -19,7 +19,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 			int userId = message.PopInt();
 			room.RoomRights.GiveRights(userId);
 
-			Habbo target = room.EntityManager.UserByUserid(userId).Habbo;
+			Player target = room.EntityManager.UserByUserid(userId).Player;
 			if (target != null)
 			{
 				room.RoomRights.RefreshRights(target);

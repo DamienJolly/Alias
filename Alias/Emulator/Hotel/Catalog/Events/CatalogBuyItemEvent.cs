@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Catalog.Composers;
 using Alias.Emulator.Hotel.Items;
+using Alias.Emulator.Hotel.Players.Currency.Composers;
+using Alias.Emulator.Hotel.Players.Inventory;
+using Alias.Emulator.Hotel.Players.Inventory.Composers;
 using Alias.Emulator.Hotel.Rooms.Items;
-using Alias.Emulator.Hotel.Users.Currency.Composers;
-using Alias.Emulator.Hotel.Users.Inventory;
-using Alias.Emulator.Hotel.Users.Inventory.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -28,7 +28,7 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 				return;
 			}
 
-			if (page.Rank > session.Habbo.Rank)
+			if (page.Rank > session.Player.Rank)
 			{
 				session.Send(new AlertPurchaseUnavailableComposer(AlertPurchaseUnavailableComposer.ILLEGAL));
 				return;
@@ -41,7 +41,7 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 				return;
 			}
 
-			if (item.ClubLevel > session.Habbo.ClubLevel)
+			if (item.ClubLevel > session.Player.ClubLevel)
 			{
 				session.Send(new AlertPurchaseUnavailableComposer(AlertPurchaseUnavailableComposer.REQUIRES_CLUB));
 				return;
@@ -83,9 +83,9 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 
 			for (int i = 0; i < amount; i++)
 			{
-				if (item.Credits <= session.Habbo.Credits - totalCredits)
+				if (item.Credits <= session.Player.Credits - totalCredits)
 				{
-					if (item.Points <= session.Habbo.Currency.GetCurrencyType(item.PointsType).Amount - totalPoints)
+					//if (item.Points <= session.Player.Currency.TryGetCurrency(item.PointsType).Amount - totalPoints) todo:
 					{
 						if (((i + 1) % 6 != 0 && item.HasOffer) || !item.HasOffer)
 						{
@@ -102,15 +102,8 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 									CatalogBots botData = Alias.Server.CatalogManager.GetCatalogBot(baseItem.Id);
 									if (botData != null)
 									{
-										InventoryBots habboBot = new InventoryBots
-										{
-											Id = 0,
-											Name = botData.Name,
-											Motto = botData.Motto,
-											Look = botData.Look,
-											Gender = botData.Gender
-										};
-										session.Habbo.Inventory.AddBot(habboBot);
+										InventoryBot habboBot = new InventoryBot(-1, botData.Name, botData.Motto, botData.Look, botData.Gender);
+										await session.Player.Inventory.AddBot(habboBot);
 										session.Send(new AddBotComposer(habboBot));
 									}
 								}
@@ -118,51 +111,24 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 								{
 									if (baseItem.Interaction == ItemInteraction.TROPHY)
 									{
-										extraData = session.Habbo.Username + (char)9 + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + (char)9 + extraData;
+										extraData = session.Player.Username + (char)9 + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + (char)9 + extraData;
 									}
 
 									if (baseItem.Interaction == ItemInteraction.TELEPORT)
 									{
-										InventoryItem teleportOne = new InventoryItem
-										{
-											Id = 0,
-											LimitedNumber = limitedNumber,
-											LimitedStack = limitedStack,
-											ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id),
-											Mode = 0,
-											UserId = session.Habbo.Id,
-											ExtraData = extraData
-										};
-										session.Habbo.Inventory.AddItem(teleportOne);
-										InventoryItem teleportTwo = new InventoryItem
-										{
-											Id = 0,
-											LimitedNumber = limitedNumber,
-											LimitedStack = limitedStack,
-											ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id),
-											Mode = 0,
-											UserId = session.Habbo.Id,
-											ExtraData = teleportOne.Id.ToString()
-										};
-										session.Habbo.Inventory.AddItem(teleportTwo);
+										InventoryItem teleportOne = new InventoryItem(-1, limitedNumber, limitedStack, baseItem.Id, session.Player.Id, extraData);
+										await session.Player.Inventory.AddItem(teleportOne);
+										InventoryItem teleportTwo = new InventoryItem(-1, limitedNumber, limitedStack, baseItem.Id, session.Player.Id, teleportOne.Id.ToString());
+										await session.Player.Inventory.AddItem(teleportTwo);
 										teleportOne.ExtraData = teleportTwo.Id.ToString();
-										session.Habbo.Inventory.UpdateItem(teleportOne);
+										await session.Player.Inventory.UpdateItem(teleportOne);
 										itemsList.Add(teleportOne);
 										itemsList.Add(teleportTwo);
 									}
 									else
 									{
-										InventoryItem habboItem = new InventoryItem
-										{
-											Id = 0,
-											LimitedNumber = limitedNumber,
-											LimitedStack = limitedStack,
-											ItemData = Alias.Server.ItemManager.GetItemData(baseItem.Id),
-											Mode = 0,
-											UserId = session.Habbo.Id,
-											ExtraData = extraData
-										};
-										session.Habbo.Inventory.AddItem(habboItem);
+										InventoryItem habboItem = new InventoryItem(-1, limitedNumber, limitedStack, baseItem.Id, session.Player.Id, extraData);
+										await session.Player.Inventory.AddItem(habboItem);
 										itemsList.Add(habboItem);
 									}
 								}
@@ -174,14 +140,14 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 
 			if (totalCredits > 0)
 			{
-				session.Habbo.Credits -= totalCredits;
-				session.Send(new UserCreditsComposer(session.Habbo));
+				session.Player.Credits -= totalCredits;
+				session.Send(new UserCreditsComposer(session.Player));
 			}
 
 			if (totalPoints > 0)
 			{
-				session.Habbo.Currency.GetCurrencyType(item.PointsType).Amount -= totalPoints;
-				session.Send(new UserPointsComposer(session.Habbo.Currency.GetCurrencyType(item.PointsType).Amount, -totalPoints, item.PointsType));
+				//session.Player.Currency.GetCurrencyType(item.PointsType).Amount -= totalPoints; todo:
+				//session.Send(new UserPointsComposer(session.Player.Currency.GetCurrencyType(item.PointsType).Amount, -totalPoints, item.PointsType));
 			}
 
 			if (item.IsLimited)
@@ -192,10 +158,10 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 
 			if (itemsList != null)
 			{
-				session.Send(new AddHabboItemsComposer(itemsList));
+				session.Send(new AddPlayerItemsComposer(itemsList));
 			}
 
-			session.Habbo.AddPurchase(item);
+			session.Player.AddPurchase(item);
 
 			session.Send(new PurchaseOKComposer(item));
 			session.Send(new InventoryRefreshComposer());

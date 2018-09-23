@@ -16,7 +16,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Composers
 		public ServerPacket Compose()
 		{
 			ServerPacket message = new ServerPacket(Outgoing.TradeAcceptedMessageComposer);
-			message.WriteInteger(this.tradeUser.User.Habbo.Id);
+			message.WriteInteger(this.tradeUser.User.Player.Id);
 			message.WriteInteger(this.tradeUser.Accepted ? 1 : 0);
 			return message;
 		}

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alias.Emulator.Hotel.Moderation.Composers;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Moderation
@@ -29,7 +29,7 @@ namespace Alias.Emulator.Hotel.Moderation
 			return this._presets.Where(preset => preset.Type == type).ToList();
 		}
 
-		public void QuickTicket(Habbo reported, string message)
+		public void QuickTicket(Player reported, string message)
 		{
 			ModerationTicket issue = new ModerationTicket()
 			{
@@ -59,10 +59,10 @@ namespace Alias.Emulator.Hotel.Moderation
 			return ModerationDatabase.ReadUserChatlogs(senderId, targetId);
 		}
 
-		public void BanUser(int targetUserId, Session moderator, string reason, int duration, ModerationBanType type, int topic)
+		public async void BanUser(int targetUserId, Session moderator, string reason, int duration, ModerationBanType type, int topic)
 		{
-			Habbo target = Alias.Server.SocketServer.SessionManager.HabboById(targetUserId);
-			if (target.Rank >= moderator.Habbo.Rank)
+			Player target = await Alias.Server.PlayerManager.ReadPlayerByIdAsync(targetUserId);
+			if (target.Rank >= moderator.Player.Rank)
 			{
 				return;
 			}
@@ -84,7 +84,7 @@ namespace Alias.Emulator.Hotel.Moderation
 			this._modTickets.Remove(issue);
 		}
 
-		public void PickTicket(ModerationTicket issue, Habbo habbo)
+		public void PickTicket(ModerationTicket issue, Player habbo)
 		{
 			issue.ModId       = habbo.Id;
 			issue.ModUsername = habbo.Username;
@@ -104,7 +104,7 @@ namespace Alias.Emulator.Hotel.Moderation
 			Alias.Server.SocketServer.SessionManager.SendWithPermission(new ModerationIssueInfoComposer(issue), "acc_modtool_ticket_queue");
 		}
 
-		public void ResolveTicket(ModerationTicket issue, Habbo sender, int state)
+		public void ResolveTicket(ModerationTicket issue, Player sender, int state)
 		{
 			issue.State = ModerationTicketState.CLOSED;
 			ModerationDatabase.UpdateTicket(issue);

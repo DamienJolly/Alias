@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Items.Crafting.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -29,7 +29,7 @@ namespace Alias.Emulator.Hotel.Items.Crafting.Events
 				return;
 			}
 			
-			session.Send(new CraftableProductsComposer(table.GetRecipes(session.Habbo), table.Ingredients));
+			session.Send(new CraftableProductsComposer(table.GetRecipes(session.Player), table.Ingredients));
 		}
 	}
 }

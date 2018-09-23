@@ -55,10 +55,11 @@ namespace Alias.Emulator.Database
 			}
 		}
 
-		protected async Task InsertAsync(string query, params object[] parameters)
+		protected async Task<int> InsertAsync(string query, params object[] parameters)
 		{
 			try
 			{
+				int lastInsertedId = -1;
 				await OpenConnection(async connection =>
 				{
 					using (MySqlCommand command = connection.CreateCommand())
@@ -66,14 +67,17 @@ namespace Alias.Emulator.Database
 						command.CommandText = query;
 						SetupParameters(command.Parameters, parameters);
 
-						await command.ExecuteNonQueryAsync();
+						lastInsertedId = await command.ExecuteNonQueryAsync();
 					}
 				});
+				return lastInsertedId;
 			}
 			catch (MySqlException ex)
 			{
 				Console.WriteLine(ex);
 			}
+
+			return -1;
 		}
 
 		private static void SetupParameters(MySqlParameterCollection collection, params object[] parameters)

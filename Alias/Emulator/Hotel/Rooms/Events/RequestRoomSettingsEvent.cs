@@ -9,12 +9,12 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (session.Habbo.CurrentRoom == null || !session.Habbo.CurrentRoom.RoomRights.HasRights(session.Habbo.Id))
+			if (session.Player.CurrentRoom == null || !session.Player.CurrentRoom.RoomRights.HasRights(session.Player.Id))
 			{
 				return;
 			}
 
-			session.Send(new RoomSettingsComposer(session.Habbo.CurrentRoom));
+			session.Send(new RoomSettingsComposer(session.Player.CurrentRoom));
 		}
 	}
 }

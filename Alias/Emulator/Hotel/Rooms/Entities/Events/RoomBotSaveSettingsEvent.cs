@@ -10,13 +10,13 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			if (room.RoomData.OwnerId != session.Habbo.Id)
+			if (room.RoomData.OwnerId != session.Player.Id)
 			{
 				return;
 			}
@@ -33,9 +33,9 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 			switch (settingId)
 			{
 				case 1:
-					bot.Look = session.Habbo.Look;
-					bot.Gender = session.Habbo.Gender;
-					bot.EffectId = session.Habbo.Entity.EffectId;
+					bot.Look = session.Player.Look;
+					bot.Gender = session.Player.Gender;
+					bot.EffectId = session.Player.Entity.EffectId;
 					room.EntityManager.Send(new RoomUserDataComposer(bot));
 					room.EntityManager.Send(new RoomUserEffectComposer(bot));
 					break;

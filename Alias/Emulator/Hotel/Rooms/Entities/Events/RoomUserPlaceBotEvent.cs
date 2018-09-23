@@ -1,5 +1,5 @@
-using Alias.Emulator.Hotel.Users.Inventory;
-using Alias.Emulator.Hotel.Users.Inventory.Composers;
+using Alias.Emulator.Hotel.Players.Inventory;
+using Alias.Emulator.Hotel.Players.Inventory.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -8,23 +8,22 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 {
 	class RoomUserPlaceBotEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientPacket message)
+		public async void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			InventoryBots bot = session.Habbo.Inventory.GetBot(message.PopInt());
-			if (bot == null)
+			int botId = message.PopInt();
+			if(!session.Player.Inventory.TryGetBot(botId, out InventoryBot bot))
 			{
 				return;
 			}
 
 			int x = message.PopInt();
 			int y = message.PopInt();
-			
 			if (!room.Mapping.Tiles[x, y].IsValidTile(null, true))
 			{
 				return;
@@ -37,23 +36,23 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 				Motto = bot.Motto,
 				Look = bot.Look,
 				Gender = bot.Gender,
-				OwnerId = session.Habbo.Id,
+				OwnerId = session.Player.Id,
 				Type = RoomEntityType.Bot,
-				Room = session.Habbo.CurrentRoom,
+				Room = session.Player.CurrentRoom,
 				Position = new UserPosition()
 				{
 					X = x,
 					Y = y,
-					Rotation = session.Habbo.CurrentRoom.Model.Door.Rotation,
-					HeadRotation = session.Habbo.CurrentRoom.Model.Door.Rotation
+					Rotation = session.Player.CurrentRoom.Model.Door.Rotation,
+					HeadRotation = session.Player.CurrentRoom.Model.Door.Rotation
 				}
 			};
 
-			session.Habbo.CurrentRoom.EntityManager.CreateEntity(entity);
+			session.Player.CurrentRoom.EntityManager.CreateEntity(entity);
 			RoomEntityDatabase.AddBot(entity);
 
 			bot.RoomId = room.Id;
-			session.Habbo.Inventory.UpdateBot(bot);
+			await session.Player.Inventory.UpdateBot(bot);
 			session.Send(new RemoveBotComposer(bot));
 		}
 	}

@@ -12,18 +12,18 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (!session.Habbo.HasPermission("acc_floorplan_editor"))
+			if (!session.Player.HasPermission("acc_floorplan_editor"))
 			{
 				return;
 			}
 
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			if (room.RoomData.OwnerId == session.Habbo.Id)
+			if (room.RoomData.OwnerId == session.Player.Id)
 			{
 				string map = message.PopString().ToLower().TrimEnd();
 				if (map.Length == 0)
@@ -104,7 +104,7 @@ namespace Alias.Emulator.Hotel.Rooms.Models.Events
 				room = Alias.Server.RoomManager.LoadRoom(room.Id);
 				foreach (RoomEntity habbo in habbos)
 				{
-					habbo.Habbo.Session.Send(new ForwardToRoomComposer(room.Id));
+					habbo.Player.Session.Send(new ForwardToRoomComposer(room.Id));
 				}
 			}
 		}

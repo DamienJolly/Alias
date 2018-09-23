@@ -10,14 +10,14 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (session.Habbo != null && session.Habbo.CurrentRoom != null)
+			if (session.Player != null && session.Player.CurrentRoom != null)
 			{
 				string text = message.PopString();
 				RoomEntity target = null;
 				if (GetChatType(message.Header) == ChatType.WHISPER)
 				{
-					target = session.Habbo.CurrentRoom.EntityManager.UserByName(text.Split(' ')[0]);
-					if (target == null || target.Habbo.CurrentRoom == null)
+					target = session.Player.CurrentRoom.EntityManager.UserByName(text.Split(' ')[0]);
+					if (target == null || target.Player.CurrentRoom == null)
 					{
 						return;
 					}
@@ -25,7 +25,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 					text = text.Substring(text.Split(' ')[0].Length + 1);
 				}
 
-				session.Habbo.Entity.OnChat(text, message.PopInt(), GetChatType(message.Header), target);
+				session.Player.Entity.OnChat(text, message.PopInt(), GetChatType(message.Header), target);
 			}
 		}
 

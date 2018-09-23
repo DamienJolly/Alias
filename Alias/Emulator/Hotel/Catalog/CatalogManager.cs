@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 
 namespace Alias.Emulator.Hotel.Catalog
 {
@@ -50,7 +50,7 @@ namespace Alias.Emulator.Hotel.Catalog
 			return _featured;
 		}
 
-		public IList<CatalogPage> GetCatalogPages(int pageId, Habbo habbo)
+		public IList<CatalogPage> GetCatalogPages(int pageId, Player habbo)
 		{
 			return _pages.Where(page => page.ParentId == pageId && page.Visible && page.Rank <= habbo.Rank).OrderBy(page => page.Order).ToList();
 		}

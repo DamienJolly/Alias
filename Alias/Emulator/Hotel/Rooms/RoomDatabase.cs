@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Rooms.States;
-using Alias.Emulator.Hotel.Users;
 using Alias.Emulator.Utilities;
 using MySql.Data.MySqlClient;
 
@@ -25,7 +24,7 @@ namespace Alias.Emulator.Hotel.Rooms
 							Name        = Reader.GetString("name"),
 							Group       = Alias.Server.GroupManager.GetGroup(Reader.GetInt32("group_id")),
 							OwnerId     = Reader.GetInt32("owner"),
-							OwnerName   = (string)UserDatabase.Variable(Reader.GetInt32("owner"), "Username"),
+							OwnerName   = "",
 							DoorState   = (RoomDoorState)Reader.GetInt32("door"),
 							MaxUsers    = Reader.GetInt32("max_users"),
 							Description = Reader.GetString("description"),

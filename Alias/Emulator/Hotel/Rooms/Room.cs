@@ -109,9 +109,9 @@ namespace Alias.Emulator.Hotel.Rooms
 			List<RoomEntity> users = this.EntityManager.Entities;
 			foreach (RoomEntity user in users)
 			{
-				if (user.Habbo != null)
+				if (user.Player != null)
 				{
-					user.Habbo.Session.Send(new GroupInfoComposer(group, user.Habbo, false, group.GetMember(user.Habbo.Id)));
+					user.Player.Session.Send(new GroupInfoComposer(group, user.Player, false, group.GetMember(user.Player.Id)));
 				}
 			}
 		}

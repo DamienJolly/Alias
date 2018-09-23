@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Alias.Emulator.Hotel.Rooms.Entities;
-using Alias.Emulator.Hotel.Users.Inventory;
+using Alias.Emulator.Hotel.Players.Inventory;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -12,13 +11,13 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			RoomTrade trade = room.RoomTrading.GetActiveTrade(session.Habbo.Entity);
+			RoomTrade trade = room.RoomTrading.GetActiveTrade(session.Player.Entity);
 			if (trade == null)
 			{
 				return;
@@ -26,18 +25,16 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 
 			int amount = message.PopInt();
 			int itemId = message.PopInt();
-
-			InventoryItem item = session.Habbo.Inventory.GetFloorItem(itemId);
-			if (item == null)
+			if(!session.Player.Inventory.TryGetItemById(itemId, out InventoryItem item))
 			{
 				return;
 			}
 
 			int count = 0;
 			List<InventoryItem> items = new List<InventoryItem>();
-			foreach (InventoryItem i in session.Habbo.Inventory.FloorItems.Where(x => x.ItemData.Id == item.ItemData.Id))
+			foreach (InventoryItem i in session.Player.Inventory.Items.Values.Where(x => x.ItemData.Id == item.ItemData.Id))
 			{
-				if (!trade.GetTradeUser(session.Habbo.Entity).OfferedItems.Contains(i))
+				if (!trade.GetTradeUser(session.Player.Entity).OfferedItems.Contains(i))
 				{
 					items.Add(i);
 					count++;
@@ -48,7 +45,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading.Events
 				}
 			}
 
-			trade.OfferItems(session.Habbo.Entity, items);
+			trade.OfferItems(session.Player.Entity, items);
 		}
 	}
 }

@@ -65,7 +65,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 					composers.ForEach(composer =>
 					{
 						ServerPacket message = composer.Compose();
-						user.Habbo.Session.Send(message, false);
+						user.Player.Session.Send(message);
 					});
 				}
 			});
@@ -76,10 +76,10 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 			List<RoomEntity> users = this.Entities;
 			foreach (RoomEntity user in users)
 			{
-				if (user.Habbo != null && user.Habbo.Session != null)
+				if (user.Player != null && user.Player.Session != null)
 				{
-					user.Habbo.CurrentRoom = null;
-					user.Habbo.Session.Send(new HotelViewComposer());
+					user.Player.CurrentRoom = null;
+					user.Player.Session.Send(new HotelViewComposer());
 				}
 			}
 		}
@@ -104,7 +104,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities
 
 		public RoomEntity EntityByVirtualid(int virtualId) => this.Entities.Where(user => user.VirtualId == virtualId).First();
 
-		public RoomEntity UserByUserid(int userId) => this.Users.Where(user => user.Habbo.Id == userId).First();
+		public RoomEntity UserByUserid(int userId) => this.Users.Where(user => user.Player.Id == userId).First();
 
 		public RoomEntity UserByName(string targetname) => this.Entities.Where(user => user.Name == targetname).First();
 

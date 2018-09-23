@@ -10,7 +10,7 @@ using Alias.Emulator.Hotel.Misc;
 using Alias.Emulator.Hotel.Moderation;
 using Alias.Emulator.Hotel.Navigator;
 using Alias.Emulator.Hotel.Rooms;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 
 namespace Alias.Emulator.Network.Packets
 {

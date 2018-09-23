@@ -25,7 +25,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 				return;
 			}
 
-			if (roomData.Group != null || roomData.OwnerId != session.Habbo.Id)
+			if (roomData.Group != null || roomData.OwnerId != session.Player.Id)
 			{
 				return;
 			}
@@ -53,15 +53,15 @@ namespace Alias.Emulator.Hotel.Groups.Events
 				badge += (id < 100 ? "0" : "") + (id < 10 ? "0" : "") + id + (colour < 10 ? "0" : "") + colour + "" + pos;
 			}
 
-			Group group = Alias.Server.GroupManager.CreateGroup(session.Habbo, roomId, roomData.Name, name, description, badge, colorOne, colorTwo);
+			Group group = Alias.Server.GroupManager.CreateGroup(session.Player, roomId, roomData.Name, name, description, badge, colorOne, colorTwo);
 			roomData.Group = group;
 			
-			if (!session.Habbo.HasPermission("acc_infinite_credits"))
+			if (!session.Player.HasPermission("acc_infinite_credits"))
 			{
 				int guildPrice = 10;
-				if (session.Habbo.Credits >= guildPrice)
+				if (session.Player.Credits >= guildPrice)
 				{
-					session.Habbo.Credits -= guildPrice;
+					session.Player.Credits -= guildPrice;
 				}
 				else
 				{
@@ -73,9 +73,9 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			session.Send(new PurchaseOKComposer());
 			session.Send(new GroupBoughtComposer(group));
 
-			if (session.Habbo.CurrentRoom != null)
+			if (session.Player.CurrentRoom != null)
 			{
-				session.Habbo.CurrentRoom.UpdateGroup(group);
+				session.Player.CurrentRoom.UpdateGroup(group);
 			}
 		}
 	}

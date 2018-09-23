@@ -189,7 +189,7 @@ namespace Alias.Emulator.Network.Packets.Headers
 		public const int GroupChangeSettingsMessageEvent = 332;
 		public const int GroupAcceptMembershipMessageEvent = 1624;
 		public const int GroupDeclineMembershipMessageEvent = 670;
-		public const int GetHabboGroupBadgesMessageEvent = 1484;
+		public const int GetPlayerGroupBadgesMessageEvent = 1484;
 
 		// Misc
 		public const int LatencyTestMessageEvent = 3047;

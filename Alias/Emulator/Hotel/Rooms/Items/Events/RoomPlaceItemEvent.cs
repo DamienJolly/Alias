@@ -1,26 +1,25 @@
 using System.Collections.Generic;
 using Alias.Emulator.Hotel.Rooms.Composers;
-using Alias.Emulator.Hotel.Users.Inventory;
+using Alias.Emulator.Hotel.Players.Inventory;
 using Alias.Emulator.Hotel.Rooms.Items.Composers;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
-using Alias.Emulator.Hotel.Users.Inventory.Composers;
-using Alias.Emulator.Hotel.Rooms.Mapping;
+using Alias.Emulator.Hotel.Players.Inventory.Composers;
 
 namespace Alias.Emulator.Hotel.Rooms.Items.Events
 {
 	class RoomPlaceItemEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientPacket message)
+		public async void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
 			}
 
-			if (!room.RoomRights.HasRights(session.Habbo.Id))
+			if (!room.RoomRights.HasRights(session.Player.Id))
 			{
 				return;
 			}
@@ -38,8 +37,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 
 			if (!int.TryParse(values[0], out int itemId)) { return; }
 
-			InventoryItem iItem = session.Habbo.Inventory.GetFloorItem(itemId);
-			if (iItem == null)
+			if(!session.Player.Inventory.TryGetItemById(itemId, out InventoryItem iItem))
 			{
 				return;
 			}
@@ -51,7 +49,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				ItemData = iItem.ItemData,
 				LimitedNumber = iItem.LimitedNumber,
 				LimitedStack = iItem.LimitedStack,
-				Owner = session.Habbo.Id,
+				Owner = session.Player.Id,
 				ExtraData = iItem.ExtraData,
 				Mode = iItem.Mode,
 				Position = new ItemPosition()
@@ -99,8 +97,8 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 
 			room.ItemManager.AddItem(rItem);
 			iItem.RoomId = room.Id;
-			session.Habbo.Inventory.UpdateItem(iItem);
-			session.Send(new RemoveHabboItemComposer(iItem.Id));
+			await session.Player.Inventory.UpdateItem(iItem);
+			session.Send(new RemovePlayerItemComposer(iItem.Id));
 		}
 	}
 }

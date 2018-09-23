@@ -18,7 +18,7 @@ namespace Alias.Emulator.Hotel.Chat.Commands.Users
 			TimeSpan Uptime = DateTime.Now - Alias.ServerStarted;
 			string message = "";
 			message += "<b>Hotel Statistics</b> \r"
-					+ "- Online Users: " + Alias.Server.SocketServer.SessionManager.OnlineUsers() + "\r"
+					+ "- Online Users: " + Alias.Server.PlayerManager.OnlinePlayers + "\r"
 					+ "- Active Rooms: " + Alias.Server.RoomManager.LoadedRooms.Count + "\r"
 					+ "- Furni: " + 0 + "\r"
 					+ "\n"

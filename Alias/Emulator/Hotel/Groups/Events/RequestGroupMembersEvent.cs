@@ -25,7 +25,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 				}
 
 				List<GroupMember> actuallMembers = members.GetRange(pageId * 14, (pageId * 14) + 14 > members.Count ? members.Count - pageId * 14 : (pageId * 14) + 14);
-				session.Send(new GroupMembersComposer(group, members.Count, actuallMembers, session.Habbo, pageId, levelId, query));
+				session.Send(new GroupMembersComposer(group, members.Count, actuallMembers, session.Player, pageId, levelId, query));
 			}
 		}
 	}

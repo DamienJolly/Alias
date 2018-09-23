@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -21,7 +21,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Events
 				return;
 			}
 
-			if (!room.RoomRights.HasRights(session.Habbo.Id))
+			if (!room.RoomRights.HasRights(session.Player.Id))
 			{
 				return;
 			}

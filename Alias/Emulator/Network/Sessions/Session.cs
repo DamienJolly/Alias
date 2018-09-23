@@ -1,65 +1,52 @@
 using DotNetty.Transport.Channels;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Packets;
-using Alias.Emulator.Hotel.Users;
 using System.Collections.Generic;
+using Alias.Emulator.Hotel.Players;
 
 namespace Alias.Emulator.Network.Sessions
 {
 	class Session
 	{
-		public string UniqueId
-		{
-			get; set;
-		} = string.Empty;
-
-		public Habbo Habbo
-		{
-			get; set;
-		}
-
-		private IChannelHandlerContext Context;
+		public string UniqueId { get; set; } = string.Empty;
+		public Player Player { get; set; }
+		private IChannelHandlerContext _context;
 
 		public Session(IChannelHandlerContext ctx)
 		{
-			this.Context = ctx;
+			_context = ctx;
 		}
 
-		public void Send(ServerPacket response, bool dispose = true)
+		public void Send(ServerPacket response)
 		{
-			this.Context.Channel.WriteAndFlushAsync(response);
+			_context.Channel.WriteAndFlushAsync(response);
 		}
 
-		public void Send(IPacketComposer composer, bool dispose = true)
+		public void Send(IPacketComposer composer)
 		{
-			this.Send(composer.Compose(), dispose);
+			Send(composer.Compose());
 		}
 
-		public void Send(List<IPacketComposer> composer, bool dispose = true)
+		public void Send(List<IPacketComposer> composer)
 		{
 			composer.ForEach(message =>
 			{
-				this.Send(message.Compose(), dispose);
+				Send(message.Compose());
 			});
 		}
 
 		public void Disconnect(bool closeSocket = true)
 		{
-			if (this.Habbo != null)
+			if (Player != null)
 			{
-				this.Habbo.OnDisconnect();
-				this.Habbo = null;
+				Player.OnDisconnect();
+				Player = null;
 			}
-			this.UniqueId = string.Empty;
+			UniqueId = string.Empty;
 			if (closeSocket)
 			{
-				this.Context.CloseAsync();
+				_context.CloseAsync();
 			}
-		}
-
-		public void AssignHabbo(Habbo habbo)
-		{
-			this.Habbo = habbo;
 		}
 	}
 }

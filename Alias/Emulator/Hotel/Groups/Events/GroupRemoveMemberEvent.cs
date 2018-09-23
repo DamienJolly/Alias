@@ -1,6 +1,6 @@
 using Alias.Emulator.Hotel.Groups.Composers;
 using Alias.Emulator.Hotel.Rooms;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 {
     class GroupRemoveMemberEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientPacket message)
+		public async void Handle(Session session, ClientPacket message)
 		{
 			int groupId = message.PopInt();
 			int userId = message.PopInt();
@@ -20,26 +20,26 @@ namespace Alias.Emulator.Hotel.Groups.Events
 				return;
 			}
 
-			if ((group.OwnerId == session.Habbo.Id && userId != session.Habbo.Id) || userId == session.Habbo.Id)
+			if ((group.OwnerId == session.Player.Id && userId != session.Player.Id) || userId == session.Player.Id)
 			{
 				group.RemoveMember(userId);
 
-				if (userId != session.Habbo.Id)
+				if (userId != session.Player.Id)
 				{
 					session.Send(new GroupRefreshMembersListComposer(group));
 				}
 
-				Habbo targetHabbo = Alias.Server.SocketServer.SessionManager.HabboById(userId);
-				if (targetHabbo != null)
+				Player targetPlayer = await Alias.Server.PlayerManager.ReadPlayerByIdAsync(userId);
+				if (targetPlayer != null)
 				{
-					targetHabbo.GroupId = 0;
-					Room room = targetHabbo.CurrentRoom;
+					targetPlayer.GroupId = 0;
+					Room room = targetPlayer.CurrentRoom;
 					if (room != null)
 					{
 						if (room.RoomData.Group == group)
 						{
-							targetHabbo.Session.Send(new GroupInfoComposer(group, targetHabbo, false, null));
-							room.RoomRights.RefreshRights(targetHabbo);
+							targetPlayer.Session.Send(new GroupInfoComposer(group, targetPlayer, false, null));
+							room.RoomRights.RefreshRights(targetPlayer);
 						}
 					}
 				}

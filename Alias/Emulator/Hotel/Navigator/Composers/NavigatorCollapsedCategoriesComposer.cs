@@ -38,7 +38,7 @@ namespace Alias.Emulator.Hotel.Navigator.Composers
 			message.WriteString("category__global help");
 			message.WriteString("category__Trading");
 			message.WriteString("category__global personal space");
-			message.WriteString("category__Habbo Life");
+			message.WriteString("category__Player Life");
 			message.WriteString("category__TRADING");
 			message.WriteString("category__global official");
 			message.WriteString("category__global trade");

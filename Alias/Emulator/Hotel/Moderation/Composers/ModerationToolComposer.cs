@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
@@ -9,10 +9,10 @@ namespace Alias.Emulator.Hotel.Moderation.Composers
 {
 	class ModerationToolComposer : IPacketComposer
 	{
-		private Habbo habbo;
+		private Player habbo;
 		private List<ModerationTicket> tickets;
 
-		public ModerationToolComposer(Habbo habbo, List<ModerationTicket> tickets)
+		public ModerationToolComposer(Player habbo, List<ModerationTicket> tickets)
 		{
 			this.habbo = habbo;
 			this.tickets = tickets;

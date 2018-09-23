@@ -3,9 +3,9 @@ using System.Linq;
 using Alias.Emulator.Hotel.Rooms.Trading.Composers;
 using Alias.Emulator.Hotel.Rooms.Entities;
 using Alias.Emulator.Hotel.Rooms.Entities.Composers;
-using Alias.Emulator.Hotel.Users.Inventory;
-using Alias.Emulator.Hotel.Users.Inventory.Composers;
+using Alias.Emulator.Hotel.Players.Inventory;
 using Alias.Emulator.Network.Packets;
+using Alias.Emulator.Hotel.Players.Inventory.Composers;
 
 namespace Alias.Emulator.Hotel.Rooms.Trading
 {
@@ -46,13 +46,13 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			this.Send(new TradeUpdateComposer(this));
 		}
 
-		public void HandleItems()
+		public async void HandleItems()
 		{
 			this.Users.ForEach(tradeUser =>
 			{
 				tradeUser.OfferedItems.ForEach(tradeItem =>
 				{
-					if (tradeUser.User.Habbo.Inventory.GetFloorItem(tradeItem.Id) == null)
+					if (!tradeUser.User.Player.Inventory.Items.ContainsKey(tradeItem.Id))
 					{
 						this.Send(new TradeClosedComposer(tradeUser.User.VirtualId, TradeClosedComposer.ITEMS_NOT_FOUND));
 						return;
@@ -66,22 +66,22 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			int logId = RoomTradingDatabase.CreateTradeLog(userOne, userTwo);
 			foreach (InventoryItem item in userOne.OfferedItems)
 			{
-				RoomTradingDatabase.LogTradeItem(logId, userOne.User.Habbo.Id, item.Id);
-				item.UserId = userTwo.User.Habbo.Id;
-				userOne.User.Habbo.Inventory.FloorItems.Remove(item);
-				userTwo.User.Habbo.Inventory.UpdateItem(item);
+				RoomTradingDatabase.LogTradeItem(logId, userOne.User.Player.Id, item.Id);
+				item.UserId = userTwo.User.Player.Id;
+				userOne.User.Player.Inventory.Items.Remove(item.Id);
+				await userTwo.User.Player.Inventory.UpdateItem(item);
 			}
 
 			foreach (InventoryItem item in userTwo.OfferedItems)
 			{
-				RoomTradingDatabase.LogTradeItem(logId, userTwo.User.Habbo.Id, item.Id);
-				item.UserId = userOne.User.Habbo.Id;
-				userTwo.User.Habbo.Inventory.FloorItems.Remove(item);
-				userOne.User.Habbo.Inventory.UpdateItem(item);
+				RoomTradingDatabase.LogTradeItem(logId, userTwo.User.Player.Id, item.Id);
+				item.UserId = userOne.User.Player.Id;
+				userTwo.User.Player.Inventory.Items.Remove(item.Id);
+				await userOne.User.Player.Inventory.UpdateItem(item);
 			}
 
-			userOne.User.Habbo.Session.Send(new AddHabboItemsComposer(userTwo.OfferedItems));
-			userTwo.User.Habbo.Session.Send(new AddHabboItemsComposer(userOne.OfferedItems));
+			userOne.User.Player.Session.Send(new AddPlayerItemsComposer(userTwo.OfferedItems));
+			userTwo.User.Player.Session.Send(new AddPlayerItemsComposer(userOne.OfferedItems));
 
 			this.Send(new InventoryRefreshComposer());
 		}
@@ -106,7 +106,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 			{
 				if (tradeUser.User != user)
 				{
-					tradeUser.User.Habbo.Session.Send(new TradeClosedComposer(user.VirtualId, TradeClosedComposer.USER_CANCEL_TRADE));
+					tradeUser.User.Player.Session.Send(new TradeClosedComposer(user.VirtualId, TradeClosedComposer.USER_CANCEL_TRADE));
 				}
 			});
 			user.Room.RoomTrading.EndTrade(this);
@@ -154,7 +154,7 @@ namespace Alias.Emulator.Hotel.Rooms.Trading
 		{
 			this.Users.ForEach(user =>
 			{
-				user.User.Habbo.Session.Send(message);
+				user.User.Player.Session.Send(message);
 			});
 		}
 	}

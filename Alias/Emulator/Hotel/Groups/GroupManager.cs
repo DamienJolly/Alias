@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 
 namespace Alias.Emulator.Hotel.Groups
 {
@@ -29,7 +29,7 @@ namespace Alias.Emulator.Hotel.Groups
 			this.Groups.Where(group => !group.Disposing).ToList().ForEach(group => group.Cycle());
 		}
 
-		public Group CreateGroup(Habbo habbo, int roomId, string roomName, string name, string description, string badge, int colourOne, int colourTwo)
+		public Group CreateGroup(Player habbo, int roomId, string roomName, string name, string description, string badge, int colourOne, int colourTwo)
 		{
 			Group group = new Group(0, name, description, habbo.Id, 0, roomId, 0, true, colourOne, colourTwo, badge, new List<GroupMember>());
 			group.Id = GroupDatabase.CreateGroup(group);

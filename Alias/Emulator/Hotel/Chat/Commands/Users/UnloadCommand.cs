@@ -12,14 +12,14 @@ namespace Alias.Emulator.Hotel.Chat.Commands.Users
 
 		public void Handle(Session session, string[] args)
 		{
-			if (session.Habbo.CurrentRoom == null)
+			if (session.Player.CurrentRoom == null)
 			{
 				return;
 			}
 
-			if (session.Habbo.CurrentRoom.RoomData.OwnerId == session.Habbo.Id)
+			if (session.Player.CurrentRoom.RoomData.OwnerId == session.Player.Id)
 			{
-				session.Habbo.CurrentRoom.Disposing = true;
+				session.Player.CurrentRoom.Disposing = true;
 			}
 		}
 	}

@@ -8,11 +8,11 @@ using Alias.Emulator.Network.Sessions;
 
 namespace Alias.Emulator.Hotel.Groups.Events
 {
-    class GetHabboGroupBadgesEvent : IPacketEvent
+    class GetPlayerGroupBadgesEvent : IPacketEvent
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -21,12 +21,12 @@ namespace Alias.Emulator.Hotel.Groups.Events
 			Dictionary<int, string> badges = new Dictionary<int, string>();
 			foreach (RoomEntity user in room.EntityManager.Users)
 			{
-				if (user.Habbo.GroupId == 0 || badges.ContainsKey(user.Habbo.GroupId))
+				if (user.Player.GroupId == 0 || badges.ContainsKey(user.Player.GroupId))
 				{
 					continue;
 				}
 
-				Group group = Alias.Server.GroupManager.GetGroup(user.Habbo.GroupId);
+				Group group = Alias.Server.GroupManager.GetGroup(user.Player.GroupId);
 				if (group == null)
 				{
 					continue;

@@ -1,5 +1,4 @@
-using Alias.Emulator.Hotel.Users;
-using Alias.Emulator.Hotel.Users.Achievements;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
@@ -8,10 +7,10 @@ namespace Alias.Emulator.Hotel.Achievements.Composers
 {
     class AchievementProgressComposer : IPacketComposer
 	{
-		private Habbo habbo;
+		private Player habbo;
 		private Achievement achievement;
 
-		public AchievementProgressComposer(Habbo habbo, Achievement achievement)
+		public AchievementProgressComposer(Player habbo, Achievement achievement)
 		{
 			this.habbo = habbo;
 			this.achievement = achievement;

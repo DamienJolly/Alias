@@ -1,34 +1,31 @@
 using System.Collections.Generic;
+using Alias.Emulator.Hotel.Players.Navigator;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Navigator.Composers
 {
-	public class NavigatorSavedSearchesComposer : IPacketComposer
+	class NavigatorSavedSearchesComposer : IPacketComposer
 	{
-		private List<NavigatorSearches> searches;
+		private ICollection<NavigatorSearch> _searches;
 
-		public NavigatorSavedSearchesComposer(List<NavigatorSearches> searches)
+		public NavigatorSavedSearchesComposer(ICollection<NavigatorSearch> searches)
 		{
-			this.searches = searches;
+			_searches = searches;
 		}
 
 		public ServerPacket Compose()
 		{
 			ServerPacket message = new ServerPacket(Outgoing.NavigatorSavedSearchesMessageComposer);
-			message.WriteInteger(searches.Count);
-
-			int count = 0;
-			searches.ForEach(search =>
+			message.WriteInteger(_searches.Count);
+			foreach (NavigatorSearch search in _searches)
 			{
-				count++;
-				message.WriteInteger(count);
+				message.WriteInteger(search.Id);
 				message.WriteString(search.Page);
-				message.WriteString(search.SearchCode);
+				message.WriteString(search.Code);
 				message.WriteString("");
-			});
-
+			}
 			return message;
 		}
 	}

@@ -39,7 +39,7 @@ namespace Alias.Emulator.Hotel.Rooms.Items.Interactions
 
 		public void OnUserInteract(RoomEntity user, Room room, RoomItem item, int state)
 		{
-			if (!room.RoomRights.HasRights(user.Habbo.Id))
+			if (!room.RoomRights.HasRights(user.Player.Id))
 			{
 				return;
 			}

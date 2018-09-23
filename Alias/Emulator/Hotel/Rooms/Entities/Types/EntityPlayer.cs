@@ -11,26 +11,26 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Types
 			message.WriteInteger(1);
 			message.WriteString(Entity.Gender.ToLower());
 
-			Group group = Alias.Server.GroupManager.GetGroup(Entity.Habbo.GroupId);
+			Group group = Alias.Server.GroupManager.GetGroup(Entity.Player.GroupId);
 			message.WriteInteger(group != null ? group.Id : -1);
 			message.WriteInteger(0); //??
 			message.WriteString(group != null ? group.Name : "");
 
 			message.WriteString("");
-			message.WriteInteger(Entity.Habbo.AchievementScore);
+			message.WriteInteger(Entity.Player.AchievementScore);
 			message.WriteBoolean(false); //idk
 		}
 
 		public override void OnEntityJoin()
 		{
-			Entity.Habbo.Entity = Entity;
+			Entity.Player.Entity = Entity;
 			CurrentRoom.RoomData.UsersNow++;
 		}
 
 		public override void OnEntityLeave()
 		{
-			Entity.Habbo.CurrentRoom = null;
-			Entity.Habbo.Entity = null;
+			Entity.Player.CurrentRoom = null;
+			Entity.Player.Entity = null;
 			CurrentRoom.RoomData.UsersNow--;
 
 			RoomTrade trade = CurrentRoom.RoomTrading.GetActiveTrade(Entity);

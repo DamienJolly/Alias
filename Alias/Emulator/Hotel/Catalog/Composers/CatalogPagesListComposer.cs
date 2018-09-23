@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
@@ -8,11 +8,11 @@ namespace Alias.Emulator.Hotel.Catalog.Composers
 {
 	class CatalogPagesListComposer : IPacketComposer
 	{
-		private readonly Habbo _habbo;
+		private readonly Player _habbo;
 		private readonly IList<CatalogPage> _pages;
 		private readonly string MODE;
 
-		public CatalogPagesListComposer(Habbo habbo, string MODE)
+		public CatalogPagesListComposer(Player habbo, string MODE)
 		{
 			_habbo = habbo;
 			_pages = Alias.Server.CatalogManager.GetCatalogPages(-1, habbo);

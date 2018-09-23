@@ -1,4 +1,4 @@
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
@@ -8,9 +8,9 @@ namespace Alias.Emulator.Hotel.Rooms.Composers
 	class RoomEntryInfoComposer : IPacketComposer
 	{
 		private Room room;
-		private Habbo habbo;
+		private Player habbo;
 
-		public RoomEntryInfoComposer(Room r, Habbo h)
+		public RoomEntryInfoComposer(Room r, Player h)
 		{
 			this.room = r;
 			this.habbo = h;

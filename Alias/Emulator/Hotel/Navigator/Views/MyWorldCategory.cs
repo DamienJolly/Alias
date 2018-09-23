@@ -13,7 +13,7 @@ namespace Alias.Emulator.Hotel.Navigator.Views
 			{
 				case "my":
 					{
-						foreach (var room in RoomDatabase.UserRooms(session.Habbo.Id))
+						foreach (var room in RoomDatabase.UserRooms(session.Player.Id))
 						{
 							if (rooms.Count >= Limit)
 							{

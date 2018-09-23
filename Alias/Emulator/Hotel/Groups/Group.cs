@@ -143,7 +143,7 @@ namespace Alias.Emulator.Hotel.Groups
 			}
 			else
 			{
-				GroupMember member = new GroupMember(userId, session.Habbo.Username, session.Habbo.Look, (int)UnixTimestamp.Now, this.State == GroupState.LOCKED ? (int)GroupRank.REQUESTED : (int)GroupRank.MEMBER);
+				GroupMember member = new GroupMember(userId, session.Player.Username, session.Player.Look, (int)UnixTimestamp.Now, this.State == GroupState.LOCKED ? (int)GroupRank.REQUESTED : (int)GroupRank.MEMBER);
 				GroupDatabase.AddMemmber(this.Id, userId, (int)member.Rank);
 				this.Members.Add(member);
 			}

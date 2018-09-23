@@ -16,11 +16,9 @@ namespace Alias.Emulator.Hotel.Landing.Events
 
 			if (Alias.Server.LandingManager.TryGetBonusRare(bonusRareId, out LandingBonusRare bonusRare))
 			{
-				int progress = session.Habbo.BonusRare.GetProgress(bonusRareId);
-				if (progress >= bonusRare.Goal && progress != 0)
+				if (!session.Player.BonusRare.TryGetProgress(bonusRareId, out int progress))
 				{
-					//todo:
-					//session.Habbo.BonusRare.GivePrize(bonusRare.Prize);
+					progress = 0;
 				}
 
 				session.Send(new BonusRareComposer(bonusRare, progress));

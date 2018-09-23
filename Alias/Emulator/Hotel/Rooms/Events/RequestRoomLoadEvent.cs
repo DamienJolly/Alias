@@ -19,7 +19,7 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 			}
 
 			string password = message.PopString();
-			if (roomData.OwnerId == session.Habbo.Id || (roomData.DoorState == RoomDoorState.PASSWORD && roomData.Password != password) || roomData.DoorState == RoomDoorState.OPEN)
+			if (roomData.OwnerId == session.Player.Id || (roomData.DoorState == RoomDoorState.PASSWORD && roomData.Password != password) || roomData.DoorState == RoomDoorState.OPEN)
 			{
 				if (!Alias.Server.RoomManager.TryGetRoom(roomId, out Room room))
 				{
@@ -34,11 +34,11 @@ namespace Alias.Emulator.Hotel.Rooms.Events
 					session.Send(new RoomPaintComposer("wallpaper", "0.0"));
 					session.Send(new RoomPaintComposer("landscape", "0.0"));
 					session.Send(new RoomScoreComposer(room.RoomData.Likes.Count, room.RoomData.Likes.Contains(room.Id)));
-					if (session.Habbo.CurrentRoom != null)
+					if (session.Player.CurrentRoom != null)
 					{
-						session.Habbo.CurrentRoom.EntityManager.OnUserLeave(session.Habbo.Entity);
+						session.Player.CurrentRoom.EntityManager.OnUserLeave(session.Player.Entity);
 					}
-					session.Habbo.CurrentRoom = room;
+					session.Player.CurrentRoom = room;
 					return;
 				}
 			}

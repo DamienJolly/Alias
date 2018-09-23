@@ -1,4 +1,5 @@
 using Alias.Emulator.Hotel.Navigator.Composers;
+using Alias.Emulator.Hotel.Players.Navigator;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Protocol;
 using Alias.Emulator.Network.Sessions;
@@ -7,17 +8,15 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 {
 	class AddSavedSearchEvent : IPacketEvent
 	{
-		public void Handle(Session session, ClientPacket message)
+		public async void Handle(Session session, ClientPacket message)
 		{
 			string page = message.PopString();
-			string searchCode = message.PopString();
+			string code = message.PopString();
 
-			if (session.Habbo.NavigatorPreference.HasPage(page, searchCode))
-				return;
+			NavigatorSearch search = new NavigatorSearch(page, code);
+			await session.Player.Navigator.AddSearch(search);
 
-			session.Habbo.NavigatorPreference.AddSearch(page, searchCode);
-
-			session.Send(new NavigatorSavedSearchesComposer(session.Habbo.NavigatorPreference.NavigatorSearches));
+			session.Send(new NavigatorSavedSearchesComposer(session.Player.Navigator.Searches.Values));
 		}
 	}
 }

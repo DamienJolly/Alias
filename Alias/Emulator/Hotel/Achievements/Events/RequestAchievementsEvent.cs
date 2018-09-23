@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Achievements.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			session.Send(new AchievementListComposer(session.Habbo));
+			session.Send(new AchievementListComposer(session.Player));
 		}
     }
 }

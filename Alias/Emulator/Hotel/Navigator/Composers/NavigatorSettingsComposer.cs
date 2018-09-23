@@ -1,27 +1,28 @@
+using Alias.Emulator.Hotel.Players.Navigator;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
 
 namespace Alias.Emulator.Hotel.Navigator.Composers
 {
-	public class NavigatorSettingsComposer : IPacketComposer
+	class NavigatorSettingsComposer : IPacketComposer
 	{
-		NavigatorPreference UserPreference;
+		NavigatorSettings _settings;
 
-		public NavigatorSettingsComposer(NavigatorPreference userpref)
+		public NavigatorSettingsComposer(NavigatorSettings settings)
 		{
-			this.UserPreference = userpref;
+			_settings = settings;
 		}
 
 		public ServerPacket Compose()
 		{
 			ServerPacket message = new ServerPacket(Outgoing.NavigatorSettingsMessageComposer);
-			message.WriteInteger(this.UserPreference.X);
-			message.WriteInteger(this.UserPreference.Y);
-			message.WriteInteger(this.UserPreference.Width);
-			message.WriteInteger(this.UserPreference.Height);
-			message.WriteBoolean(this.UserPreference.ShowSearches);
-			message.WriteInteger(this.UserPreference.UnknownInt);
+			message.WriteInteger(_settings.X);
+			message.WriteInteger(_settings.Y);
+			message.WriteInteger(_settings.Width);
+			message.WriteInteger(_settings.Height);
+			message.WriteBoolean(_settings.ShowSearches);
+			message.WriteInteger(_settings.UnknownInt);
 			return message;
 		}
 	}

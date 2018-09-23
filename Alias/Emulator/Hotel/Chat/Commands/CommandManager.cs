@@ -57,13 +57,13 @@ namespace Alias.Emulator.Hotel.Chat.Commands
 				return false;
 			}
 
-			if (!session.Habbo.HasPermission("cmd_" + command.Name))
+			if (!session.Player.HasPermission("cmd_" + command.Name))
 			{
 				return false;
 			}
 
 			command.Handle(session, MsgSplit.Skip(1).ToArray());
-			session.Habbo.CurrentRoom.EntityManager.Send(new RoomUserTypingComposer(session.Habbo.Entity, false));
+			session.Player.CurrentRoom.EntityManager.Send(new RoomUserTypingComposer(session.Player.Entity, false));
 			return true;
 		}
 

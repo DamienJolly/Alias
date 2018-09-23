@@ -16,7 +16,7 @@ namespace Alias.Emulator.Hotel.Navigator.Events
 				return;
 			}
 
-			session.Send(new NavigatorEventCategoriesComposer(session.Habbo.Rank, categories));
+			session.Send(new NavigatorEventCategoriesComposer(session.Player.Rank, categories));
 		}
 	}
 }

@@ -10,14 +10,14 @@ namespace Alias.Emulator.Hotel.Moderation.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (!session.Habbo.HasPermission("acc_modtool_room_alert"))
+			if (!session.Player.HasPermission("acc_modtool_room_alert"))
 			{
 				return;
 			}
 
 			int type = message.PopInt(); //message - caution
 
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;

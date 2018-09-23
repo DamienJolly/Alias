@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Alias.Emulator.Database;
 using Alias.Emulator.Hotel.Rooms.Entities.Chat;
-using Alias.Emulator.Hotel.Users;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Moderation
@@ -17,9 +16,9 @@ namespace Alias.Emulator.Hotel.Moderation
 				{
 					while (Reader.Read())
 					{
-						string senderUsername   = Reader.GetInt32("sender_id") > 0 ? (string)UserDatabase.Variable(Reader.GetInt32("sender_id"), "username") : "Unknown";
-						string reportedUsername = Reader.GetInt32("reported_id") > 0 ? (string)UserDatabase.Variable(Reader.GetInt32("reported_id"), "username") : "Unknown";
-						string modUsername      = Reader.GetInt32("mod_id") > 0 ? (string)UserDatabase.Variable(Reader.GetInt32("mod_id"), "username") : "";
+						string senderUsername   = "Unknown";
+						string reportedUsername = "Unknown";
+						string modUsername      = "";
 						ModerationTicket ticket = new ModerationTicket()
 						{
 							Id               = Reader.GetInt32("id"),
@@ -109,11 +108,11 @@ namespace Alias.Emulator.Hotel.Moderation
 				{
 					while (Reader.Read())
 					{
-						string targetUsername = Reader.GetInt32("target_id") > 0 ? (string)UserDatabase.Variable(Reader.GetInt32("target_id"), "username") : "";
+						string targetUsername = "";
 						ModerationChatlog chatlog = new ModerationChatlog()
 						{
 							UserId         = Reader.GetInt32("user_id"),
-							Username       = (string)UserDatabase.Variable(Reader.GetInt32("user_id"), "username"),
+							Username       = "",
 							TargetId       = Reader.GetInt32("target_id"),
 							TargetUsername = targetUsername,
 							Timestamp      = Reader.GetInt32("timestamp"),
@@ -138,11 +137,11 @@ namespace Alias.Emulator.Hotel.Moderation
 				{
 					while (Reader.Read())
 					{
-						string targetUsername = Reader.GetInt32("target_id") > 0 ? (string)UserDatabase.Variable(Reader.GetInt32("target_id"), "username") : "";
+						string targetUsername = "";
 						ModerationChatlog chatlog = new ModerationChatlog()
 						{
 							UserId         = Reader.GetInt32("user_id"),
-							Username       = (string)UserDatabase.Variable(Reader.GetInt32("user_id"), "username"),
+							Username       = "",
 							TargetId       = Reader.GetInt32("target_id"),
 							TargetUsername = targetUsername,
 							Timestamp      = Reader.GetInt32("timestamp"),

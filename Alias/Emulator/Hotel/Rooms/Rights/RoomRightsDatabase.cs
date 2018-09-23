@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Data;
 using Alias.Emulator.Database;
-using Alias.Emulator.Hotel.Users;
 using MySql.Data.MySqlClient;
 
 namespace Alias.Emulator.Hotel.Rooms.Rights
@@ -21,7 +19,7 @@ namespace Alias.Emulator.Hotel.Rooms.Rights
 						UserRight right = new UserRight()
 						{
 							Id       = Reader.GetInt32("id"),
-							Username = (string)UserDatabase.Variable(Reader.GetInt32("user_id"), "username")
+							Username = ""
 						};
 						rights.Add(right);
 					}

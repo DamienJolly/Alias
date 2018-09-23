@@ -8,9 +8,9 @@ namespace Alias.Emulator.Hotel.Landing.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			if (session.Habbo.CurrentRoom != null)
+			if (session.Player.CurrentRoom != null)
 			{
-				session.Habbo.CurrentRoom.EntityManager.OnUserLeave(session.Habbo.Entity);
+				session.Player.CurrentRoom.EntityManager.OnUserLeave(session.Player.Entity);
 			}
 		}
 	}

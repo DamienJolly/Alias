@@ -11,7 +11,7 @@ namespace Alias.Emulator.Hotel.Rooms.Promotions.Events
 		public void Handle(Session session, ClientPacket message)
 		{
 			List<RoomData> rooms = new List<RoomData>();
-			RoomDatabase.UserRooms(session.Habbo.Id).ForEach(roomData =>
+			RoomDatabase.UserRooms(session.Player.Id).ForEach(roomData =>
 			{
 				//todo: check if room is promoted
 				rooms.Add(roomData);

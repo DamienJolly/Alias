@@ -16,9 +16,9 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 			CatalogPage page = Alias.Server.CatalogManager.GetCatalogPage(catalogPageId);
 			if (catalogPageId > 0 && page != null)
 			{
-				if (page.Rank <= session.Habbo.Rank && page.Enabled)
+				if (page.Rank <= session.Player.Rank && page.Enabled)
 				{
-					session.Send(new CatalogPageComposer(page, session.Habbo, mode));
+					session.Send(new CatalogPageComposer(page, session.Player, mode));
 				}
 			}
 		}

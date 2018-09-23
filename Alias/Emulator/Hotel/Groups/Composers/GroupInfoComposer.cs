@@ -1,5 +1,5 @@
 using System;
-using Alias.Emulator.Hotel.Users;
+using Alias.Emulator.Hotel.Players;
 using Alias.Emulator.Network.Packets;
 using Alias.Emulator.Network.Packets.Headers;
 using Alias.Emulator.Network.Protocol;
@@ -9,12 +9,12 @@ namespace Alias.Emulator.Hotel.Groups.Composers
     class GroupInfoComposer : IPacketComposer
 	{
 		private Group group;
-		private Habbo habbo;
+		private Player habbo;
 		private bool newWindow;
 		private DateTime created;
 		private GroupMember member;
 
-		public GroupInfoComposer(Group group, Habbo habbo, bool newWindow, GroupMember member)
+		public GroupInfoComposer(Group group, Player habbo, bool newWindow, GroupMember member)
 		{
 			this.group = group;
 			this.habbo = habbo;

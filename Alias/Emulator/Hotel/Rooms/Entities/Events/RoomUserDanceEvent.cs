@@ -9,7 +9,7 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 	{
 		public void Handle(Session session, ClientPacket message)
 		{
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room == null)
 			{
 				return;
@@ -21,8 +21,8 @@ namespace Alias.Emulator.Hotel.Rooms.Entities.Events
 				return;
 			}
 
-			session.Habbo.Entity.DanceId = danceId;
-			room.EntityManager.Send(new RoomUserDanceComposer(session.Habbo.Entity));
+			session.Player.Entity.DanceId = danceId;
+			room.EntityManager.Send(new RoomUserDanceComposer(session.Player.Entity));
 		}
 	}
 }

@@ -18,7 +18,7 @@ namespace Alias.Emulator.Hotel.Groups.Events
 				return;
 			}
 
-			GroupMember member = group.GetMember(session.Habbo.Id);
+			GroupMember member = group.GetMember(session.Player.Id);
 			if (member != null)
 			{
 				return;
@@ -30,13 +30,13 @@ namespace Alias.Emulator.Hotel.Groups.Events
 				return;
 			}
 
-			group.JoinGroup(session, session.Habbo.Id, false);
-			session.Send(new GroupInfoComposer(group, session.Habbo, false, member));
+			group.JoinGroup(session, session.Player.Id, false);
+			session.Send(new GroupInfoComposer(group, session.Player, false, member));
 
-			Room room = session.Habbo.CurrentRoom;
+			Room room = session.Player.CurrentRoom;
 			if (room != null && room.RoomData.Group == group)
 			{
-				room.RoomRights.RefreshRights(session.Habbo);
+				room.RoomRights.RefreshRights(session.Player);
 			}
 		}
 	}

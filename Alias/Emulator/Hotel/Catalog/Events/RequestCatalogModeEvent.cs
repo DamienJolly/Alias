@@ -13,12 +13,12 @@ namespace Alias.Emulator.Hotel.Catalog.Events
 			if (MODE.Equals("normal"))
 			{
 				session.Send(new CatalogModeComposer(0));
-				session.Send(new CatalogPagesListComposer(session.Habbo, MODE));
+				session.Send(new CatalogPagesListComposer(session.Player, MODE));
 			}
 			else
 			{
 				session.Send(new CatalogModeComposer(1));
-				session.Send(new CatalogPagesListComposer(session.Habbo, MODE));
+				session.Send(new CatalogPagesListComposer(session.Player, MODE));
 			}
 		}
 	}
